@@ -1,5 +1,43 @@
 import { Spin } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
+import { ApiTable } from '../components/ApiTable'
+import type { ApiProperty } from '../components/ApiTable'
+
+const spinApi: ApiProperty[] = [
+  {
+    property: 'size',
+    description: 'Spinner size',
+    type: "'xs' | 'sm' | 'md' | 'lg'",
+    default: "'md'",
+  },
+  {
+    property: 'type',
+    description: 'Spinner animation type',
+    type: "'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity'",
+    default: "'spinner'",
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes',
+    type: 'string',
+  },
+  {
+    property: 'spinning',
+    description: 'Whether the spinner is active',
+    type: 'boolean',
+    default: 'true',
+  },
+  {
+    property: 'children',
+    description: 'Content to wrap with loading overlay',
+    type: 'ReactNode',
+  },
+  {
+    property: 'tip',
+    description: 'Text message to display with spinner',
+    type: 'string',
+  },
+]
 
 export function SpinPage() {
   return (
@@ -129,6 +167,8 @@ export default App`}
         <Spin spinning={true} tip="Spinning" />
       </ExampleSection>
       </div>
+
+      <ApiTable data={spinApi} />
     </div>
   )
 }

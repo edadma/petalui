@@ -6,8 +6,8 @@ import type { ApiProperty } from '../components/ApiTable'
 const buttonApi: ApiProperty[] = [
   {
     property: 'type',
-    description: 'Button style type',
-    type: "'primary' | 'secondary' | 'accent' | 'ghost' | 'link'",
+    description: 'Button color type',
+    type: "'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral' | 'ghost' | 'link'",
     default: 'undefined',
   },
   {
@@ -15,6 +15,35 @@ const buttonApi: ApiProperty[] = [
     description: 'Button size',
     type: "'xs' | 'sm' | 'md' | 'lg'",
     default: "'md'",
+  },
+  {
+    property: 'outline',
+    description: 'Outline style variant',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'active',
+    description: 'Active state',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'loading',
+    description: 'Show loading spinner',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'shape',
+    description: 'Button shape',
+    type: "'square' | 'circle' | 'wide' | 'block'",
+  },
+  {
+    property: 'noAnimation',
+    description: 'Disable click animation',
+    type: 'boolean',
+    default: 'false',
   },
   {
     property: 'disabled',
@@ -40,24 +69,23 @@ export function ButtonPage() {
       <div className="mb-6">
         <h1 className="text-4xl font-bold mb-2">Button</h1>
         <p className="text-base-content/70">
-          Button component with DaisyUI styling and multiple types.
+          Versatile button component with DaisyUI styling and many variants.
         </p>
       </div>
 
       <div className="columns-1 lg:columns-2 gap-x-4">
         <ExampleSection
-        title="Types"
-        description="Use the type prop to set the button style."
+        title="Brand Colors"
+        description="Primary brand colors for common actions."
         code={`import React from 'react'
 import { Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
-  <div className="flex gap-4 flex-wrap">
+  <div className="flex gap-2 flex-wrap">
     <Button type="primary">Primary</Button>
     <Button type="secondary">Secondary</Button>
     <Button type="accent">Accent</Button>
-    <Button type="ghost">Ghost</Button>
-    <Button type="link">Link</Button>
+    <Button type="neutral">Neutral</Button>
   </div>
 )
 
@@ -66,19 +94,62 @@ export default App`}
         <Button type="primary">Primary</Button>
         <Button type="secondary">Secondary</Button>
         <Button type="accent">Accent</Button>
-        <Button type="ghost">Ghost</Button>
-        <Button type="link">Link</Button>
+        <Button type="neutral">Neutral</Button>
       </ExampleSection>
 
       <ExampleSection
-        title="Sizes"
-        description="Buttons come in four sizes: xs, sm, md (default), and lg."
+        title="State Colors"
+        description="Semantic colors for different states and feedback."
         code={`import React from 'react'
 import { Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
-  <div className="flex gap-4 items-center flex-wrap">
-    <Button size="xs">Extra Small</Button>
+  <div className="flex gap-2 flex-wrap">
+    <Button type="info">Info</Button>
+    <Button type="success">Success</Button>
+    <Button type="warning">Warning</Button>
+    <Button type="error">Error</Button>
+  </div>
+)
+
+export default App`}
+      >
+        <Button type="info">Info</Button>
+        <Button type="success">Success</Button>
+        <Button type="warning">Warning</Button>
+        <Button type="error">Error</Button>
+      </ExampleSection>
+
+      <ExampleSection
+        title="Minimal Styles"
+        description="Ghost and link variants for subtle actions."
+        code={`import React from 'react'
+import { Button } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <div className="flex gap-2 flex-wrap">
+    <Button type="ghost">Ghost</Button>
+    <Button type="link">Link</Button>
+    <Button>No Type</Button>
+  </div>
+)
+
+export default App`}
+      >
+        <Button type="ghost">Ghost</Button>
+        <Button type="link">Link</Button>
+        <Button>No Type</Button>
+      </ExampleSection>
+
+      <ExampleSection
+        title="Sizes"
+        description="Four sizes: xs, sm, md (default), and lg."
+        code={`import React from 'react'
+import { Button } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <div className="flex gap-2 items-center flex-wrap">
+    <Button size="xs">XS</Button>
     <Button size="sm">Small</Button>
     <Button size="md">Medium</Button>
     <Button size="lg">Large</Button>
@@ -87,66 +158,140 @@ const App: React.FC = () => (
 
 export default App`}
       >
-        <Button size="xs">Extra Small</Button>
+        <Button size="xs">XS</Button>
         <Button size="sm">Small</Button>
         <Button size="md">Medium</Button>
         <Button size="lg">Large</Button>
       </ExampleSection>
 
       <ExampleSection
-        title="States"
-        description="Buttons support disabled state through the standard disabled attribute."
+        title="Outline"
+        description="Outline variant with transparent background."
         code={`import React from 'react'
 import { Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
-  <div className="flex gap-4 flex-wrap">
+  <div className="flex gap-2 flex-wrap">
+    <Button type="primary" outline>Primary</Button>
+    <Button type="secondary" outline>Secondary</Button>
+    <Button type="accent" outline>Accent</Button>
+  </div>
+)
+
+export default App`}
+      >
+        <Button type="primary" outline>Primary</Button>
+        <Button type="secondary" outline>Secondary</Button>
+        <Button type="accent" outline>Accent</Button>
+      </ExampleSection>
+
+      <ExampleSection
+        title="States"
+        description="Active, loading, and disabled states."
+        code={`import React from 'react'
+import { Button } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <div className="flex gap-2 flex-wrap">
     <Button type="primary">Normal</Button>
-    <Button type="primary" disabled>
-      Disabled
-    </Button>
+    <Button type="primary" active>Active</Button>
+    <Button type="primary" loading>Loading</Button>
+    <Button type="primary" disabled>Disabled</Button>
   </div>
 )
 
 export default App`}
       >
         <Button type="primary">Normal</Button>
-        <Button type="primary" disabled>
-          Disabled
-        </Button>
+        <Button type="primary" active>Active</Button>
+        <Button type="primary" loading>Loading</Button>
+        <Button type="primary" disabled>Disabled</Button>
       </ExampleSection>
 
       <ExampleSection
-        title="Combinations"
-        description="Combine type and size props to create different button variations."
+        title="Shapes"
+        description="Square and circle shapes for icon buttons."
         code={`import React from 'react'
 import { Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
-  <div className="flex gap-4 flex-wrap">
-    <Button type="primary" size="sm">
-      Small Primary
+  <div className="flex gap-2 items-center flex-wrap">
+    <Button type="primary" shape="square">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
     </Button>
-    <Button type="secondary" size="lg">
-      Large Secondary
-    </Button>
-    <Button type="accent" size="xs">
-      XS Accent
+    <Button type="primary" shape="circle">
+      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
     </Button>
   </div>
 )
 
 export default App`}
       >
-        <Button type="primary" size="sm">
-          Small Primary
+        <Button type="primary" shape="square">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </Button>
-        <Button type="secondary" size="lg">
-          Large Secondary
+        <Button type="primary" shape="circle">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
         </Button>
-        <Button type="accent" size="xs">
-          XS Accent
-        </Button>
+      </ExampleSection>
+
+      <ExampleSection
+        title="Wide"
+        description="Extra wide buttons for emphasis."
+        code={`import React from 'react'
+import { Button } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <div className="flex flex-col gap-2">
+    <Button type="primary" shape="wide">Wide Button</Button>
+    <Button type="secondary" shape="wide">Another Wide</Button>
+  </div>
+)
+
+export default App`}
+      >
+        <Button type="primary" shape="wide">Wide Button</Button>
+        <Button type="secondary" shape="wide">Another Wide</Button>
+      </ExampleSection>
+
+      <ExampleSection
+        title="Block"
+        description="Full width buttons."
+        code={`import React from 'react'
+import { Button } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <div className="flex flex-col gap-2">
+    <Button type="primary" shape="block">Block Button</Button>
+    <Button type="secondary" shape="block">Another Block</Button>
+  </div>
+)
+
+export default App`}
+      >
+        <Button type="primary" shape="block">Block Button</Button>
+        <Button type="secondary" shape="block">Another Block</Button>
+      </ExampleSection>
+
+      <ExampleSection
+        title="Loading States"
+        description="Loading spinner with different colors."
+        code={`import React from 'react'
+import { Button } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <div className="flex gap-2 flex-wrap">
+    <Button type="primary" loading>Loading</Button>
+    <Button type="success" loading>Processing</Button>
+    <Button type="error" loading>Deleting</Button>
+  </div>
+)
+
+export default App`}
+      >
+        <Button type="primary" loading>Loading</Button>
+        <Button type="success" loading>Processing</Button>
+        <Button type="error" loading>Deleting</Button>
       </ExampleSection>
       </div>
 

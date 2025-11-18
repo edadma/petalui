@@ -110,7 +110,7 @@ export function Table<T extends Record<string, any>>({
     .join(' ')
 
   const wrapperClasses = [
-    'overflow-x-auto',
+    !pinRows && 'overflow-x-auto',
     bordered && 'rounded-box border border-base-content/5 bg-base-100',
   ]
     .filter(Boolean)

@@ -23,6 +23,11 @@ function App() {
           active: currentPage === 'button',
           onClick: () => setCurrentPage('button'),
         },
+      ],
+    },
+    {
+      title: 'Feedback',
+      items: [
         {
           key: 'spin',
           label: 'Spin',
@@ -78,7 +83,7 @@ function App() {
       {/* Content Area with Sidebar */}
       <div className="flex flex-1">
         {/* Fixed Sidebar */}
-        <aside className="w-[154px] bg-base-100 border-r border-base-content/10 overflow-y-auto">
+        <aside className="w-44 bg-base-100 border-r border-base-content/10 overflow-y-auto">
           <div className="p-4">
             <Menu groups={menuGroups} />
           </div>

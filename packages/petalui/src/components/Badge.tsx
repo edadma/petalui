@@ -4,10 +4,12 @@ export interface BadgeProps {
   children?: React.ReactNode
   count?: number
   showZero?: boolean
-  type?: 'default' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost'
+  type?: 'default' | 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost'
   size?: 'xs' | 'sm' | 'md' | 'lg'
   outline?: boolean
   dot?: boolean
+  circular?: boolean
+  content?: React.ReactNode
   className?: string
 }
 
@@ -19,6 +21,8 @@ export const Badge: React.FC<BadgeProps> = ({
   size = 'md',
   outline = false,
   dot = false,
+  circular = false,
+  content,
   className = '',
 }) => {
   const typeClasses = {
@@ -26,6 +30,7 @@ export const Badge: React.FC<BadgeProps> = ({
     primary: 'badge-primary',
     secondary: 'badge-secondary',
     accent: 'badge-accent',
+    neutral: 'badge-neutral',
     info: 'badge-info',
     success: 'badge-success',
     warning: 'badge-warning',
@@ -52,6 +57,7 @@ export const Badge: React.FC<BadgeProps> = ({
               'indicator-item badge',
               typeClasses[type],
               dot ? 'badge-xs p-0 w-2 h-2' : sizeClasses[size],
+              outline && 'badge-outline',
               className,
             ]
               .filter(Boolean)
@@ -71,12 +77,13 @@ export const Badge: React.FC<BadgeProps> = ({
     typeClasses[type],
     sizeClasses[size],
     outline && 'badge-outline',
+    circular && 'w-3 h-3 p-0',
     className,
   ]
     .filter(Boolean)
     .join(' ')
 
-  const content = count !== undefined ? count : ''
+  const displayContent = content !== undefined ? content : count !== undefined ? count : ''
 
-  return <span className={badgeClasses}>{content}</span>
+  return <span className={badgeClasses}>{displayContent}</span>
 }

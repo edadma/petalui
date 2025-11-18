@@ -1,6 +1,48 @@
 import { useState } from 'react'
 import { Drawer, Button } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
+import { ApiTable } from '../components/ApiTable'
+import type { ApiProperty } from '../components/ApiTable'
+
+const drawerApi: ApiProperty[] = [
+  {
+    property: 'children',
+    description: 'Main content area',
+    type: 'ReactNode',
+  },
+  {
+    property: 'sidebar',
+    description: 'Drawer sidebar content',
+    type: 'ReactNode',
+  },
+  {
+    property: 'open',
+    description: 'Whether the drawer is open',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'onOpenChange',
+    description: 'Callback when drawer open state changes',
+    type: '(open: boolean) => void',
+  },
+  {
+    property: 'end',
+    description: 'Position drawer on the right side',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes for drawer container',
+    type: 'string',
+  },
+  {
+    property: 'sidebarClassName',
+    description: 'Additional CSS classes for sidebar',
+    type: 'string',
+  },
+]
 
 export function DrawerPage() {
   const [open1, setOpen1] = useState(false)
@@ -74,16 +116,10 @@ export default App`}
           title="With Menu"
           description="Drawer with a navigation menu."
           code={`import React, { useState } from 'react'
-import { Drawer, Button, Menu } from '@edadma/petalui'
+import { Drawer, Button } from '@edadma/petalui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
-
-  const menuItems = [
-    { key: 'home', label: 'Home', onClick: () => console.log('Home') },
-    { key: 'about', label: 'About', onClick: () => console.log('About') },
-    { key: 'contact', label: 'Contact', onClick: () => console.log('Contact') },
-  ]
 
   return (
     <>
@@ -92,7 +128,14 @@ const App: React.FC = () => {
         sidebar={
           <div className="p-4">
             <h2 className="text-xl font-bold mb-4">Navigation</h2>
-            <Menu items={menuItems} />
+            <ul className="menu">
+              <li><a>Home</a></li>
+              <li><a>About</a></li>
+              <li><a>Contact</a></li>
+            </ul>
+            <Button className="mt-4" onClick={() => setOpen(false)}>
+              Close
+            </Button>
           </div>
         }
         open={open}
@@ -100,6 +143,7 @@ const App: React.FC = () => {
       >
         <div className="p-4">
           <h1>Main Content</h1>
+          <p>Drawer with navigation menu items.</p>
         </div>
       </Drawer>
     </>
@@ -133,6 +177,8 @@ export default App`}
           </Drawer>
         </ExampleSection>
       </div>
+
+      <ApiTable data={drawerApi} />
     </div>
   )
 }
