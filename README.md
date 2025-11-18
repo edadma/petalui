@@ -4,7 +4,7 @@ A React component library built with DaisyUI and Tailwind CSS.
 
 ## Demo
 
-View the live demo at: [https://edadma.github.io/@edadma/petalui](https://edadma.github.io/@edadma/petalui)
+View the live demo at: [https://edadma.github.io/petalui](https://edadma.github.io/petalui)
 
 ## Installation
 

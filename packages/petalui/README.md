@@ -39,7 +39,7 @@ function App() {
 
 ## Demo
 
-View live examples and documentation at [https://edadma.github.io/@edadma/petalui](https://edadma.github.io/@edadma/petalui)
+View live examples and documentation at [https://edadma.github.io/petalui](https://edadma.github.io/petalui)
 
 ## Requirements
 
