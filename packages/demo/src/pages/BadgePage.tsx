@@ -1,5 +1,55 @@
 import { Badge, Button } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
+import { ApiTable } from '../components/ApiTable'
+import type { ApiProperty } from '../components/ApiTable'
+
+const badgeApi: ApiProperty[] = [
+  {
+    property: 'count',
+    description: 'Number to display in the badge',
+    type: 'number',
+  },
+  {
+    property: 'showZero',
+    description: 'Whether to display badge when count is 0',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'dot',
+    description: 'Show a dot instead of count',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'type',
+    description: 'Badge color type',
+    type: "'default' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost'",
+    default: "'error'",
+  },
+  {
+    property: 'size',
+    description: 'Badge size',
+    type: "'xs' | 'sm' | 'md' | 'lg'",
+    default: "'md'",
+  },
+  {
+    property: 'outline',
+    description: 'Outline style (standalone mode only)',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'children',
+    description: 'Element to wrap with badge',
+    type: 'ReactNode',
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes',
+    type: 'string',
+  },
+]
 
 export function BadgePage() {
   return (
@@ -181,6 +231,8 @@ export default App`}
         <Badge count={999} type="warning" />
       </ExampleSection>
       </div>
+
+      <ApiTable data={badgeApi} />
     </div>
   )
 }

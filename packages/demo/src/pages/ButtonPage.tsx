@@ -1,5 +1,38 @@
 import { Button } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
+import { ApiTable } from '../components/ApiTable'
+import type { ApiProperty } from '../components/ApiTable'
+
+const buttonApi: ApiProperty[] = [
+  {
+    property: 'type',
+    description: 'Button style type',
+    type: "'primary' | 'secondary' | 'accent' | 'ghost' | 'link'",
+    default: 'undefined',
+  },
+  {
+    property: 'size',
+    description: 'Button size',
+    type: "'xs' | 'sm' | 'md' | 'lg'",
+    default: "'md'",
+  },
+  {
+    property: 'disabled',
+    description: 'Disabled state',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes',
+    type: 'string',
+  },
+  {
+    property: 'children',
+    description: 'Button content',
+    type: 'ReactNode',
+  },
+]
 
 export function ButtonPage() {
   return (
@@ -116,6 +149,8 @@ export default App`}
         </Button>
       </ExampleSection>
       </div>
+
+      <ApiTable data={buttonApi} />
     </div>
   )
 }
