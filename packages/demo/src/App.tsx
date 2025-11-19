@@ -11,6 +11,7 @@ import { FormPage } from './pages/FormPage'
 import { InputPage } from './pages/InputPage'
 import { LoadingPage } from './pages/LoadingPage'
 import { MenuPage } from './pages/MenuPage'
+import { SelectPage } from './pages/SelectPage'
 import { TablePage } from './pages/TablePage'
 import { TextareaPage } from './pages/TextareaPage'
 import { TogglePage } from './pages/TogglePage'
@@ -58,6 +59,9 @@ function AppContent() {
               </Menu.Item>
               <Menu.Item active={isActive('/input')} onClick={() => navigate('/input')}>
                 Input
+              </Menu.Item>
+              <Menu.Item active={isActive('/select')} onClick={() => navigate('/select')}>
+                Select
               </Menu.Item>
               <Menu.Item active={isActive('/textarea')} onClick={() => navigate('/textarea')}>
                 Textarea
@@ -108,6 +112,7 @@ function AppContent() {
               <Route path="/input" element={<InputPage />} />
               <Route path="/loading" element={<LoadingPage />} />
               <Route path="/menu" element={<MenuPage />} />
+              <Route path="/select" element={<SelectPage />} />
               <Route path="/table" element={<TablePage />} />
               <Route path="/textarea" element={<TextareaPage />} />
               <Route path="/toggle" element={<TogglePage />} />

@@ -1,4 +1,4 @@
-import { Checkbox } from '@edadma/petalui'
+import { Checkbox, Form, Button } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -44,6 +44,10 @@ const checkboxApi: ApiProperty[] = [
 ]
 
 export function CheckboxPage() {
+  const handleSubmit = (values: any) => {
+    alert(JSON.stringify(values, null, 2))
+  }
+
   return (
     <div>
       <div className="mb-6">
@@ -248,6 +252,87 @@ export default App`}
             <Checkbox indeterminate />
             <span>Indeterminate</span>
           </div>
+        </ExampleSection>
+
+        <ExampleSection
+          title="In Form"
+          description="Checkbox working with Form validation."
+          code={`import React from 'react'
+import { Form, Checkbox, Button } from '@edadma/petalui'
+
+const App: React.FC = () => {
+  const handleSubmit = (values: any) => {
+    console.log(values)
+  }
+
+  return (
+    <Form
+      onFinish={handleSubmit}
+      initialValues={{ newsletter: true }}
+    >
+      <Form.Item name="terms" valuePropName="checked">
+        <div className="flex items-center gap-2">
+          <Checkbox />
+          <span>I agree to the terms and conditions</span>
+        </div>
+      </Form.Item>
+
+      <Form.Item name="newsletter" valuePropName="checked">
+        <div className="flex items-center gap-2">
+          <Checkbox />
+          <span>Subscribe to newsletter</span>
+        </div>
+      </Form.Item>
+
+      <Form.Item name="updates" valuePropName="checked">
+        <div className="flex items-center gap-2">
+          <Checkbox />
+          <span>Receive product updates</span>
+        </div>
+      </Form.Item>
+
+      <Form.Item>
+        <Button htmlType="submit" type="primary">
+          Save Preferences
+        </Button>
+      </Form.Item>
+    </Form>
+  )
+}
+
+export default App`}
+        >
+          <Form
+            onFinish={handleSubmit}
+            initialValues={{ newsletter: true }}
+          >
+            <Form.Item name="terms" valuePropName="checked">
+              <div className="flex items-center gap-2">
+                <Checkbox />
+                <span>I agree to the terms and conditions</span>
+              </div>
+            </Form.Item>
+
+            <Form.Item name="newsletter" valuePropName="checked">
+              <div className="flex items-center gap-2">
+                <Checkbox />
+                <span>Subscribe to newsletter</span>
+              </div>
+            </Form.Item>
+
+            <Form.Item name="updates" valuePropName="checked">
+              <div className="flex items-center gap-2">
+                <Checkbox />
+                <span>Receive product updates</span>
+              </div>
+            </Form.Item>
+
+            <Form.Item>
+              <Button htmlType="submit" type="primary">
+                Save Preferences
+              </Button>
+            </Form.Item>
+          </Form>
         </ExampleSection>
       </div>
 

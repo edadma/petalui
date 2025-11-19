@@ -31,6 +31,9 @@ export type { MenuProps, MenuItemProps, MenuTitleProps } from './components/Menu
 export { Navbar } from './components/Navbar'
 export type { NavbarProps } from './components/Navbar'
 
+export { Select } from './components/Select'
+export type { SelectProps } from './components/Select'
+
 export { Table } from './components/Table'
 export type { TableProps, ColumnType, PaginationConfig } from './components/Table'
 
