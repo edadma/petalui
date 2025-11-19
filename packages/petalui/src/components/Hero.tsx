@@ -2,37 +2,29 @@ import React from 'react'
 
 export interface HeroProps {
   children: React.ReactNode
+  overlay?: boolean
+  overlayClassName?: string
+  contentClassName?: string
   className?: string
   style?: React.CSSProperties
 }
 
-export interface HeroContentProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface HeroOverlayProps {
-  className?: string
-}
-
-function HeroRoot({ children, className = '', style }: HeroProps) {
+export function Hero({
+  children,
+  overlay = false,
+  overlayClassName = '',
+  contentClassName = '',
+  className = '',
+  style,
+}: HeroProps) {
   const classes = ['hero', className].filter(Boolean).join(' ')
+  const contentClasses = ['hero-content', contentClassName].filter(Boolean).join(' ')
+  const overlayClasses = ['hero-overlay', overlayClassName].filter(Boolean).join(' ')
+
   return (
     <div className={classes} style={style}>
-      {children}
+      {overlay && <div className={overlayClasses} />}
+      <div className={contentClasses}>{children}</div>
     </div>
   )
 }
-
-function HeroContent({ children, className = '' }: HeroContentProps) {
-  return <div className={`hero-content ${className}`}>{children}</div>
-}
-
-function HeroOverlay({ className = '' }: HeroOverlayProps) {
-  return <div className={`hero-overlay ${className}`} />
-}
-
-export const Hero = Object.assign(HeroRoot, {
-  Content: HeroContent,
-  Overlay: HeroOverlay,
-})

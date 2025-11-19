@@ -7,32 +7,11 @@ export interface StatsProps {
 }
 
 export interface StatProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface StatTitleProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface StatValueProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface StatDescProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface StatFigureProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface StatActionsProps {
-  children: React.ReactNode
+  title?: React.ReactNode
+  value?: React.ReactNode
+  desc?: React.ReactNode
+  figure?: React.ReactNode
+  actions?: React.ReactNode
   className?: string
 }
 
@@ -48,35 +27,18 @@ function StatsRoot({ children, className = '', vertical = false }: StatsProps) {
   return <div className={classes}>{children}</div>
 }
 
-function StatItem({ children, className = '' }: StatProps) {
-  return <div className={`stat ${className}`}>{children}</div>
-}
-
-function StatTitle({ children, className = '' }: StatTitleProps) {
-  return <div className={`stat-title ${className}`}>{children}</div>
-}
-
-function StatValue({ children, className = '' }: StatValueProps) {
-  return <div className={`stat-value ${className}`}>{children}</div>
-}
-
-function StatDesc({ children, className = '' }: StatDescProps) {
-  return <div className={`stat-desc ${className}`}>{children}</div>
-}
-
-function StatFigure({ children, className = '' }: StatFigureProps) {
-  return <div className={`stat-figure ${className}`}>{children}</div>
-}
-
-function StatActions({ children, className = '' }: StatActionsProps) {
-  return <div className={`stat-actions ${className}`}>{children}</div>
+function StatItem({ title, value, desc, figure, actions, className = '' }: StatProps) {
+  return (
+    <div className={`stat ${className}`}>
+      {figure && <div className="stat-figure">{figure}</div>}
+      {title && <div className="stat-title">{title}</div>}
+      {value && <div className="stat-value">{value}</div>}
+      {desc && <div className="stat-desc">{desc}</div>}
+      {actions && <div className="stat-actions">{actions}</div>}
+    </div>
+  )
 }
 
 export const Stats = Object.assign(StatsRoot, {
   Stat: StatItem,
-  Title: StatTitle,
-  Value: StatValue,
-  Desc: StatDesc,
-  Figure: StatFigure,
-  Actions: StatActions,
 })

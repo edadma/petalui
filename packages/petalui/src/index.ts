@@ -41,7 +41,7 @@ export { Form, useFormInstance } from './components/Form'
 export type { FormProps, FormItemProps, FormInstance } from './components/Form'
 
 export { Hero } from './components/Hero'
-export type { HeroProps, HeroContentProps, HeroOverlayProps } from './components/Hero'
+export type { HeroProps } from './components/Hero'
 
 export { Dropdown } from './components/Dropdown'
 export type { DropdownProps, DropdownTriggerProps, DropdownMenuProps, DropdownItemProps, DropdownDividerProps } from './components/Dropdown'
@@ -50,7 +50,7 @@ export { Input } from './components/Input'
 export type { InputProps } from './components/Input'
 
 export { Join } from './components/Join'
-export type { JoinProps, JoinItemProps } from './components/Join'
+export type { JoinProps } from './components/Join'
 
 export { Label } from './components/Label'
 export type { LabelProps, FloatingLabelProps } from './components/Label'
@@ -80,7 +80,7 @@ export { Select } from './components/Select'
 export type { SelectProps } from './components/Select'
 
 export { Stats } from './components/Stat'
-export type { StatsProps, StatProps, StatTitleProps, StatValueProps, StatDescProps, StatFigureProps, StatActionsProps } from './components/Stat'
+export type { StatsProps, StatProps } from './components/Stat'
 
 export { Steps } from './components/Steps'
 export type { StepsProps, StepProps } from './components/Steps'
@@ -95,7 +95,7 @@ export { Textarea } from './components/Textarea'
 export type { TextareaProps } from './components/Textarea'
 
 export { Timeline } from './components/Timeline'
-export type { TimelineProps, TimelineItemProps, TimelineStartProps, TimelineMiddleProps, TimelineEndProps } from './components/Timeline'
+export type { TimelineProps, TimelineItemProps } from './components/Timeline'
 
 export { Toggle } from './components/Toggle'
 export type { ToggleProps } from './components/Toggle'

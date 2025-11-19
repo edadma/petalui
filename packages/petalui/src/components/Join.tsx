@@ -6,21 +6,21 @@ export interface JoinProps {
   className?: string
 }
 
-export interface JoinItemProps {
-  children: React.ReactNode
-  className?: string
-}
-
-function JoinRoot({ children, vertical = false, className = '' }: JoinProps) {
+export function Join({ children, vertical = false, className = '' }: JoinProps) {
   const classes = ['join', vertical && 'join-vertical', className].filter(Boolean).join(' ')
 
-  return <div className={classes}>{children}</div>
-}
+  // Automatically add join-item class to all children
+  const childrenWithJoinItem = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      const existingClassName = (child.props as any).className || ''
+      const newClassName = existingClassName ? `join-item ${existingClassName}` : 'join-item'
 
-function JoinItem({ children, className = '' }: JoinItemProps) {
-  return <div className={`join-item ${className}`}>{children}</div>
-}
+      return React.cloneElement(child as React.ReactElement<any>, {
+        className: newClassName,
+      })
+    }
+    return child
+  })
 
-export const Join = Object.assign(JoinRoot, {
-  Item: JoinItem,
-})
+  return <div className={classes}>{childrenWithJoinItem}</div>
+}

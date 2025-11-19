@@ -24,8 +24,28 @@ const statsApi: ApiProperty[] = [
 
 const statApi: ApiProperty[] = [
   {
-    property: 'children',
-    description: 'Stat content (Title, Value, Desc, etc.)',
+    property: 'title',
+    description: 'Stat title',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'value',
+    description: 'Stat value',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'desc',
+    description: 'Description text',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'figure',
+    description: 'Icon or image figure',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'actions',
+    description: 'Action buttons or elements',
     type: 'React.ReactNode',
   },
   {
@@ -54,47 +74,37 @@ import { Stats } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
-    <Stats.Stat>
-      <Stats.Title>Total Page Views</Stats.Title>
-      <Stats.Value>89,400</Stats.Value>
-    </Stats.Stat>
+    <Stats.Stat title="Total Page Views" value="89,400" />
   </Stats>
 )
 
 export default App`}
         >
           <Stats className="shadow">
-            <Stats.Stat>
-              <Stats.Title>Total Page Views</Stats.Title>
-              <Stats.Value>89,400</Stats.Value>
-            </Stats.Stat>
+            <Stats.Stat title="Total Page Views" value="89,400" />
           </Stats>
         </ExampleSection>
 
         <ExampleSection
           title="With Description"
-          description="Adding description text below the value."
+          description="Add description using desc prop."
           code={`import React from 'react'
 import { Stats } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
-    <Stats.Stat>
-      <Stats.Title>Downloads</Stats.Title>
-      <Stats.Value>31K</Stats.Value>
-      <Stats.Desc>Jan 1st - Feb 1st</Stats.Desc>
-    </Stats.Stat>
+    <Stats.Stat
+      title="Downloads"
+      value="31K"
+      desc="Jan 1st - Feb 1st"
+    />
   </Stats>
 )
 
 export default App`}
         >
           <Stats className="shadow">
-            <Stats.Stat>
-              <Stats.Title>Downloads</Stats.Title>
-              <Stats.Value>31K</Stats.Value>
-              <Stats.Desc>Jan 1st - Feb 1st</Stats.Desc>
-            </Stats.Stat>
+            <Stats.Stat title="Downloads" value="31K" desc="Jan 1st - Feb 1st" />
           </Stats>
         </ExampleSection>
 
@@ -106,59 +116,43 @@ import { Stats } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
-    <Stats.Stat>
-      <Stats.Title>Total Users</Stats.Title>
-      <Stats.Value>4,200</Stats.Value>
-      <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-    </Stats.Stat>
-
-    <Stats.Stat>
-      <Stats.Title>New Users</Stats.Title>
-      <Stats.Value>1,200</Stats.Value>
-      <Stats.Desc>↘︎ 90 (14%)</Stats.Desc>
-    </Stats.Stat>
-
-    <Stats.Stat>
-      <Stats.Title>New Registers</Stats.Title>
-      <Stats.Value>4,200</Stats.Value>
-      <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-    </Stats.Stat>
+    <Stats.Stat
+      title="Total Users"
+      value="4,200"
+      desc="↗︎ 400 (22%)"
+    />
+    <Stats.Stat
+      title="New Users"
+      value="1,200"
+      desc="↘︎ 90 (14%)"
+    />
+    <Stats.Stat
+      title="New Registers"
+      value="4,200"
+      desc="↗︎ 400 (22%)"
+    />
   </Stats>
 )
 
 export default App`}
         >
           <Stats className="shadow">
-            <Stats.Stat>
-              <Stats.Title>Total Users</Stats.Title>
-              <Stats.Value>4,200</Stats.Value>
-              <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-            </Stats.Stat>
-
-            <Stats.Stat>
-              <Stats.Title>New Users</Stats.Title>
-              <Stats.Value>1,200</Stats.Value>
-              <Stats.Desc>↘︎ 90 (14%)</Stats.Desc>
-            </Stats.Stat>
-
-            <Stats.Stat>
-              <Stats.Title>New Registers</Stats.Title>
-              <Stats.Value>4,200</Stats.Value>
-              <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-            </Stats.Stat>
+            <Stats.Stat title="Total Users" value="4,200" desc="↗︎ 400 (22%)" />
+            <Stats.Stat title="New Users" value="1,200" desc="↘︎ 90 (14%)" />
+            <Stats.Stat title="New Registers" value="4,200" desc="↗︎ 400 (22%)" />
           </Stats>
         </ExampleSection>
 
         <ExampleSection
           title="With Icons"
-          description="Adding icons using stat-figure."
+          description="Adding icons using figure prop."
           code={`import React from 'react'
 import { Stats } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
-    <Stats.Stat>
-      <Stats.Figure>
+    <Stats.Stat
+      figure={
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -170,16 +164,15 @@ const App: React.FC = () => (
             strokeLinejoin="round"
             strokeWidth="2"
             d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          ></path>
+          />
         </svg>
-      </Stats.Figure>
-      <Stats.Title>Downloads</Stats.Title>
-      <Stats.Value>31K</Stats.Value>
-      <Stats.Desc>Jan 1st - Feb 1st</Stats.Desc>
-    </Stats.Stat>
-
-    <Stats.Stat>
-      <Stats.Figure>
+      }
+      title="Downloads"
+      value="31K"
+      desc="Jan 1st - Feb 1st"
+    />
+    <Stats.Stat
+      figure={
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -191,21 +184,21 @@ const App: React.FC = () => (
             strokeLinejoin="round"
             strokeWidth="2"
             d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-          ></path>
+          />
         </svg>
-      </Stats.Figure>
-      <Stats.Title>New Users</Stats.Title>
-      <Stats.Value>4,200</Stats.Value>
-      <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-    </Stats.Stat>
+      }
+      title="New Users"
+      value="4,200"
+      desc="↗︎ 400 (22%)"
+    />
   </Stats>
 )
 
 export default App`}
         >
           <Stats className="shadow">
-            <Stats.Stat>
-              <Stats.Figure>
+            <Stats.Stat
+              figure={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -219,14 +212,13 @@ export default App`}
                     d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                   ></path>
                 </svg>
-              </Stats.Figure>
-              <Stats.Title>Downloads</Stats.Title>
-              <Stats.Value>31K</Stats.Value>
-              <Stats.Desc>Jan 1st - Feb 1st</Stats.Desc>
-            </Stats.Stat>
-
-            <Stats.Stat>
-              <Stats.Figure>
+              }
+              title="Downloads"
+              value="31K"
+              desc="Jan 1st - Feb 1st"
+            />
+            <Stats.Stat
+              figure={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -240,50 +232,48 @@ export default App`}
                     d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
                   ></path>
                 </svg>
-              </Stats.Figure>
-              <Stats.Title>New Users</Stats.Title>
-              <Stats.Value>4,200</Stats.Value>
-              <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-            </Stats.Stat>
+              }
+              title="New Users"
+              value="4,200"
+              desc="↗︎ 400 (22%)"
+            />
           </Stats>
         </ExampleSection>
 
         <ExampleSection
           title="Colored Values"
-          description="Using color classes for stat values."
+          description="Using className for colored values."
           code={`import React from 'react'
 import { Stats } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
-    <Stats.Stat>
-      <Stats.Title>Account balance</Stats.Title>
-      <Stats.Value className="text-primary">$89,400</Stats.Value>
-      <Stats.Desc>21% more than last month</Stats.Desc>
-    </Stats.Stat>
-
-    <Stats.Stat>
-      <Stats.Title>Current balance</Stats.Title>
-      <Stats.Value className="text-secondary">$12,721</Stats.Value>
-      <Stats.Desc>12% less than last month</Stats.Desc>
-    </Stats.Stat>
+    <Stats.Stat
+      title="Account balance"
+      value={<span className="text-primary">$89,400</span>}
+      desc="21% more than last month"
+    />
+    <Stats.Stat
+      title="Current balance"
+      value={<span className="text-secondary">$12,721</span>}
+      desc="12% less than last month"
+    />
   </Stats>
 )
 
 export default App`}
         >
           <Stats className="shadow">
-            <Stats.Stat>
-              <Stats.Title>Account balance</Stats.Title>
-              <Stats.Value className="text-primary">$89,400</Stats.Value>
-              <Stats.Desc>21% more than last month</Stats.Desc>
-            </Stats.Stat>
-
-            <Stats.Stat>
-              <Stats.Title>Current balance</Stats.Title>
-              <Stats.Value className="text-secondary">$12,721</Stats.Value>
-              <Stats.Desc>12% less than last month</Stats.Desc>
-            </Stats.Stat>
+            <Stats.Stat
+              title="Account balance"
+              value={<span className="text-primary">$89,400</span>}
+              desc="21% more than last month"
+            />
+            <Stats.Stat
+              title="Current balance"
+              value={<span className="text-secondary">$12,721</span>}
+              desc="12% less than last month"
+            />
           </Stats>
         </ExampleSection>
 
@@ -295,81 +285,65 @@ import { Stats } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats vertical className="shadow">
-    <Stats.Stat>
-      <Stats.Title>Downloads</Stats.Title>
-      <Stats.Value>31K</Stats.Value>
-      <Stats.Desc>Jan 1st - Feb 1st</Stats.Desc>
-    </Stats.Stat>
-
-    <Stats.Stat>
-      <Stats.Title>New Users</Stats.Title>
-      <Stats.Value>4,200</Stats.Value>
-      <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-    </Stats.Stat>
-
-    <Stats.Stat>
-      <Stats.Title>New Registers</Stats.Title>
-      <Stats.Value>1,200</Stats.Value>
-      <Stats.Desc>↘︎ 90 (14%)</Stats.Desc>
-    </Stats.Stat>
+    <Stats.Stat
+      title="Downloads"
+      value="31K"
+      desc="Jan 1st - Feb 1st"
+    />
+    <Stats.Stat
+      title="New Users"
+      value="4,200"
+      desc="↗︎ 400 (22%)"
+    />
+    <Stats.Stat
+      title="New Registers"
+      value="1,200"
+      desc="↘︎ 90 (14%)"
+    />
   </Stats>
 )
 
 export default App`}
         >
           <Stats vertical className="shadow">
-            <Stats.Stat>
-              <Stats.Title>Downloads</Stats.Title>
-              <Stats.Value>31K</Stats.Value>
-              <Stats.Desc>Jan 1st - Feb 1st</Stats.Desc>
-            </Stats.Stat>
-
-            <Stats.Stat>
-              <Stats.Title>New Users</Stats.Title>
-              <Stats.Value>4,200</Stats.Value>
-              <Stats.Desc>↗︎ 400 (22%)</Stats.Desc>
-            </Stats.Stat>
-
-            <Stats.Stat>
-              <Stats.Title>New Registers</Stats.Title>
-              <Stats.Value>1,200</Stats.Value>
-              <Stats.Desc>↘︎ 90 (14%)</Stats.Desc>
-            </Stats.Stat>
+            <Stats.Stat title="Downloads" value="31K" desc="Jan 1st - Feb 1st" />
+            <Stats.Stat title="New Users" value="4,200" desc="↗︎ 400 (22%)" />
+            <Stats.Stat title="New Registers" value="1,200" desc="↘︎ 90 (14%)" />
           </Stats>
         </ExampleSection>
 
         <ExampleSection
           title="With Actions"
-          description="Adding buttons below the stat."
+          description="Adding buttons using actions prop."
           code={`import React from 'react'
 import { Stats, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
-    <Stats.Stat>
-      <Stats.Title>Account balance</Stats.Title>
-      <Stats.Value>$89,400</Stats.Value>
-      <Stats.Actions>
+    <Stats.Stat
+      title="Account balance"
+      value="$89,400"
+      actions={
         <Button size="sm" type="primary">
           Add funds
         </Button>
-      </Stats.Actions>
-    </Stats.Stat>
+      }
+    />
   </Stats>
 )
 
 export default App`}
         >
           <Stats className="shadow">
-            <Stats.Stat>
-              <Stats.Title>Account balance</Stats.Title>
-              <Stats.Value>$89,400</Stats.Value>
-              <Stats.Actions>
+            <Stats.Stat
+              title="Account balance"
+              value="$89,400"
+              actions={
                 <Button size="sm" type="primary">
                   Add funds
                 </Button>
-              </Stats.Actions>
-            </Stats.Stat>
+              }
+            />
           </Stats>
         </ExampleSection>
       </div>
@@ -381,48 +355,18 @@ export default App`}
         <h2 className="text-2xl font-bold mb-4 mt-8">Stats.Stat API</h2>
         <ApiTable data={statApi} />
 
-        <h2 className="text-2xl font-bold mb-4 mt-8">Subcomponents</h2>
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>Stats.Title</code>
-                </td>
-                <td>Label or heading for the stat</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Stats.Value</code>
-                </td>
-                <td>Main numeric value display</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Stats.Desc</code>
-                </td>
-                <td>Supporting description text</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Stats.Figure</code>
-                </td>
-                <td>Space for icons or images</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Stats.Actions</code>
-                </td>
-                <td>Area for buttons or controls</td>
-              </tr>
-            </tbody>
-          </table>
+        <div className="alert alert-info mt-8">
+          <div>
+            <strong>Usage Tips:</strong>
+            <ul className="list-disc list-inside mt-2">
+              <li>Use title and value props for simple stats</li>
+              <li>Add desc for supporting information like changes or date ranges</li>
+              <li>Use figure prop to display icons or images</li>
+              <li>Add actions prop for buttons or interactive elements</li>
+              <li>Values can be ReactNode for custom styling (wrap in elements with classes)</li>
+              <li>Use vertical prop on Stats for vertical stacking</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

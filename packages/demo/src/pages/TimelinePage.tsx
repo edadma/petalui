@@ -40,6 +40,56 @@ const timelineApi: ApiProperty[] = [
   },
 ]
 
+const timelineItemApi: ApiProperty[] = [
+  {
+    property: 'start',
+    description: 'Content at start position (left/top)',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'end',
+    description: 'Content at end position (right/bottom)',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'icon',
+    description: 'Central icon or marker',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'startBox',
+    description: 'Wrap start content in timeline-box',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'endBox',
+    description: 'Wrap end content in timeline-box',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes',
+    type: 'string',
+  },
+]
+
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    className="w-5 h-5"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+      clipRule="evenodd"
+    />
+  </svg>
+)
+
 export function TimelinePage() {
   return (
     <div>
@@ -57,90 +107,43 @@ export function TimelinePage() {
           code={`import React from 'react'
 import { Timeline } from '@edadma/petalui'
 
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    className="w-5 h-5"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+      clipRule="evenodd"
+    />
+  </svg>
+)
+
 const App: React.FC = () => (
   <Timeline>
-    <Timeline.Item>
-      <Timeline.Start>1984</Timeline.Start>
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>First Macintosh computer</Timeline.End>
-      <Timeline.Connector />
-    </Timeline.Item>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.Start box>iMac</Timeline.Start>
-      <Timeline.End>1998</Timeline.End>
-    </Timeline.Item>
+    <Timeline.Item
+      start="1984"
+      icon={<CheckIcon />}
+      end="First Macintosh computer"
+      endBox
+    />
+    <Timeline.Item
+      start="iMac"
+      icon={<CheckIcon />}
+      end="1998"
+      startBox
+    />
   </Timeline>
 )
 
 export default App`}
         >
           <Timeline>
-            <Timeline.Item>
-              <Timeline.Start>1984</Timeline.Start>
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.End box>First Macintosh computer</Timeline.End>
-              <Timeline.Connector />
-            </Timeline.Item>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.Start box>iMac</Timeline.Start>
-              <Timeline.End>1998</Timeline.End>
-            </Timeline.Item>
+            <Timeline.Item start="1984" icon={<CheckIcon />} end="First Macintosh computer" endBox />
+            <Timeline.Item start="iMac" icon={<CheckIcon />} end="1998" startBox />
           </Timeline>
         </ExampleSection>
 
@@ -150,78 +153,50 @@ export default App`}
           code={`import React from 'react'
 import { Timeline } from '@edadma/petalui'
 
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    className="text-primary w-5 h-5"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+      clipRule="evenodd"
+    />
+  </svg>
+)
+
 const App: React.FC = () => (
   <Timeline vertical>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Start>2015</Timeline.Start>
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="text-primary w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>Apple Watch</Timeline.End>
-      <Timeline.Connector />
-    </Timeline.Item>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Start>2017</Timeline.Start>
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="text-primary w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>iPhone X</Timeline.End>
-      <Timeline.Connector />
-    </Timeline.Item>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Start>2020</Timeline.Start>
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="text-primary w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>Apple Silicon M1</Timeline.End>
-      <Timeline.Connector />
-    </Timeline.Item>
+    <Timeline.Item
+      start="2015"
+      icon={<CheckIcon />}
+      end="Apple Watch"
+      endBox
+    />
+    <Timeline.Item
+      start="2017"
+      icon={<CheckIcon />}
+      end="iPhone X"
+      endBox
+    />
+    <Timeline.Item
+      start="2020"
+      icon={<CheckIcon />}
+      end="Apple Silicon M1"
+      endBox
+    />
   </Timeline>
 )
 
 export default App`}
         >
           <Timeline vertical>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Start>2015</Timeline.Start>
-              <Timeline.Middle>
+            <Timeline.Item
+              start="2015"
+              icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -234,14 +209,13 @@ export default App`}
                     clipRule="evenodd"
                   />
                 </svg>
-              </Timeline.Middle>
-              <Timeline.End box>Apple Watch</Timeline.End>
-              <Timeline.Connector />
-            </Timeline.Item>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Start>2017</Timeline.Start>
-              <Timeline.Middle>
+              }
+              end="Apple Watch"
+              endBox
+            />
+            <Timeline.Item
+              start="2017"
+              icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -254,14 +228,13 @@ export default App`}
                     clipRule="evenodd"
                   />
                 </svg>
-              </Timeline.Middle>
-              <Timeline.End box>iPhone X</Timeline.End>
-              <Timeline.Connector />
-            </Timeline.Item>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Start>2020</Timeline.Start>
-              <Timeline.Middle>
+              }
+              end="iPhone X"
+              endBox
+            />
+            <Timeline.Item
+              start="2020"
+              icon={
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 20 20"
@@ -274,10 +247,10 @@ export default App`}
                     clipRule="evenodd"
                   />
                 </svg>
-              </Timeline.Middle>
-              <Timeline.End box>Apple Silicon M1</Timeline.End>
-              <Timeline.Connector />
-            </Timeline.Item>
+              }
+              end="Apple Silicon M1"
+              endBox
+            />
           </Timeline>
         </ExampleSection>
 
@@ -287,241 +260,89 @@ export default App`}
           code={`import React from 'react'
 import { Timeline } from '@edadma/petalui'
 
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20"
+    fill="currentColor"
+    className="w-5 h-5"
+  >
+    <path
+      fillRule="evenodd"
+      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
+      clipRule="evenodd"
+    />
+  </svg>
+)
+
 const App: React.FC = () => (
   <Timeline vertical compact>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>
-        <time>1984</time>
-        <div className="text-lg font-black">First Macintosh computer</div>
-      </Timeline.End>
-      <Timeline.Connector />
-    </Timeline.Item>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>
-        <time>1998</time>
-        <div className="text-lg font-black">iMac</div>
-      </Timeline.End>
-      <Timeline.Connector />
-    </Timeline.Item>
-    <Timeline.Item>
-      <Timeline.Connector />
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>
-        <time>2001</time>
-        <div className="text-lg font-black">iPod</div>
-      </Timeline.End>
-    </Timeline.Item>
+    <Timeline.Item
+      icon={<CheckIcon />}
+      end={
+        <div>
+          <time>1984</time>
+          <div className="text-lg font-black">First Macintosh computer</div>
+        </div>
+      }
+      endBox
+    />
+    <Timeline.Item
+      icon={<CheckIcon />}
+      end={
+        <div>
+          <time>1998</time>
+          <div className="text-lg font-black">iMac</div>
+        </div>
+      }
+      endBox
+    />
+    <Timeline.Item
+      icon={<CheckIcon />}
+      end={
+        <div>
+          <time>2001</time>
+          <div className="text-lg font-black">iPod</div>
+        </div>
+      }
+      endBox
+    />
   </Timeline>
 )
 
 export default App`}
         >
           <Timeline vertical compact>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.End box>
-                <time>1984</time>
-                <div className="text-lg font-black">First Macintosh computer</div>
-              </Timeline.End>
-              <Timeline.Connector />
-            </Timeline.Item>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.End box>
-                <time>1998</time>
-                <div className="text-lg font-black">iMac</div>
-              </Timeline.End>
-              <Timeline.Connector />
-            </Timeline.Item>
-            <Timeline.Item>
-              <Timeline.Connector />
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.End box>
-                <time>2001</time>
-                <div className="text-lg font-black">iPod</div>
-              </Timeline.End>
-            </Timeline.Item>
-          </Timeline>
-        </ExampleSection>
-
-        <ExampleSection
-          title="Colored Connectors"
-          description="Style connecting lines with colors."
-          code={`import React from 'react'
-import { Timeline } from '@edadma/petalui'
-
-const App: React.FC = () => (
-  <Timeline vertical>
-    <Timeline.Item>
-      <Timeline.Connector className="bg-primary" />
-      <Timeline.Start>2015</Timeline.Start>
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="text-primary w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>Apple Watch</Timeline.End>
-      <Timeline.Connector className="bg-primary" />
-    </Timeline.Item>
-    <Timeline.Item>
-      <Timeline.Connector className="bg-secondary" />
-      <Timeline.Start>2017</Timeline.Start>
-      <Timeline.Middle>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-          className="text-secondary w-5 h-5"
-        >
-          <path
-            fillRule="evenodd"
-            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-            clipRule="evenodd"
-          />
-        </svg>
-      </Timeline.Middle>
-      <Timeline.End box>iPhone X</Timeline.End>
-      <Timeline.Connector className="bg-secondary" />
-    </Timeline.Item>
-  </Timeline>
-)
-
-export default App`}
-        >
-          <Timeline vertical>
-            <Timeline.Item>
-              <Timeline.Connector className="bg-primary" />
-              <Timeline.Start>2015</Timeline.Start>
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-primary w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.End box>Apple Watch</Timeline.End>
-              <Timeline.Connector className="bg-primary" />
-            </Timeline.Item>
-            <Timeline.Item>
-              <Timeline.Connector className="bg-secondary" />
-              <Timeline.Start>2017</Timeline.Start>
-              <Timeline.Middle>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  className="text-secondary w-5 h-5"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </Timeline.Middle>
-              <Timeline.End box>iPhone X</Timeline.End>
-              <Timeline.Connector className="bg-secondary" />
-            </Timeline.Item>
+            <Timeline.Item
+              icon={<CheckIcon />}
+              end={
+                <div>
+                  <time>1984</time>
+                  <div className="text-lg font-black">First Macintosh computer</div>
+                </div>
+              }
+              endBox
+            />
+            <Timeline.Item
+              icon={<CheckIcon />}
+              end={
+                <div>
+                  <time>1998</time>
+                  <div className="text-lg font-black">iMac</div>
+                </div>
+              }
+              endBox
+            />
+            <Timeline.Item
+              icon={<CheckIcon />}
+              end={
+                <div>
+                  <time>2001</time>
+                  <div className="text-lg font-black">iPod</div>
+                </div>
+              }
+              endBox
+            />
           </Timeline>
         </ExampleSection>
       </div>
@@ -530,48 +351,22 @@ export default App`}
         <h2 className="text-2xl font-bold mb-4">Timeline API</h2>
         <ApiTable data={timelineApi} />
 
-        <h2 className="text-2xl font-bold mb-4 mt-8">Subcomponents</h2>
-        <div className="overflow-x-auto">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Component</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>
-                  <code>Timeline.Item</code>
-                </td>
-                <td>Individual timeline entry (li element)</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Timeline.Start</code>
-                </td>
-                <td>Content at start position (left/top)</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Timeline.Middle</code>
-                </td>
-                <td>Central icon or marker</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Timeline.End</code>
-                </td>
-                <td>Content at end position (right/bottom)</td>
-              </tr>
-              <tr>
-                <td>
-                  <code>Timeline.Connector</code>
-                </td>
-                <td>Connecting line between items (hr element)</td>
-              </tr>
-            </tbody>
-          </table>
+        <h2 className="text-2xl font-bold mb-4 mt-8">Timeline.Item API</h2>
+        <ApiTable data={timelineItemApi} />
+
+        <div className="alert alert-info mt-8">
+          <div>
+            <strong>Usage Tips:</strong>
+            <ul className="list-disc list-inside mt-2">
+              <li>Use start and end props for content positioning</li>
+              <li>Icon prop displays the central marker</li>
+              <li>Set startBox or endBox to wrap content in timeline-box styling</li>
+              <li>Connectors are automatically inserted between items</li>
+              <li>Horizontal layout alternates content automatically</li>
+              <li>Use vertical for top-to-bottom timelines</li>
+              <li>Use compact to display all content on one side</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

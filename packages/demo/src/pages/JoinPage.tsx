@@ -6,7 +6,7 @@ import type { ApiProperty } from '../components/ApiTable'
 const joinApi: ApiProperty[] = [
   {
     property: 'children',
-    description: 'Join.Item components or direct elements',
+    description: 'Elements to join together (buttons, inputs, etc.)',
     type: 'React.ReactNode',
   },
   {
@@ -14,19 +14,6 @@ const joinApi: ApiProperty[] = [
     description: 'Vertical layout orientation',
     type: 'boolean',
     default: 'false',
-  },
-  {
-    property: 'className',
-    description: 'Additional CSS classes',
-    type: 'string',
-  },
-]
-
-const joinItemApi: ApiProperty[] = [
-  {
-    property: 'children',
-    description: 'Item content (buttons, inputs, etc.)',
-    type: 'React.ReactNode',
   },
   {
     property: 'className',
@@ -52,30 +39,18 @@ import { Join, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Join>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
+    <Button>Button</Button>
+    <Button>Button</Button>
+    <Button>Button</Button>
   </Join>
 )
 
 export default App`}
         >
           <Join>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
           </Join>
         </ExampleSection>
 
@@ -87,30 +62,18 @@ import { Join, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Join vertical>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
+    <Button>Button</Button>
+    <Button>Button</Button>
+    <Button>Button</Button>
   </Join>
 )
 
 export default App`}
         >
           <Join vertical>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
           </Join>
         </ExampleSection>
 
@@ -122,24 +85,16 @@ import { Join, Input, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Join>
-    <Join.Item>
-      <Input className="join-item" placeholder="Email" />
-    </Join.Item>
-    <Join.Item>
-      <Button type="primary">Subscribe</Button>
-    </Join.Item>
+    <Input placeholder="Email" />
+    <Button type="primary">Subscribe</Button>
   </Join>
 )
 
 export default App`}
         >
           <Join>
-            <Join.Item>
-              <Input className="join-item" placeholder="Email" />
-            </Join.Item>
-            <Join.Item>
-              <Button type="primary">Subscribe</Button>
-            </Join.Item>
+            <Input placeholder="Email" />
+            <Button type="primary">Subscribe</Button>
           </Join>
         </ExampleSection>
 
@@ -147,44 +102,32 @@ export default App`}
           title="With Select"
           description="Mix different form controls."
           code={`import React from 'react'
-import { Join, Select, Button } from '@edadma/petalui'
+import { Join, Select, Input, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Join>
-    <Join.Item>
-      <Select className="join-item">
-        <option>Filter</option>
-        <option>Name</option>
-        <option>Date</option>
-        <option>Status</option>
-      </Select>
-    </Join.Item>
-    <Join.Item>
-      <Input className="join-item" placeholder="Search..." />
-    </Join.Item>
-    <Join.Item>
-      <Button type="primary">Go</Button>
-    </Join.Item>
+    <Select>
+      <option>Filter</option>
+      <option>Name</option>
+      <option>Date</option>
+      <option>Status</option>
+    </Select>
+    <Input placeholder="Search..." />
+    <Button type="primary">Go</Button>
   </Join>
 )
 
 export default App`}
         >
           <Join>
-            <Join.Item>
-              <Select className="join-item">
-                <option>Filter</option>
-                <option>Name</option>
-                <option>Date</option>
-                <option>Status</option>
-              </Select>
-            </Join.Item>
-            <Join.Item>
-              <Input className="join-item" placeholder="Search..." />
-            </Join.Item>
-            <Join.Item>
-              <Button type="primary">Go</Button>
-            </Join.Item>
+            <Select>
+              <option>Filter</option>
+              <option>Name</option>
+              <option>Date</option>
+              <option>Status</option>
+            </Select>
+            <Input placeholder="Search..." />
+            <Button type="primary">Go</Button>
           </Join>
         </ExampleSection>
 
@@ -196,65 +139,41 @@ import { Join, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Join className="join-vertical lg:join-horizontal">
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
+    <Button>Button</Button>
+    <Button>Button</Button>
+    <Button>Button</Button>
   </Join>
 )
 
 export default App`}
         >
           <Join className="join-vertical lg:join-horizontal">
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
+            <Button>Button</Button>
+            <Button>Button</Button>
+            <Button>Button</Button>
           </Join>
         </ExampleSection>
 
         <ExampleSection
           title="Custom Styling"
-          description="Apply custom border radius to items."
+          description="Apply custom classes to items."
           code={`import React from 'react'
 import { Join, Button } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <Join>
-    <Join.Item className="rounded-l-full">
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item>
-      <Button>Button</Button>
-    </Join.Item>
-    <Join.Item className="rounded-r-full">
-      <Button>Button</Button>
-    </Join.Item>
+    <Button className="rounded-l-full">Button</Button>
+    <Button>Button</Button>
+    <Button className="rounded-r-full">Button</Button>
   </Join>
 )
 
 export default App`}
         >
           <Join>
-            <Join.Item className="rounded-l-full">
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item>
-              <Button>Button</Button>
-            </Join.Item>
-            <Join.Item className="rounded-r-full">
-              <Button>Button</Button>
-            </Join.Item>
+            <Button className="rounded-l-full">Button</Button>
+            <Button>Button</Button>
+            <Button className="rounded-r-full">Button</Button>
           </Join>
         </ExampleSection>
       </div>
@@ -263,17 +182,15 @@ export default App`}
         <h2 className="text-2xl font-bold mb-4">Join API</h2>
         <ApiTable data={joinApi} />
 
-        <h2 className="text-2xl font-bold mb-4 mt-8">Join.Item API</h2>
-        <ApiTable data={joinItemApi} />
-
         <div className="alert alert-info mt-8">
           <div>
             <strong>Usage Tips:</strong>
             <ul className="list-disc list-inside mt-2">
+              <li>Join automatically adds join-item class to all children</li>
               <li>Join automatically applies border radius to first and last items</li>
               <li>Works with buttons, inputs, selects, and other form controls</li>
               <li>Use vertical prop or responsive classes for layout control</li>
-              <li>Apply join-item class to child elements for proper styling</li>
+              <li>Children can have their own className props for customization</li>
             </ul>
           </div>
         </div>
