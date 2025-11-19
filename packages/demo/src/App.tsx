@@ -18,6 +18,7 @@ import { InputPage } from './pages/InputPage'
 import { LabelPage } from './pages/LabelPage'
 import { LoadingPage } from './pages/LoadingPage'
 import { MenuPage } from './pages/MenuPage'
+import { ModalPage } from './pages/ModalPage'
 import { NavbarPage } from './pages/NavbarPage'
 import { RadioPage } from './pages/RadioPage'
 import { SelectPage } from './pages/SelectPage'
@@ -138,6 +139,9 @@ function AppContent() {
               <Menu.Item active={isActive('/loading')} onClick={() => navigate('/loading')}>
                 Loading
               </Menu.Item>
+              <Menu.Item active={isActive('/modal')} onClick={() => navigate('/modal')}>
+                Modal
+              </Menu.Item>
               <Menu.Item active={isActive('/tooltip')} onClick={() => navigate('/tooltip')}>
                 Tooltip
               </Menu.Item>
@@ -167,6 +171,7 @@ function AppContent() {
               <Route path="/label" element={<LabelPage />} />
               <Route path="/loading" element={<LoadingPage />} />
               <Route path="/menu" element={<MenuPage />} />
+              <Route path="/modal" element={<ModalPage />} />
               <Route path="/navbar" element={<NavbarPage />} />
               <Route path="/radio" element={<RadioPage />} />
               <Route path="/select" element={<SelectPage />} />
