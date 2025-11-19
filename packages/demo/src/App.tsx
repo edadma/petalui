@@ -7,6 +7,7 @@ import { CardPage } from './pages/CardPage'
 import { CheckboxPage } from './pages/CheckboxPage'
 import { DrawerPage } from './pages/DrawerPage'
 import { DropdownPage } from './pages/DropdownPage'
+import { FieldsetPage } from './pages/FieldsetPage'
 import { FormPage } from './pages/FormPage'
 import { InputPage } from './pages/InputPage'
 import { LoadingPage } from './pages/LoadingPage'
@@ -53,6 +54,9 @@ function AppContent() {
               <Menu.Title>Data Entry</Menu.Title>
               <Menu.Item active={isActive('/checkbox')} onClick={() => navigate('/checkbox')}>
                 Checkbox
+              </Menu.Item>
+              <Menu.Item active={isActive('/fieldset')} onClick={() => navigate('/fieldset')}>
+                Fieldset
               </Menu.Item>
               <Menu.Item active={isActive('/form')} onClick={() => navigate('/form')}>
                 Form
@@ -108,6 +112,7 @@ function AppContent() {
               <Route path="/checkbox" element={<CheckboxPage />} />
               <Route path="/drawer" element={<DrawerPage />} />
               <Route path="/dropdown" element={<DropdownPage />} />
+              <Route path="/fieldset" element={<FieldsetPage />} />
               <Route path="/form" element={<FormPage />} />
               <Route path="/input" element={<InputPage />} />
               <Route path="/loading" element={<LoadingPage />} />

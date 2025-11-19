@@ -13,6 +13,9 @@ export type { CardProps, CardBodyProps, CardTitleProps, CardActionsProps, CardFi
 export { Drawer } from './components/Drawer'
 export type { DrawerProps } from './components/Drawer'
 
+export { Fieldset } from './components/Fieldset'
+export type { FieldsetProps, FieldsetLegendProps } from './components/Fieldset'
+
 export { Form, useFormInstance } from './components/Form'
 export type { FormProps, FormItemProps, FormInstance } from './components/Form'
 
