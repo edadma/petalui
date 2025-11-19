@@ -3,26 +3,19 @@ import { createRoot } from 'react-dom/client'
 
 export interface ModalProps {
   children: React.ReactNode
+  title?: React.ReactNode
+  footer?: React.ReactNode
   open?: boolean
-  onClose?: () => void
+  onOk?: () => void | Promise<void>
+  onCancel?: () => void
+  okText?: string
+  cancelText?: string
+  maskClosable?: boolean
+  closable?: boolean
   position?: 'top' | 'middle' | 'bottom'
   align?: 'start' | 'end'
   className?: string
-}
-
-export interface ModalBoxProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface ModalActionProps {
-  children: React.ReactNode
-  className?: string
-}
-
-export interface ModalBackdropProps {
-  onClick?: () => void
-  className?: string
+  style?: React.CSSProperties
 }
 
 export interface ModalFuncProps {
@@ -35,8 +28,24 @@ export interface ModalFuncProps {
   type?: 'info' | 'success' | 'warning' | 'error'
 }
 
-function ModalRoot({ children, open = false, onClose, position, align, className = '' }: ModalProps) {
+export function Modal({
+  children,
+  title,
+  footer,
+  open = false,
+  onOk,
+  onCancel,
+  okText = 'OK',
+  cancelText = 'Cancel',
+  maskClosable = true,
+  closable = true,
+  position,
+  align,
+  className = '',
+  style,
+}: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const [loading, setLoading] = React.useState(false)
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -58,14 +67,14 @@ function ModalRoot({ children, open = false, onClose, position, align, className
     if (!dialog) return
 
     const handleClose = () => {
-      onClose?.()
+      onCancel?.()
     }
 
     dialog.addEventListener('close', handleClose)
     return () => {
       dialog.removeEventListener('close', handleClose)
     }
-  }, [onClose])
+  }, [onCancel])
 
   const positionClasses = {
     top: 'modal-top',
@@ -87,26 +96,60 @@ function ModalRoot({ children, open = false, onClose, position, align, className
     .filter(Boolean)
     .join(' ')
 
+  const handleOk = async () => {
+    if (onOk) {
+      setLoading(true)
+      try {
+        await onOk()
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        throw error
+      }
+    }
+  }
+
+  const handleBackdropClick = () => {
+    if (maskClosable && onCancel) {
+      onCancel()
+    }
+  }
+
+  // Render default footer if no custom footer provided and either onOk or onCancel exists
+  const shouldRenderDefaultFooter = !footer && (onOk || onCancel)
+  const shouldRenderCustomFooter = footer !== null && footer !== undefined
+
   return (
-    <dialog ref={dialogRef} className={classes}>
-      {children}
+    <dialog ref={dialogRef} className={classes} style={style}>
+      <div className="modal-box">
+        {title && <h3 className="text-lg font-bold mb-4">{title}</h3>}
+        <div className="py-4">{children}</div>
+        {shouldRenderDefaultFooter && (
+          <div className="modal-action">
+            {onCancel && (
+              <button className="btn" onClick={onCancel}>
+                {cancelText}
+              </button>
+            )}
+            {onOk && (
+              <button
+                className={`btn btn-primary ${loading ? 'loading' : ''}`}
+                onClick={handleOk}
+                disabled={loading}
+              >
+                {okText}
+              </button>
+            )}
+          </div>
+        )}
+        {shouldRenderCustomFooter && <div className="modal-action">{footer}</div>}
+      </div>
+      {closable && maskClosable && (
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={handleBackdropClick}>close</button>
+        </form>
+      )}
     </dialog>
-  )
-}
-
-function ModalBox({ children, className = '' }: ModalBoxProps) {
-  return <div className={`modal-box ${className}`}>{children}</div>
-}
-
-function ModalAction({ children, className = '' }: ModalActionProps) {
-  return <div className={`modal-action ${className}`}>{children}</div>
-}
-
-function ModalBackdrop({ onClick, className = '' }: ModalBackdropProps) {
-  return (
-    <form method="dialog" className={`modal-backdrop ${className}`}>
-      <button onClick={onClick}>close</button>
-    </form>
   )
 }
 
@@ -235,29 +278,39 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
     }
 
     return (
-      <ModalRoot open={open} onClose={handleCancel}>
-        <ModalBox>
-          {config.type && (
-            <div className={`alert ${getAlertClass()} mb-4`}>
+      <Modal
+        open={open}
+        onOk={config.showCancel ? undefined : handleOk}
+        onCancel={handleCancel}
+        title={
+          config.type ? (
+            <div className={`alert ${getAlertClass()}`}>
               {getIcon()}
               <div>
                 {config.title && <h3 className="font-bold">{config.title}</h3>}
-                {config.content && <div className="text-sm">{config.content}</div>}
               </div>
             </div>
-          )}
-          {!config.type && (
+          ) : (
+            config.title
+          )
+        }
+        okText={config.okText}
+        cancelText={config.cancelText}
+        footer={
+          config.showCancel ? (
             <>
-              {config.title && <h3 className="text-lg font-bold mb-4">{config.title}</h3>}
-              {config.content && <div className="py-4">{config.content}</div>}
-            </>
-          )}
-          <ModalAction>
-            {config.showCancel && (
               <button className="btn" onClick={handleCancel}>
                 {config.cancelText || 'Cancel'}
               </button>
-            )}
+              <button
+                className={`btn ${config.type === 'error' ? 'btn-error' : 'btn-primary'} ${loading ? 'loading' : ''}`}
+                onClick={handleOk}
+                disabled={loading}
+              >
+                {config.okText || 'OK'}
+              </button>
+            </>
+          ) : (
             <button
               className={`btn ${config.type === 'error' ? 'btn-error' : 'btn-primary'} ${loading ? 'loading' : ''}`}
               onClick={handleOk}
@@ -265,10 +318,12 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
             >
               {config.okText || 'OK'}
             </button>
-          </ModalAction>
-        </ModalBox>
-        <ModalBackdrop onClick={handleCancel} />
-      </ModalRoot>
+          )
+        }
+      >
+        {config.type && config.content && <div className="text-sm">{config.content}</div>}
+        {!config.type && config.content}
+      </Modal>
     )
   }
 
@@ -299,13 +354,8 @@ function error(config: ModalFuncProps) {
   return createModal({ ...config, type: 'error', showCancel: false })
 }
 
-export const Modal = Object.assign(ModalRoot, {
-  Box: ModalBox,
-  Action: ModalAction,
-  Backdrop: ModalBackdrop,
-  confirm,
-  info,
-  success,
-  warning,
-  error,
-})
+Modal.confirm = confirm
+Modal.info = info
+Modal.success = success
+Modal.warning = warning
+Modal.error = error

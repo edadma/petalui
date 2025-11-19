@@ -62,7 +62,7 @@ export { Menu } from './components/Menu'
 export type { MenuProps, MenuItemProps, MenuTitleProps } from './components/Menu'
 
 export { Modal } from './components/Modal'
-export type { ModalProps, ModalBoxProps, ModalActionProps, ModalBackdropProps, ModalFuncProps } from './components/Modal'
+export type { ModalProps, ModalFuncProps } from './components/Modal'
 
 export { Navbar } from './components/Navbar'
 export type { NavbarProps } from './components/Navbar'
