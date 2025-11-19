@@ -4,6 +4,7 @@ import { ThemeSwitcher } from './ThemeSwitcher'
 import { AlertPage } from './pages/AlertPage'
 import { AvatarPage } from './pages/AvatarPage'
 import { BadgePage } from './pages/BadgePage'
+import { BreadcrumbsPage } from './pages/BreadcrumbsPage'
 import { ButtonPage } from './pages/ButtonPage'
 import { CardPage } from './pages/CardPage'
 import { CheckboxPage } from './pages/CheckboxPage'
@@ -16,7 +17,9 @@ import { FooterPage } from './pages/FooterPage'
 import { FormPage } from './pages/FormPage'
 import { HeroPage } from './pages/HeroPage'
 import { InputPage } from './pages/InputPage'
+import { JoinPage } from './pages/JoinPage'
 import { LabelPage } from './pages/LabelPage'
+import { LinkPage } from './pages/LinkPage'
 import { LoadingPage } from './pages/LoadingPage'
 import { MenuPage } from './pages/MenuPage'
 import { ModalPage } from './pages/ModalPage'
@@ -24,6 +27,7 @@ import { NavbarPage } from './pages/NavbarPage'
 import { RadioPage } from './pages/RadioPage'
 import { SelectPage } from './pages/SelectPage'
 import { StatPage } from './pages/StatPage'
+import { StepsPage } from './pages/StepsPage'
 import { TablePage } from './pages/TablePage'
 import { TabsPage } from './pages/TabsPage'
 import { TextareaPage } from './pages/TextareaPage'
@@ -63,6 +67,9 @@ function AppContent() {
               </Menu.Item>
               <Menu.Item active={isActive('/dropdown')} onClick={() => navigate('/dropdown')}>
                 Dropdown
+              </Menu.Item>
+              <Menu.Item active={isActive('/join')} onClick={() => navigate('/join')}>
+                Join
               </Menu.Item>
 
               <Menu.Title>Data Entry</Menu.Title>
@@ -113,6 +120,9 @@ function AppContent() {
               <Menu.Item active={isActive('/stat')} onClick={() => navigate('/stat')}>
                 Stats
               </Menu.Item>
+              <Menu.Item active={isActive('/steps')} onClick={() => navigate('/steps')}>
+                Steps
+              </Menu.Item>
               <Menu.Item active={isActive('/table')} onClick={() => navigate('/table')}>
                 Table
               </Menu.Item>
@@ -132,6 +142,12 @@ function AppContent() {
               </Menu.Item>
 
               <Menu.Title>Navigation</Menu.Title>
+              <Menu.Item active={isActive('/breadcrumbs')} onClick={() => navigate('/breadcrumbs')}>
+                Breadcrumbs
+              </Menu.Item>
+              <Menu.Item active={isActive('/link')} onClick={() => navigate('/link')}>
+                Link
+              </Menu.Item>
               <Menu.Item active={isActive('/menu')} onClick={() => navigate('/menu')}>
                 Menu
               </Menu.Item>
@@ -167,6 +183,7 @@ function AppContent() {
               <Route path="/alert" element={<AlertPage />} />
               <Route path="/avatar" element={<AvatarPage />} />
               <Route path="/badge" element={<BadgePage />} />
+              <Route path="/breadcrumbs" element={<BreadcrumbsPage />} />
               <Route path="/button" element={<ButtonPage />} />
               <Route path="/card" element={<CardPage />} />
               <Route path="/checkbox" element={<CheckboxPage />} />
@@ -179,7 +196,9 @@ function AppContent() {
               <Route path="/form" element={<FormPage />} />
               <Route path="/hero" element={<HeroPage />} />
               <Route path="/input" element={<InputPage />} />
+              <Route path="/join" element={<JoinPage />} />
               <Route path="/label" element={<LabelPage />} />
+              <Route path="/link" element={<LinkPage />} />
               <Route path="/loading" element={<LoadingPage />} />
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/modal" element={<ModalPage />} />
@@ -187,6 +206,7 @@ function AppContent() {
               <Route path="/radio" element={<RadioPage />} />
               <Route path="/select" element={<SelectPage />} />
               <Route path="/stat" element={<StatPage />} />
+              <Route path="/steps" element={<StepsPage />} />
               <Route path="/table" element={<TablePage />} />
               <Route path="/tabs" element={<TabsPage />} />
               <Route path="/textarea" element={<TextareaPage />} />
