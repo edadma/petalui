@@ -2,9 +2,46 @@ import { Radio, Form } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
-import { useState } from 'react'
+
+const radioGroupApi: ApiProperty[] = [
+  {
+    property: 'children',
+    description: 'Radio components',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'value',
+    description: 'Current selected value (controlled)',
+    type: 'string | number',
+  },
+  {
+    property: 'defaultValue',
+    description: 'Default selected value (uncontrolled)',
+    type: 'string | number',
+  },
+  {
+    property: 'onChange',
+    description: 'Callback when selection changes',
+    type: '(value: string | number) => void',
+  },
+  {
+    property: 'name',
+    description: 'Name for all radio inputs in the group',
+    type: 'string',
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes',
+    type: 'string',
+  },
+]
 
 const radioApi: ApiProperty[] = [
+  {
+    property: 'value',
+    description: 'Radio value (required when in Radio.Group)',
+    type: 'string | number',
+  },
   {
     property: 'size',
     description: 'Radio button size',
@@ -15,16 +52,6 @@ const radioApi: ApiProperty[] = [
     property: 'color',
     description: 'Radio button color variant',
     type: "'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'",
-  },
-  {
-    property: 'name',
-    description: 'Radio group name (required)',
-    type: 'string',
-  },
-  {
-    property: 'checked',
-    description: 'Checked state',
-    type: 'boolean',
   },
   {
     property: 'disabled',
@@ -40,8 +67,6 @@ const radioApi: ApiProperty[] = [
 ]
 
 export function RadioPage() {
-  const [selectedOption, setSelectedOption] = useState('option1')
-
   const handleSubmit = (values: { plan?: string }) => {
     alert(`Selected plan: ${values.plan}`)
   }
@@ -57,128 +82,149 @@ export function RadioPage() {
 
       <div className="columns-1 lg:columns-2 gap-x-4">
         <ExampleSection
-          title="Basic Radio"
-          description="Simple radio button group."
-          code={`import React, { useState } from 'react'
+          title="Basic Usage"
+          description="Use Radio.Group to manage radio selection."
+          code={`import React from 'react'
 import { Radio } from '@edadma/petalui'
 
-const App: React.FC = () => {
-  const [selected, setSelected] = useState('option1')
-
-  return (
+const App: React.FC = () => (
+  <Radio.Group defaultValue="1">
     <div className="flex flex-col gap-3">
       <label className="flex items-center gap-2 cursor-pointer">
-        <Radio
-          name="radio-1"
-          checked={selected === 'option1'}
-          onChange={() => setSelected('option1')}
-        />
+        <Radio value="1" />
         <span>Option 1</span>
       </label>
       <label className="flex items-center gap-2 cursor-pointer">
-        <Radio
-          name="radio-1"
-          checked={selected === 'option2'}
-          onChange={() => setSelected('option2')}
-        />
+        <Radio value="2" />
         <span>Option 2</span>
       </label>
       <label className="flex items-center gap-2 cursor-pointer">
-        <Radio
-          name="radio-1"
-          checked={selected === 'option3'}
-          onChange={() => setSelected('option3')}
-        />
+        <Radio value="3" />
         <span>Option 3</span>
       </label>
     </div>
-  )
-}
+  </Radio.Group>
+)
 
 export default App`}
         >
-          <div className="flex flex-col gap-3">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <Radio
-                name="radio-1"
-                checked={selectedOption === 'option1'}
-                onChange={() => setSelectedOption('option1')}
-              />
-              <span>Option 1</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <Radio
-                name="radio-1"
-                checked={selectedOption === 'option2'}
-                onChange={() => setSelectedOption('option2')}
-              />
-              <span>Option 2</span>
-            </label>
-            <label className="flex items-center gap-2 cursor-pointer">
-              <Radio
-                name="radio-1"
-                checked={selectedOption === 'option3'}
-                onChange={() => setSelectedOption('option3')}
-              />
-              <span>Option 3</span>
-            </label>
-          </div>
+          <Radio.Group defaultValue="1">
+            <div className="flex flex-col gap-3">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Radio value="1" />
+                <span>Option 1</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Radio value="2" />
+                <span>Option 2</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Radio value="3" />
+                <span>Option 3</span>
+              </label>
+            </div>
+          </Radio.Group>
         </ExampleSection>
 
         <ExampleSection
-          title="Sizes"
-          description="Different radio button sizes."
+          title="Horizontal Layout"
+          description="Radio buttons in a horizontal row."
+          code={`import React from 'react'
+import { Radio } from '@edadma/petalui'
+
+const App: React.FC = () => (
+  <Radio.Group defaultValue="apple">
+    <div className="flex gap-4">
+      <label className="flex items-center gap-2 cursor-pointer">
+        <Radio value="apple" />
+        <span>Apple</span>
+      </label>
+      <label className="flex items-center gap-2 cursor-pointer">
+        <Radio value="orange" />
+        <span>Orange</span>
+      </label>
+      <label className="flex items-center gap-2 cursor-pointer">
+        <Radio value="banana" />
+        <span>Banana</span>
+      </label>
+    </div>
+  </Radio.Group>
+)
+
+export default App`}
+        >
+          <Radio.Group defaultValue="apple">
+            <div className="flex gap-4">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Radio value="apple" />
+                <span>Apple</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Radio value="orange" />
+                <span>Orange</span>
+              </label>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <Radio value="banana" />
+                <span>Banana</span>
+              </label>
+            </div>
+          </Radio.Group>
+        </ExampleSection>
+
+        <ExampleSection
+          title="Different Sizes"
+          description="Radio buttons in various sizes."
           code={`import React from 'react'
 import { Radio } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <div className="flex flex-col gap-3">
-    <div className="flex items-center gap-2">
-      <Radio name="radio-size" size="xs" defaultChecked />
+    <label className="flex items-center gap-2">
+      <Radio size="xs" defaultChecked />
       <span className="text-xs">Extra Small</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <Radio name="radio-size" size="sm" />
+    </label>
+    <label className="flex items-center gap-2">
+      <Radio size="sm" />
       <span className="text-sm">Small</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <Radio name="radio-size" size="md" />
+    </label>
+    <label className="flex items-center gap-2">
+      <Radio size="md" />
       <span>Medium</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <Radio name="radio-size" size="lg" />
+    </label>
+    <label className="flex items-center gap-2">
+      <Radio size="lg" />
       <span className="text-lg">Large</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <Radio name="radio-size" size="xl" />
+    </label>
+    <label className="flex items-center gap-2">
+      <Radio size="xl" />
       <span className="text-xl">Extra Large</span>
-    </div>
+    </label>
   </div>
 )
 
 export default App`}
         >
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <Radio name="radio-size" size="xs" defaultChecked />
+            <label className="flex items-center gap-2">
+              <Radio size="xs" defaultChecked />
               <span className="text-xs">Extra Small</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Radio name="radio-size" size="sm" />
+            </label>
+            <label className="flex items-center gap-2">
+              <Radio size="sm" />
               <span className="text-sm">Small</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Radio name="radio-size" size="md" />
+            </label>
+            <label className="flex items-center gap-2">
+              <Radio size="md" />
               <span>Medium</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Radio name="radio-size" size="lg" />
+            </label>
+            <label className="flex items-center gap-2">
+              <Radio size="lg" />
               <span className="text-lg">Large</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Radio name="radio-size" size="xl" />
+            </label>
+            <label className="flex items-center gap-2">
+              <Radio size="xl" />
               <span className="text-xl">Extra Large</span>
-            </div>
+            </label>
           </div>
         </ExampleSection>
 
@@ -190,31 +236,31 @@ import { Radio } from '@edadma/petalui'
 
 const App: React.FC = () => (
   <div className="flex flex-wrap gap-4">
-    <Radio name="radio-color" color="primary" defaultChecked />
-    <Radio name="radio-color" color="secondary" />
-    <Radio name="radio-color" color="accent" />
-    <Radio name="radio-color" color="info" />
-    <Radio name="radio-color" color="success" />
-    <Radio name="radio-color" color="warning" />
-    <Radio name="radio-color" color="error" />
+    <Radio color="primary" defaultChecked />
+    <Radio color="secondary" />
+    <Radio color="accent" />
+    <Radio color="info" />
+    <Radio color="success" />
+    <Radio color="warning" />
+    <Radio color="error" />
   </div>
 )
 
 export default App`}
         >
           <div className="flex flex-wrap gap-4">
-            <Radio name="radio-color" color="primary" defaultChecked />
-            <Radio name="radio-color" color="secondary" />
-            <Radio name="radio-color" color="accent" />
-            <Radio name="radio-color" color="info" />
-            <Radio name="radio-color" color="success" />
-            <Radio name="radio-color" color="warning" />
-            <Radio name="radio-color" color="error" />
+            <Radio color="primary" defaultChecked />
+            <Radio color="secondary" />
+            <Radio color="accent" />
+            <Radio color="info" />
+            <Radio color="success" />
+            <Radio color="warning" />
+            <Radio color="error" />
           </div>
         </ExampleSection>
 
         <ExampleSection
-          title="Disabled"
+          title="Disabled State"
           description="Disabled radio buttons."
           code={`import React from 'react'
 import { Radio } from '@edadma/petalui'
@@ -222,11 +268,11 @@ import { Radio } from '@edadma/petalui'
 const App: React.FC = () => (
   <div className="flex flex-col gap-3">
     <label className="flex items-center gap-2">
-      <Radio name="radio-disabled" disabled />
+      <Radio disabled />
       <span className="opacity-50">Disabled unchecked</span>
     </label>
     <label className="flex items-center gap-2">
-      <Radio name="radio-disabled-2" disabled defaultChecked />
+      <Radio disabled defaultChecked />
       <span className="opacity-50">Disabled checked</span>
     </label>
   </div>
@@ -236,11 +282,11 @@ export default App`}
         >
           <div className="flex flex-col gap-3">
             <label className="flex items-center gap-2">
-              <Radio name="radio-disabled" disabled />
+              <Radio disabled />
               <span className="opacity-50">Disabled unchecked</span>
             </label>
             <label className="flex items-center gap-2">
-              <Radio name="radio-disabled-2" disabled defaultChecked />
+              <Radio disabled defaultChecked />
               <span className="opacity-50">Disabled checked</span>
             </label>
           </div>
@@ -248,7 +294,7 @@ export default App`}
 
         <ExampleSection
           title="In Form"
-          description="Radio buttons in a form with validation."
+          description="Radio group in a form with validation."
           code={`import React from 'react'
 import { Radio, Form, Button } from '@edadma/petalui'
 
@@ -264,29 +310,31 @@ const App: React.FC = () => {
         label="Choose a plan"
         rules={{ required: 'Please select a plan' }}
       >
-        <div className="flex flex-col gap-3">
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Radio value="basic" />
-            <div>
-              <div className="font-semibold">Basic</div>
-              <div className="text-sm opacity-70">$10/month</div>
-            </div>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Radio value="pro" />
-            <div>
-              <div className="font-semibold">Pro</div>
-              <div className="text-sm opacity-70">$20/month</div>
-            </div>
-          </label>
-          <label className="flex items-center gap-2 cursor-pointer">
-            <Radio value="enterprise" />
-            <div>
-              <div className="font-semibold">Enterprise</div>
-              <div className="text-sm opacity-70">Contact us</div>
-            </div>
-          </label>
-        </div>
+        <Radio.Group>
+          <div className="flex flex-col gap-3">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <Radio value="basic" />
+              <div>
+                <div className="font-semibold">Basic</div>
+                <div className="text-sm opacity-70">$10/month</div>
+              </div>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <Radio value="pro" />
+              <div>
+                <div className="font-semibold">Pro</div>
+                <div className="text-sm opacity-70">$20/month</div>
+              </div>
+            </label>
+            <label className="flex items-center gap-2 cursor-pointer">
+              <Radio value="enterprise" />
+              <div>
+                <div className="font-semibold">Enterprise</div>
+                <div className="text-sm opacity-70">Contact us</div>
+              </div>
+            </label>
+          </div>
+        </Radio.Group>
       </Form.Item>
       <Button type="primary" htmlType="submit">
         Continue
@@ -298,34 +346,32 @@ const App: React.FC = () => {
 export default App`}
         >
           <Form onFinish={handleSubmit} initialValues={{ plan: 'basic' }}>
-            <Form.Item
-              name="plan"
-              label="Choose a plan"
-              rules={{ required: 'Please select a plan' }}
-            >
-              <div className="flex flex-col gap-3">
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <Radio value="basic" />
-                  <div>
-                    <div className="font-semibold">Basic</div>
-                    <div className="text-sm opacity-70">$10/month</div>
-                  </div>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <Radio value="pro" />
-                  <div>
-                    <div className="font-semibold">Pro</div>
-                    <div className="text-sm opacity-70">$20/month</div>
-                  </div>
-                </label>
-                <label className="flex items-center gap-2 cursor-pointer">
-                  <Radio value="enterprise" />
-                  <div>
-                    <div className="font-semibold">Enterprise</div>
-                    <div className="text-sm opacity-70">Contact us</div>
-                  </div>
-                </label>
-              </div>
+            <Form.Item name="plan" label="Choose a plan" rules={{ required: 'Please select a plan' }}>
+              <Radio.Group>
+                <div className="flex flex-col gap-3">
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <Radio value="basic" />
+                    <div>
+                      <div className="font-semibold">Basic</div>
+                      <div className="text-sm opacity-70">$10/month</div>
+                    </div>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <Radio value="pro" />
+                    <div>
+                      <div className="font-semibold">Pro</div>
+                      <div className="text-sm opacity-70">$20/month</div>
+                    </div>
+                  </label>
+                  <label className="flex items-center gap-2 cursor-pointer">
+                    <Radio value="enterprise" />
+                    <div>
+                      <div className="font-semibold">Enterprise</div>
+                      <div className="text-sm opacity-70">Contact us</div>
+                    </div>
+                  </label>
+                </div>
+              </Radio.Group>
             </Form.Item>
             <button type="submit" className="btn btn-primary">
               Continue
@@ -335,12 +381,28 @@ export default App`}
       </div>
 
       <div className="mt-12">
-        <h2 className="text-2xl font-bold mb-4">Radio API</h2>
+        <h2 className="text-2xl font-bold mb-4">Radio.Group API</h2>
+        <ApiTable data={radioGroupApi} />
+
+        <h2 className="text-2xl font-bold mb-4 mt-8">Radio API</h2>
         <ApiTable data={radioApi} />
-        <div className="alert alert-info mt-4">
-          <span>
-            Note: Radio buttons in the same group must share the same <code>name</code> attribute.
-          </span>
+
+        <div className="alert alert-info mt-8">
+          <div>
+            <strong>Usage Tips:</strong>
+            <ul className="list-disc list-inside mt-2">
+              <li>
+                Use <code>Radio.Group</code> to manage selection state
+              </li>
+              <li>
+                Each <code>Radio</code> needs a unique <code>value</code> prop
+              </li>
+              <li>
+                Use <code>defaultValue</code> for uncontrolled, <code>value</code> + <code>onChange</code> for
+                controlled
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>

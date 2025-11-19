@@ -56,7 +56,7 @@ export { Navbar } from './components/Navbar'
 export type { NavbarProps } from './components/Navbar'
 
 export { Radio } from './components/Radio'
-export type { RadioProps } from './components/Radio'
+export type { RadioProps, RadioGroupProps } from './components/Radio'
 
 export { Select } from './components/Select'
 export type { SelectProps } from './components/Select'

@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, createContext, useContext } from 'react'
 
 export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
@@ -6,8 +6,45 @@ export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   className?: string
 }
 
-export const Radio = forwardRef<HTMLInputElement, RadioProps>(
-  ({ size, color, className = '', ...props }, ref) => {
+export interface RadioGroupProps {
+  children: React.ReactNode
+  value?: string | number
+  defaultValue?: string | number
+  onChange?: (value: string | number) => void
+  name?: string
+  className?: string
+}
+
+interface RadioGroupContextValue {
+  value?: string | number
+  onChange?: (value: string | number) => void
+  name?: string
+}
+
+const RadioGroupContext = createContext<RadioGroupContextValue | null>(null)
+
+function RadioGroup({ children, value, defaultValue, onChange, name, className = '' }: RadioGroupProps) {
+  const [internalValue, setInternalValue] = React.useState(defaultValue)
+  const currentValue = value !== undefined ? value : internalValue
+
+  const handleChange = (newValue: string | number) => {
+    if (value === undefined) {
+      setInternalValue(newValue)
+    }
+    onChange?.(newValue)
+  }
+
+  return (
+    <RadioGroupContext.Provider value={{ value: currentValue, onChange: handleChange, name }}>
+      <div className={className}>{children}</div>
+    </RadioGroupContext.Provider>
+  )
+}
+
+const RadioRoot = forwardRef<HTMLInputElement, RadioProps>(
+  ({ size, color, className = '', value, checked, onChange, name: nameProp, ...props }, ref) => {
+    const groupContext = useContext(RadioGroupContext)
+
     const sizeClasses = {
       xs: 'radio-xs',
       sm: 'radio-sm',
@@ -27,17 +64,38 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
       error: 'radio-error',
     }
 
-    const radioClasses = [
-      'radio',
-      size && sizeClasses[size],
-      color && colorClasses[color],
-      className,
-    ]
+    const radioClasses = ['radio', size && sizeClasses[size], color && colorClasses[color], className]
       .filter(Boolean)
       .join(' ')
 
-    return <input ref={ref} type="radio" className={radioClasses} {...props} />
+    // If in a group, use group's value and onChange
+    const isChecked = groupContext ? groupContext.value === value : checked
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (groupContext && value !== undefined) {
+        const normalizedValue = typeof value === 'string' || typeof value === 'number' ? value : String(value)
+        groupContext.onChange?.(normalizedValue)
+      }
+      onChange?.(e)
+    }
+    const name = groupContext?.name || nameProp
+
+    return (
+      <input
+        ref={ref}
+        type="radio"
+        className={radioClasses}
+        value={value}
+        checked={isChecked}
+        onChange={handleChange}
+        name={name}
+        {...props}
+      />
+    )
   }
 )
 
-Radio.displayName = 'Radio'
+RadioRoot.displayName = 'Radio'
+
+export const Radio = Object.assign(RadioRoot, {
+  Group: RadioGroup,
+})
