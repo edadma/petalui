@@ -22,18 +22,43 @@ yarn add @edadma/petalui
 
 ## Prerequisites
 
-PetalUI requires Tailwind CSS and DaisyUI to be configured in your project:
+PetalUI requires Tailwind CSS v4 and DaisyUI to be configured in your project.
+
+Install dependencies:
 
 ```bash
-npm install -D tailwindcss daisyui
+npm install -D tailwindcss @tailwindcss/vite daisyui
 ```
 
-Configure your `tailwind.config.js`:
+Add the Tailwind plugin to your `vite.config.ts`:
+
+```ts
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})
+```
+
+Import Tailwind and DaisyUI in your CSS file (e.g., `src/index.css`):
+
+```css
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+}
+```
+
+Or specify themes in `tailwind.config.js` if you prefer:
 
 ```js
 export default {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
-  plugins: [require('daisyui')],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  daisyui: {
+    themes: ['light', 'dark', 'cupcake'], // or "all" for all themes
+  },
 }
 ```
 

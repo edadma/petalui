@@ -1,20 +1,14 @@
 import { useState } from 'react'
-import { Menu } from '@edadma/petalui'
-import type { MenuItem, MenuGroup } from '@edadma/petalui'
+import { Menu, Card } from '@edadma/petalui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
 
 const menuApi: ApiProperty[] = [
   {
-    property: 'items',
-    description: 'Array of menu items',
-    type: 'MenuItem[]',
-  },
-  {
-    property: 'groups',
-    description: 'Array of menu groups with titles',
-    type: 'MenuGroup[]',
+    property: 'children',
+    description: 'Menu items and titles',
+    type: 'ReactNode',
   },
   {
     property: 'className',
@@ -25,14 +19,9 @@ const menuApi: ApiProperty[] = [
 
 const menuItemApi: ApiProperty[] = [
   {
-    property: 'key',
-    description: 'Unique identifier for the menu item',
-    type: 'string',
-  },
-  {
-    property: 'label',
-    description: 'Text to display for the menu item',
-    type: 'string',
+    property: 'children',
+    description: 'Item content',
+    type: 'ReactNode',
   },
   {
     property: 'onClick',
@@ -45,18 +34,23 @@ const menuItemApi: ApiProperty[] = [
     type: 'boolean',
     default: 'false',
   },
-]
-
-const menuGroupApi: ApiProperty[] = [
   {
-    property: 'title',
-    description: 'Optional group title/header',
+    property: 'className',
+    description: 'Additional CSS classes',
     type: 'string',
   },
+]
+
+const menuTitleApi: ApiProperty[] = [
   {
-    property: 'items',
-    description: 'Array of menu items in this group',
-    type: 'MenuItem[]',
+    property: 'children',
+    description: 'Title text',
+    type: 'ReactNode',
+  },
+  {
+    property: 'className',
+    description: 'Additional CSS classes',
+    type: 'string',
   },
 ]
 
@@ -64,35 +58,12 @@ export function MenuPage() {
   const [activeKey1, setActiveKey1] = useState('home')
   const [activeKey2, setActiveKey2] = useState('dashboard')
 
-  const basicItems: MenuItem[] = [
-    { key: 'home', label: 'Home', onClick: () => setActiveKey1('home'), active: activeKey1 === 'home' },
-    { key: 'about', label: 'About', onClick: () => setActiveKey1('about'), active: activeKey1 === 'about' },
-    { key: 'contact', label: 'Contact', onClick: () => setActiveKey1('contact'), active: activeKey1 === 'contact' },
-  ]
-
-  const groupedMenu: MenuGroup[] = [
-    {
-      title: 'Main',
-      items: [
-        { key: 'dashboard', label: 'Dashboard', onClick: () => setActiveKey2('dashboard'), active: activeKey2 === 'dashboard' },
-        { key: 'analytics', label: 'Analytics', onClick: () => setActiveKey2('analytics'), active: activeKey2 === 'analytics' },
-      ],
-    },
-    {
-      title: 'Settings',
-      items: [
-        { key: 'profile', label: 'Profile', onClick: () => setActiveKey2('profile'), active: activeKey2 === 'profile' },
-        { key: 'preferences', label: 'Preferences', onClick: () => setActiveKey2('preferences'), active: activeKey2 === 'preferences' },
-      ],
-    },
-  ]
-
   return (
     <div>
       <div className="mb-6">
         <h1 className="text-4xl font-bold mb-2">Menu</h1>
         <p className="text-base-content/70">
-          Vertical menu component for navigation lists and grouped items.
+          Composable vertical menu component for navigation lists and grouped items.
         </p>
       </div>
 
@@ -102,24 +73,39 @@ export function MenuPage() {
           description="Simple menu with clickable items."
           code={`import React, { useState } from 'react'
 import { Menu } from '@edadma/petalui'
-import type { MenuItem } from '@edadma/petalui'
 
 const App: React.FC = () => {
-  const [activeKey, setActiveKey] = useState('home')
+  const [active, setActive] = useState('home')
 
-  const items: MenuItem[] = [
-    { key: 'home', label: 'Home', onClick: () => setActiveKey('home'), active: activeKey === 'home' },
-    { key: 'about', label: 'About', onClick: () => setActiveKey('about'), active: activeKey === 'about' },
-    { key: 'contact', label: 'Contact', onClick: () => setActiveKey('contact'), active: activeKey === 'contact' },
-  ]
-
-  return <Menu items={items} />
+  return (
+    <Menu>
+      <Menu.Item active={active === 'home'} onClick={() => setActive('home')}>
+        Home
+      </Menu.Item>
+      <Menu.Item active={active === 'about'} onClick={() => setActive('about')}>
+        About
+      </Menu.Item>
+      <Menu.Item active={active === 'contact'} onClick={() => setActive('contact')}>
+        Contact
+      </Menu.Item>
+    </Menu>
+  )
 }
 
 export default App`}
         >
           <div className="w-64">
-            <Menu items={basicItems} />
+            <Menu>
+              <Menu.Item active={activeKey1 === 'home'} onClick={() => setActiveKey1('home')}>
+                Home
+              </Menu.Item>
+              <Menu.Item active={activeKey1 === 'about'} onClick={() => setActiveKey1('about')}>
+                About
+              </Menu.Item>
+              <Menu.Item active={activeKey1 === 'contact'} onClick={() => setActiveKey1('contact')}>
+                Contact
+              </Menu.Item>
+            </Menu>
           </div>
         </ExampleSection>
 
@@ -128,71 +114,86 @@ export default App`}
           description="Menu with titled sections."
           code={`import React, { useState } from 'react'
 import { Menu } from '@edadma/petalui'
-import type { MenuGroup } from '@edadma/petalui'
 
 const App: React.FC = () => {
-  const [activeKey, setActiveKey] = useState('dashboard')
+  const [active, setActive] = useState('dashboard')
 
-  const groups: MenuGroup[] = [
-    {
-      title: 'Main',
-      items: [
-        { key: 'dashboard', label: 'Dashboard', onClick: () => setActiveKey('dashboard'), active: activeKey === 'dashboard' },
-        { key: 'analytics', label: 'Analytics', onClick: () => setActiveKey('analytics'), active: activeKey === 'analytics' },
-      ],
-    },
-    {
-      title: 'Settings',
-      items: [
-        { key: 'profile', label: 'Profile', onClick: () => setActiveKey('profile'), active: activeKey === 'profile' },
-        { key: 'preferences', label: 'Preferences', onClick: () => setActiveKey('preferences'), active: activeKey === 'preferences' },
-      ],
-    },
-  ]
+  return (
+    <Menu>
+      <Menu.Title>Main</Menu.Title>
+      <Menu.Item active={active === 'dashboard'} onClick={() => setActive('dashboard')}>
+        Dashboard
+      </Menu.Item>
+      <Menu.Item active={active === 'analytics'} onClick={() => setActive('analytics')}>
+        Analytics
+      </Menu.Item>
 
-  return <Menu groups={groups} />
+      <Menu.Title>Settings</Menu.Title>
+      <Menu.Item active={active === 'profile'} onClick={() => setActive('profile')}>
+        Profile
+      </Menu.Item>
+      <Menu.Item active={active === 'preferences'} onClick={() => setActive('preferences')}>
+        Preferences
+      </Menu.Item>
+    </Menu>
+  )
 }
 
 export default App`}
         >
           <div className="w-64">
-            <Menu groups={groupedMenu} />
+            <Menu>
+              <Menu.Title>Main</Menu.Title>
+              <Menu.Item active={activeKey2 === 'dashboard'} onClick={() => setActiveKey2('dashboard')}>
+                Dashboard
+              </Menu.Item>
+              <Menu.Item active={activeKey2 === 'analytics'} onClick={() => setActiveKey2('analytics')}>
+                Analytics
+              </Menu.Item>
+
+              <Menu.Title>Settings</Menu.Title>
+              <Menu.Item active={activeKey2 === 'profile'} onClick={() => setActiveKey2('profile')}>
+                Profile
+              </Menu.Item>
+              <Menu.Item active={activeKey2 === 'preferences'} onClick={() => setActiveKey2('preferences')}>
+                Preferences
+              </Menu.Item>
+            </Menu>
           </div>
         </ExampleSection>
 
         <ExampleSection
           title="Menu in Card"
           description="Menu styled within a card container."
-          code={`import React, { useState } from 'react'
-import { Menu } from '@edadma/petalui'
-import type { MenuItem } from '@edadma/petalui'
+          code={`import React from 'react'
+import { Menu, Card } from '@edadma/petalui'
 
-const App: React.FC = () => {
-  const [activeKey, setActiveKey] = useState('inbox')
-
-  const items: MenuItem[] = [
-    { key: 'inbox', label: 'Inbox', onClick: () => setActiveKey('inbox'), active: activeKey === 'inbox' },
-    { key: 'sent', label: 'Sent', onClick: () => setActiveKey('sent'), active: activeKey === 'sent' },
-    { key: 'drafts', label: 'Drafts', onClick: () => setActiveKey('drafts'), active: activeKey === 'drafts' },
-    { key: 'trash', label: 'Trash', onClick: () => setActiveKey('trash'), active: activeKey === 'trash' },
-  ]
-
-  return (
-    <div className="bg-base-100 rounded-box border border-base-content/10">
-      <Menu items={items} />
-    </div>
-  )
-}
+const App: React.FC = () => (
+  <Card bordered>
+    <Card.Body className="p-0">
+      <Menu>
+        <Menu.Item active>Inbox</Menu.Item>
+        <Menu.Item>Sent</Menu.Item>
+        <Menu.Item>Drafts</Menu.Item>
+        <Menu.Item>Trash</Menu.Item>
+      </Menu>
+    </Card.Body>
+  </Card>
+)
 
 export default App`}
         >
-          <div className="w-64 bg-base-100 rounded-box border border-base-content/10">
-            <Menu items={[
-              { key: 'inbox', label: 'Inbox', active: true },
-              { key: 'sent', label: 'Sent' },
-              { key: 'drafts', label: 'Drafts' },
-              { key: 'trash', label: 'Trash' },
-            ]} />
+          <div className="w-64">
+            <Card bordered>
+              <Card.Body className="p-0">
+                <Menu>
+                  <Menu.Item active>Inbox</Menu.Item>
+                  <Menu.Item>Sent</Menu.Item>
+                  <Menu.Item>Drafts</Menu.Item>
+                  <Menu.Item>Trash</Menu.Item>
+                </Menu>
+              </Card.Body>
+            </Card>
           </div>
         </ExampleSection>
 
@@ -201,28 +202,25 @@ export default App`}
           description="Menu with compact spacing."
           code={`import React from 'react'
 import { Menu } from '@edadma/petalui'
-import type { MenuItem } from '@edadma/petalui'
 
-const App: React.FC = () => {
-  const items: MenuItem[] = [
-    { key: 'file', label: 'File' },
-    { key: 'edit', label: 'Edit' },
-    { key: 'view', label: 'View' },
-    { key: 'help', label: 'Help' },
-  ]
-
-  return <Menu items={items} className="menu-compact" />
-}
+const App: React.FC = () => (
+  <Menu className="menu-compact">
+    <Menu.Item>File</Menu.Item>
+    <Menu.Item>Edit</Menu.Item>
+    <Menu.Item>View</Menu.Item>
+    <Menu.Item>Help</Menu.Item>
+  </Menu>
+)
 
 export default App`}
         >
           <div className="w-64">
-            <Menu items={[
-              { key: 'file', label: 'File' },
-              { key: 'edit', label: 'Edit' },
-              { key: 'view', label: 'View' },
-              { key: 'help', label: 'Help' },
-            ]} className="menu-compact" />
+            <Menu className="menu-compact">
+              <Menu.Item>File</Menu.Item>
+              <Menu.Item>Edit</Menu.Item>
+              <Menu.Item>View</Menu.Item>
+              <Menu.Item>Help</Menu.Item>
+            </Menu>
           </div>
         </ExampleSection>
 
@@ -231,62 +229,39 @@ export default App`}
           description="Menu with multiple titled groups."
           code={`import React from 'react'
 import { Menu } from '@edadma/petalui'
-import type { MenuGroup } from '@edadma/petalui'
 
-const App: React.FC = () => {
-  const groups: MenuGroup[] = [
-    {
-      title: 'Navigation',
-      items: [
-        { key: 'home', label: 'Home' },
-        { key: 'explore', label: 'Explore' },
-      ],
-    },
-    {
-      title: 'Content',
-      items: [
-        { key: 'library', label: 'Library' },
-        { key: 'history', label: 'History' },
-      ],
-    },
-    {
-      title: 'Account',
-      items: [
-        { key: 'settings', label: 'Settings' },
-        { key: 'logout', label: 'Logout' },
-      ],
-    },
-  ]
+const App: React.FC = () => (
+  <Menu>
+    <Menu.Title>Navigation</Menu.Title>
+    <Menu.Item>Home</Menu.Item>
+    <Menu.Item>Explore</Menu.Item>
 
-  return <Menu groups={groups} />
-}
+    <Menu.Title>Content</Menu.Title>
+    <Menu.Item>Library</Menu.Item>
+    <Menu.Item>History</Menu.Item>
+
+    <Menu.Title>Account</Menu.Title>
+    <Menu.Item>Settings</Menu.Item>
+    <Menu.Item>Logout</Menu.Item>
+  </Menu>
+)
 
 export default App`}
         >
           <div className="w-64">
-            <Menu groups={[
-              {
-                title: 'Navigation',
-                items: [
-                  { key: 'home', label: 'Home' },
-                  { key: 'explore', label: 'Explore' },
-                ],
-              },
-              {
-                title: 'Content',
-                items: [
-                  { key: 'library', label: 'Library' },
-                  { key: 'history', label: 'History' },
-                ],
-              },
-              {
-                title: 'Account',
-                items: [
-                  { key: 'settings', label: 'Settings' },
-                  { key: 'logout', label: 'Logout' },
-                ],
-              },
-            ]} />
+            <Menu>
+              <Menu.Title>Navigation</Menu.Title>
+              <Menu.Item>Home</Menu.Item>
+              <Menu.Item>Explore</Menu.Item>
+
+              <Menu.Title>Content</Menu.Title>
+              <Menu.Item>Library</Menu.Item>
+              <Menu.Item>History</Menu.Item>
+
+              <Menu.Title>Account</Menu.Title>
+              <Menu.Item>Settings</Menu.Item>
+              <Menu.Item>Logout</Menu.Item>
+            </Menu>
           </div>
         </ExampleSection>
 
@@ -295,28 +270,25 @@ export default App`}
           description="Menu without active states or handlers."
           code={`import React from 'react'
 import { Menu } from '@edadma/petalui'
-import type { MenuItem } from '@edadma/petalui'
 
-const App: React.FC = () => {
-  const items: MenuItem[] = [
-    { key: '1', label: 'Getting Started' },
-    { key: '2', label: 'Installation' },
-    { key: '3', label: 'Configuration' },
-    { key: '4', label: 'Usage Examples' },
-  ]
-
-  return <Menu items={items} />
-}
+const App: React.FC = () => (
+  <Menu>
+    <Menu.Item>Getting Started</Menu.Item>
+    <Menu.Item>Installation</Menu.Item>
+    <Menu.Item>Configuration</Menu.Item>
+    <Menu.Item>Usage Examples</Menu.Item>
+  </Menu>
+)
 
 export default App`}
         >
           <div className="w-64">
-            <Menu items={[
-              { key: '1', label: 'Getting Started' },
-              { key: '2', label: 'Installation' },
-              { key: '3', label: 'Configuration' },
-              { key: '4', label: 'Usage Examples' },
-            ]} />
+            <Menu>
+              <Menu.Item>Getting Started</Menu.Item>
+              <Menu.Item>Installation</Menu.Item>
+              <Menu.Item>Configuration</Menu.Item>
+              <Menu.Item>Usage Examples</Menu.Item>
+            </Menu>
           </div>
         </ExampleSection>
       </div>
@@ -327,13 +299,13 @@ export default App`}
       </div>
 
       <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">MenuItem API</h2>
+        <h2 className="text-2xl font-bold mb-4">Menu.Item API</h2>
         <ApiTable data={menuItemApi} />
       </div>
 
       <div className="mt-8">
-        <h2 className="text-2xl font-bold mb-4">MenuGroup API</h2>
-        <ApiTable data={menuGroupApi} />
+        <h2 className="text-2xl font-bold mb-4">Menu.Title API</h2>
+        <ApiTable data={menuTitleApi} />
       </div>
     </div>
   )

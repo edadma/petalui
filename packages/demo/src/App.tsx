@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Menu, Navbar } from '@edadma/petalui'
-import type { MenuGroup } from '@edadma/petalui'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { BadgePage } from './pages/BadgePage'
 import { ButtonPage } from './pages/ButtonPage'
@@ -15,77 +14,6 @@ type Page = 'badge' | 'button' | 'card' | 'drawer' | 'dropdown' | 'loading' | 'm
 
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>('button')
-
-  const menuGroups: MenuGroup[] = [
-    {
-      title: 'Actions',
-      items: [
-        {
-          key: 'button',
-          label: 'Button',
-          active: currentPage === 'button',
-          onClick: () => setCurrentPage('button'),
-        },
-        {
-          key: 'dropdown',
-          label: 'Dropdown',
-          active: currentPage === 'dropdown',
-          onClick: () => setCurrentPage('dropdown'),
-        },
-      ],
-    },
-    {
-      title: 'Data Display',
-      items: [
-        {
-          key: 'badge',
-          label: 'Badge',
-          active: currentPage === 'badge',
-          onClick: () => setCurrentPage('badge'),
-        },
-        {
-          key: 'card',
-          label: 'Card',
-          active: currentPage === 'card',
-          onClick: () => setCurrentPage('card'),
-        },
-        {
-          key: 'table',
-          label: 'Table',
-          active: currentPage === 'table',
-          onClick: () => setCurrentPage('table'),
-        },
-      ],
-    },
-    {
-      title: 'Navigation',
-      items: [
-        {
-          key: 'drawer',
-          label: 'Drawer',
-          active: currentPage === 'drawer',
-          onClick: () => setCurrentPage('drawer'),
-        },
-        {
-          key: 'menu',
-          label: 'Menu',
-          active: currentPage === 'menu',
-          onClick: () => setCurrentPage('menu'),
-        },
-      ],
-    },
-    {
-      title: 'Feedback',
-      items: [
-        {
-          key: 'loading',
-          label: 'Loading',
-          active: currentPage === 'loading',
-          onClick: () => setCurrentPage('loading'),
-        },
-      ],
-    },
-  ]
 
   return (
     <div className="min-h-screen bg-base-200 flex flex-col">
@@ -106,7 +34,39 @@ function App() {
         {/* Fixed Sidebar */}
         <aside className="w-44 bg-base-100 border-r border-base-content/10 overflow-y-auto">
           <div className="p-4">
-            <Menu groups={menuGroups} />
+            <Menu>
+              <Menu.Title>Actions</Menu.Title>
+              <Menu.Item active={currentPage === 'button'} onClick={() => setCurrentPage('button')}>
+                Button
+              </Menu.Item>
+              <Menu.Item active={currentPage === 'dropdown'} onClick={() => setCurrentPage('dropdown')}>
+                Dropdown
+              </Menu.Item>
+
+              <Menu.Title>Data Display</Menu.Title>
+              <Menu.Item active={currentPage === 'badge'} onClick={() => setCurrentPage('badge')}>
+                Badge
+              </Menu.Item>
+              <Menu.Item active={currentPage === 'card'} onClick={() => setCurrentPage('card')}>
+                Card
+              </Menu.Item>
+              <Menu.Item active={currentPage === 'table'} onClick={() => setCurrentPage('table')}>
+                Table
+              </Menu.Item>
+
+              <Menu.Title>Navigation</Menu.Title>
+              <Menu.Item active={currentPage === 'drawer'} onClick={() => setCurrentPage('drawer')}>
+                Drawer
+              </Menu.Item>
+              <Menu.Item active={currentPage === 'menu'} onClick={() => setCurrentPage('menu')}>
+                Menu
+              </Menu.Item>
+
+              <Menu.Title>Feedback</Menu.Title>
+              <Menu.Item active={currentPage === 'loading'} onClick={() => setCurrentPage('loading')}>
+                Loading
+              </Menu.Item>
+            </Menu>
           </div>
         </aside>
 

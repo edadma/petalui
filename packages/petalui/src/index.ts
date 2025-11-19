@@ -17,7 +17,7 @@ export { Loading } from './components/Loading'
 export type { LoadingProps } from './components/Loading'
 
 export { Menu } from './components/Menu'
-export type { MenuProps, MenuItem, MenuGroup } from './components/Menu'
+export type { MenuProps, MenuItemProps, MenuTitleProps } from './components/Menu'
 
 export { Navbar } from './components/Navbar'
 export type { NavbarProps } from './components/Navbar'
