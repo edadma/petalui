@@ -12,6 +12,7 @@ import { InputPage } from './pages/InputPage'
 import { LoadingPage } from './pages/LoadingPage'
 import { MenuPage } from './pages/MenuPage'
 import { TablePage } from './pages/TablePage'
+import { TogglePage } from './pages/TogglePage'
 
 function AppContent() {
   const navigate = useNavigate()
@@ -57,6 +58,9 @@ function AppContent() {
               <Menu.Item active={isActive('/input')} onClick={() => navigate('/input')}>
                 Input
               </Menu.Item>
+              <Menu.Item active={isActive('/toggle')} onClick={() => navigate('/toggle')}>
+                Toggle
+              </Menu.Item>
 
               <Menu.Title>Data Display</Menu.Title>
               <Menu.Item active={isActive('/badge')} onClick={() => navigate('/badge')}>
@@ -101,6 +105,7 @@ function AppContent() {
               <Route path="/loading" element={<LoadingPage />} />
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/table" element={<TablePage />} />
+              <Route path="/toggle" element={<TogglePage />} />
             </Routes>
           </div>
         </main>

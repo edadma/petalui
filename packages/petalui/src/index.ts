@@ -33,3 +33,6 @@ export type { NavbarProps } from './components/Navbar'
 
 export { Table } from './components/Table'
 export type { TableProps, ColumnType, PaginationConfig } from './components/Table'
+
+export { Toggle } from './components/Toggle'
+export type { ToggleProps } from './components/Toggle'
