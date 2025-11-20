@@ -645,20 +645,15 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Dropdown</h3>
-        <ApiTable data={dropdownApi} />
+        <ApiTable title="Dropdown" data={dropdownApi} />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Dropdown.Trigger</h3>
-        <ApiTable data={dropdownTriggerApi} />
+        <ApiTable title="Dropdown.Trigger" data={dropdownTriggerApi} className="mt-8" />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Dropdown.Menu</h3>
-        <ApiTable data={dropdownMenuApi} />
+        <ApiTable title="Dropdown.Menu" data={dropdownMenuApi} className="mt-8" />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Dropdown.Item</h3>
-        <ApiTable data={dropdownItemApi} />
+        <ApiTable title="Dropdown.Item" data={dropdownItemApi} className="mt-8" />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Dropdown.Divider</h3>
-        <ApiTable data={dropdownDividerApi} />
+        <ApiTable title="Dropdown.Divider" data={dropdownDividerApi} className="mt-8" />
       </div>
     </div>
   )

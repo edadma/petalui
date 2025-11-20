@@ -367,11 +367,9 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Rating</h3>
-        <ApiTable data={ratingApi} />
+        <ApiTable title="Rating" data={ratingApi} />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Rating.Item</h3>
-        <ApiTable data={ratingItemApi} />
+        <ApiTable title="Rating.Item" data={ratingItemApi} className="mt-8" />
 
         <div className="alert alert-info mt-8">
           <div>

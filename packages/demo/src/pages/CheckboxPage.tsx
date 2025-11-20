@@ -357,11 +357,9 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Checkbox</h3>
-        <ApiTable data={checkboxApi} />
+        <ApiTable title="Checkbox" data={checkboxApi} />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Checkbox.Group</h3>
-        <ApiTable data={checkboxGroupApi} />
+        <ApiTable title="Checkbox.Group" data={checkboxGroupApi} className="mt-8" />
 
         <div className="alert alert-info mt-8">
           <div>

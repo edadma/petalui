@@ -7,11 +7,16 @@ export interface ApiProperty {
 
 export interface ApiTableProps {
   data: ApiProperty[]
+  title?: string
+  className?: string
 }
 
-export function ApiTable({ data }: ApiTableProps) {
+export function ApiTable({ data, title, className = '' }: ApiTableProps) {
   return (
-    <div>
+    <div className={className}>
+      {title && (
+        <h3 className="text-xl font-bold font-mono mb-4">{title}</h3>
+      )}
       <div className="overflow-x-auto border border-base-content/10 rounded-lg">
         <table className="table">
           <thead>

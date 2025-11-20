@@ -857,11 +857,9 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Table</h3>
-        <ApiTable data={tableApi} />
+        <ApiTable title="Table" data={tableApi} />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">ColumnType</h3>
-        <ApiTable data={columnTypeApi} />
+        <ApiTable title="ColumnType" data={columnTypeApi} className="mt-8" />
       </div>
     </div>
   )

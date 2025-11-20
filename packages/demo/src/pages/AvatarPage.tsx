@@ -373,11 +373,9 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Avatar</h3>
-        <ApiTable data={avatarApi} />
+        <ApiTable title="Avatar" data={avatarApi} />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">AvatarGroup</h3>
-        <ApiTable data={avatarGroupApi} />
+        <ApiTable title="AvatarGroup" data={avatarGroupApi} className="mt-8" />
       </div>
     </div>
   )

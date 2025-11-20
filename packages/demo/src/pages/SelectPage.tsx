@@ -362,8 +362,7 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Select</h3>
-        <ApiTable data={selectApi} />
+        <ApiTable title="Select" data={selectApi} />
       </div>
     </div>
   )

@@ -181,8 +181,7 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Join</h3>
-        <ApiTable data={joinApi} />
+        <ApiTable title="Join" data={joinApi} />
 
         <div className="alert alert-info mt-8">
           <div>

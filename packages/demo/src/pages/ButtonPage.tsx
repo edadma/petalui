@@ -358,8 +358,7 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Button</h3>
-        <ApiTable data={buttonApi} />
+        <ApiTable title="Button" data={buttonApi} />
       </div>
     </div>
   )

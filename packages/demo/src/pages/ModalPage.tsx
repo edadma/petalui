@@ -645,8 +645,7 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Modal</h3>
-        <ApiTable data={modalApi} />
+        <ApiTable title="Modal" data={modalApi} />
 
         <h3 className="text-xl font-bold mb-4 mt-8">Static Methods</h3>
         <p className="mb-4 text-base-content/70">

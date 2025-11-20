@@ -210,11 +210,9 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Label</h3>
-        <ApiTable data={labelApi} />
+        <ApiTable title="Label" data={labelApi} />
 
-        <h3 className="text-xl font-bold mb-4 mt-8">Label.Floating</h3>
-        <ApiTable data={floatingLabelApi} />
+        <ApiTable title="Label.Floating" data={floatingLabelApi} className="mt-8" />
       </div>
     </div>
   )

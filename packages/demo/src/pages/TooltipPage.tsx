@@ -172,8 +172,7 @@ export default App`}
       <div className="mt-12">
         <h2 className="text-2xl font-bold mb-4">API</h2>
 
-        <h3 className="text-xl font-bold mb-4">Tooltip</h3>
-        <ApiTable data={tooltipApi} />
+        <ApiTable title="Tooltip" data={tooltipApi} />
       </div>
     </div>
   )
