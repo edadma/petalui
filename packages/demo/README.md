@@ -13,10 +13,10 @@ This demo application provides live examples and documentation for all PetalUI c
 
 ## Components
 
-Browse 39 components organized by category:
+Browse 40 components organized by category:
 
 - **Actions**: Button, Dropdown
-- **Data Entry**: Checkbox, Fieldset, File Input, Form, Input, Label, Radio, Rating, Select, Textarea, Toggle
+- **Data Entry**: Checkbox, DatePicker, Fieldset, File Input, Form, Input, Label, Radio, Rating, Select, Textarea, Toggle
 - **Data Display**: Avatar, Badge, Card, Collapse, Empty, List, Stats, Steps, Table, Timeline
 - **Layout**: Divider, Drawer, Footer, Grid, Hero, Join
 - **Navigation**: Breadcrumbs, Link, Menu, Navbar, Tabs

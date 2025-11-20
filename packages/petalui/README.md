@@ -79,6 +79,7 @@ function App() {
 
 ### Data Entry
 - **Checkbox** - Checkboxes with sizes, colors, and indeterminate state
+- **DatePicker** - Interactive calendar date picker with custom formatting
 - **Fieldset** - Fieldset container with legend
 - **FileInput** - File input with sizes and colors
 - **Form** - Form component with React Hook Form integration and validation

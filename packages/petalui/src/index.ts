@@ -22,6 +22,9 @@ export type { CardProps } from './components/Card'
 export { Collapse } from './components/Collapse'
 export type { CollapseProps, CollapseTitleProps, CollapseContentProps } from './components/Collapse'
 
+export { DatePicker } from './components/DatePicker'
+export type { DatePickerProps } from './components/DatePicker'
+
 export { Divider } from './components/Divider'
 export type { DividerProps } from './components/Divider'
 

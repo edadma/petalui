@@ -9,6 +9,7 @@ import { ButtonPage } from './pages/ButtonPage'
 import { CardPage } from './pages/CardPage'
 import { CheckboxPage } from './pages/CheckboxPage'
 import { CollapsePage } from './pages/CollapsePage'
+import { DatePickerPage } from './pages/DatePickerPage'
 import { DividerPage } from './pages/DividerPage'
 import { DrawerPage } from './pages/DrawerPage'
 import { DropdownPage } from './pages/DropdownPage'
@@ -79,6 +80,9 @@ function AppContent() {
               <Menu.Title>Data Entry</Menu.Title>
               <Menu.Item active={isActive('/checkbox')} onClick={() => navigate('/checkbox')}>
                 Checkbox
+              </Menu.Item>
+              <Menu.Item active={isActive('/datepicker')} onClick={() => navigate('/datepicker')}>
+                DatePicker
               </Menu.Item>
               <Menu.Item active={isActive('/fieldset')} onClick={() => navigate('/fieldset')}>
                 Fieldset
@@ -216,6 +220,7 @@ function AppContent() {
               <Route path="/card" element={<CardPage />} />
               <Route path="/checkbox" element={<CheckboxPage />} />
               <Route path="/collapse" element={<CollapsePage />} />
+              <Route path="/datepicker" element={<DatePickerPage />} />
               <Route path="/divider" element={<DividerPage />} />
               <Route path="/drawer" element={<DrawerPage />} />
               <Route path="/dropdown" element={<DropdownPage />} />
