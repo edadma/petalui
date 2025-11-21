@@ -19,11 +19,17 @@ export type { ButtonProps } from './components/Button'
 export { Checkbox } from './components/Checkbox'
 export type { CheckboxProps, CheckboxGroupProps, CheckboxOptionType } from './components/Checkbox'
 
+export { Chat } from './components/Chat'
+export type { ChatProps } from './components/Chat'
+
 export { CalendarOld } from './components/CalendarOld'
 export type { CalendarOldProps, CalendarOldEvent } from './components/CalendarOld'
 
 export { Card } from './components/Card'
 export type { CardProps } from './components/Card'
+
+export { Carousel } from './components/Carousel'
+export type { CarouselProps, CarouselItemProps } from './components/Carousel'
 
 export { Collapse } from './components/Collapse'
 export type { CollapseProps, CollapseTitleProps, CollapseContentProps } from './components/Collapse'
@@ -54,6 +60,9 @@ export type { RowProps, ColProps } from './components/Grid'
 
 export { Hero } from './components/Hero'
 export type { HeroProps } from './components/Hero'
+
+export { Image } from './components/Image'
+export type { ImageProps } from './components/Image'
 
 export { Dropdown } from './components/Dropdown'
 export type { DropdownProps, DropdownTriggerProps, DropdownMenuProps, DropdownItemProps, DropdownDividerProps } from './components/Dropdown'

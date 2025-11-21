@@ -8,6 +8,8 @@ import { BadgePage } from './pages/BadgePage'
 import { BreadcrumbPage } from './pages/BreadcrumbPage'
 import { ButtonPage } from './pages/ButtonPage'
 import { CardPage } from './pages/CardPage'
+import { CarouselPage } from './pages/CarouselPage'
+import { ChatPage } from './pages/ChatPage'
 import { CheckboxPage } from './pages/CheckboxPage'
 import { CollapsePage } from './pages/CollapsePage'
 import { DatePickerPage } from './pages/DatePickerPage'
@@ -21,6 +23,7 @@ import { FooterPage } from './pages/FooterPage'
 import { FormPage } from './pages/FormPage'
 import { GridPage } from './pages/GridPage'
 import { HeroPage } from './pages/HeroPage'
+import { ImagePage } from './pages/ImagePage'
 import { InputPage } from './pages/InputPage'
 import { JoinPage } from './pages/JoinPage'
 import { LabelPage } from './pages/LabelPage'
@@ -145,11 +148,20 @@ function AppContent() {
               <Menu.Item active={isActive('/card')} onClick={() => navigate('/card')}>
                 Card
               </Menu.Item>
+              <Menu.Item active={isActive('/carousel')} onClick={() => navigate('/carousel')}>
+                Carousel
+              </Menu.Item>
+              <Menu.Item active={isActive('/chat')} onClick={() => navigate('/chat')}>
+                Chat
+              </Menu.Item>
               <Menu.Item active={isActive('/collapse')} onClick={() => navigate('/collapse')}>
                 Collapse
               </Menu.Item>
               <Menu.Item active={isActive('/empty')} onClick={() => navigate('/empty')}>
                 Empty
+              </Menu.Item>
+              <Menu.Item active={isActive('/image')} onClick={() => navigate('/image')}>
+                Image
               </Menu.Item>
               <Menu.Item active={isActive('/list')} onClick={() => navigate('/list')}>
                 List
@@ -251,6 +263,8 @@ function AppContent() {
               <Route path="/breadcrumbs" element={<BreadcrumbPage />} />
               <Route path="/button" element={<ButtonPage />} />
               <Route path="/card" element={<CardPage />} />
+              <Route path="/carousel" element={<CarouselPage />} />
+              <Route path="/chat" element={<ChatPage />} />
               <Route path="/checkbox" element={<CheckboxPage />} />
               <Route path="/collapse" element={<CollapsePage />} />
               <Route path="/datepicker" element={<DatePickerPage />} />
@@ -264,6 +278,7 @@ function AppContent() {
               <Route path="/form" element={<FormPage />} />
               <Route path="/grid" element={<GridPage />} />
               <Route path="/hero" element={<HeroPage />} />
+              <Route path="/image" element={<ImagePage />} />
               <Route path="/input" element={<InputPage />} />
               <Route path="/join" element={<JoinPage />} />
               <Route path="/label" element={<LabelPage />} />
