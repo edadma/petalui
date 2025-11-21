@@ -103,6 +103,9 @@ export type { ProgressProps } from './components/Progress'
 export { Radio } from './components/Radio'
 export type { RadioProps, RadioGroupProps } from './components/Radio'
 
+export { RadialProgress } from './components/RadialProgress'
+export type { RadialProgressProps } from './components/RadialProgress'
+
 export { Range } from './components/Range'
 export type { RangeProps } from './components/Range'
 
@@ -111,6 +114,9 @@ export type { RatingProps, RatingItemProps } from './components/Rating'
 
 export { Select } from './components/Select'
 export type { SelectProps } from './components/Select'
+
+export { Skeleton } from './components/Skeleton'
+export type { SkeletonProps } from './components/Skeleton'
 
 export { Stats } from './components/Stat'
 export type { StatsProps, StatProps } from './components/Stat'

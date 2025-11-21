@@ -35,9 +35,11 @@ import { PaginationPage } from './pages/PaginationPage'
 import { PopconfirmPage } from './pages/PopconfirmPage'
 import { ProgressPage } from './pages/ProgressPage'
 import { RadioPage } from './pages/RadioPage'
+import { RadialProgressPage } from './pages/RadialProgressPage'
 import { RangePage } from './pages/RangePage'
 import { RatingPage } from './pages/RatingPage'
 import { SelectPage } from './pages/SelectPage'
+import { SkeletonPage } from './pages/SkeletonPage'
 import { StatPage } from './pages/StatPage'
 import { StepsPage } from './pages/StepsPage'
 import { TablePage } from './pages/TablePage'
@@ -220,6 +222,12 @@ function AppContent() {
               <Menu.Item active={isActive('/progress')} onClick={() => navigate('/progress')}>
                 Progress
               </Menu.Item>
+              <Menu.Item active={isActive('/radial-progress')} onClick={() => navigate('/radial-progress')}>
+                Radial Progress
+              </Menu.Item>
+              <Menu.Item active={isActive('/skeleton')} onClick={() => navigate('/skeleton')}>
+                Skeleton
+              </Menu.Item>
               <Menu.Item active={isActive('/tooltip')} onClick={() => navigate('/tooltip')}>
                 Tooltip
               </Menu.Item>
@@ -266,9 +274,11 @@ function AppContent() {
               <Route path="/popconfirm" element={<PopconfirmPage />} />
               <Route path="/progress" element={<ProgressPage />} />
               <Route path="/radio" element={<RadioPage />} />
+              <Route path="/radial-progress" element={<RadialProgressPage />} />
               <Route path="/range" element={<RangePage />} />
               <Route path="/rating" element={<RatingPage />} />
               <Route path="/select" element={<SelectPage />} />
+              <Route path="/skeleton" element={<SkeletonPage />} />
               <Route path="/stat" element={<StatPage />} />
               <Route path="/steps" element={<StepsPage />} />
               <Route path="/table" element={<TablePage />} />
