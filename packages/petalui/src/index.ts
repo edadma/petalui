@@ -94,6 +94,9 @@ export type { NotificationConfig, NotificationType, NotificationPlacement } from
 export { Pagination } from './components/Pagination'
 export type { PaginationProps } from './components/Pagination'
 
+export { Popconfirm } from './components/Popconfirm'
+export type { PopconfirmProps } from './components/Popconfirm'
+
 export { Progress } from './components/Progress'
 export type { ProgressProps } from './components/Progress'
 

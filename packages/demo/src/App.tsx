@@ -32,6 +32,7 @@ import { ModalPage } from './pages/ModalPage'
 import { NavbarPage } from './pages/NavbarPage'
 import { NotificationPage } from './pages/NotificationPage'
 import { PaginationPage } from './pages/PaginationPage'
+import { PopconfirmPage } from './pages/PopconfirmPage'
 import { ProgressPage } from './pages/ProgressPage'
 import { RadioPage } from './pages/RadioPage'
 import { RangePage } from './pages/RangePage'
@@ -213,6 +214,9 @@ function AppContent() {
               <Menu.Item active={isActive('/notification')} onClick={() => navigate('/notification')}>
                 Notification
               </Menu.Item>
+              <Menu.Item active={isActive('/popconfirm')} onClick={() => navigate('/popconfirm')}>
+                Popconfirm
+              </Menu.Item>
               <Menu.Item active={isActive('/progress')} onClick={() => navigate('/progress')}>
                 Progress
               </Menu.Item>
@@ -259,6 +263,7 @@ function AppContent() {
               <Route path="/navbar" element={<NavbarPage />} />
               <Route path="/notification" element={<NotificationPage />} />
               <Route path="/pagination" element={<PaginationPage />} />
+              <Route path="/popconfirm" element={<PopconfirmPage />} />
               <Route path="/progress" element={<ProgressPage />} />
               <Route path="/radio" element={<RadioPage />} />
               <Route path="/range" element={<RangePage />} />
