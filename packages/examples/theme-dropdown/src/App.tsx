@@ -47,7 +47,7 @@ function App() {
         end={<ThemeController.Dropdown themes={THEMES} />}
       />
 
-      <Hero className="min-h-[calc(100vh-4rem)] bg-base-200" contentClassName="text-center">
+      <Hero className="bg-base-200" contentClassName="text-center">
         <div className="max-w-2xl space-y-6">
           <h1 className="text-5xl font-bold">Theme Showcase</h1>
           <p className="text-lg">

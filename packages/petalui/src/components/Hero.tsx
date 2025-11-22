@@ -17,7 +17,7 @@ export function Hero({
   className = '',
   style,
 }: HeroProps) {
-  const classes = ['hero', className].filter(Boolean).join(' ')
+  const classes = ['hero', 'min-h-screen', className].filter(Boolean).join(' ')
   const contentClasses = ['hero-content', contentClassName].filter(Boolean).join(' ')
   const overlayClasses = ['hero-overlay', overlayClassName].filter(Boolean).join(' ')
 

@@ -9,7 +9,7 @@ function App() {
         end={<ThemeController.Swap lightTheme="light" darkTheme="dark" />}
       />
 
-      <Hero className="min-h-[calc(100vh-4rem)] bg-base-200" contentClassName="text-center">
+      <Hero className="bg-base-200" contentClassName="text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">Welcome!</h1>
           <p className="py-6">
