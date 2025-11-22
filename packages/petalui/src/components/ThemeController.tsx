@@ -102,7 +102,7 @@ function ThemeControllerDropdown({
   }
 
   return (
-    <div className={`dropdown ${className}`}>
+    <div className={`dropdown dropdown-end ${className}`}>
       <div tabIndex={0} role="button" className="btn">
         Theme
         <svg
@@ -117,7 +117,7 @@ function ThemeControllerDropdown({
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl"
+        className="dropdown-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl max-h-96 overflow-y-auto"
       >
         {themes.map((theme) => (
           <li key={theme}>
