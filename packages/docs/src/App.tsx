@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom'
-import { Menu, Navbar } from '@edadma/petalui'
-import { ThemeSwitcher } from './ThemeSwitcher'
+import { Menu, Navbar, ThemeController } from '@edadma/petalui'
 import { AlertPage } from './pages/AlertPage'
 import { AutocompletePage } from './pages/AutocompletePage'
 import { AvatarPage } from './pages/AvatarPage'
@@ -54,6 +53,44 @@ import { TimelinePage } from './pages/TimelinePage'
 import { TogglePage } from './pages/TogglePage'
 import { TooltipPage } from './pages/TooltipPage'
 
+const THEMES = [
+  'light',
+  'dark',
+  'cupcake',
+  'bumblebee',
+  'emerald',
+  'corporate',
+  'synthwave',
+  'retro',
+  'cyberpunk',
+  'valentine',
+  'halloween',
+  'garden',
+  'forest',
+  'aqua',
+  'lofi',
+  'pastel',
+  'fantasy',
+  'wireframe',
+  'black',
+  'luxury',
+  'dracula',
+  'cmyk',
+  'autumn',
+  'business',
+  'acid',
+  'lemonade',
+  'night',
+  'coffee',
+  'winter',
+  'dim',
+  'nord',
+  'sunset',
+  'caramellatte',
+  'abyss',
+  'silk',
+]
+
 function AppContent() {
   const navigate = useNavigate()
   const location = useLocation()
@@ -71,7 +108,7 @@ function AppContent() {
             <span className="text-xl font-semibold">PetalUI Components</span>
           </div>
         }
-        end={<ThemeSwitcher />}
+        end={<ThemeController.Dropdown themes={THEMES} />}
       />
 
       {/* Content Area with Sidebar */}
