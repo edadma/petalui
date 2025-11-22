@@ -34,6 +34,7 @@ function ThemeControllerSwap({
     const currentTheme = document.documentElement.getAttribute('data-theme')
     if (defaultTheme) {
       setIsDark(defaultTheme === darkTheme)
+      document.documentElement.setAttribute('data-theme', defaultTheme)
     } else if (currentTheme) {
       setIsDark(currentTheme === darkTheme)
     }
@@ -88,10 +89,12 @@ function ThemeControllerDropdown({
     const currentTheme = document.documentElement.getAttribute('data-theme')
     if (defaultTheme) {
       setSelectedTheme(defaultTheme)
+      document.documentElement.setAttribute('data-theme', defaultTheme)
     } else if (currentTheme && themes.includes(currentTheme)) {
       setSelectedTheme(currentTheme)
     } else if (!currentTheme && themes.length > 0) {
       setSelectedTheme(themes[0])
+      document.documentElement.setAttribute('data-theme', themes[0])
     }
   }, [defaultTheme, themes])
 
