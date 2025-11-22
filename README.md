@@ -161,7 +161,7 @@ function App() {
 This is a pnpm monorepo with two packages:
 
 - `packages/@edadma/petalui` - The component library
-- `packages/demo` - Demo application
+- `packages/docs` - Documentation site
 
 ### Setup
 
@@ -172,7 +172,7 @@ corepack enable
 # Install dependencies
 pnpm install
 
-# Start demo app
+# Start documentation site
 pnpm dev
 
 # Build all packages

@@ -1,10 +1,10 @@
-# PetalUI Demo
+# PetalUI Documentation
 
 Interactive documentation and component showcase for [PetalUI](https://github.com/edadma/petalui).
 
 ## Overview
 
-This demo application provides live examples and documentation for all PetalUI components. Each component page includes:
+This documentation site provides live examples and API documentation for all PetalUI components. Each component page includes:
 
 - Interactive examples with working code
 - Complete API documentation
