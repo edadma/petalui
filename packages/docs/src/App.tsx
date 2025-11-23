@@ -27,6 +27,7 @@ import { GridPage } from './pages/GridPage'
 import { HeroPage } from './pages/HeroPage'
 import { ImagePage } from './pages/ImagePage'
 import { InputPage } from './pages/InputPage'
+import InputNumberPage from './pages/InputNumberPage'
 import { JoinPage } from './pages/JoinPage'
 import { LabelPage } from './pages/LabelPage'
 import { LinkPage } from './pages/LinkPage'
@@ -164,6 +165,9 @@ function AppContent() {
               </Menu.Item>
               <Menu.Item active={isActive('/input')} onClick={() => navigate('/input')}>
                 Input
+              </Menu.Item>
+              <Menu.Item active={isActive('/input-number')} onClick={() => navigate('/input-number')}>
+                InputNumber
               </Menu.Item>
               <Menu.Item active={isActive('/label')} onClick={() => navigate('/label')}>
                 Label
@@ -361,6 +365,7 @@ function AppContent() {
               <Route path="/indicator" element={<IndicatorPage />} />
               <Route path="/image" element={<ImagePage />} />
               <Route path="/input" element={<InputPage />} />
+              <Route path="/input-number" element={<InputNumberPage />} />
               <Route path="/join" element={<JoinPage />} />
               <Route path="/label" element={<LabelPage />} />
               <Route path="/link" element={<LinkPage />} />

@@ -79,6 +79,9 @@ export type { EmptyProps } from './components/Empty'
 export { Input } from './components/Input'
 export type { InputProps } from './components/Input'
 
+export { InputNumber } from './components/InputNumber'
+export type { InputNumberProps } from './components/InputNumber'
+
 export { Join } from './components/Join'
 export type { JoinProps } from './components/Join'
 
