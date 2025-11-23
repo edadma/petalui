@@ -116,12 +116,13 @@ function App() {
 - **Toggle** - Toggle switches with sizes and colors
 
 ### Data Display
-- **Avatar** - User avatars with sizes, shapes, and group support
+- **Avatar** - User avatars with sizes, shapes, status indicators, and group support
 - **Badge** - Notification badges with colors and variants
 - **Card** - Composable card component with body, title, actions, and figure
 - **Carousel** - Image carousel with navigation and indicators
 - **Chat** - Chat message bubbles with avatars and timestamps
 - **Collapse** - Collapsible content panels
+- **Descriptions** - Display multiple read-only fields in structured layouts
 - **Empty** - Empty state placeholder with custom images and actions
 - **Image** - Image component with fallback and preview support
 - **List** - Vertical list layout with customizable rows
@@ -137,7 +138,9 @@ function App() {
 - **Footer** - Footer component with title sections
 - **Grid** - Powerful 24-column grid system with Row and Col components
 - **Hero** - Hero section with overlay and content wrapping
+- **Indicator** - Position indicators and badges on elements
 - **Join** - Join multiple elements together seamlessly
+- **Masonry** - Masonry grid layout with CSS columns
 - **Space** - Layout component for consistent spacing between elements
 
 ### Navigation
