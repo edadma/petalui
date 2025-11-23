@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
-import { Navbar, ThemeController, Form, Input, Button, Card, Checkbox, Space } from '@edadma/petalui'
+import { Navbar, ThemeController, Form, Input, Button, Card, Checkbox, Space, Row, Col } from '@edadma/petalui'
 
 interface WorkExperience {
   company: string
@@ -81,50 +81,58 @@ function App() {
               <Space>
                 <h2 className="text-2xl font-bold border-b pb-2">Personal Information</h2>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Form.Item
-                    name="firstName"
-                    label="First Name"
-                    rules={{ required: 'First name is required' }}
-                  >
-                    <Input placeholder="John" />
-                  </Form.Item>
+                <Row gutter={16}>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      name="firstName"
+                      label="First Name"
+                      rules={{ required: 'First name is required' }}
+                    >
+                      <Input placeholder="John" />
+                    </Form.Item>
+                  </Col>
 
-                  <Form.Item
-                    name="lastName"
-                    label="Last Name"
-                    rules={{ required: 'Last name is required' }}
-                  >
-                    <Input placeholder="Doe" />
-                  </Form.Item>
-                </div>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      name="lastName"
+                      label="Last Name"
+                      rules={{ required: 'Last name is required' }}
+                    >
+                      <Input placeholder="Doe" />
+                    </Form.Item>
+                  </Col>
+                </Row>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <Form.Item
-                    name="email"
-                    label="Email"
-                    rules={{
-                      required: 'Email is required',
-                      type: 'email',
-                    }}
-                  >
-                    <Input type="email" placeholder="john@example.com" />
-                  </Form.Item>
+                <Row gutter={16}>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      name="email"
+                      label="Email"
+                      rules={{
+                        required: 'Email is required',
+                        type: 'email',
+                      }}
+                    >
+                      <Input type="email" placeholder="john@example.com" />
+                    </Form.Item>
+                  </Col>
 
-                  <Form.Item
-                    name="phone"
-                    label="Phone"
-                    rules={{
-                      required: 'Phone is required',
-                      pattern: {
-                        value: /^\+?[\d\s\-()]+$/,
-                        message: 'Invalid phone number',
-                      },
-                    }}
-                  >
-                    <Input placeholder="+1 (555) 123-4567" />
-                  </Form.Item>
-                </div>
+                  <Col xs={24} md={12}>
+                    <Form.Item
+                      name="phone"
+                      label="Phone"
+                      rules={{
+                        required: 'Phone is required',
+                        pattern: {
+                          value: /^\+?[\d\s\-()]+$/,
+                          message: 'Invalid phone number',
+                        },
+                      }}
+                    >
+                      <Input placeholder="+1 (555) 123-4567" />
+                    </Form.Item>
+                  </Col>
+                </Row>
               </Space>
 
               {/* Work Experience */}
@@ -174,55 +182,63 @@ function App() {
                             )}
                           </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Form.Item
-                              name={[field.name, 'school']}
-                              label="School/University"
-                              rules={{ required: 'School is required' }}
-                            >
-                              <Input placeholder="University of Example" />
-                            </Form.Item>
+                          <Row gutter={16}>
+                            <Col xs={24} md={12}>
+                              <Form.Item
+                                name={[field.name, 'school']}
+                                label="School/University"
+                                rules={{ required: 'School is required' }}
+                              >
+                                <Input placeholder="University of Example" />
+                              </Form.Item>
+                            </Col>
 
-                            <Form.Item
-                              name={[field.name, 'degree']}
-                              label="Degree"
-                              rules={{ required: 'Degree is required' }}
-                            >
-                              <Input placeholder="Bachelor of Science" />
-                            </Form.Item>
-                          </div>
+                            <Col xs={24} md={12}>
+                              <Form.Item
+                                name={[field.name, 'degree']}
+                                label="Degree"
+                                rules={{ required: 'Degree is required' }}
+                              >
+                                <Input placeholder="Bachelor of Science" />
+                              </Form.Item>
+                            </Col>
+                          </Row>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Form.Item
-                              name={[field.name, 'field']}
-                              label="Field of Study"
-                              rules={{ required: 'Field is required' }}
-                            >
-                              <Input placeholder="Computer Science" />
-                            </Form.Item>
+                          <Row gutter={16}>
+                            <Col xs={24} md={12}>
+                              <Form.Item
+                                name={[field.name, 'field']}
+                                label="Field of Study"
+                                rules={{ required: 'Field is required' }}
+                              >
+                                <Input placeholder="Computer Science" />
+                              </Form.Item>
+                            </Col>
 
-                            <Form.Item
-                              name={[field.name, 'graduationYear']}
-                              label="Graduation Year"
-                              rules={{
-                                required: 'Graduation year is required',
-                                pattern: {
-                                  value: /^\d{4}$/,
-                                  message: 'Must be a 4-digit year',
-                                },
-                                validate: (value) => {
-                                  const year = parseInt(value)
-                                  const currentYear = new Date().getFullYear()
-                                  return (
-                                    (year >= 1950 && year <= currentYear + 10) ||
-                                    'Year must be between 1950 and ' + (currentYear + 10)
-                                  )
-                                },
-                              }}
-                            >
-                              <Input placeholder="2020" />
-                            </Form.Item>
-                          </div>
+                            <Col xs={24} md={12}>
+                              <Form.Item
+                                name={[field.name, 'graduationYear']}
+                                label="Graduation Year"
+                                rules={{
+                                  required: 'Graduation year is required',
+                                  pattern: {
+                                    value: /^\d{4}$/,
+                                    message: 'Must be a 4-digit year',
+                                  },
+                                  validate: (value) => {
+                                    const year = parseInt(value)
+                                    const currentYear = new Date().getFullYear()
+                                    return (
+                                      (year >= 1950 && year <= currentYear + 10) ||
+                                      'Year must be between 1950 and ' + (currentYear + 10)
+                                    )
+                                  },
+                                }}
+                              >
+                                <Input placeholder="2020" />
+                              </Form.Item>
+                            </Col>
+                          </Row>
                         </Space>
                       ))}
 
@@ -239,16 +255,18 @@ function App() {
                 <h2 className="text-2xl font-bold border-b pb-2">Skills</h2>
                 <p className="text-sm text-base-content/70">Select all that apply</p>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'Java', 'SQL', 'Git', 'Docker'].map((skill) => (
-                    <Form.Item key={skill} name="skills" valuePropName="checked">
-                      <label className="flex items-center gap-2 cursor-pointer">
-                        <Checkbox value={skill} />
-                        <span>{skill}</span>
-                      </label>
-                    </Form.Item>
+                <Row cols={120} gutter={16}>
+                  {['JavaScript', 'TypeScript', 'React', 'Node.js', 'Python', 'Java', 'SQL', 'Git', 'Docker', 'Kubernetes', 'AWS', 'GraphQL', 'MongoDB', 'Redis', 'Go'].map((skill) => (
+                    <Col key={skill} xs={60} md={24}>
+                      <Form.Item name="skills" valuePropName="checked">
+                        <label className="flex items-center gap-2 cursor-pointer">
+                          <Checkbox value={skill} />
+                          <span>{skill}</span>
+                        </label>
+                      </Form.Item>
+                    </Col>
                   ))}
-                </div>
+                </Row>
               </Space>
 
               {/* References */}
@@ -270,52 +288,62 @@ function App() {
                             </Button>
                           </div>
 
-                          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <Form.Item
-                              name={[field.name, 'name']}
-                              label="Name"
-                              rules={{ required: 'Name is required' }}
-                            >
-                              <Input placeholder="Jane Smith" />
-                            </Form.Item>
+                          <Row gutter={16}>
+                            <Col xs={24} md={12}>
+                              <Form.Item
+                                name={[field.name, 'name']}
+                                label="Name"
+                                rules={{ required: 'Name is required' }}
+                              >
+                                <Input placeholder="Jane Smith" />
+                              </Form.Item>
+                            </Col>
 
-                            <Form.Item
-                              name={[field.name, 'company']}
-                              label="Company"
-                              rules={{ required: 'Company is required' }}
-                            >
-                              <Input placeholder="Example Corp" />
-                            </Form.Item>
-                          </div>
+                            <Col xs={24} md={12}>
+                              <Form.Item
+                                name={[field.name, 'company']}
+                                label="Company"
+                                rules={{ required: 'Company is required' }}
+                              >
+                                <Input placeholder="Example Corp" />
+                              </Form.Item>
+                            </Col>
+                          </Row>
 
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <Form.Item
-                              name={[field.name, 'position']}
-                              label="Position"
-                              rules={{ required: 'Position is required' }}
-                            >
-                              <Input placeholder="Manager" />
-                            </Form.Item>
+                          <Row gutter={16}>
+                            <Col xs={24} md={8}>
+                              <Form.Item
+                                name={[field.name, 'position']}
+                                label="Position"
+                                rules={{ required: 'Position is required' }}
+                              >
+                                <Input placeholder="Manager" />
+                              </Form.Item>
+                            </Col>
 
-                            <Form.Item
-                              name={[field.name, 'email']}
-                              label="Email"
-                              rules={{
-                                required: 'Email is required',
-                                type: 'email',
-                              }}
-                            >
-                              <Input type="email" placeholder="jane@example.com" />
-                            </Form.Item>
+                            <Col xs={24} md={8}>
+                              <Form.Item
+                                name={[field.name, 'email']}
+                                label="Email"
+                                rules={{
+                                  required: 'Email is required',
+                                  type: 'email',
+                                }}
+                              >
+                                <Input type="email" placeholder="jane@example.com" />
+                              </Form.Item>
+                            </Col>
 
-                            <Form.Item
-                              name={[field.name, 'phone']}
-                              label="Phone"
-                              rules={{ required: 'Phone is required' }}
-                            >
-                              <Input placeholder="+1 (555) 987-6543" />
-                            </Form.Item>
-                          </div>
+                            <Col xs={24} md={8}>
+                              <Form.Item
+                                name={[field.name, 'phone']}
+                                label="Phone"
+                                rules={{ required: 'Phone is required' }}
+                              >
+                                <Input placeholder="+1 (555) 987-6543" />
+                              </Form.Item>
+                            </Col>
+                          </Row>
                         </Space>
                       ))}
 
@@ -366,56 +394,66 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
         )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Form.Item
-          name={[field.name, 'company']}
-          label="Company"
-          rules={{ required: 'Company is required' }}
-        >
-          <Input placeholder="Example Corp" />
-        </Form.Item>
+      <Row gutter={16}>
+        <Col xs={24} md={12}>
+          <Form.Item
+            name={[field.name, 'company']}
+            label="Company"
+            rules={{ required: 'Company is required' }}
+          >
+            <Input placeholder="Example Corp" />
+          </Form.Item>
+        </Col>
 
-        <Form.Item
-          name={[field.name, 'position']}
-          label="Position"
-          rules={{ required: 'Position is required' }}
-        >
-          <Input placeholder="Software Engineer" />
-        </Form.Item>
-      </div>
+        <Col xs={24} md={12}>
+          <Form.Item
+            name={[field.name, 'position']}
+            label="Position"
+            rules={{ required: 'Position is required' }}
+          >
+            <Input placeholder="Software Engineer" />
+          </Form.Item>
+        </Col>
+      </Row>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Form.Item
-          name={[field.name, 'startDate']}
-          label="Start Date"
-          rules={{ required: 'Start date is required' }}
-        >
-          <Input type="date" />
-        </Form.Item>
+      <Row gutter={16}>
+        <Col xs={24} md={8}>
+          <Form.Item
+            name={[field.name, 'startDate']}
+            label="Start Date"
+            rules={{ required: 'Start date is required' }}
+          >
+            <Input type="date" />
+          </Form.Item>
+        </Col>
 
-        <Form.Item
-          name={[field.name, 'endDate']}
-          label="End Date"
-          rules={{
-            required: !currentlyWorking ? 'End date is required' : false,
-            validate: (value) => {
-              if (currentlyWorking) return true
-              const startDate = form.getValues(`workExperience.${index}.startDate`)
-              if (!value || !startDate) return true
-              return value >= startDate || 'End date must be after start date'
-            },
-          }}
-        >
-          <Input type="date" disabled={currentlyWorking} />
-        </Form.Item>
+        <Col xs={24} md={8}>
+          <Form.Item
+            name={[field.name, 'endDate']}
+            label="End Date"
+            rules={{
+              required: !currentlyWorking ? 'End date is required' : false,
+              validate: (value) => {
+                if (currentlyWorking) return true
+                const startDate = form.getValues(`workExperience.${index}.startDate`)
+                if (!value || !startDate) return true
+                return value >= startDate || 'End date must be after start date'
+              },
+            }}
+          >
+            <Input type="date" disabled={currentlyWorking} />
+          </Form.Item>
+        </Col>
 
-        <Form.Item name={[field.name, 'currentlyWorking']} valuePropName="checked">
-          <label className="flex items-center gap-2 cursor-pointer mt-8">
-            <Checkbox />
-            <span>Currently working</span>
-          </label>
-        </Form.Item>
-      </div>
+        <Col xs={24} md={8}>
+          <Form.Item name={[field.name, 'currentlyWorking']} valuePropName="checked">
+            <label className="flex items-center gap-2 cursor-pointer mt-8">
+              <Checkbox />
+              <span>Currently working</span>
+            </label>
+          </Form.Item>
+        </Col>
+      </Row>
 
       <Form.Item
         name={[field.name, 'description']}

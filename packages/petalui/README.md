@@ -114,7 +114,7 @@ function App() {
 - **Divider** - Horizontal and vertical dividers with optional text
 - **Drawer** - Sidebar drawer with multiple placements
 - **Footer** - Footer component with title sections
-- **Grid** - Powerful 24-column grid system with Row and Col components
+- **Grid** - Flexible grid system with 24-column and 120-column support for precise layouts
 - **Hero** - Hero section with overlay and content wrapping
 - **Join** - Join multiple elements together seamlessly
 - **Space** - Layout component for consistent spacing between elements
