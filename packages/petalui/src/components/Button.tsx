@@ -72,8 +72,14 @@ export const Button: React.FC<ButtonProps> = ({
     .join(' ')
 
   return (
-    <button type={htmlType} className={classes} {...props}>
-      {loading && <span className="loading loading-spinner"></span>}
+    <button
+      type={htmlType}
+      className={classes}
+      aria-busy={loading ? 'true' : undefined}
+      disabled={loading || props.disabled}
+      {...props}
+    >
+      {loading && <span className="loading loading-spinner" aria-hidden="true"></span>}
       {children}
     </button>
   )
