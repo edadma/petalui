@@ -112,8 +112,23 @@ export type { LoadingProps } from './components/Loading'
 export { Masonry } from './components/Masonry'
 export type { MasonryProps } from './components/Masonry'
 
+export { Mention } from './components/Mention'
+export type { MentionProps, MentionOption } from './components/Mention'
+
 export { Menu } from './components/Menu'
 export type { MenuProps, MenuItemProps, MenuSubMenuProps, MenuTitleProps, MenuDividerProps, MenuMode } from './components/Menu'
+
+export { Browser } from './components/Browser'
+export type { BrowserProps } from './components/Browser'
+
+export { CodeMockup } from './components/CodeMockup'
+export type { CodeMockupProps, CodeMockupLineProps } from './components/CodeMockup'
+
+export { Phone } from './components/Phone'
+export type { PhoneProps } from './components/Phone'
+
+export { Window } from './components/Window'
+export type { WindowProps } from './components/Window'
 
 export { Modal } from './components/Modal'
 export type { ModalProps, ModalFuncProps } from './components/Modal'

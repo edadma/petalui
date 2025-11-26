@@ -38,7 +38,12 @@ import { LinkPage } from './pages/LinkPage'
 import { ListPage } from './pages/ListPage'
 import { LoadingPage } from './pages/LoadingPage'
 import { MasonryPage } from './pages/MasonryPage'
+import { MentionPage } from './pages/MentionPage'
 import { MenuPage } from './pages/MenuPage'
+import { PhonePage } from './pages/PhonePage'
+import { BrowserPage } from './pages/BrowserPage'
+import { WindowPage } from './pages/WindowPage'
+import { CodeMockupPage } from './pages/CodeMockupPage'
 import { ModalPage } from './pages/ModalPage'
 import { NavbarPage } from './pages/NavbarPage'
 import { NotificationPage } from './pages/NotificationPage'
@@ -190,6 +195,9 @@ function AppContent() {
               </Menu.Item>
               <Menu.Item active={isActive('/label')} onClick={() => navigate('/label')}>
                 Label
+              </Menu.Item>
+              <Menu.Item active={isActive('/mention')} onClick={() => navigate('/mention')}>
+                Mention
               </Menu.Item>
               <Menu.Item active={isActive('/radio')} onClick={() => navigate('/radio')}>
                 Radio
@@ -364,6 +372,20 @@ function AppContent() {
               <Menu.Item active={isActive('/tooltip')} onClick={() => navigate('/tooltip')}>
                 Tooltip
               </Menu.Item>
+
+              <Menu.Title>Mockup</Menu.Title>
+              <Menu.Item active={isActive('/browser')} onClick={() => navigate('/browser')}>
+                Browser
+              </Menu.Item>
+              <Menu.Item active={isActive('/code-mockup')} onClick={() => navigate('/code-mockup')}>
+                CodeMockup
+              </Menu.Item>
+              <Menu.Item active={isActive('/phone')} onClick={() => navigate('/phone')}>
+                Phone
+              </Menu.Item>
+              <Menu.Item active={isActive('/window')} onClick={() => navigate('/window')}>
+                Window
+              </Menu.Item>
             </Menu>
           </div>
         </aside>
@@ -409,6 +431,7 @@ function AppContent() {
               <Route path="/list" element={<ListPage />} />
               <Route path="/loading" element={<LoadingPage />} />
               <Route path="/masonry" element={<MasonryPage />} />
+              <Route path="/mention" element={<MentionPage />} />
               <Route path="/menu" element={<MenuPage />} />
               <Route path="/modal" element={<ModalPage />} />
               <Route path="/navbar" element={<NavbarPage />} />
@@ -443,6 +466,10 @@ function AppContent() {
               <Route path="/tree" element={<TreePage />} />
               <Route path="/tree-select" element={<TreeSelectPage />} />
               <Route path="/upload" element={<UploadPage />} />
+              <Route path="/browser" element={<BrowserPage />} />
+              <Route path="/code-mockup" element={<CodeMockupPage />} />
+              <Route path="/phone" element={<PhonePage />} />
+              <Route path="/window" element={<WindowPage />} />
             </Routes>
           </div>
         </main>
