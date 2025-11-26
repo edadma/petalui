@@ -13,14 +13,16 @@ This documentation site provides live examples and API documentation for all Pet
 
 ## Components
 
-Browse 40 components organized by category:
+Browse 75+ components organized by category:
 
-- **Actions**: Button, Dropdown
-- **Data Entry**: Checkbox, DatePicker, Fieldset, File Input, Form, Input, Label, Radio, Rating, Select, Textarea, Toggle
-- **Data Display**: Avatar, Badge, Card, Collapse, Empty, List, Stats, Steps, Table, Timeline
-- **Layout**: Divider, Drawer, Footer, Grid, Hero, Join
-- **Navigation**: Breadcrumbs, Link, Menu, Navbar, Tabs
-- **Feedback**: Alert, Loading, Modal, Notification, Progress, Tooltip
+- **General**: Typography
+- **Actions**: Button, Dropdown, ThemeController
+- **Data Entry**: Autocomplete, Cascader, Checkbox, ColorPicker, DatePicker, Fieldset, FileInput, Form, Input, InputNumber, Label, Mention, Radio, Range, Rating, Select, Textarea, TimePicker, Toggle, Transfer, TreeSelect, Upload
+- **Data Display**: Avatar, Badge, Card, Carousel, Chat, Collapse, Descriptions, Empty, Image, List, Pagination, QRCode, Stats, Steps, Table, Tag, Timeline, Tree
+- **Layout**: Divider, Drawer, Footer, Grid, Hero, Indicator, Join, Layout, Masonry, Space, Splitter
+- **Navigation**: Breadcrumb, Link, Menu, Navbar, Tabs
+- **Feedback**: Alert, Loading, Modal, Notification, Popconfirm, Popover, Progress, RadialProgress, Result, Skeleton, Tooltip
+- **Mockup**: Browser, CodeMockup, Phone, Window
 
 ## Development
 

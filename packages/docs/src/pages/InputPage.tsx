@@ -48,6 +48,17 @@ const inputApi: ApiProperty[] = [
     description: 'Additional CSS classes',
     type: 'string',
   },
+  {
+    property: 'mask',
+    description: 'Input mask pattern. Use # for digits, A for letters, * for alphanumeric',
+    type: 'string',
+  },
+  {
+    property: 'maskPlaceholder',
+    description: 'Placeholder character shown in mask',
+    type: 'string',
+    default: "'_'",
+  },
 ]
 
 export function InputPage() {
@@ -219,6 +230,46 @@ const App: React.FC = () => (
 export default App`}
         >
           <Input defaultValue="Pre-filled value" />
+        </ExampleSection>
+
+        <ExampleSection
+          title="Input Mask - Phone"
+          description="Mask for US phone number format."
+          code={`<Input mask="(###) ###-####" placeholder="Phone number" />`}
+        >
+          <Input mask="(###) ###-####" />
+        </ExampleSection>
+
+        <ExampleSection
+          title="Input Mask - Credit Card"
+          description="Mask for credit card number."
+          code={`<Input mask="#### #### #### ####" placeholder="Card number" />`}
+        >
+          <Input mask="#### #### #### ####" />
+        </ExampleSection>
+
+        <ExampleSection
+          title="Input Mask - Date"
+          description="Mask for date format MM/DD/YYYY."
+          code={`<Input mask="##/##/####" placeholder="MM/DD/YYYY" />`}
+        >
+          <Input mask="##/##/####" />
+        </ExampleSection>
+
+        <ExampleSection
+          title="Input Mask - SSN"
+          description="Mask for Social Security Number."
+          code={`<Input mask="###-##-####" placeholder="SSN" />`}
+        >
+          <Input mask="###-##-####" />
+        </ExampleSection>
+
+        <ExampleSection
+          title="Input Mask - Custom Placeholder"
+          description="Use a different placeholder character."
+          code={`<Input mask="AA-####" maskPlaceholder="·" placeholder="Code" />`}
+        >
+          <Input mask="AA-####" maskPlaceholder="·" />
         </ExampleSection>
       </Masonry>
 

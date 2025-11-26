@@ -98,9 +98,10 @@ function App() {
 - **Fieldset** - Fieldset container with legend
 - **FileInput** - File input with sizes and colors
 - **Form** - Form component with React Hook Form integration and validation
-- **Input** - Text inputs with multiple types, sizes, and colors
+- **Input** - Text inputs with types, sizes, colors, and input masking
 - **InputNumber** - Numeric input with increment/decrement controls
 - **Label** - Form labels with required indicator and floating labels
+- **Mention** - Input with @mention support for tagging users
 - **Radio** - Radio buttons with group support
 - **Range** - Range slider with min, max, and step support
 - **Rating** - Star rating component
@@ -143,6 +144,7 @@ function App() {
 - **Layout** - Page layout with Header, Sider, Content, and Footer
 - **Masonry** - Responsive masonry grid layout
 - **Space** - Layout component for consistent spacing between elements
+- **Splitter** - Resizable split panes for adjustable layouts
 
 ### Navigation
 - **Breadcrumb** - Breadcrumb navigation trail
@@ -163,6 +165,12 @@ function App() {
 - **Result** - Result pages for operation outcomes
 - **Skeleton** - Loading placeholder with animated shimmer effect
 - **Tooltip** - Tooltips with multiple placements
+
+### Mockup
+- **Browser** - Browser window mockup with URL bar
+- **CodeMockup** - Terminal-style code display
+- **Phone** - iPhone-style phone frame mockup
+- **Window** - OS-style window frame mockup
 
 ## Development
 
