@@ -8,45 +8,35 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
 }
 
+const gapClasses = {
+  xs: 'gap-1',
+  sm: 'gap-2',
+  md: 'gap-4',
+  lg: 'gap-6',
+  xl: 'gap-8',
+} as const
+
+const alignClasses = {
+  start: 'items-start',
+  end: 'items-end',
+  center: 'items-center',
+  baseline: 'items-baseline',
+  stretch: 'items-stretch',
+} as const
+
 export const Space: React.FC<SpaceProps> = ({
   direction = 'vertical',
   size = 'md',
   align,
   wrap = false,
   className = '',
+  style,
   children,
   ...rest
 }) => {
-  const getGapClass = () => {
-    if (typeof size === 'number') {
-      return `gap-[${size}px]`
-    }
-
-    const gapClasses = {
-      xs: 'gap-1',
-      sm: 'gap-2',
-      md: 'gap-4',
-      lg: 'gap-6',
-      xl: 'gap-8',
-    }
-
-    return gapClasses[size]
-  }
-
-  const getAlignClass = () => {
-    if (!align) return ''
-    const alignClasses = {
-      start: 'items-start',
-      end: 'items-end',
-      center: 'items-center',
-      baseline: 'items-baseline',
-      stretch: 'items-stretch',
-    }
-    return alignClasses[align]
-  }
-
-  const gapClass = getGapClass()
-  const alignClass = getAlignClass()
+  const isNumericSize = typeof size === 'number'
+  const gapClass = isNumericSize ? '' : gapClasses[size]
+  const alignClass = align ? alignClasses[align] : ''
   const wrapClass = wrap ? 'flex-wrap' : ''
   const directionClass = direction === 'horizontal' ? 'flex-row' : 'flex-col'
 
@@ -59,5 +49,10 @@ export const Space: React.FC<SpaceProps> = ({
     className
   ].filter(Boolean).join(' ')
 
-  return <div className={classes} {...rest}>{children}</div>
+  const combinedStyle: React.CSSProperties = {
+    ...style,
+    ...(isNumericSize ? { gap: `${size}px` } : {}),
+  }
+
+  return <div className={classes} style={combinedStyle} {...rest}>{children}</div>
 }
