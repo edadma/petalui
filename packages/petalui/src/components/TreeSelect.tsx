@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react'
 import type { TreeDataNode } from './Tree'
 
-export interface TreeSelectProps {
+export interface TreeSelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   treeData: TreeDataNode[]
   value?: string | string[]
   defaultValue?: string | string[]
@@ -17,7 +17,6 @@ export interface TreeSelectProps {
   treeExpandedKeys?: string[]
   onTreeExpand?: (expandedKeys: string[]) => void
   size?: 'xs' | 'sm' | 'md' | 'lg'
-  className?: string
 }
 
 // Helper to flatten tree data for search
@@ -210,6 +209,7 @@ export function TreeSelect({
   onTreeExpand,
   size = 'md',
   className = '',
+  ...rest
 }: TreeSelectProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [searchValue, setSearchValue] = useState('')
@@ -461,7 +461,7 @@ export function TreeSelect({
   }
 
   return (
-    <div ref={containerRef} className={`relative ${className}`}>
+    <div ref={containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       {/* Trigger */}
       <div
         className={[

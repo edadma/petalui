@@ -4,7 +4,7 @@ export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type AvatarShape = 'circle' | 'square'
 export type AvatarStatus = 'online' | 'offline'
 
-export interface AvatarProps {
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   src?: string
   alt?: string
   icon?: React.ReactNode
@@ -12,20 +12,16 @@ export interface AvatarProps {
   size?: AvatarSize
   shape?: AvatarShape
   status?: AvatarStatus
-  className?: string
-  style?: React.CSSProperties
   // Legacy props for backwards compatibility
   online?: boolean
   offline?: boolean
   placeholder?: boolean
 }
 
-export interface AvatarGroupProps {
+export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   max?: number
   size?: AvatarSize
-  className?: string
-  style?: React.CSSProperties
 }
 
 function AvatarRoot({
@@ -42,6 +38,7 @@ function AvatarRoot({
   online,
   offline,
   placeholder,
+  ...rest
 }: AvatarProps) {
   const sizeClasses: Record<AvatarSize, string> = {
     xs: 'w-8',
@@ -75,7 +72,7 @@ function AvatarRoot({
   // Image avatar
   if (src) {
     return (
-      <div className={avatarClasses} style={style}>
+      <div className={avatarClasses} style={style} {...rest}>
         <div className={innerClasses}>
           <img src={src} alt={alt} />
         </div>
@@ -88,7 +85,7 @@ function AvatarRoot({
 
   if (content) {
     return (
-      <div className={avatarClasses} style={style}>
+      <div className={avatarClasses} style={style} {...rest}>
         <div className={innerClasses}>
           <div className="bg-neutral text-neutral-content flex items-center justify-center w-full h-full">
             {content}
@@ -100,7 +97,7 @@ function AvatarRoot({
 
   // Empty avatar
   return (
-    <div className={avatarClasses} style={style}>
+    <div className={avatarClasses} style={style} {...rest}>
       <div className={innerClasses}>
         <div className="bg-neutral-focus text-neutral-content w-full h-full" />
       </div>
@@ -108,7 +105,7 @@ function AvatarRoot({
   )
 }
 
-function AvatarGroup({ children, max, size, className = '', style }: AvatarGroupProps) {
+function AvatarGroup({ children, max, size, className = '', style, ...rest }: AvatarGroupProps) {
   const avatars = React.Children.toArray(children)
   const displayAvatars = max ? avatars.slice(0, max) : avatars
   const remainingCount = max && avatars.length > max ? avatars.length - max : 0
@@ -122,7 +119,7 @@ function AvatarGroup({ children, max, size, className = '', style }: AvatarGroup
   }
 
   return (
-    <div className={`avatar-group -space-x-6 rtl:space-x-reverse ${className}`} style={style}>
+    <div className={`avatar-group -space-x-6 rtl:space-x-reverse ${className}`} style={style} {...rest}>
       {displayAvatars}
       {remainingCount > 0 && (
         <div className="avatar placeholder">

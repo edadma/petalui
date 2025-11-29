@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useId, useState } from 'react'
 
-export interface CollapseProps {
+export interface CollapseProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'onChange'> {
   children: React.ReactNode
   title?: React.ReactNode
   open?: boolean
   defaultOpen?: boolean
   onChange?: (open: boolean) => void
   icon?: 'arrow' | 'plus' | 'none'
-  className?: string
 }
 
 export interface CollapseTitleProps {
@@ -36,6 +35,7 @@ function CollapseRoot({
   onChange,
   icon = 'arrow',
   className = '',
+  ...rest
 }: CollapseProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen)
   const isOpen = open !== undefined ? open : internalOpen
@@ -69,7 +69,7 @@ function CollapseRoot({
   // If title prop is provided, render with automatic structure
   if (title !== undefined) {
     return (
-      <div className={classes}>
+      <div className={classes} data-state={isOpen ? 'open' : 'closed'} {...rest}>
         <input
           type="checkbox"
           id={checkboxId}
@@ -89,7 +89,7 @@ function CollapseRoot({
   // Otherwise, use compound component pattern with Context
   return (
     <CollapseContext.Provider value={{ isOpen, toggle, checkboxId }}>
-      <div className={classes}>
+      <div className={classes} data-state={isOpen ? 'open' : 'closed'} {...rest}>
         <input
           type="checkbox"
           id={checkboxId}

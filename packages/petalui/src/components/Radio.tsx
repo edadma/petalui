@@ -80,6 +80,8 @@ const RadioRoot = forwardRef<HTMLInputElement, RadioProps>(
     }
     const name = groupContext?.name || nameProp
 
+    const dataState = isChecked ? 'checked' : 'unchecked'
+
     const input = (
       <input
         ref={ref}
@@ -89,6 +91,7 @@ const RadioRoot = forwardRef<HTMLInputElement, RadioProps>(
         checked={isChecked}
         onChange={handleChange}
         name={name}
+        data-state={dataState}
         {...props}
       />
     )

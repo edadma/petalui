@@ -1,34 +1,34 @@
 import React from 'react'
 
-export interface CodeMockupLineProps {
+export interface CodeMockupLineProps extends React.HTMLAttributes<HTMLPreElement> {
   children: React.ReactNode
   prefix?: string
-  className?: string
 }
 
 const Line: React.FC<CodeMockupLineProps> = ({
   children,
   prefix = '$',
   className = '',
+  ...rest
 }) => {
   return (
-    <pre data-prefix={prefix} className={className}>
+    <pre data-prefix={prefix} className={className} {...rest}>
       <code>{children}</code>
     </pre>
   )
 }
 
-export interface CodeMockupProps {
+export interface CodeMockupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  className?: string
 }
 
 export const CodeMockup: React.FC<CodeMockupProps> & { Line: typeof Line } = ({
   children,
   className = '',
+  ...rest
 }) => {
   return (
-    <div className={`mockup-code ${className}`}>
+    <div className={`mockup-code ${className}`} {...rest}>
       {children}
     </div>
   )

@@ -1,12 +1,11 @@
 import React from 'react'
 
-export interface DrawerProps {
+export interface DrawerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   children: React.ReactNode
   sidebar: React.ReactNode
   open?: boolean
   onOpenChange?: (open: boolean) => void
   end?: boolean
-  className?: string
   sidebarClassName?: string
 }
 
@@ -18,6 +17,7 @@ export const Drawer: React.FC<DrawerProps> = ({
   end = false,
   className = '',
   sidebarClassName = '',
+  ...rest
 }) => {
   const drawerId = React.useId()
 
@@ -34,7 +34,7 @@ export const Drawer: React.FC<DrawerProps> = ({
     .join(' ')
 
   return (
-    <div className={drawerClasses}>
+    <div className={drawerClasses} data-state={open ? 'open' : 'closed'} {...rest}>
       <input
         id={drawerId}
         type="checkbox"

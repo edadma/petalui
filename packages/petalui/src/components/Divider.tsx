@@ -1,11 +1,10 @@
 import React from 'react'
 
-export interface DividerProps {
+export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode
   orientation?: 'horizontal' | 'vertical'
   position?: 'start' | 'center' | 'end'
   type?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error'
-  className?: string
 }
 
 export function Divider({
@@ -14,6 +13,7 @@ export function Divider({
   position = 'center',
   type,
   className = '',
+  ...rest
 }: DividerProps) {
   const positionClasses: Record<string, string> = {
     start: 'divider-start',
@@ -42,5 +42,5 @@ export function Divider({
     .filter(Boolean)
     .join(' ')
 
-  return <div className={classes}>{children}</div>
+  return <div className={classes} {...rest}>{children}</div>
 }

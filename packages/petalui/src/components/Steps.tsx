@@ -1,25 +1,23 @@
 import React from 'react'
 
-export interface StepsProps {
+export interface StepsProps extends React.HTMLAttributes<HTMLUListElement> {
   children: React.ReactNode
   vertical?: boolean
-  className?: string
 }
 
-export interface StepProps {
+export interface StepProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'color'> {
   children: React.ReactNode
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
   dataContent?: string
-  className?: string
 }
 
-function StepsRoot({ children, vertical = false, className = '' }: StepsProps) {
+function StepsRoot({ children, vertical = false, className = '', ...rest }: StepsProps) {
   const classes = ['steps', vertical && 'steps-vertical', className].filter(Boolean).join(' ')
 
-  return <ul className={classes}>{children}</ul>
+  return <ul className={classes} {...rest}>{children}</ul>
 }
 
-function Step({ children, color, dataContent, className = '' }: StepProps) {
+function Step({ children, color, dataContent, className = '', ...rest }: StepProps) {
   const colorClasses = {
     neutral: 'step-neutral',
     primary: 'step-primary',
@@ -34,7 +32,7 @@ function Step({ children, color, dataContent, className = '' }: StepProps) {
   const classes = ['step', color && colorClasses[color], className].filter(Boolean).join(' ')
 
   return (
-    <li className={classes} data-content={dataContent}>
+    <li className={classes} data-content={dataContent} {...rest}>
       {children}
     </li>
   )

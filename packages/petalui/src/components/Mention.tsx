@@ -8,7 +8,7 @@ export interface MentionOption {
   disabled?: boolean
 }
 
-export interface MentionProps {
+export interface MentionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSelect' | 'defaultValue' | 'prefix'> {
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
@@ -25,7 +25,6 @@ export interface MentionProps {
   autoSize?: boolean | { minRows?: number; maxRows?: number }
   notFoundContent?: React.ReactNode
   filterOption?: boolean | ((input: string, option: MentionOption) => boolean)
-  className?: string
   dropdownClassName?: string
 }
 
@@ -48,6 +47,7 @@ export const Mention: React.FC<MentionProps> = ({
   filterOption = true,
   className = '',
   dropdownClassName = '',
+  ...rest
 }) => {
   const [internalValue, setInternalValue] = useState(defaultValue)
   const currentValue = value !== undefined ? value : internalValue
@@ -327,7 +327,7 @@ export const Mention: React.FC<MentionProps> = ({
   )
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       {/* Hidden measure element for cursor position */}
       <div
         ref={measureRef}

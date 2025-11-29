@@ -1,15 +1,15 @@
 import React from 'react'
 
-export interface ContainerProps {
+export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   size?: 'sm' | 'md' | 'lg' | 'xl' | 'full'
-  className?: string
 }
 
 export const Container: React.FC<ContainerProps> = ({
   children,
   size = 'lg',
   className = '',
+  ...rest
 }) => {
   const sizeClasses = {
     sm: 'max-w-2xl',
@@ -23,5 +23,5 @@ export const Container: React.FC<ContainerProps> = ({
     .filter(Boolean)
     .join(' ')
 
-  return <div className={classes}>{children}</div>
+  return <div className={classes} {...rest}>{children}</div>
 }

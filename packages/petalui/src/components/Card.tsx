@@ -1,12 +1,10 @@
 import React from 'react'
 
-export interface CardProps {
+export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   children: React.ReactNode
   title?: React.ReactNode
   cover?: React.ReactNode
   actions?: React.ReactNode
-  className?: string
-  style?: React.CSSProperties
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   bordered?: boolean
   side?: boolean
@@ -19,14 +17,12 @@ export interface CardProps {
   description?: React.ReactNode
 }
 
-export interface CardGridProps {
+export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   hoverable?: boolean
-  className?: string
-  style?: React.CSSProperties
 }
 
-function CardGrid({ children, hoverable = false, className = '', style }: CardGridProps) {
+function CardGrid({ children, hoverable = false, className = '', style, ...rest }: CardGridProps) {
   const classes = [
     'p-6 border border-base-content/10',
     hoverable && 'cursor-pointer hover:shadow-md transition-shadow',
@@ -36,7 +32,7 @@ function CardGrid({ children, hoverable = false, className = '', style }: CardGr
     .join(' ')
 
   return (
-    <div className={classes} style={style}>
+    <div className={classes} style={style} {...rest}>
       {children}
     </div>
   )
@@ -58,6 +54,7 @@ function CardRoot({
   hoverable = false,
   avatar,
   description,
+  ...rest
 }: CardProps) {
   const sizeClasses: Record<string, string> = {
     xs: 'card-xs',
@@ -88,7 +85,7 @@ function CardRoot({
 
   if (loading) {
     return (
-      <div className={classes} style={style}>
+      <div className={classes} style={style} {...rest}>
         {cover && (
           <figure>
             <div className="skeleton h-48 w-full rounded-none" />
@@ -129,7 +126,7 @@ function CardRoot({
   const hasMetaLayout = avatar || (title && description)
 
   return (
-    <div className={classes} style={style}>
+    <div className={classes} style={style} {...rest}>
       {cover && <figure>{cover}</figure>}
       <div className="card-body">
         {hasMetaLayout ? (

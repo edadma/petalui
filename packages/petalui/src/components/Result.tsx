@@ -2,15 +2,13 @@ import React from 'react'
 
 export type ResultStatus = 'success' | 'error' | 'info' | 'warning' | '404' | '403' | '500'
 
-export interface ResultProps {
+export interface ResultProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   status?: ResultStatus
   title?: React.ReactNode
   subTitle?: React.ReactNode
   icon?: React.ReactNode
   extra?: React.ReactNode
   children?: React.ReactNode
-  className?: string
-  style?: React.CSSProperties
 }
 
 const defaultIcons: Record<ResultStatus, React.ReactNode> = {
@@ -93,14 +91,15 @@ export const Result: React.FC<ResultProps> = ({
   extra,
   children,
   className = '',
-  style,
+  ...rest
 }) => {
   const displayIcon = icon !== undefined ? icon : defaultIcons[status]
 
   return (
     <div
       className={`w-full flex flex-col items-center justify-center text-center p-8 ${className}`}
-      style={style}
+      data-status={status}
+      {...rest}
     >
       {displayIcon && <div className="mb-6">{displayIcon}</div>}
 

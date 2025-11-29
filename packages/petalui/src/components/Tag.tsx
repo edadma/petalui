@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export interface TagProps {
+export interface TagProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
   closable?: boolean
   closeIcon?: React.ReactNode
   onClose?: () => void
@@ -8,15 +8,13 @@ export interface TagProps {
   icon?: React.ReactNode
   size?: 'xs' | 'sm' | 'md' | 'lg'
   children?: React.ReactNode
-  className?: string
 }
 
-export interface CheckableTagProps {
+export interface CheckableTagProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
   checked?: boolean
   onChange?: (checked: boolean) => void
   icon?: React.ReactNode
   children?: React.ReactNode
-  className?: string
 }
 
 export const Tag: React.FC<TagProps> = ({
@@ -28,6 +26,7 @@ export const Tag: React.FC<TagProps> = ({
   size = 'md',
   children,
   className = '',
+  ...rest
 }) => {
   const [visible, setVisible] = useState(true)
 
@@ -82,7 +81,7 @@ export const Tag: React.FC<TagProps> = ({
   const customColorStyle = color && !getColorClass() ? { backgroundColor: color, borderColor: color } : undefined
 
   return (
-    <span className={tagClasses} style={customColorStyle}>
+    <span className={tagClasses} style={customColorStyle} {...rest}>
       {icon && <span className="inline-flex">{icon}</span>}
       {children}
       {closable && (
@@ -119,6 +118,7 @@ export const CheckableTag: React.FC<CheckableTagProps> = ({
   icon,
   children,
   className = '',
+  ...rest
 }) => {
   const handleClick = () => {
     onChange?.(!checked)
@@ -133,7 +133,7 @@ export const CheckableTag: React.FC<CheckableTagProps> = ({
     .join(' ')
 
   return (
-    <span className={tagClasses} onClick={handleClick} role="checkbox" aria-checked={checked}>
+    <span className={tagClasses} onClick={handleClick} role="checkbox" aria-checked={checked} {...rest}>
       {icon && <span className="inline-flex">{icon}</span>}
       {children}
     </span>

@@ -1,11 +1,10 @@
 import React from 'react'
 
-export interface SkeletonProps {
+export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number
   height?: string | number
   circle?: boolean
   variant?: 'default' | 'text'
-  className?: string
   children?: React.ReactNode
 }
 
@@ -16,6 +15,8 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   variant = 'default',
   className = '',
   children,
+  style,
+  ...rest
 }) => {
   const getClasses = () => {
     const classes = ['skeleton']
@@ -50,7 +51,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   }
 
   return (
-    <div className={getClasses()} style={getStyles()}>
+    <div className={getClasses()} style={{ ...getStyles(), ...style }} {...rest}>
       {children}
     </div>
   )

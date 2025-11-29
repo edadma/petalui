@@ -169,6 +169,8 @@ const CheckboxRoot = forwardRef<HTMLInputElement, CheckboxProps>(
       [indeterminate, ref]
     )
 
+    const dataState = indeterminate ? 'indeterminate' : isChecked ? 'checked' : 'unchecked'
+
     const checkboxInput = (
       <input
         ref={checkboxRef}
@@ -178,6 +180,7 @@ const CheckboxRoot = forwardRef<HTMLInputElement, CheckboxProps>(
         checked={isChecked}
         onChange={handleChange}
         disabled={isDisabled}
+        data-state={dataState}
         {...props}
       />
     )

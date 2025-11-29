@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 
-export interface TabsProps {
+export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   children: React.ReactNode
   activeKey?: string
   defaultActiveKey?: string
   onChange?: (key: string) => void
   variant?: 'box' | 'border' | 'lift'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  className?: string
 }
 
 export interface TabPanelProps {
@@ -25,6 +24,7 @@ function TabsRoot({
   variant,
   size,
   className = '',
+  ...rest
 }: TabsProps) {
   // Get all panel children
   const panels = React.Children.toArray(children).filter(
@@ -65,21 +65,26 @@ function TabsRoot({
   const activePanel = panels.find((panel) => panel.props.tabKey === currentActiveKey)
 
   return (
-    <div>
+    <div {...rest}>
       <div role="tablist" className={classes}>
-        {panels.map((panel) => (
-          <button
-            key={panel.props.tabKey}
-            role="tab"
-            className={`tab ${currentActiveKey === panel.props.tabKey ? 'tab-active' : ''} ${
-              panel.props.disabled ? 'tab-disabled' : ''
-            }`}
-            onClick={() => !panel.props.disabled && handleTabClick(panel.props.tabKey)}
-            disabled={panel.props.disabled}
-          >
-            {panel.props.tab}
-          </button>
-        ))}
+        {panels.map((panel) => {
+          const isActive = currentActiveKey === panel.props.tabKey
+          return (
+            <button
+              key={panel.props.tabKey}
+              role="tab"
+              className={`tab ${isActive ? 'tab-active' : ''} ${
+                panel.props.disabled ? 'tab-disabled' : ''
+              }`}
+              onClick={() => !panel.props.disabled && handleTabClick(panel.props.tabKey)}
+              disabled={panel.props.disabled}
+              data-state={isActive ? 'active' : 'inactive'}
+              aria-selected={isActive}
+            >
+              {panel.props.tab}
+            </button>
+          )
+        })}
       </div>
       {activePanel && <div className="mt-4">{activePanel.props.children}</div>}
     </div>

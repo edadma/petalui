@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 
-export interface ColorPickerProps {
+export interface ColorPickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string
   onChange?: (color: string) => void
   mode?: 'swatches' | 'picker' | 'both'
   presets?: string[]
   size?: 'xs' | 'sm' | 'md' | 'lg'
   disabled?: boolean
-  className?: string
 }
 
 const DEFAULT_PRESETS = [
@@ -90,6 +89,7 @@ export function ColorPicker({
   size = 'md',
   disabled = false,
   className = '',
+  ...rest
 }: ColorPickerProps) {
   const [hsl, setHsl] = useState(() => hexToHsl(value))
   const [hexInput, setHexInput] = useState(value)
@@ -211,7 +211,7 @@ export function ColorPicker({
   const hueX = hsl.h / 360
 
   return (
-    <div className={`inline-flex flex-col gap-3 ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`}>
+    <div className={`inline-flex flex-col gap-3 ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`} {...rest}>
       {showPicker && (
         <>
           {/* Saturation/Lightness Panel */}

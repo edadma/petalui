@@ -13,7 +13,7 @@ export type BadgePosition =
 
 export type BadgeStatus = 'success' | 'processing' | 'error' | 'default' | 'warning'
 
-export interface BadgeProps {
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
   // Count mode
   count?: number
   showZero?: boolean
@@ -39,7 +39,6 @@ export interface BadgeProps {
 
   // Content
   children?: React.ReactNode
-  className?: string
 }
 
 export const Badge: React.FC<BadgeProps> = ({
@@ -58,6 +57,7 @@ export const Badge: React.FC<BadgeProps> = ({
   dot = false,
   outline = false,
   className = '',
+  ...rest
 }) => {
   const typeClasses = {
     default: '',
@@ -132,7 +132,7 @@ export const Badge: React.FC<BadgeProps> = ({
   if (status && !children) {
     const statusType = statusTypeMap[status]
     return (
-      <span className={`inline-flex items-center gap-2 ${className}`}>
+      <span className={`inline-flex items-center gap-2 ${className}`} {...rest}>
         <span
           className={[
             'badge badge-xs w-2 h-2 p-0',
@@ -160,7 +160,7 @@ export const Badge: React.FC<BadgeProps> = ({
     ].join(' ')
 
     return (
-      <div className="relative inline-block">
+      <div className={`relative inline-block ${className}`} {...rest}>
         {children}
         <div className={ribbonClasses}>{ribbon}</div>
       </div>
@@ -177,7 +177,7 @@ export const Badge: React.FC<BadgeProps> = ({
         : undefined
 
     return (
-      <div className="indicator inline-block">
+      <div className={`indicator inline-block ${className}`} {...rest}>
         {shouldShowBadge && (
           <span
             className={[
@@ -186,7 +186,6 @@ export const Badge: React.FC<BadgeProps> = ({
               typeClasses[type],
               dot ? 'badge-xs p-0 w-2 h-2' : sizeClasses[size],
               outline && 'badge-outline',
-              className,
             ]
               .filter(Boolean)
               .join(' ')}
@@ -213,5 +212,5 @@ export const Badge: React.FC<BadgeProps> = ({
 
   const displayContent = getDisplayCount()
 
-  return <span className={badgeClasses}>{displayContent}</span>
+  return <span className={badgeClasses} {...rest}>{displayContent}</span>
 }

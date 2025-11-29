@@ -1,8 +1,7 @@
 import React from 'react'
 
-export interface EmptyProps {
+export interface EmptyProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode
-  className?: string
   description?: React.ReactNode
   image?: React.ReactNode
   imageStyle?: React.CSSProperties
@@ -72,13 +71,14 @@ export const Empty: React.FC<EmptyProps> = ({
   description = 'No Data',
   image,
   imageStyle,
+  ...rest
 }) => {
   const classes = ['flex flex-col items-center justify-center py-8 px-4', className]
     .filter(Boolean)
     .join(' ')
 
   return (
-    <div className={classes}>
+    <div className={classes} {...rest}>
       <div className="mb-2" style={imageStyle}>
         {image === undefined ? <DefaultEmptyImage /> : image}
       </div>

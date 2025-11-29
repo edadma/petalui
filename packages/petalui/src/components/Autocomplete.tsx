@@ -5,7 +5,7 @@ export interface AutocompleteOption {
   label: string
 }
 
-export interface AutocompleteProps {
+export interface AutocompleteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
@@ -13,7 +13,6 @@ export interface AutocompleteProps {
   placeholder?: string
   disabled?: boolean
   size?: 'xs' | 'sm' | 'md' | 'lg'
-  className?: string
   allowCustomValue?: boolean
   filterOption?: (option: AutocompleteOption, inputValue: string) => boolean
   notFoundContent?: React.ReactNode
@@ -31,6 +30,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   allowCustomValue = true,
   filterOption,
   notFoundContent = 'No results found',
+  ...rest
 }) => {
   // Normalize options to AutocompleteOption[]
   const options: AutocompleteOption[] = rawOptions.map((opt) =>
@@ -142,7 +142,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   }, [highlightedIndex])
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       <input
         ref={inputRef}
         type="text"

@@ -1,8 +1,7 @@
 import React from 'react'
 
-export interface AlertProps {
+export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  className?: string
   type?: 'info' | 'success' | 'warning' | 'error'
   outline?: boolean
   dash?: boolean
@@ -18,6 +17,7 @@ export const Alert: React.FC<AlertProps> = ({
   dash = false,
   soft = false,
   vertical = false,
+  ...rest
 }) => {
   const typeClasses = {
     info: 'alert-info',
@@ -39,7 +39,7 @@ export const Alert: React.FC<AlertProps> = ({
     .join(' ')
 
   return (
-    <div role="alert" className={classes}>
+    <div role="alert" className={classes} {...rest}>
       {children}
     </div>
   )

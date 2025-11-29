@@ -12,7 +12,7 @@ export interface TreeDataNode {
   isLeaf?: boolean
 }
 
-export interface TreeProps {
+export interface TreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   treeData: TreeDataNode[]
   checkable?: boolean
   selectable?: boolean
@@ -29,7 +29,6 @@ export interface TreeProps {
   onCheck?: (checkedKeys: string[], info: { node: TreeDataNode; checked: boolean }) => void
   showLine?: boolean
   showIcon?: boolean
-  className?: string
 }
 
 // Helper to get all keys from tree data
@@ -231,6 +230,7 @@ export function Tree({
   showLine = false,
   showIcon = false,
   className = '',
+  ...rest
 }: TreeProps) {
   // Initialize expanded keys
   const initialExpandedKeys = useMemo(() => {
@@ -407,5 +407,5 @@ export function Tree({
     ]
   )
 
-  return <div className={`tree ${className}`}>{renderNodes(treeData, 0)}</div>
+  return <div className={`tree ${className}`} {...rest}>{renderNodes(treeData, 0)}</div>
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface ChatProps {
+export interface ChatProps extends React.HTMLAttributes<HTMLDivElement> {
   message: React.ReactNode
   position?: 'start' | 'end'
   avatar?: string
@@ -8,7 +8,6 @@ export interface ChatProps {
   header?: React.ReactNode
   footer?: React.ReactNode
   color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error'
-  className?: string
 }
 
 export const Chat: React.FC<ChatProps> = ({
@@ -20,6 +19,7 @@ export const Chat: React.FC<ChatProps> = ({
   footer,
   color,
   className = '',
+  ...rest
 }) => {
   const positionClass = position === 'start' ? 'chat-start' : 'chat-end'
 
@@ -40,7 +40,7 @@ export const Chat: React.FC<ChatProps> = ({
   }
 
   return (
-    <div className={`chat ${positionClass} ${className}`}>
+    <div className={`chat ${positionClass} ${className}`} {...rest}>
       {avatar && (
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">

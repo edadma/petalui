@@ -1,13 +1,12 @@
 import React from 'react'
 
-export interface RadialProgressProps {
+export interface RadialProgressProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   value: number
   size?: string | number
   thickness?: string | number
   color?: 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
   showValue?: boolean
   children?: React.ReactNode
-  className?: string
 }
 
 export const RadialProgress: React.FC<RadialProgressProps> = ({
@@ -18,6 +17,8 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
   showValue = true,
   children,
   className = '',
+  style,
+  ...rest
 }) => {
   const getClasses = () => {
     const classes = ['radial-progress']
@@ -52,11 +53,12 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
   return (
     <div
       className={getClasses()}
-      style={getStyle()}
+      style={{ ...getStyle(), ...style }}
       role="progressbar"
       aria-valuenow={value}
       aria-valuemin={0}
       aria-valuemax={100}
+      {...rest}
     >
       {children !== undefined ? children : showValue ? `${value}%` : null}
     </div>

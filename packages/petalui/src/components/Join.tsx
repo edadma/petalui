@@ -1,12 +1,11 @@
 import React from 'react'
 
-export interface JoinProps {
+export interface JoinProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   vertical?: boolean
-  className?: string
 }
 
-export function Join({ children, vertical = false, className = '' }: JoinProps) {
+export function Join({ children, vertical = false, className = '', ...rest }: JoinProps) {
   const classes = ['join', vertical && 'join-vertical', className].filter(Boolean).join(' ')
 
   // Automatically add join-item class to all children
@@ -22,5 +21,5 @@ export function Join({ children, vertical = false, className = '' }: JoinProps) 
     return child
   })
 
-  return <div className={classes}>{childrenWithJoinItem}</div>
+  return <div className={classes} {...rest}>{childrenWithJoinItem}</div>
 }

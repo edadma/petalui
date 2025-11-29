@@ -7,7 +7,7 @@ export interface TransferItem {
   disabled?: boolean
 }
 
-export interface TransferProps {
+export interface TransferProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   dataSource: TransferItem[]
   targetKeys?: string[]
   defaultTargetKeys?: string[]
@@ -20,7 +20,6 @@ export interface TransferProps {
   showSelectAll?: boolean
   disabled?: boolean
   listStyle?: React.CSSProperties
-  className?: string
 }
 
 interface TransferListProps {
@@ -176,6 +175,7 @@ export function Transfer({
   disabled = false,
   listStyle,
   className = '',
+  ...rest
 }: TransferProps) {
   const [internalTargetKeys, setInternalTargetKeys] = useState<string[]>(defaultTargetKeys)
   const [sourceSelectedKeys, setSourceSelectedKeys] = useState<string[]>([])
@@ -263,7 +263,7 @@ export function Transfer({
   })
 
   return (
-    <div className={`flex items-center gap-4 ${className}`}>
+    <div className={`flex items-center gap-4 ${className}`} {...rest}>
       {/* Source list */}
       <TransferList
         items={sourceItems}

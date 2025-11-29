@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useCallback, useId } from '
 
 export type MenuMode = 'vertical' | 'horizontal' | 'inline'
 
-export interface MenuProps {
+export interface MenuProps extends Omit<React.HTMLAttributes<HTMLUListElement>, 'onSelect'> {
   children: React.ReactNode
   mode?: MenuMode
   selectedKeys?: string[]
@@ -11,10 +11,9 @@ export interface MenuProps {
   defaultOpenKeys?: string[]
   onSelect?: (key: string) => void
   onOpenChange?: (openKeys: string[]) => void
-  className?: string
 }
 
-export interface MenuItemProps {
+export interface MenuItemProps extends Omit<React.HTMLAttributes<HTMLAnchorElement>, 'onClick'> {
   children: React.ReactNode
   itemKey?: string
   icon?: React.ReactNode
@@ -22,26 +21,21 @@ export interface MenuItemProps {
   onClick?: () => void
   /** @deprecated Use itemKey and selectedKeys instead */
   active?: boolean
-  className?: string
 }
 
-export interface MenuSubMenuProps {
+export interface MenuSubMenuProps extends React.HTMLAttributes<HTMLLIElement> {
   children: React.ReactNode
   itemKey: string
   label: React.ReactNode
   icon?: React.ReactNode
   disabled?: boolean
-  className?: string
 }
 
-export interface MenuTitleProps {
+export interface MenuTitleProps extends React.HTMLAttributes<HTMLLIElement> {
   children: React.ReactNode
-  className?: string
 }
 
-export interface MenuDividerProps {
-  className?: string
-}
+export interface MenuDividerProps extends React.HTMLAttributes<HTMLLIElement> {}
 
 interface MenuContextValue {
   mode: MenuMode
@@ -71,6 +65,7 @@ function MenuRoot({
   onSelect,
   onOpenChange,
   className = '',
+  ...rest
 }: MenuProps) {
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<string[]>(defaultSelectedKeys)
   const [internalOpenKeys, setInternalOpenKeys] = useState<string[]>(defaultOpenKeys)
@@ -120,7 +115,7 @@ function MenuRoot({
         onToggleOpen: handleToggleOpen,
       }}
     >
-      <ul className={menuClasses}>{children}</ul>
+      <ul className={menuClasses} {...rest}>{children}</ul>
     </MenuContext.Provider>
   )
 }
@@ -133,6 +128,7 @@ function MenuItem({
   onClick,
   active,
   className = '',
+  ...rest
 }: MenuItemProps) {
   const context = useContext(MenuContext)
 
@@ -162,6 +158,8 @@ function MenuItem({
         onClick={handleClick}
         aria-disabled={disabled}
         role="menuitem"
+        data-state={isSelected ? 'active' : 'inactive'}
+        {...rest}
       >
         {icon && <span className="menu-icon">{icon}</span>}
         {children}
@@ -177,6 +175,7 @@ function MenuSubMenu({
   icon,
   disabled = false,
   className = '',
+  ...rest
 }: MenuSubMenuProps) {
   const context = useMenuContext()
   const isOpen = context.openKeys.includes(itemKey)
@@ -192,7 +191,7 @@ function MenuSubMenu({
   // For inline mode, use collapsible details/summary
   if (context.mode === 'inline') {
     return (
-      <li className={submenuClasses}>
+      <li className={submenuClasses} data-state={isOpen ? 'open' : 'closed'} {...rest}>
         <details open={isOpen}>
           <summary
             onClick={(e) => {
@@ -216,7 +215,7 @@ function MenuSubMenu({
 
   // For vertical/horizontal, use nested menu (dropdown style)
   return (
-    <li className={submenuClasses}>
+    <li className={submenuClasses} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       <details open={isOpen}>
         <summary
           onClick={(e) => {
@@ -238,16 +237,16 @@ function MenuSubMenu({
   )
 }
 
-function MenuTitle({ children, className = '' }: MenuTitleProps) {
+function MenuTitle({ children, className = '', ...rest }: MenuTitleProps) {
   const titleClasses = ['menu-title', className].filter(Boolean).join(' ')
 
-  return <li className={titleClasses}>{children}</li>
+  return <li className={titleClasses} {...rest}>{children}</li>
 }
 
-function MenuDivider({ className = '' }: MenuDividerProps) {
+function MenuDivider({ className = '', ...rest }: MenuDividerProps) {
   const dividerClasses = ['border-t border-base-300 my-1', className].filter(Boolean).join(' ')
 
-  return <li className={dividerClasses} role="separator" />
+  return <li className={dividerClasses} role="separator" {...rest} />
 }
 
 export const Menu = Object.assign(MenuRoot, {

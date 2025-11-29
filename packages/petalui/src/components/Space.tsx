@@ -1,11 +1,10 @@
 import React from 'react'
 
-export interface SpaceProps {
+export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
   direction?: 'horizontal' | 'vertical'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | number
   align?: 'start' | 'end' | 'center' | 'baseline' | 'stretch'
   wrap?: boolean
-  className?: string
   children: React.ReactNode
 }
 
@@ -16,6 +15,7 @@ export const Space: React.FC<SpaceProps> = ({
   wrap = false,
   className = '',
   children,
+  ...rest
 }) => {
   const getGapClass = () => {
     if (typeof size === 'number') {
@@ -59,5 +59,5 @@ export const Space: React.FC<SpaceProps> = ({
     className
   ].filter(Boolean).join(' ')
 
-  return <div className={classes}>{children}</div>
+  return <div className={classes} {...rest}>{children}</div>
 }

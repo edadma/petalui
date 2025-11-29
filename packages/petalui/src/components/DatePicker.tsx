@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Input } from './Input'
 
-export interface DatePickerProps {
+export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: Date | null
   defaultValue?: Date | null
   onChange?: (date: Date | null) => void
   format?: string
   placeholder?: string
   disabled?: boolean
-  className?: string
   size?: 'xs' | 'sm' | 'md' | 'lg'
 }
 
@@ -58,6 +57,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   disabled = false,
   className = '',
   size = 'md',
+  ...rest
 }) => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     value || defaultValue || null
@@ -147,7 +147,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }
 
   return (
-    <div ref={containerRef} className={`relative ${className}`}>
+    <div ref={containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       <Input
         value={formatDate(selectedDate, format)}
         placeholder={placeholder}

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useId } from 'react'
 import { createRoot } from 'react-dom/client'
 
-export interface ModalProps {
+export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDialogElement>, 'title'> {
   children: React.ReactNode
   title?: React.ReactNode
   footer?: React.ReactNode
@@ -14,8 +14,6 @@ export interface ModalProps {
   closable?: boolean
   position?: 'top' | 'middle' | 'bottom'
   align?: 'start' | 'end'
-  className?: string
-  style?: React.CSSProperties
 }
 
 export interface ModalFuncProps {
@@ -42,7 +40,7 @@ export function Modal({
   position,
   align,
   className = '',
-  style,
+  ...rest
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const previousActiveElement = useRef<HTMLElement | null>(null)
@@ -130,9 +128,10 @@ export function Modal({
     <dialog
       ref={dialogRef}
       className={classes}
-      style={style}
+      data-state={open ? 'open' : 'closed'}
       aria-labelledby={title ? titleId : undefined}
       aria-describedby={contentId}
+      {...rest}
     >
       <div className="modal-box">
         {title && (

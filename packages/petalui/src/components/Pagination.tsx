@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface PaginationProps {
+export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   current?: number
   defaultCurrent?: number
   total: number
@@ -15,7 +15,6 @@ export interface PaginationProps {
   simple?: boolean
   size?: 'xs' | 'sm' | 'md' | 'lg'
   disabled?: boolean
-  className?: string
 }
 
 export const Pagination: React.FC<PaginationProps> = ({
@@ -34,6 +33,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   size = 'md',
   disabled = false,
   className = '',
+  ...rest
 }) => {
   const [internalCurrent, setInternalCurrent] = React.useState(defaultCurrent)
   const [internalPageSize, setInternalPageSize] = React.useState(defaultPageSize)
@@ -126,7 +126,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   if (simple) {
     return (
-      <div className={`flex items-center gap-2 ${className}`}>
+      <div className={`flex items-center gap-2 ${className}`} {...rest}>
         <button
           className={`btn btn-ghost ${sizeClass}`}
           onClick={() => handlePageChange(current - 1)}
@@ -149,7 +149,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className={`flex flex-wrap items-center gap-4 ${className}`}>
+    <div className={`flex flex-wrap items-center gap-4 ${className}`} {...rest}>
       {/* Total */}
       {showTotal && (
         <div className="text-sm text-base-content/70">

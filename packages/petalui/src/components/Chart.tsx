@@ -67,25 +67,6 @@ function oklchToHex(oklch: string): string {
   return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${bl.toString(16).padStart(2, '0')}`
 }
 
-// Convert rgb/rgba string to hex
-function rgbToHex(rgb: string): string {
-  if (!rgb) return ''
-
-  // Handle hex passthrough
-  if (rgb.startsWith('#')) return rgb
-
-  // Parse rgb(r, g, b) or rgba(r, g, b, a) format
-  const match = rgb.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/)
-  if (match) {
-    const r = parseInt(match[1]).toString(16).padStart(2, '0')
-    const g = parseInt(match[2]).toString(16).padStart(2, '0')
-    const b = parseInt(match[3]).toString(16).padStart(2, '0')
-    return `#${r}${g}${b}`
-  }
-
-  return ''
-}
-
 // Get daisyUI theme colors from CSS variables
 function getThemeColors(): string[] {
   if (typeof document === 'undefined') return []

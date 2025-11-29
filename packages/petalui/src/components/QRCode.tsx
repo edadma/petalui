@@ -5,7 +5,7 @@ export type QRCodeErrorLevel = 'L' | 'M' | 'Q' | 'H'
 export type QRCodeType = 'canvas' | 'svg'
 export type QRCodeStatus = 'active' | 'loading' | 'expired'
 
-export interface QRCodeProps {
+export interface QRCodeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   value: string
   size?: number
   errorLevel?: QRCodeErrorLevel
@@ -17,7 +17,6 @@ export interface QRCodeProps {
   bordered?: boolean
   status?: QRCodeStatus
   onRefresh?: () => void
-  className?: string
 }
 
 export const QRCode: React.FC<QRCodeProps> = ({
@@ -33,6 +32,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
   status = 'active',
   onRefresh,
   className = '',
+  ...rest
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [loading, setLoading] = useState(status === 'loading')
@@ -101,7 +101,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
 
   if (status === 'loading' || loading) {
     return (
-      <div className={containerClasses} style={{ width: size + (bordered ? 24 : 0), height: size + (bordered ? 24 : 0) }}>
+      <div className={containerClasses} style={{ width: size + (bordered ? 24 : 0), height: size + (bordered ? 24 : 0) }} data-state="loading" {...rest}>
         <div className="flex flex-col items-center justify-center gap-2">
           <span className="loading loading-spinner loading-lg"></span>
           <span className="text-sm text-base-content/70">Loading...</span>
@@ -112,7 +112,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
 
   if (status === 'expired') {
     return (
-      <div className={containerClasses} style={{ width: size + (bordered ? 24 : 0), height: size + (bordered ? 24 : 0) }}>
+      <div className={containerClasses} style={{ width: size + (bordered ? 24 : 0), height: size + (bordered ? 24 : 0) }} data-state="expired" {...rest}>
         <div className="flex flex-col items-center justify-center gap-2">
           <svg className="w-12 h-12 text-base-content/30" fill="currentColor" viewBox="0 0 20 20">
             <path
@@ -134,7 +134,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
 
   if (type === 'canvas') {
     return (
-      <div className="inline-block">
+      <div className="inline-block" data-state="active" {...rest}>
         <div className={containerClasses}>
           <canvas ref={canvasRef} style={{ display: 'block' }} />
         </div>
@@ -143,7 +143,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
   }
 
   return (
-    <div className="inline-block">
+    <div className="inline-block" data-state="active" {...rest}>
       <div className={containerClasses}>
         <div style={{ width: size, height: size }} className="bg-base-content/5">
           <span className="text-xs text-base-content/50">SVG mode placeholder</span>

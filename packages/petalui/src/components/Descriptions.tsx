@@ -11,7 +11,7 @@ export interface DescriptionsItemProps {
   contentStyle?: React.CSSProperties
 }
 
-export interface DescriptionsProps {
+export interface DescriptionsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title?: React.ReactNode
   bordered?: boolean
   column?: number | {
@@ -27,8 +27,6 @@ export interface DescriptionsProps {
   colon?: boolean
   labelStyle?: React.CSSProperties
   contentStyle?: React.CSSProperties
-  className?: string
-  style?: React.CSSProperties
   children?: React.ReactNode
 }
 
@@ -48,6 +46,7 @@ function DescriptionsRoot({
   className = '',
   style,
   children,
+  ...rest
 }: DescriptionsProps) {
   const sizeClasses: Record<DescriptionsSize, string> = {
     small: 'text-sm',
@@ -193,7 +192,7 @@ function DescriptionsRoot({
   ].filter(Boolean).join(' ')
 
   return (
-    <div style={style}>
+    <div style={style} {...rest}>
       {title && (
         <div className="text-lg font-semibold mb-4">
           {title}

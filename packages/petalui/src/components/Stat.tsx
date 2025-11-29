@@ -1,21 +1,19 @@
 import React from 'react'
 
-export interface StatsProps {
+export interface StatsProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  className?: string
   vertical?: boolean
 }
 
-export interface StatProps {
+export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   title?: React.ReactNode
   value?: React.ReactNode
   desc?: React.ReactNode
   figure?: React.ReactNode
   actions?: React.ReactNode
-  className?: string
 }
 
-function StatsRoot({ children, className = '', vertical = false }: StatsProps) {
+function StatsRoot({ children, className = '', vertical = false, ...rest }: StatsProps) {
   const classes = [
     'stats',
     vertical ? 'stats-vertical' : 'stats-horizontal',
@@ -24,12 +22,12 @@ function StatsRoot({ children, className = '', vertical = false }: StatsProps) {
     .filter(Boolean)
     .join(' ')
 
-  return <div className={classes}>{children}</div>
+  return <div className={classes} {...rest}>{children}</div>
 }
 
-function StatItem({ title, value, desc, figure, actions, className = '' }: StatProps) {
+function StatItem({ title, value, desc, figure, actions, className = '', ...rest }: StatProps) {
   return (
-    <div className={`stat ${className}`}>
+    <div className={`stat ${className}`} {...rest}>
       {figure && <div className="stat-figure">{figure}</div>}
       {title && <div className="stat-title">{title}</div>}
       {value && <div className="stat-value">{value}</div>}

@@ -1,21 +1,19 @@
 import React from 'react'
 
-export interface TimelineProps {
+export interface TimelineProps extends React.HTMLAttributes<HTMLUListElement> {
   children: React.ReactNode
-  className?: string
   vertical?: boolean
   horizontal?: boolean
   compact?: boolean
   snapIcon?: boolean
 }
 
-export interface TimelineItemProps {
+export interface TimelineItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   start?: React.ReactNode
   end?: React.ReactNode
   icon?: React.ReactNode
   startBox?: boolean
   endBox?: boolean
-  className?: string
   // Internal props injected by Timeline container
   _index?: number
   _compact?: boolean
@@ -29,6 +27,7 @@ function TimelineRoot({
   horizontal = false,
   compact = false,
   snapIcon = false,
+  ...rest
 }: TimelineProps) {
   const classes = [
     'timeline',
@@ -53,7 +52,7 @@ function TimelineRoot({
     return child
   })
 
-  return <ul className={classes}>{childrenWithProps}</ul>
+  return <ul className={classes} {...rest}>{childrenWithProps}</ul>
 }
 
 function TimelineItem({
@@ -66,6 +65,7 @@ function TimelineItem({
   _index = 0,
   _compact = false,
   _vertical = false,
+  ...rest
 }: TimelineItemProps) {
   const startClasses = ['timeline-start', startBox && 'timeline-box'].filter(Boolean).join(' ')
   const endClasses = ['timeline-end', endBox && 'timeline-box'].filter(Boolean).join(' ')
@@ -77,7 +77,7 @@ function TimelineItem({
   if (_compact) {
     // Compact layout: connector, icon, end content, connector
     return (
-      <li className={className}>
+      <li className={className} {...rest}>
         <hr />
         {icon && <div className="timeline-middle">{icon}</div>}
         {end && <div className={endClasses}>{end}</div>}
@@ -87,7 +87,7 @@ function TimelineItem({
   } else if (_vertical) {
     // Vertical layout: connector, start, icon, end, connector
     return (
-      <li className={className}>
+      <li className={className} {...rest}>
         <hr />
         {start && <div className={startClasses}>{start}</div>}
         {icon && <div className="timeline-middle">{icon}</div>}
@@ -100,7 +100,7 @@ function TimelineItem({
     if (isEven) {
       // Even items: start, icon, end, connector
       return (
-        <li className={className}>
+        <li className={className} {...rest}>
           {start && <div className={startClasses}>{start}</div>}
           {icon && <div className="timeline-middle">{icon}</div>}
           {end && <div className={endClasses}>{end}</div>}
@@ -110,7 +110,7 @@ function TimelineItem({
     } else {
       // Odd items: connector, icon, start, end
       return (
-        <li className={className}>
+        <li className={className} {...rest}>
           <hr />
           {icon && <div className="timeline-middle">{icon}</div>}
           {start && <div className={startClasses}>{start}</div>}

@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Input } from './Input'
 
-export interface TimePickerProps {
+export interface TimePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: Date | null
   defaultValue?: Date | null
   onChange?: (date: Date | null) => void
   format?: '12' | '24'
   placeholder?: string
   disabled?: boolean
-  className?: string
   size?: 'xs' | 'sm' | 'md' | 'lg'
   showSeconds?: boolean
 }
@@ -43,6 +42,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({
   className = '',
   size = 'md',
   showSeconds = false,
+  ...rest
 }) => {
   const [selectedTime, setSelectedTime] = useState<Date | null>(
     value || defaultValue || null
@@ -160,7 +160,7 @@ export const TimePicker: React.FC<TimePickerProps> = ({
   const displayHours = format === '12' ? (hours % 12 || 12) : hours
 
   return (
-    <div ref={containerRef} className={`relative ${className}`}>
+    <div ref={containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       <Input
         value={formatTime(selectedTime, format, showSeconds)}
         placeholder={placeholder}

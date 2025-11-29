@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-export interface PopconfirmProps {
+export interface PopconfirmProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   children: React.ReactElement
   title: React.ReactNode
   description?: React.ReactNode
@@ -30,6 +30,8 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
   disabled = false,
   icon,
   showCancel = true,
+  className,
+  ...rest
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -129,7 +131,7 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
   )
 
   return (
-    <div ref={containerRef} className="relative inline-block">
+    <div ref={containerRef} className={`relative inline-block ${className || ''}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       {React.cloneElement(children, {
         onClick: (e: React.MouseEvent) => {
           handleTriggerClick(e)

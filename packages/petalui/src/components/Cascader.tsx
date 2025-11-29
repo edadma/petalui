@@ -7,7 +7,7 @@ export interface CascaderOption {
   children?: CascaderOption[]
 }
 
-export interface CascaderProps {
+export interface CascaderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   options: CascaderOption[]
   value?: (string | number)[]
   onChange?: (value: (string | number)[], selectedOptions: CascaderOption[]) => void
@@ -17,7 +17,6 @@ export interface CascaderProps {
   expandTrigger?: 'click' | 'hover'
   displayRender?: (labels: React.ReactNode[], selectedOptions: CascaderOption[]) => React.ReactNode
   size?: 'xs' | 'sm' | 'md' | 'lg'
-  className?: string
 }
 
 export function Cascader({
@@ -31,6 +30,7 @@ export function Cascader({
   displayRender,
   size = 'md',
   className = '',
+  ...rest
 }: CascaderProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [selectedPath, setSelectedPath] = useState<(string | number)[]>(value || [])
@@ -173,7 +173,7 @@ export function Cascader({
   }
 
   return (
-    <div ref={containerRef} className={`relative inline-block w-full ${className}`}>
+    <div ref={containerRef} className={`relative inline-block w-full ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       {/* Input/Trigger */}
       <div
         id={inputId}

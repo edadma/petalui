@@ -44,7 +44,8 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
       .filter(Boolean)
       .join(' ')
 
-    return <input ref={ref} type="checkbox" className={toggleClasses} {...props} />
+    const dataState = props.checked ? 'checked' : 'unchecked'
+    return <input ref={ref} type="checkbox" className={toggleClasses} data-state={dataState} {...props} />
   }
 )
 

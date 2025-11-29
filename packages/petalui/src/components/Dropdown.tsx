@@ -24,12 +24,11 @@ function useDropdownContext() {
   return context
 }
 
-export interface DropdownProps {
+export interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   hover?: boolean
   position?: 'top' | 'bottom' | 'left' | 'right'
   align?: 'start' | 'center' | 'end'
-  className?: string
 }
 
 export interface DropdownTriggerProps {
@@ -62,6 +61,7 @@ function DropdownRoot({
   position = 'bottom',
   align = 'start',
   className = '',
+  ...rest
 }: DropdownProps) {
   const menuId = useId()
   const triggerId = useId()
@@ -134,7 +134,7 @@ function DropdownRoot({
         setItemCount,
       }}
     >
-      <div ref={dropdownRef} className={dropdownClasses}>{children}</div>
+      <div ref={dropdownRef} className={dropdownClasses} data-state={isOpen ? 'open' : 'closed'} {...rest}>{children}</div>
     </DropdownContext.Provider>
   )
 }

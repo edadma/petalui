@@ -11,16 +11,16 @@ export type IndicatorPosition =
   | 'bottom-center'
   | 'bottom-end'
 
-export interface IndicatorProps {
+export interface IndicatorProps extends React.HTMLAttributes<HTMLDivElement> {
   position?: IndicatorPosition
   children: React.ReactNode
-  className?: string
 }
 
 export const Indicator: React.FC<IndicatorProps> = ({
   position = 'top-end',
   children,
   className = '',
+  ...rest
 }) => {
   // Get position classes for indicator
   const getPositionClasses = (pos: IndicatorPosition) => {
@@ -59,7 +59,7 @@ export const Indicator: React.FC<IndicatorProps> = ({
   const indicatorElement = childrenArray[1]
 
   return (
-    <div className={`indicator inline-block ${className}`}>
+    <div className={`indicator inline-block ${className}`} {...rest}>
       {indicatorElement && (
         <div className={`indicator-item ${getPositionClasses(position)}`}>
           {indicatorElement}

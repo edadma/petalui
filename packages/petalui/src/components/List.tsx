@@ -1,23 +1,21 @@
 import React from 'react'
 
-export interface ListProps {
+export interface ListProps extends React.HTMLAttributes<HTMLUListElement> {
   children: React.ReactNode
-  className?: string
 }
 
-export interface ListRowProps {
+export interface ListRowProps extends React.LiHTMLAttributes<HTMLLIElement> {
   children: React.ReactNode
-  className?: string
 }
 
-function ListRoot({ children, className = '' }: ListProps) {
+function ListRoot({ children, className = '', ...rest }: ListProps) {
   const classes = ['list', className].filter(Boolean).join(' ')
-  return <ul className={classes}>{children}</ul>
+  return <ul className={classes} {...rest}>{children}</ul>
 }
 
-function ListRow({ children, className = '' }: ListRowProps) {
+function ListRow({ children, className = '', ...rest }: ListRowProps) {
   const classes = ['list-row', className].filter(Boolean).join(' ')
-  return <li className={classes}>{children}</li>
+  return <li className={classes} {...rest}>{children}</li>
 }
 
 export const List = Object.assign(ListRoot, {

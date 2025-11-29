@@ -1,9 +1,8 @@
 import React from 'react'
 
-export interface LoadingProps {
+export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'xs' | 'sm' | 'md' | 'lg'
   type?: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity'
-  className?: string
   spinning?: boolean
   children?: React.ReactNode
   tip?: string
@@ -16,6 +15,7 @@ export const Loading: React.FC<LoadingProps> = ({
   spinning = true,
   children,
   tip,
+  ...rest
 }) => {
   const sizeClasses = {
     xs: 'loading-xs',
@@ -39,7 +39,7 @@ export const Loading: React.FC<LoadingProps> = ({
 
   if (children) {
     return (
-      <div className="relative">
+      <div className="relative" {...rest}>
         {spinning && (
           <div className="absolute inset-0 flex flex-col items-center justify-center bg-base-100/50 backdrop-blur-sm z-10">
             <span className={spinnerClasses}></span>
@@ -56,7 +56,7 @@ export const Loading: React.FC<LoadingProps> = ({
   }
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-2" {...rest}>
       <span className={spinnerClasses}></span>
       {tip && <p className="text-sm">{tip}</p>}
     </div>

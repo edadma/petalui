@@ -11,7 +11,7 @@ export interface UploadFile {
   originFileObj?: File
 }
 
-export interface UploadProps {
+export interface UploadProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   action?: string
   accept?: string
   multiple?: boolean
@@ -32,7 +32,6 @@ export interface UploadProps {
   showUploadList?: boolean
   disabled?: boolean
   children?: React.ReactNode
-  className?: string
 }
 
 export const Upload: React.FC<UploadProps> = ({
@@ -52,6 +51,7 @@ export const Upload: React.FC<UploadProps> = ({
   disabled = false,
   children,
   className = '',
+  ...rest
 }) => {
   const [internalFileList, setInternalFileList] = useState<UploadFile[]>(defaultFileList)
   const [isDragging, setIsDragging] = useState(false)
@@ -347,7 +347,7 @@ export const Upload: React.FC<UploadProps> = ({
   }
 
   return (
-    <div className={className}>
+    <div className={className} data-state={isDragging ? 'dragging' : 'idle'} {...rest}>
       <div
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}

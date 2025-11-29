@@ -3,29 +3,25 @@ import React, { useState } from 'react'
 export type TypographySize = 'sm' | 'base' | 'lg' | 'xl' | '2xl'
 export type TitleLevel = 1 | 2 | 3 | 4 | 5
 
-export interface TypographyProps {
+export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   size?: TypographySize
-  className?: string
 }
 
-export interface TitleProps {
+export interface TitleProps extends Omit<React.HTMLAttributes<HTMLHeadingElement>, 'title'> {
   level?: TitleLevel
   children: React.ReactNode
   copyable?: boolean
   ellipsis?: boolean
-  className?: string
-  id?: string
 }
 
-export interface ParagraphProps {
+export interface ParagraphProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   ellipsis?: boolean | { rows?: number; expandable?: boolean; onExpand?: () => void }
   copyable?: boolean
-  className?: string
 }
 
-export interface TextProps {
+export interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode
   code?: boolean
   mark?: boolean
@@ -35,15 +31,12 @@ export interface TextProps {
   delete?: boolean
   type?: 'default' | 'secondary' | 'success' | 'warning' | 'error'
   copyable?: boolean
-  className?: string
 }
 
-export interface TypographyLinkProps {
+export interface TypographyLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href: string
   children: React.ReactNode
-  target?: string
   external?: boolean
-  className?: string
 }
 
 function CopyButton({ text }: { text: string }) {
@@ -83,7 +76,7 @@ function CopyButton({ text }: { text: string }) {
   )
 }
 
-function TypographyRoot({ children, size = 'base', className = '' }: TypographyProps) {
+function TypographyRoot({ children, size = 'base', className = '', ...rest }: TypographyProps) {
   const sizeClasses = {
     sm: 'prose-sm text-sm',
     base: 'prose-base text-base',
@@ -103,10 +96,10 @@ function TypographyRoot({ children, size = 'base', className = '' }: TypographyP
     .filter(Boolean)
     .join(' ')
 
-  return <div className={classes}>{children}</div>
+  return <div className={classes} {...rest}>{children}</div>
 }
 
-function Title({ level = 1, children, copyable, ellipsis, className = '', id }: TitleProps) {
+function Title({ level = 1, children, copyable, ellipsis, className = '', id, ...rest }: TitleProps) {
   const textContent = typeof children === 'string' ? children : ''
   const generatedId = id || (textContent ? textContent.toLowerCase().replace(/\s+/g, '-') : undefined)
 
@@ -130,21 +123,21 @@ function Title({ level = 1, children, copyable, ellipsis, className = '', id }: 
 
   switch (level) {
     case 1:
-      return <h1 id={generatedId} className={classes}>{content}</h1>
+      return <h1 id={generatedId} className={classes} {...rest}>{content}</h1>
     case 2:
-      return <h2 id={generatedId} className={classes}>{content}</h2>
+      return <h2 id={generatedId} className={classes} {...rest}>{content}</h2>
     case 3:
-      return <h3 id={generatedId} className={classes}>{content}</h3>
+      return <h3 id={generatedId} className={classes} {...rest}>{content}</h3>
     case 4:
-      return <h4 id={generatedId} className={classes}>{content}</h4>
+      return <h4 id={generatedId} className={classes} {...rest}>{content}</h4>
     case 5:
-      return <h5 id={generatedId} className={classes}>{content}</h5>
+      return <h5 id={generatedId} className={classes} {...rest}>{content}</h5>
     default:
-      return <h1 id={generatedId} className={classes}>{content}</h1>
+      return <h1 id={generatedId} className={classes} {...rest}>{content}</h1>
   }
 }
 
-function Paragraph({ children, ellipsis, copyable, className = '' }: ParagraphProps) {
+function Paragraph({ children, ellipsis, copyable, className = '', ...rest }: ParagraphProps) {
   const [expanded, setExpanded] = useState(false)
   const textContent = typeof children === 'string' ? children : ''
 
@@ -158,7 +151,7 @@ function Paragraph({ children, ellipsis, copyable, className = '' }: ParagraphPr
   const classes = `group mb-4 ${ellipsisClass} ${className}`.trim()
 
   return (
-    <div>
+    <div {...rest}>
       <p className={classes}>
         {children}
         {copyable && <CopyButton text={textContent} />}
@@ -191,6 +184,7 @@ function Text({
   type = 'default',
   copyable,
   className = '',
+  ...rest
 }: TextProps) {
   const textContent = typeof children === 'string' ? children : ''
 
@@ -233,14 +227,14 @@ function Text({
   const classes = `group inline ${typeClasses[type]} ${className}`.trim()
 
   return (
-    <span className={classes}>
+    <span className={classes} {...rest}>
       {content}
       {copyable && <CopyButton text={textContent} />}
     </span>
   )
 }
 
-function Link({ href, children, target, external, className = '' }: TypographyLinkProps) {
+function Link({ href, children, target, external, className = '', ...rest }: TypographyLinkProps) {
   const isExternal = external || href.startsWith('http')
   const linkTarget = target || (isExternal ? '_blank' : undefined)
   const rel = isExternal ? 'noopener noreferrer' : undefined
@@ -251,6 +245,7 @@ function Link({ href, children, target, external, className = '' }: TypographyLi
       target={linkTarget}
       rel={rel}
       className={`link link-primary ${className}`}
+      {...rest}
     >
       {children}
       {isExternal && (

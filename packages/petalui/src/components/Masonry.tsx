@@ -1,6 +1,6 @@
 import React from 'react'
 
-export interface MasonryProps {
+export interface MasonryProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   columns?: number | {
     xs?: number
@@ -11,7 +11,6 @@ export interface MasonryProps {
     '2xl'?: number
   }
   gap?: number | string
-  className?: string
 }
 
 export const Masonry: React.FC<MasonryProps> = ({
@@ -19,6 +18,7 @@ export const Masonry: React.FC<MasonryProps> = ({
   columns = 3,
   gap = 4,
   className = '',
+  ...rest
 }) => {
   // Map gap values to Tailwind classes
   const getGapClass = () => {
@@ -169,7 +169,7 @@ export const Masonry: React.FC<MasonryProps> = ({
   ))
 
   return (
-    <div className={containerClasses}>
+    <div className={containerClasses} {...rest}>
       {wrappedChildren}
     </div>
   )

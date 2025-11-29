@@ -1,9 +1,8 @@
 import React from 'react'
 
-export interface TooltipProps {
+export interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   tip: string
-  className?: string
   position?: 'top' | 'bottom' | 'left' | 'right'
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
   open?: boolean
@@ -16,6 +15,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
   position = 'top',
   color,
   open = false,
+  ...rest
 }) => {
   const positionClasses = {
     top: 'tooltip-top',
@@ -48,7 +48,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
     .join(' ')
 
   return (
-    <div className={classes} data-tip={tip}>
+    <div className={classes} data-tip={tip} data-state={open ? 'open' : 'closed'} {...rest}>
       {children}
     </div>
   )

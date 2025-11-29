@@ -1,22 +1,20 @@
 import React from 'react'
 
-export interface LabelProps {
+export interface LabelProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode
-  className?: string
 }
 
-export interface FloatingLabelProps {
+export interface FloatingLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   children: React.ReactNode
   label: string
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-  className?: string
 }
 
-function LabelRoot({ children, className = '' }: LabelProps) {
-  return <span className={`label ${className}`}>{children}</span>
+function LabelRoot({ children, className = '', ...rest }: LabelProps) {
+  return <span className={`label ${className}`} {...rest}>{children}</span>
 }
 
-function FloatingLabel({ children, label, size, className = '' }: FloatingLabelProps) {
+function FloatingLabel({ children, label, size, className = '', ...rest }: FloatingLabelProps) {
   const sizeClasses = {
     xs: 'input-xs',
     sm: 'input-sm',
@@ -28,7 +26,7 @@ function FloatingLabel({ children, label, size, className = '' }: FloatingLabelP
   const classes = ['floating-label', size && sizeClasses[size], className].filter(Boolean).join(' ')
 
   return (
-    <label className={classes}>
+    <label className={classes} {...rest}>
       {children}
       <span>{label}</span>
     </label>

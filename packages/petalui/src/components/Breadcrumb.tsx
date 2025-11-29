@@ -1,29 +1,27 @@
 import React from 'react'
 
-export interface BreadcrumbProps {
+export interface BreadcrumbProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  className?: string
 }
 
-export interface BreadcrumbItemProps {
+export interface BreadcrumbItemProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'onClick'> {
   children: React.ReactNode
   href?: string
   onClick?: () => void
-  className?: string
 }
 
-function BreadcrumbRoot({ children, className = '' }: BreadcrumbProps) {
+function BreadcrumbRoot({ children, className = '', ...rest }: BreadcrumbProps) {
   return (
-    <div className={`breadcrumbs text-sm ${className}`}>
+    <div className={`breadcrumbs text-sm ${className}`} {...rest}>
       <ul>{children}</ul>
     </div>
   )
 }
 
-function BreadcrumbItem({ children, href, onClick, className = '' }: BreadcrumbItemProps) {
+function BreadcrumbItem({ children, href, onClick, className = '', ...rest }: BreadcrumbItemProps) {
   if (href || onClick) {
     return (
-      <li className={className}>
+      <li className={className} {...rest}>
         <a href={href} onClick={onClick}>
           {children}
         </a>
@@ -31,7 +29,7 @@ function BreadcrumbItem({ children, href, onClick, className = '' }: BreadcrumbI
     )
   }
 
-  return <li className={className}>{children}</li>
+  return <li className={className} {...rest}>{children}</li>
 }
 
 export const Breadcrumb = Object.assign(BreadcrumbRoot, {

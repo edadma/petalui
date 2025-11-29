@@ -2,16 +2,15 @@ import React from 'react'
 
 const GridContext = React.createContext<{ cols: 24 | 120 }>({ cols: 24 })
 
-export interface RowProps {
+export interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   cols?: 24 | 120
   gutter?: number | [number, number]
   justify?: 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline'
-  className?: string
 }
 
-export interface ColProps {
+export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   span?: number
   offset?: number
@@ -22,7 +21,6 @@ export interface ColProps {
   lg?: number
   xl?: number
   xxl?: number
-  className?: string
 }
 
 // Explicit class mappings - Tailwind v4 supports any grid value natively
@@ -287,7 +285,7 @@ const COL_START_120_CLASSES: Record<number, string> = {
   121: 'col-start-121',
 }
 
-export function Row({ children, cols = 24, gutter = 0, justify, align, className = '' }: RowProps) {
+export function Row({ children, cols = 24, gutter = 0, justify, align, className = '', style: userStyle, ...rest }: RowProps) {
   const [gutterX, gutterY] = Array.isArray(gutter) ? gutter : [gutter, 0]
 
   // Scale gutter for 120-column grids to maintain consistent visual spacing
@@ -332,18 +330,19 @@ export function Row({ children, cols = 24, gutter = 0, justify, align, className
   const style: React.CSSProperties = {
     ...(actualGutterX && { columnGap: `${actualGutterX}px` }),
     ...(actualGutterY && { rowGap: `${actualGutterY}px` }),
+    ...userStyle,
   }
 
   return (
     <GridContext.Provider value={{ cols }}>
-      <div className={classes} style={style}>
+      <div className={classes} style={style} {...rest}>
         {children}
       </div>
     </GridContext.Provider>
   )
 }
 
-export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, className = '' }: ColProps) {
+export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, className = '', ...rest }: ColProps) {
   const { cols } = React.useContext(GridContext)
   const classes: string[] = []
 
@@ -381,7 +380,7 @@ export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, cl
 
   if (className) classes.push(className)
 
-  return <div className={classes.join(' ')}>{children}</div>
+  return <div className={classes.join(' ')} {...rest}>{children}</div>
 }
 
 export const Grid = {

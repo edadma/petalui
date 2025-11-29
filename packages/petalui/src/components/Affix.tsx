@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-export interface AffixProps {
+export interface AffixProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** Content to make sticky */
   children: React.ReactNode
   /** Offset from top when fixed (pixels) */
@@ -11,8 +11,6 @@ export interface AffixProps {
   target?: () => HTMLElement | Window
   /** Callback when affix state changes */
   onChange?: (affixed: boolean) => void
-  /** Additional CSS classes */
-  className?: string
 }
 
 export const Affix: React.FC<AffixProps> = ({
@@ -22,6 +20,7 @@ export const Affix: React.FC<AffixProps> = ({
   target,
   onChange,
   className = '',
+  ...rest
 }) => {
   const [affixed, setAffixed] = useState(false)
   const [placeholderStyle, setPlaceholderStyle] = useState<React.CSSProperties>({})
@@ -94,7 +93,7 @@ export const Affix: React.FC<AffixProps> = ({
   }, [target, offsetTop, offsetBottom, affixed, onChange])
 
   return (
-    <div ref={wrapperRef} className={className}>
+    <div ref={wrapperRef} className={className} data-state={affixed ? 'affixed' : 'normal'} {...rest}>
       {affixed && <div style={placeholderStyle} />}
       <div ref={contentRef} style={affixStyle}>
         {children}

@@ -16,7 +16,7 @@ export type PopoverPlacement =
 
 export type PopoverTrigger = 'hover' | 'click' | 'focus'
 
-export interface PopoverProps {
+export interface PopoverProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'content' | 'title'> {
   children: React.ReactNode
   content: React.ReactNode
   title?: React.ReactNode
@@ -24,7 +24,6 @@ export interface PopoverProps {
   placement?: PopoverPlacement
   open?: boolean
   onOpenChange?: (open: boolean) => void
-  className?: string
   overlayClassName?: string
 }
 
@@ -38,6 +37,7 @@ export const Popover: React.FC<PopoverProps> = ({
   onOpenChange,
   className = '',
   overlayClassName = '',
+  ...rest
 }) => {
   const [internalOpen, setInternalOpen] = useState(false)
   const triggerRef = useRef<HTMLDivElement>(null)
@@ -130,7 +130,7 @@ export const Popover: React.FC<PopoverProps> = ({
   }
 
   return (
-    <div className={`relative inline-block ${className}`}>
+    <div className={`relative inline-block ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
       <div
         ref={triggerRef}
         onMouseEnter={handleMouseEnter}

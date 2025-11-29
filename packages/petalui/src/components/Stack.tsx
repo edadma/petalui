@@ -1,13 +1,12 @@
 import React from 'react'
 
-export interface StackProps {
+export interface StackProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   direction?: 'vertical' | 'horizontal'
   spacing?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 8 | 10 | 12 | 16 | 20 | 24
   align?: 'start' | 'center' | 'end' | 'stretch'
   justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'
   wrap?: boolean
-  className?: string
 }
 
 export const Stack: React.FC<StackProps> = ({
@@ -18,6 +17,7 @@ export const Stack: React.FC<StackProps> = ({
   justify,
   wrap = false,
   className = '',
+  ...rest
 }) => {
   const directionClasses = {
     vertical: 'flex-col',
@@ -68,5 +68,5 @@ export const Stack: React.FC<StackProps> = ({
     .filter(Boolean)
     .join(' ')
 
-  return <div className={classes}>{children}</div>
+  return <div className={classes} {...rest}>{children}</div>
 }

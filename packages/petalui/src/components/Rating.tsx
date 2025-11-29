@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useId, useState } from 'react'
 
-export interface RatingProps {
+export interface RatingProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   children: React.ReactNode
   value?: number
   defaultValue?: number
   onChange?: (value: number) => void
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   readOnly?: boolean
-  className?: string
 }
 
 export interface RatingItemProps {
@@ -36,6 +35,7 @@ function RatingRoot({
   size,
   readOnly = false,
   className = '',
+  ...rest
 }: RatingProps) {
   const [internalValue, setInternalValue] = useState(defaultValue)
   const currentValue = value !== undefined ? value : internalValue
@@ -61,7 +61,7 @@ function RatingRoot({
 
   return (
     <RatingContext.Provider value={{ name, currentValue, onChange: handleChange, size, readOnly }}>
-      <div className={classes}>{children}</div>
+      <div className={classes} data-value={currentValue} {...rest}>{children}</div>
     </RatingContext.Provider>
   )
 }
