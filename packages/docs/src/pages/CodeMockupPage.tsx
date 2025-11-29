@@ -100,14 +100,14 @@ export function CodeMockupPage() {
   <CodeMockup.Line>cd my-project</CodeMockup.Line>
   <CodeMockup.Line>npm init -y</CodeMockup.Line>
   <CodeMockup.Line>npm install @edadma/petalui</CodeMockup.Line>
-  <CodeMockup.Line className="text-success">+ @edadma/petalui@0.8.0</CodeMockup.Line>
+  <CodeMockup.Line className="text-success">+ @edadma/petalui@0.8.1</CodeMockup.Line>
 </CodeMockup>`}
         >
           <CodeMockup className="w-full">
             <CodeMockup.Line>cd my-project</CodeMockup.Line>
             <CodeMockup.Line>npm init -y</CodeMockup.Line>
             <CodeMockup.Line>npm install @edadma/petalui</CodeMockup.Line>
-            <CodeMockup.Line className="text-success">+ @edadma/petalui@0.8.0</CodeMockup.Line>
+            <CodeMockup.Line className="text-success">+ @edadma/petalui@0.8.1</CodeMockup.Line>
           </CodeMockup>
         </ExampleSection>
 
