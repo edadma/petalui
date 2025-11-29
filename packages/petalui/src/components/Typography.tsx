@@ -137,6 +137,15 @@ function Title({ level = 1, children, copyable, ellipsis, className = '', id, ..
   }
 }
 
+const lineClampClasses = {
+  1: 'line-clamp-1',
+  2: 'line-clamp-2',
+  3: 'line-clamp-3',
+  4: 'line-clamp-4',
+  5: 'line-clamp-5',
+  6: 'line-clamp-6',
+} as const
+
 function Paragraph({ children, ellipsis, copyable, className = '', ...rest }: ParagraphProps) {
   const [expanded, setExpanded] = useState(false)
   const textContent = typeof children === 'string' ? children : ''
@@ -145,8 +154,9 @@ function Paragraph({ children, ellipsis, copyable, className = '', ...rest }: Pa
   const rows = isEllipsisObject ? ellipsis.rows || 3 : 3
   const expandable = isEllipsisObject ? ellipsis.expandable : false
 
+  const clampedRows = Math.min(Math.max(rows, 1), 6) as 1 | 2 | 3 | 4 | 5 | 6
   const ellipsisClass =
-    ellipsis && !expanded ? `line-clamp-${rows}` : ''
+    ellipsis && !expanded ? lineClampClasses[clampedRows] : ''
 
   const classes = `group mb-4 ${ellipsisClass} ${className}`.trim()
 

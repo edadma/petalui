@@ -9,6 +9,17 @@ export interface RadialProgressProps extends Omit<React.HTMLAttributes<HTMLDivEl
   children?: React.ReactNode
 }
 
+const colorClasses = {
+  primary: 'text-primary',
+  secondary: 'text-secondary',
+  accent: 'text-accent',
+  success: 'text-success',
+  warning: 'text-warning',
+  error: 'text-error',
+  info: 'text-info',
+  neutral: 'text-neutral',
+} as const
+
 export const RadialProgress: React.FC<RadialProgressProps> = ({
   value,
   size,
@@ -24,7 +35,7 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
     const classes = ['radial-progress']
 
     if (color) {
-      classes.push(`text-${color}`)
+      classes.push(colorClasses[color])
     }
 
     if (className) {

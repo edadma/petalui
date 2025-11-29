@@ -109,9 +109,19 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
     return `${base} ${positions[placement]}`
   }
 
-  const getButtonClass = (type: string) => {
-    if (type === 'ghost') return 'btn-ghost'
-    return `btn-${type}`
+  const buttonClasses = {
+    primary: 'btn-primary',
+    secondary: 'btn-secondary',
+    accent: 'btn-accent',
+    success: 'btn-success',
+    warning: 'btn-warning',
+    error: 'btn-error',
+    info: 'btn-info',
+    ghost: 'btn-ghost',
+  } as const
+
+  const getButtonClass = (type: keyof typeof buttonClasses) => {
+    return buttonClasses[type]
   }
 
   const defaultIcon = (

@@ -32,6 +32,16 @@ const MONTHS = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ]
 
+const badgeColorClasses = {
+  primary: 'badge-primary',
+  secondary: 'badge-secondary',
+  accent: 'badge-accent',
+  success: 'badge-success',
+  warning: 'badge-warning',
+  error: 'badge-error',
+  info: 'badge-info',
+} as const
+
 function isSameDay(date1: Date, date2: Date): boolean {
   return (
     date1.getFullYear() === date2.getFullYear() &&
@@ -328,7 +338,7 @@ export const CalendarOld: React.FC<CalendarOldProps> = ({
                                   <div
                                     key={idx}
                                     className={`badge badge-xs ${
-                                      event.color ? `badge-${event.color}` : 'badge-primary'
+                                      event.color ? badgeColorClasses[event.color] : 'badge-primary'
                                     }`}
                                     title={event.title}
                                   />

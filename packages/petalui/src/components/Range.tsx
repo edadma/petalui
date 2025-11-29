@@ -40,14 +40,25 @@ export const Range: React.FC<RangeProps> = ({
     onChange?.(newValue)
   }
 
-  const sizeClass = {
+  const sizeClasses = {
     xs: 'range-xs',
     sm: 'range-sm',
     md: 'range-md',
     lg: 'range-lg',
-  }[size]
+  } as const
 
-  const colorClass = color ? `range-${color}` : ''
+  const colorClasses = {
+    primary: 'range-primary',
+    secondary: 'range-secondary',
+    accent: 'range-accent',
+    success: 'range-success',
+    warning: 'range-warning',
+    info: 'range-info',
+    error: 'range-error',
+  } as const
+
+  const sizeClass = sizeClasses[size]
+  const colorClass = color ? colorClasses[color] : ''
 
   // Calculate steps for visual markers
   const steps = showSteps
