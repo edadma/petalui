@@ -10,21 +10,11 @@ A comprehensive React component library built with DaisyUI and Tailwind CSS.
 
 View the live demo at: [https://edadma.github.io/petalui](https://edadma.github.io/petalui)
 
-## Installation
-
-```bash
-npm install @edadma/petalui
-# or
-pnpm add @edadma/petalui
-# or
-yarn add @edadma/petalui
-```
-
 ## Prerequisites
 
 PetalUI requires Tailwind CSS v4 and DaisyUI to be configured in your project.
 
-Install dependencies:
+Install Tailwind and DaisyUI:
 
 ```bash
 npm install -D tailwindcss @tailwindcss/vite daisyui
@@ -42,11 +32,24 @@ export default defineConfig({
 })
 ```
 
-Import Tailwind and DaisyUI in your CSS file (e.g., `src/index.css`):
+Configure your CSS file (e.g., `src/index.css`):
 
 ```css
 @import "tailwindcss";
 @plugin "daisyui";
+@source "../node_modules/@edadma/petalui";
+```
+
+The `@source` directive tells Tailwind to scan the PetalUI package for classes to include in your build.
+
+## Installation
+
+```bash
+npm install @edadma/petalui
+# or
+pnpm add @edadma/petalui
+# or
+yarn add @edadma/petalui
 ```
 
 ## Usage
@@ -150,7 +153,6 @@ function App() {
 
 ### Navigation
 - **Breadcrumb** - Breadcrumb navigation trail
-- **Link** - Link component with hover and focus states
 - **Menu** - Menu with vertical, horizontal, and inline modes
 - **Navbar** - Navigation bar with start, center, and end sections
 - **Tabs** - Tab navigation with multiple variants
@@ -171,7 +173,7 @@ function App() {
 
 ### Mockup
 - **Browser** - Browser window mockup with URL bar
-- **CodeMockup** - Terminal-style code display
+- **Code** - Terminal-style code display with line highlighting
 - **Phone** - iPhone-style phone frame mockup
 - **Window** - OS-style window frame mockup
 
