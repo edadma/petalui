@@ -1,4 +1,4 @@
-import { Popconfirm, Button, notification } from 'bloomui'
+import { Popconfirm, Button, notification } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -112,7 +112,7 @@ export function PopconfirmPage() {
           title="Basic"
           description="Simple popconfirm with title."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popconfirm
@@ -135,7 +135,7 @@ export default App`}
           title="With Description"
           description="Add a description for more context."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popconfirm
@@ -163,7 +163,7 @@ export default App`}
           title="Placements"
           description="Popconfirm can be placed in different positions."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -205,7 +205,7 @@ export default App`}
           title="Custom Text"
           description="Customize button text and types."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popconfirm
@@ -240,7 +240,7 @@ export default App`}
           title="Async Confirm"
           description="Handle async operations with loading state."
           code={`import React from 'react'
-import { Popconfirm, Button, notification } from 'bloomui'
+import { Popconfirm, Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleAsyncDelete = () => {
@@ -279,7 +279,7 @@ export default App`}
           title="Custom Icon"
           description="Customize or hide the icon."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -315,7 +315,7 @@ export default App`}
           title="No Cancel Button"
           description="Hide the cancel button."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popconfirm
@@ -344,7 +344,7 @@ export default App`}
           title="Disabled"
           description="Disabled popconfirm."
           code={`import React from 'react'
-import { Popconfirm, Button } from 'bloomui'
+import { Popconfirm, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popconfirm

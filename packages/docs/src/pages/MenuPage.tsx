@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Menu, Card, Masonry } from 'bloomui'
+import { Menu, Card, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -187,7 +187,7 @@ export function MenuPage() {
           title="Basic Menu with Keys"
           description="Menu with key-based selection. Items automatically track selection state."
           code={`import React, { useState } from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const HomeIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -241,7 +241,7 @@ export default App`}
           title="Horizontal Menu"
           description="Horizontal menu for navigation bars."
           code={`import React, { useState } from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [selected, setSelected] = useState('nav1')
@@ -276,7 +276,7 @@ export default App`}
           title="Inline Menu with Submenus"
           description="Collapsible submenus for sidebar navigation."
           code={`import React, { useState } from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const HomeIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -344,7 +344,7 @@ export default App`}
           title="Grouped Menu with Titles"
           description="Menu with titled sections for organization."
           code={`import React from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   return (
@@ -381,7 +381,7 @@ export default App`}
           title="Menu with Icons"
           description="Menu items can include icons for better visual context."
           code={`import React from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const HomeIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -437,7 +437,7 @@ export default App`}
           title="Disabled Items"
           description="Menu items can be disabled."
           code={`import React from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   return (
@@ -466,7 +466,7 @@ export default App`}
           title="Menu in Card"
           description="Menu styled within a card container."
           code={`import React from 'react'
-import { Menu, Card } from 'bloomui'
+import { Menu, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   return (
@@ -501,7 +501,7 @@ export default App`}
           title="Nested Submenus"
           description="Submenus can contain multiple levels of items."
           code={`import React from 'react'
-import { Menu } from 'bloomui'
+import { Menu } from '@edadma/bloomui'
 
 const FolderIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

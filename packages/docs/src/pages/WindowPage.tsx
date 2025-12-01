@@ -1,4 +1,4 @@
-import { Window, Masonry } from 'bloomui'
+import { Window, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'

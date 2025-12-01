@@ -1,4 +1,4 @@
-import { Input, Space, Masonry } from 'bloomui'
+import { Input, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -76,7 +76,7 @@ export function InputPage() {
           title="Basic Input"
           description="Simple text input field."
           code={`import React from 'react'
-import { Input } from 'bloomui'
+import { Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Input placeholder="Type here" />
@@ -91,7 +91,7 @@ export default App`}
           title="Input Types"
           description="Different input types for various data."
           code={`import React from 'react'
-import { Input, Space } from 'bloomui'
+import { Input, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -118,7 +118,7 @@ export default App`}
           title="Sizes"
           description="Five sizes: xs, sm, md, lg, and xl."
           code={`import React from 'react'
-import { Input, Space } from 'bloomui'
+import { Input, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -145,7 +145,7 @@ export default App`}
           title="Colors"
           description="Color variants for different states."
           code={`import React from 'react'
-import { Input, Space } from 'bloomui'
+import { Input, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -176,7 +176,7 @@ export default App`}
           title="Ghost Style"
           description="Minimal appearance without border."
           code={`import React from 'react'
-import { Input } from 'bloomui'
+import { Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Input ghost placeholder="Ghost input" />
@@ -191,7 +191,7 @@ export default App`}
           title="Without Border"
           description="Remove the border styling."
           code={`import React from 'react'
-import { Input } from 'bloomui'
+import { Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Input bordered={false} placeholder="No border" />
@@ -206,7 +206,7 @@ export default App`}
           title="Disabled State"
           description="Non-interactive disabled input."
           code={`import React from 'react'
-import { Input } from 'bloomui'
+import { Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Input disabled placeholder="Disabled input" />
@@ -221,7 +221,7 @@ export default App`}
           title="With Default Value"
           description="Input with pre-filled value."
           code={`import React from 'react'
-import { Input } from 'bloomui'
+import { Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Input defaultValue="Pre-filled value" />

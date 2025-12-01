@@ -1,4 +1,4 @@
-import { Timeline, Masonry } from 'bloomui'
+import { Timeline, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -105,7 +105,7 @@ export function TimelinePage() {
           title="Basic Timeline"
           description="Simple timeline with alternating content."
           code={`import React from 'react'
-import { Timeline, Masonry } from 'bloomui'
+import { Timeline, Masonry } from '@edadma/bloomui'
 
 const CheckIcon = () => (
   <svg
@@ -151,7 +151,7 @@ export default App`}
           title="Vertical Timeline"
           description="Stack items vertically."
           code={`import React from 'react'
-import { Timeline, Masonry } from 'bloomui'
+import { Timeline, Masonry } from '@edadma/bloomui'
 
 const CheckIcon = () => (
   <svg
@@ -258,7 +258,7 @@ export default App`}
           title="Compact Timeline"
           description="All content on one side."
           code={`import React from 'react'
-import { Timeline, Masonry } from 'bloomui'
+import { Timeline, Masonry } from '@edadma/bloomui'
 
 const CheckIcon = () => (
   <svg

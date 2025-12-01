@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useNavigate, useLocation } from 'react-router-dom'
-import { Button, Menu, Navbar, Space, Tag, ThemeController } from 'bloomui'
+import { Button, Menu, Navbar, Space, Tag, ThemeController } from '@edadma/bloomui'
 import { HomePage } from './pages/HomePage'
 import { AffixPage } from './pages/AffixPage'
 import { AlertPage } from './pages/AlertPage'
@@ -137,7 +137,7 @@ function AppContent() {
         }
         end={
           <Space direction="horizontal" size="sm" align="center">
-            <Button type="ghost" href="https://www.npmjs.com/package/bloomui" target="_blank">npm</Button>
+            <Button type="ghost" href="https://www.npmjs.com/package/@edadma/bloomui" target="_blank">npm</Button>
             <Button type="ghost" href="https://github.com/edadma/bloomui" target="_blank">GitHub</Button>
             <ThemeController.Dropdown themes={THEMES} />
           </Space>

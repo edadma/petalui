@@ -1,4 +1,4 @@
-import { Footer, Masonry } from 'bloomui'
+import { Footer, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -49,7 +49,7 @@ export function FooterPage() {
           title="Basic Footer"
           description="Simple footer with navigation sections."
           code={`import React from 'react'
-import { Footer } from 'bloomui'
+import { Footer } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Footer className="bg-base-200 text-base-content p-10">
@@ -100,7 +100,7 @@ export default App`}
           title="Centered Footer"
           description="Center aligned content."
           code={`import React from 'react'
-import { Footer } from 'bloomui'
+import { Footer } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Footer center className="bg-base-200 text-base-content p-10">
@@ -139,7 +139,7 @@ export default App`}
           title="With Logo"
           description="Footer with brand logo and social links."
           code={`import React from 'react'
-import { Footer } from 'bloomui'
+import { Footer } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Footer className="bg-neutral text-neutral-content p-10">

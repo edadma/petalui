@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Fieldset, Input, Select, Checkbox, Button, Form, Modal, Space, Masonry } from 'bloomui'
+import { Fieldset, Input, Select, Checkbox, Button, Form, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -59,7 +59,7 @@ export function FieldsetPage() {
           title="Basic Fieldset"
           description="Simple fieldset with legend and inputs."
           code={`import React from 'react'
-import { Fieldset, Input, Space } from 'bloomui'
+import { Fieldset, Input, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Fieldset>
@@ -100,7 +100,7 @@ export default App`}
           title="With Styling"
           description="Fieldset with border and background."
           code={`import React from 'react'
-import { Fieldset, Select, Space } from 'bloomui'
+import { Fieldset, Select, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Fieldset className="border border-base-300 bg-base-200 rounded-box p-4">
@@ -157,7 +157,7 @@ export default App`}
           title="Multiple Fieldsets"
           description="Grouping different sections of a form."
           code={`import React from 'react'
-import { Fieldset, Input, Checkbox, Space } from 'bloomui'
+import { Fieldset, Input, Checkbox, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="lg">
@@ -216,7 +216,7 @@ export default App`}
           title="Disabled Fieldset"
           description="Disable all controls within a fieldset."
           code={`import React from 'react'
-import { Fieldset, Input, Button, Space } from 'bloomui'
+import { Fieldset, Input, Button, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Fieldset disabled className="border border-base-300 rounded-box p-4">
@@ -245,7 +245,7 @@ export default App`}
           title="In Form"
           description="Using Fieldset with Form component."
           code={`import React from 'react'
-import { Form, Fieldset, Input, Select, Button } from 'bloomui'
+import { Form, Fieldset, Input, Select, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {

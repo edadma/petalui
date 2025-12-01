@@ -1,4 +1,4 @@
-import { FloatButton, Button, Masonry } from 'bloomui'
+import { FloatButton, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -40,7 +40,7 @@ export function FloatButtonPage() {
           title="Basic FloatButton"
           description="Default floating action button with plus icon."
           code={`import React from 'react'
-import { FloatButton } from 'bloomui'
+import { FloatButton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FloatButton onClick={() => alert('Clicked!')} />
@@ -57,7 +57,7 @@ export default App`}
           title="Button Types"
           description="Different color variants."
           code={`import React from 'react'
-import { FloatButton } from 'bloomui'
+import { FloatButton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -81,7 +81,7 @@ export default App`}
           title="Custom Icon"
           description="Use any icon as button content."
           code={`import React from 'react'
-import { FloatButton } from 'bloomui'
+import { FloatButton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FloatButton type="primary">
@@ -106,7 +106,7 @@ export default App`}
           title="Square Shape"
           description="Square button instead of circle."
           code={`import React from 'react'
-import { FloatButton } from 'bloomui'
+import { FloatButton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FloatButton shape="square" type="primary">
@@ -133,7 +133,7 @@ export default App`}
           title="With Tooltip"
           description="Show tooltip on hover."
           code={`import React from 'react'
-import { FloatButton } from 'bloomui'
+import { FloatButton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FloatButton
@@ -156,7 +156,7 @@ export default App`}
           title="BackTop"
           description="Scroll-to-top button that appears after scrolling down."
           code={`import React from 'react'
-import { FloatButton } from 'bloomui'
+import { FloatButton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FloatButton.BackTop visibilityHeight={400} />

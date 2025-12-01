@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Checkbox, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { Checkbox, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -101,7 +101,7 @@ export function CheckboxPage() {
           title="Basic Checkbox"
           description="Simple checkbox with label."
           code={`import React from 'react'
-import { Checkbox } from 'bloomui'
+import { Checkbox } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Checkbox>Remember me</Checkbox>
@@ -116,7 +116,7 @@ export default App`}
           title="Checked"
           description="Checkbox in checked state."
           code={`import React from 'react'
-import { Checkbox } from 'bloomui'
+import { Checkbox } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Checkbox checked readOnly>Checked</Checkbox>
@@ -131,7 +131,7 @@ export default App`}
           title="Sizes"
           description="Five sizes: xs, sm, md, lg, and xl."
           code={`import React from 'react'
-import { Checkbox } from 'bloomui'
+import { Checkbox } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-4">
@@ -158,7 +158,7 @@ export default App`}
           title="Colors"
           description="Color variants for different themes."
           code={`import React from 'react'
-import { Checkbox, Space } from 'bloomui'
+import { Checkbox, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -189,7 +189,7 @@ export default App`}
           title="Disabled State"
           description="Non-interactive disabled checkbox."
           code={`import React from 'react'
-import { Checkbox, Space } from 'bloomui'
+import { Checkbox, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -210,7 +210,7 @@ export default App`}
           title="Indeterminate State"
           description="Partially checked state for hierarchical selections."
           code={`import React from 'react'
-import { Checkbox } from 'bloomui'
+import { Checkbox } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Checkbox indeterminate>Indeterminate</Checkbox>
@@ -225,7 +225,7 @@ export default App`}
           title="Checkbox Group"
           description="Group checkboxes together with automatic value management."
           code={`import React, { useState } from 'react'
-import { Checkbox, Space } from 'bloomui'
+import { Checkbox, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [checkedList, setCheckedList] = useState(['Apple', 'Pear'])
@@ -264,7 +264,7 @@ export default App`}
           title="Checkbox Group with Options"
           description="Generate checkboxes from an options array."
           code={`import React, { useState } from 'react'
-import { Checkbox } from 'bloomui'
+import { Checkbox } from '@edadma/bloomui'
 
 const options = ['Apple', 'Pear', 'Orange']
 
@@ -299,7 +299,7 @@ export default App`}
           title="In Form"
           description="Checkbox working with Form validation."
           code={`import React from 'react'
-import { Form, Checkbox, Button } from 'bloomui'
+import { Form, Checkbox, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {

@@ -1,4 +1,4 @@
-import { Loading, Masonry } from 'bloomui'
+import { Loading, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -54,7 +54,7 @@ export function LoadingPage() {
         title="Types"
         description="Different spinner animations to choose from."
         code={`import React from 'react'
-import { Loading } from 'bloomui'
+import { Loading } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-8 flex-wrap">
@@ -81,7 +81,7 @@ export default App`}
         title="Sizes"
         description="Four sizes available: xs, sm, md (default), and lg."
         code={`import React from 'react'
-import { Loading } from 'bloomui'
+import { Loading } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-8 items-center flex-wrap">
@@ -104,7 +104,7 @@ export default App`}
         title="With Tip"
         description="Display a text message below the spinner."
         code={`import React from 'react'
-import { Loading } from 'bloomui'
+import { Loading } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-8 flex-wrap">
@@ -125,7 +125,7 @@ export default App`}
         title="Embedded in Container"
         description="Wrap content to show a loading overlay."
         code={`import React from 'react'
-import { Loading } from 'bloomui'
+import { Loading } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Loading spinning={true} tip="Loading content...">
@@ -152,7 +152,7 @@ export default App`}
         title="Controlled Spinning"
         description="Toggle the spinning state with the spinning prop."
         code={`import React from 'react'
-import { Loading } from 'bloomui'
+import { Loading } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-8 flex-wrap">

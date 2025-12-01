@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { TreeSelect, Form, Button, Space, Masonry } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect, Form, Button, Space, Masonry } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -205,8 +205,8 @@ export function TreeSelectPage() {
           title="Basic TreeSelect"
           description="Single selection from a tree structure."
           code={`import React, { useState } from 'react'
-import { TreeSelect } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState<string>('')
@@ -305,8 +305,8 @@ export default App`}
           title="Multiple Selection"
           description="Select multiple items from the tree."
           code={`import React, { useState } from 'react'
-import { TreeSelect } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState<string[]>([])
@@ -376,8 +376,8 @@ export default App`}
           title="Checkable TreeSelect"
           description="Checkbox-based selection with cascade checking."
           code={`import React, { useState } from 'react'
-import { TreeSelect } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState<string[]>([])
@@ -456,8 +456,8 @@ export default App`}
           title="With Search"
           description="Filter tree nodes with search."
           code={`import React from 'react'
-import { TreeSelect } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const categoryData: TreeDataNode[] = [
@@ -513,8 +513,8 @@ export default App`}
           title="Different Sizes"
           description="TreeSelect in various sizes."
           code={`import React from 'react'
-import { TreeSelect, Space } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect, Space } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const data: TreeDataNode[] = [
@@ -552,8 +552,8 @@ export default App`}
           title="Disabled State"
           description="Disabled TreeSelect with a preset value."
           code={`import React from 'react'
-import { TreeSelect } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const categoryData: TreeDataNode[] = [
@@ -601,8 +601,8 @@ export default App`}
           title="Form Integration"
           description="TreeSelect in a form with validation."
           code={`import React from 'react'
-import { TreeSelect, Form, Button } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect, Form, Button } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const categoryData: TreeDataNode[] = [
@@ -656,8 +656,8 @@ export default App`}
           title="Default Expanded"
           description="Control which nodes are expanded by default."
           code={`import React from 'react'
-import { TreeSelect } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { TreeSelect } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const categoryData: TreeDataNode[] = [

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileInput, Fieldset, Form, Modal, Space, Masonry } from 'bloomui'
+import { FileInput, Fieldset, Form, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -66,7 +66,7 @@ export function FileInputPage() {
           title="Basic File Input"
           description="Standard file input."
           code={`import React from 'react'
-import { FileInput } from 'bloomui'
+import { FileInput } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FileInput />
@@ -81,7 +81,7 @@ export default App`}
           title="Sizes"
           description="Different input sizes from xs to xl."
           code={`import React from 'react'
-import { FileInput, Space } from 'bloomui'
+import { FileInput, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -108,7 +108,7 @@ export default App`}
           title="Colors"
           description="Colored file input variants."
           code={`import React from 'react'
-import { FileInput, Space } from 'bloomui'
+import { FileInput, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -139,7 +139,7 @@ export default App`}
           title="Ghost Style"
           description="Minimal styling with ghost variant."
           code={`import React from 'react'
-import { FileInput } from 'bloomui'
+import { FileInput } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FileInput ghost />
@@ -154,7 +154,7 @@ export default App`}
           title="Disabled"
           description="Disabled file input."
           code={`import React from 'react'
-import { FileInput } from 'bloomui'
+import { FileInput } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <FileInput disabled />
@@ -169,7 +169,7 @@ export default App`}
           title="With Fieldset"
           description="File input within a fieldset with helper text."
           code={`import React from 'react'
-import { FileInput, Fieldset } from 'bloomui'
+import { FileInput, Fieldset } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Fieldset>
@@ -192,7 +192,7 @@ export default App`}
           title="In Form"
           description="File input in a form with validation."
           code={`import React from 'react'
-import { FileInput, Form, Button } from 'bloomui'
+import { FileInput, Form, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: { file?: FileList }) => {

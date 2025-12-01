@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Affix, Button, Masonry } from 'bloomui'
+import { Affix, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -30,7 +30,7 @@ export function AffixPage() {
           title="Basic Affix"
           description="Element becomes fixed when scrolled past its position."
           code={`import React from 'react'
-import { Affix, Button } from 'bloomui'
+import { Affix, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Affix offsetTop={80}>
@@ -49,7 +49,7 @@ export default App`}
           title="With Callback"
           description="Get notified when affix state changes."
           code={`import React, { useState } from 'react'
-import { Affix, Button } from 'bloomui'
+import { Affix, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [affixed, setAffixed] = useState(false)
@@ -76,7 +76,7 @@ export default App`}
           title="Affix to Bottom"
           description="Fix element to bottom of viewport."
           code={`import React from 'react'
-import { Affix, Button } from 'bloomui'
+import { Affix, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Affix offsetBottom={20}>
@@ -95,7 +95,7 @@ export default App`}
           title="Custom Target"
           description="Affix within a scrollable container."
           code={`import React from 'react'
-import { Affix } from 'bloomui'
+import { Affix } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div id="scroll-container" className="h-64 overflow-auto">

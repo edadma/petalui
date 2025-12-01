@@ -1,4 +1,4 @@
-import { Navbar, Hero, ThemeController, Space } from 'bloomui'
+import { Navbar, Hero, ThemeController, Space } from '@edadma/bloomui'
 
 function App() {
   return (

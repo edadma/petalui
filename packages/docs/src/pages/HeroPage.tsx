@@ -1,4 +1,4 @@
-import { Hero, Button, Card, Input } from 'bloomui'
+import { Hero, Button, Card, Input } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -57,7 +57,7 @@ export function HeroPage() {
           title="Centered Hero"
           description="Basic hero with centered content."
           code={`import React from 'react'
-import { Hero, Button } from 'bloomui'
+import { Hero, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Hero className="bg-base-200 min-h-[400px]" contentClassName="text-center">
@@ -90,7 +90,7 @@ export default App`}
           title="Hero with Figure"
           description="Hero with image alongside content."
           code={`import React from 'react'
-import { Hero, Button } from 'bloomui'
+import { Hero, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Hero className="bg-base-200 min-h-[400px]" contentClassName="flex-col lg:flex-row">
@@ -133,7 +133,7 @@ export default App`}
           title="Reversed Layout"
           description="Hero with image on the right."
           code={`import React from 'react'
-import { Hero, Button } from 'bloomui'
+import { Hero, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Hero className="bg-base-200 min-h-[400px]" contentClassName="flex-col lg:flex-row-reverse">
@@ -176,7 +176,7 @@ export default App`}
           title="Hero with Form"
           description="Hero with a login form card."
           code={`import React from 'react'
-import { Hero, Card, Input, Button } from 'bloomui'
+import { Hero, Card, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Hero className="bg-base-200 min-h-[400px]" contentClassName="flex-col lg:flex-row-reverse">
@@ -251,7 +251,7 @@ export default App`}
           title="Hero with Overlay"
           description="Hero with background image and overlay."
           code={`import React from 'react'
-import { Hero, Button } from 'bloomui'
+import { Hero, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Hero

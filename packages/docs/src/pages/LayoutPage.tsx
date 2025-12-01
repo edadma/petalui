@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Layout, Menu, Breadcrumb, Masonry } from 'bloomui'
+import { Layout, Menu, Breadcrumb, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -173,7 +173,7 @@ export function LayoutPage() {
           title="Basic Layout"
           description="Simple layout with header, content, and footer."
           code={`import React from 'react'
-import { Layout } from 'bloomui'
+import { Layout } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   return (
@@ -212,7 +212,7 @@ export default App`}
           title="Header with Navigation"
           description="Header with horizontal menu navigation."
           code={`import React, { useState } from 'react'
-import { Layout, Menu } from 'bloomui'
+import { Layout, Menu } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [selected, setSelected] = useState('1')
@@ -271,7 +271,7 @@ export default App`}
           title="Layout with Sider"
           description="Layout with a sidebar for navigation."
           code={`import React, { useState } from 'react'
-import { Layout, Menu } from 'bloomui'
+import { Layout, Menu } from '@edadma/bloomui'
 
 const HomeIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -353,7 +353,7 @@ export default App`}
           title="Collapsible Sider"
           description="Sidebar that can be collapsed to save space."
           code={`import React, { useState } from 'react'
-import { Layout, Menu } from 'bloomui'
+import { Layout, Menu } from '@edadma/bloomui'
 
 const HomeIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -455,7 +455,7 @@ export default App`}
           title="Full Application Layout"
           description="Complete layout with header, sidebar, breadcrumb, content, and footer."
           code={`import React from 'react'
-import { Layout, Menu, Breadcrumb } from 'bloomui'
+import { Layout, Menu, Breadcrumb } from '@edadma/bloomui'
 
 const UserIcon = () => (
   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

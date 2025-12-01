@@ -1,4 +1,4 @@
-import { Alert, Button, Card, Masonry } from 'bloomui'
+import { Alert, Button, Card, Masonry } from '@edadma/bloomui'
 
 export function HomePage() {
   return (
@@ -80,11 +80,11 @@ export default {
                 <pre className="bg-base-300 p-4 rounded-lg overflow-x-auto text-sm">
                   <code>{`@import "tailwindcss";
 @plugin "daisyui";
-@source "../node_modules/bloomui/dist";`}</code>
+@source "../node_modules/@edadma/bloomui/dist";`}</code>
                 </pre>
                 <button
                   className="absolute top-2 right-2 btn btn-xs btn-ghost opacity-0 group-hover:opacity-100 transition-opacity"
-                  onClick={() => navigator.clipboard.writeText(`@import "tailwindcss";\n@plugin "daisyui";\n@source "../node_modules/bloomui/dist";`)}
+                  onClick={() => navigator.clipboard.writeText(`@import "tailwindcss";\n@plugin "daisyui";\n@source "../node_modules/@edadma/bloomui/dist";`)}
                 >
                   Copy
                 </button>
@@ -115,7 +115,7 @@ export default {
               <p>Import and use components in your React app:</p>
               <div className="relative group">
                 <pre className="bg-base-300 p-4 rounded-lg overflow-x-auto text-sm">
-                  <code>{`import { Button, Card } from 'bloomui'
+                  <code>{`import { Button, Card } from '@edadma/bloomui'
 
 const App = () => {
   return (
@@ -130,7 +130,7 @@ export default App`}</code>
                 <button
                   className="absolute top-2 right-2 btn btn-xs btn-ghost opacity-0 group-hover:opacity-100 transition-opacity"
                   onClick={() => {
-                    navigator.clipboard.writeText(`import { Button, Card } from 'bloomui'
+                    navigator.clipboard.writeText(`import { Button, Card } from '@edadma/bloomui'
 
 const App = () => {
   return (

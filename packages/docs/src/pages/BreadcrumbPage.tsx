@@ -1,4 +1,4 @@
-import { Breadcrumb, Masonry } from 'bloomui'
+import { Breadcrumb, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -52,7 +52,7 @@ export function BreadcrumbPage() {
           title="Basic Breadcrumb"
           description="Simple breadcrumb navigation."
           code={`import React from 'react'
-import { Breadcrumb } from 'bloomui'
+import { Breadcrumb } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Breadcrumb>
@@ -75,7 +75,7 @@ export default App`}
           title="With Icons"
           description="Breadcrumb with SVG icons."
           code={`import React from 'react'
-import { Breadcrumb } from 'bloomui'
+import { Breadcrumb } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Breadcrumb>
@@ -158,7 +158,7 @@ export default App`}
           title="Max Width with Scroll"
           description="Breadcrumb with overflow scrolling."
           code={`import React from 'react'
-import { Breadcrumb } from 'bloomui'
+import { Breadcrumb } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Breadcrumb className="max-w-xs">

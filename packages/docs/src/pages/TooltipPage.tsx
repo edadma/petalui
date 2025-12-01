@@ -1,4 +1,4 @@
-import { Tooltip, Button, Masonry } from 'bloomui'
+import { Tooltip, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -53,7 +53,7 @@ export function TooltipPage() {
           title="Basic Tooltip"
           description="Hover over the button to see tooltip."
           code={`import React from 'react'
-import { Tooltip, Button, Masonry } from 'bloomui'
+import { Tooltip, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Tooltip tip="Hello there!">
@@ -72,7 +72,7 @@ export default App`}
           title="Positions"
           description="Four placement options."
           code={`import React from 'react'
-import { Tooltip, Button, Masonry } from 'bloomui'
+import { Tooltip, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -113,7 +113,7 @@ export default App`}
           title="Colors"
           description="Colored tooltip variants."
           code={`import React from 'react'
-import { Tooltip, Button, Masonry } from 'bloomui'
+import { Tooltip, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex flex-wrap gap-4">

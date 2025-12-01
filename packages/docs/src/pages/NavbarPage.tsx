@@ -1,4 +1,4 @@
-import { Navbar, Button, Dropdown, Badge, Space, Masonry } from 'bloomui'
+import { Navbar, Button, Dropdown, Badge, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -46,7 +46,7 @@ export function NavbarPage() {
           title="Basic Navbar"
           description="Simple navbar with title."
           code={`import React from 'react'
-import { Navbar } from 'bloomui'
+import { Navbar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Navbar start={<span className="text-xl font-bold">MyApp</span>} />
@@ -61,7 +61,7 @@ export default App`}
           title="With Start, Center, End"
           description="Using all three sections."
           code={`import React from 'react'
-import { Navbar, Button } from 'bloomui'
+import { Navbar, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Navbar
@@ -96,7 +96,7 @@ export default App`}
           title="With Logo"
           description="Brand logo with navigation."
           code={`import React from 'react'
-import { Navbar } from 'bloomui'
+import { Navbar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Navbar
@@ -141,7 +141,7 @@ export default App`}
           title="With Dropdown Menu"
           description="Using dropdown for user menu."
           code={`import React from 'react'
-import { Navbar, Dropdown } from 'bloomui'
+import { Navbar, Dropdown } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Navbar
@@ -192,7 +192,7 @@ export default App`}
           title="With Icons and Badge"
           description="Notification badge and icons."
           code={`import React from 'react'
-import { Navbar, Badge } from 'bloomui'
+import { Navbar, Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Navbar
@@ -287,7 +287,7 @@ export default App`}
           title="Colored Background"
           description="Different background colors."
           code={`import React from 'react'
-import { Navbar, Button, Space } from 'bloomui'
+import { Navbar, Button, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -334,7 +334,7 @@ export default App`}
           title="Custom Layout"
           description="Using children for custom structure."
           code={`import React from 'react'
-import { Navbar, Button } from 'bloomui'
+import { Navbar, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Navbar>

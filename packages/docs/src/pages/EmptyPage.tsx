@@ -1,4 +1,4 @@
-import { Empty, Button, Masonry } from 'bloomui'
+import { Empty, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -47,7 +47,7 @@ export function EmptyPage() {
           title="Basic Empty"
           description="Simple empty state with default styling."
           code={`import React from 'react'
-import { Empty } from 'bloomui'
+import { Empty } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty />
@@ -62,7 +62,7 @@ export default App`}
           title="Custom Description"
           description="Empty state with custom description text."
           code={`import React from 'react'
-import { Empty } from 'bloomui'
+import { Empty } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty description="No items found" />
@@ -77,7 +77,7 @@ export default App`}
           title="With Action Button"
           description="Empty state with action button."
           code={`import React from 'react'
-import { Empty, Button } from 'bloomui'
+import { Empty, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty description="No data available">
@@ -96,7 +96,7 @@ export default App`}
           title="Custom Image"
           description="Empty state with custom image."
           code={`import React from 'react'
-import { Empty } from 'bloomui'
+import { Empty } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty
@@ -145,7 +145,7 @@ export default App`}
           title="In a Card"
           description="Empty state displayed in a card component."
           code={`import React from 'react'
-import { Empty, Button } from 'bloomui'
+import { Empty, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="card bg-base-100 shadow-xl">
@@ -174,7 +174,7 @@ export default App`}
           title="Search Results"
           description="Empty state for search with no results."
           code={`import React from 'react'
-import { Empty, Button } from 'bloomui'
+import { Empty, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty
@@ -235,7 +235,7 @@ export default App`}
           title="No Image"
           description="Empty state without any image."
           code={`import React from 'react'
-import { Empty, Button } from 'bloomui'
+import { Empty, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty image={null} description="Your cart is empty">
@@ -254,7 +254,7 @@ export default App`}
           title="Multiple Actions"
           description="Empty state with multiple action buttons."
           code={`import React from 'react'
-import { Empty, Button } from 'bloomui'
+import { Empty, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Empty description="No projects created yet">

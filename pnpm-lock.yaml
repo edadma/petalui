@@ -59,7 +59,7 @@ importers:
 
   packages/docs:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../bloomui
       react:
@@ -132,7 +132,7 @@ importers:
 
   packages/examples/autocomplete-search:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../../bloomui
       react:
@@ -169,7 +169,7 @@ importers:
 
   packages/examples/comprehensive-form:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../../bloomui
       react:
@@ -209,7 +209,7 @@ importers:
 
   packages/examples/form-validation:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../../bloomui
       react:
@@ -249,7 +249,7 @@ importers:
 
   packages/examples/job-application:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../../bloomui
       react:
@@ -289,7 +289,7 @@ importers:
 
   packages/examples/theme-dropdown:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../../bloomui
       react:
@@ -326,7 +326,7 @@ importers:
 
   packages/examples/theme-swap:
     dependencies:
-      bloomui:
+      '@edadma/bloomui':
         specifier: workspace:*
         version: link:../../bloomui
       react:

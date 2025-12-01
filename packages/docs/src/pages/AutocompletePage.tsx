@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Autocomplete, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { Autocomplete, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -140,7 +140,7 @@ export function AutocompletePage() {
           title="Basic Autocomplete"
           description="Simple autocomplete with string array options."
           code={`import React from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const countries = [
   'United States',
@@ -167,7 +167,7 @@ export default App`}
           title="With Object Options"
           description="Autocomplete with value/label object options."
           code={`import React from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const fruits = [
   { value: 'apple', label: 'Apple' },
@@ -192,7 +192,7 @@ export default App`}
           title="Controlled"
           description="Controlled autocomplete with state management."
           code={`import React, { useState } from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const countries = [
   'United States',
@@ -236,7 +236,7 @@ export default App`}
           title="No Custom Values"
           description="Autocomplete that only allows selection from options."
           code={`import React from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const languages = [
   'JavaScript',
@@ -267,7 +267,7 @@ export default App`}
           title="Custom Filter"
           description="Autocomplete with custom filtering logic (starts with)."
           code={`import React from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const countries = [
   'United States',
@@ -301,7 +301,7 @@ export default App`}
           title="Different Sizes"
           description="Autocomplete in various sizes."
           code={`import React from 'react'
-import { Autocomplete, Space } from 'bloomui'
+import { Autocomplete, Space } from '@edadma/bloomui'
 
 const options = ['Option 1', 'Option 2', 'Option 3']
 
@@ -328,7 +328,7 @@ export default App`}
           title="Disabled"
           description="Disabled autocomplete."
           code={`import React from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Autocomplete
@@ -347,7 +347,7 @@ export default App`}
           title="Custom Not Found Content"
           description="Autocomplete with custom message when no results."
           code={`import React from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Autocomplete
@@ -375,7 +375,7 @@ export default App`}
           title="Email Domain Autocomplete"
           description="Practical example with email domain suggestions."
           code={`import React, { useState } from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -421,7 +421,7 @@ export default App`}
           title="In Form"
           description="Autocomplete integrated with Form component."
           code={`import React from 'react'
-import { Autocomplete, Form, Button } from 'bloomui'
+import { Autocomplete, Form, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values) => {
@@ -490,7 +490,7 @@ export default App`}
           title="Search with Highlighting"
           description="Controlled autocomplete for search functionality."
           code={`import React, { useState } from 'react'
-import { Autocomplete } from 'bloomui'
+import { Autocomplete } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [language, setLanguage] = useState('')

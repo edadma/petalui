@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Textarea, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { Textarea, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -73,7 +73,7 @@ export function TextareaPage() {
           title="Basic Textarea"
           description="Simple textarea with placeholder."
           code={`import React from 'react'
-import { Textarea, Masonry } from 'bloomui'
+import { Textarea, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Textarea placeholder="Type your message here" />
@@ -88,7 +88,7 @@ export default App`}
           title="With Rows"
           description="Control height with rows attribute."
           code={`import React from 'react'
-import { Textarea, Masonry } from 'bloomui'
+import { Textarea, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Textarea rows={6} placeholder="Tall textarea" />
@@ -103,7 +103,7 @@ export default App`}
           title="Sizes"
           description="Five sizes: xs, sm, md, lg, and xl."
           code={`import React from 'react'
-import { Textarea, Space, Masonry } from 'bloomui'
+import { Textarea, Space, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -130,7 +130,7 @@ export default App`}
           title="Colors"
           description="Color variants for different states."
           code={`import React from 'react'
-import { Textarea, Space, Masonry } from 'bloomui'
+import { Textarea, Space, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -161,7 +161,7 @@ export default App`}
           title="Ghost Variant"
           description="Transparent background style."
           code={`import React from 'react'
-import { Textarea, Masonry } from 'bloomui'
+import { Textarea, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Textarea ghost placeholder="Ghost textarea" />
@@ -176,7 +176,7 @@ export default App`}
           title="Disabled State"
           description="Non-interactive disabled textarea."
           code={`import React from 'react'
-import { Textarea, Masonry } from 'bloomui'
+import { Textarea, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Textarea disabled placeholder="Disabled textarea" />
@@ -191,7 +191,7 @@ export default App`}
           title="In Form"
           description="Textarea with form validation."
           code={`import React from 'react'
-import { Form, Textarea, Button, Masonry } from 'bloomui'
+import { Form, Textarea, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {

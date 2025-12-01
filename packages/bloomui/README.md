@@ -29,7 +29,7 @@ Configure your CSS file (e.g., `src/index.css`):
 ```css
 @import "tailwindcss";
 @plugin "daisyui";
-@source "../node_modules/bloomui";
+@source "../node_modules/@edadma/bloomui";
 ```
 
 The `@source` directive tells Tailwind to scan the BloomUI package for classes to include in your build.
@@ -47,7 +47,7 @@ yarn add bloomui
 ## Usage
 
 ```tsx
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 function App() {
   const handleSubmit = (values) => {

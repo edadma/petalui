@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Input, Checkbox, Button, Modal, Masonry } from 'bloomui'
+import { Form, Input, Checkbox, Button, Modal, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -158,7 +158,7 @@ export function FormPage() {
           title="Basic Form"
           description="Simple form with email and password fields."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {
@@ -207,7 +207,7 @@ export default App`}
           title="With Validation"
           description="Form with custom validation rules."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {
@@ -292,7 +292,7 @@ export default App`}
           title="With Checkbox"
           description="Form with checkbox using valuePropName."
           code={`import React from 'react'
-import { Form, Input, Checkbox, Button } from 'bloomui'
+import { Form, Input, Checkbox, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {
@@ -361,7 +361,7 @@ export default App`}
           title="With Help Text"
           description="Form fields with helpful hints."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {
@@ -436,7 +436,7 @@ export default App`}
           title="Form Sizes"
           description="Apply size to all fields at once."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Form size="lg" onFinish={(values) => console.log(values)}>
@@ -479,7 +479,7 @@ export default App`}
           title="Type Validators"
           description="Built-in validators for email, URL, and number types."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Form onFinish={(values) => console.log(values)}>
@@ -554,7 +554,7 @@ export default App`}
           title="Form Methods API"
           description="Programmatic control with form instance methods."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const form = Form.useForm()
@@ -647,7 +647,7 @@ export default App`}
           title="Dynamic Fields (Form.List)"
           description="Add and remove fields dynamically with Form.List."
           code={`import React from 'react'
-import { Form, Input, Button } from 'bloomui'
+import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Form

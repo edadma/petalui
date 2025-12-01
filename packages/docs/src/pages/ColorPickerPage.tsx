@@ -1,4 +1,4 @@
-import { ColorPicker, Space, Form, Button, Masonry } from 'bloomui'
+import { ColorPicker, Space, Form, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -66,7 +66,7 @@ export function ColorPickerPage() {
           title="Basic ColorPicker"
           description="Full picker with saturation/lightness panel, hue slider, and swatches."
           code={`import React, { useState } from 'react'
-import { ColorPicker } from 'bloomui'
+import { ColorPicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [color, setColor] = useState('#3b82f6')
@@ -91,7 +91,7 @@ export default App`}
           title="Swatches Only"
           description="Simple swatch grid without the full picker."
           code={`import React, { useState } from 'react'
-import { ColorPicker } from 'bloomui'
+import { ColorPicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [color, setColor] = useState('#ef4444')
@@ -114,7 +114,7 @@ export default App`}
           title="Picker Only"
           description="Full picker without preset swatches."
           code={`import React, { useState } from 'react'
-import { ColorPicker } from 'bloomui'
+import { ColorPicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [color, setColor] = useState('#8b5cf6')
@@ -137,7 +137,7 @@ export default App`}
           title="Different Sizes"
           description="ColorPicker in various sizes."
           code={`import React from 'react'
-import { ColorPicker, Space } from 'bloomui'
+import { ColorPicker, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space direction="vertical" size="large">
@@ -178,7 +178,7 @@ export default App`}
           title="Custom Presets"
           description="Provide your own color swatches."
           code={`import React, { useState } from 'react'
-import { ColorPicker } from 'bloomui'
+import { ColorPicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [color, setColor] = useState('#3b82f6')
@@ -219,7 +219,7 @@ export default App`}
           title="Disabled State"
           description="ColorPicker in disabled state."
           code={`import React from 'react'
-import { ColorPicker } from 'bloomui'
+import { ColorPicker } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ColorPicker value="#6366f1" disabled />
@@ -234,7 +234,7 @@ export default App`}
           title="Form Integration"
           description="Use ColorPicker with Form.Item for form validation."
           code={`import React from 'react'
-import { Form, ColorPicker, Button } from 'bloomui'
+import { Form, ColorPicker, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Form
@@ -269,7 +269,7 @@ export default App`}
           title="Live Preview"
           description="Use the selected color in real-time."
           code={`import React, { useState } from 'react'
-import { ColorPicker } from 'bloomui'
+import { ColorPicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [bgColor, setBgColor] = useState('#3b82f6')

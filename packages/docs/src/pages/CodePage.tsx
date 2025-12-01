@@ -1,4 +1,4 @@
-import { Code, Masonry } from 'bloomui'
+import { Code, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -77,7 +77,7 @@ export function CodePage() {
           description="Code with line numbers."
           code={`<Code className="w-full">
   <Code.Line prefix="1">import React from 'react'</Code.Line>
-  <Code.Line prefix="2">import { Code } from 'bloomui'</Code.Line>
+  <Code.Line prefix="2">import { Code } from '@edadma/bloomui'</Code.Line>
   <Code.Line prefix="3">{' '}</Code.Line>
   <Code.Line prefix="4">export default function App() {'{'}</Code.Line>
   <Code.Line prefix="5">{'  return <Code />'}</Code.Line>
@@ -86,7 +86,7 @@ export function CodePage() {
         >
           <Code className="w-full">
             <Code.Line prefix="1">import React from 'react'</Code.Line>
-            <Code.Line prefix="2">import {'{ Code }'} from 'bloomui'</Code.Line>
+            <Code.Line prefix="2">import {'{ Code }'} from '@edadma/bloomui'</Code.Line>
             <Code.Line prefix="3">{' '}</Code.Line>
             <Code.Line prefix="4">export default function App() {'{'}</Code.Line>
             <Code.Line prefix="5">{'  return <Code />'}</Code.Line>

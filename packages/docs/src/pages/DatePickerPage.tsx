@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DatePicker, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { DatePicker, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -77,7 +77,7 @@ export function DatePickerPage() {
           title="Basic DatePicker"
           description="Simple date picker with default settings."
           code={`import React from 'react'
-import { DatePicker } from 'bloomui'
+import { DatePicker } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <DatePicker placeholder="Select date" />
@@ -92,7 +92,7 @@ export default App`}
           title="With Default Value"
           description="DatePicker with a pre-selected date."
           code={`import React from 'react'
-import { DatePicker } from 'bloomui'
+import { DatePicker } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <DatePicker defaultValue={new Date()} />
@@ -107,7 +107,7 @@ export default App`}
           title="Controlled"
           description="Controlled date picker with state management."
           code={`import React, { useState } from 'react'
-import { DatePicker } from 'bloomui'
+import { DatePicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [date, setDate] = useState<Date | null>(null)
@@ -136,7 +136,7 @@ export default App`}
           title="Custom Format"
           description="DatePicker with custom date format."
           code={`import React, { useState } from 'react'
-import { DatePicker } from 'bloomui'
+import { DatePicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [date, setDate] = useState<Date | null>(new Date())
@@ -163,7 +163,7 @@ export default App`}
           title="Different Sizes"
           description="DatePicker in various sizes."
           code={`import React from 'react'
-import { DatePicker, Space } from 'bloomui'
+import { DatePicker, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -188,7 +188,7 @@ export default App`}
           title="Disabled"
           description="Disabled date picker."
           code={`import React from 'react'
-import { DatePicker } from 'bloomui'
+import { DatePicker } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <DatePicker disabled defaultValue={new Date()} />
@@ -203,7 +203,7 @@ export default App`}
           title="In Form"
           description="DatePicker integrated with Form component."
           code={`import React from 'react'
-import { DatePicker, Form, Button } from 'bloomui'
+import { DatePicker, Form, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values) => {
@@ -272,7 +272,7 @@ export default App`}
           title="Date Range Selection"
           description="Two date pickers for selecting a date range."
           code={`import React, { useState } from 'react'
-import { DatePicker } from 'bloomui'
+import { DatePicker } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null)

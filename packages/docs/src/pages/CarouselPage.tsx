@@ -1,4 +1,4 @@
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -61,7 +61,7 @@ export function CarouselPage() {
           title="Basic"
           description="Simple horizontal carousel with snap scrolling."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Carousel className="rounded-box">
@@ -127,7 +127,7 @@ export default App`}
           title="Center Snap"
           description="Carousel with center-aligned snap scrolling."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Carousel snap="center" className="rounded-box">
@@ -181,7 +181,7 @@ export default App`}
           title="End Snap"
           description="Carousel with end-aligned snap scrolling."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Carousel snap="end" className="rounded-box">
@@ -235,7 +235,7 @@ export default App`}
           title="Full Width Items"
           description="Each item takes full width of the carousel."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Carousel className="rounded-box">
@@ -295,7 +295,7 @@ export default App`}
           title="Half Width Items"
           description="Each item takes half the width of the carousel."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Carousel snap="center" className="rounded-box">
@@ -355,7 +355,7 @@ export default App`}
           title="Vertical Carousel"
           description="Carousel with vertical scrolling."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Carousel vertical className="rounded-box h-96">
@@ -409,7 +409,7 @@ export default App`}
           title="With Indicators"
           description="Carousel with navigation indicators using anchor links."
           code={`import React from 'react'
-import { Carousel } from 'bloomui'
+import { Carousel } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>

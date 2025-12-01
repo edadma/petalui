@@ -1,4 +1,4 @@
-import { Navbar, Hero, ThemeController, Button, Badge, Card, Space } from 'bloomui'
+import { Navbar, Hero, ThemeController, Button, Badge, Card, Space } from '@edadma/bloomui'
 
 const THEMES = [
   'light',

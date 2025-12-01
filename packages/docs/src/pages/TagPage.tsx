@@ -1,4 +1,4 @@
-import { Tag, CheckableTag, Masonry } from 'bloomui'
+import { Tag, CheckableTag, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -92,7 +92,7 @@ export function TagPage() {
           title="Basic Tags"
           description="Simple tags with preset colors."
           code={`import React from 'react'
-import { Tag, Masonry } from 'bloomui'
+import { Tag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -125,7 +125,7 @@ export default App`}
           title="Closable Tags"
           description="Tags that can be closed by the user."
           code={`import React, { useState } from 'react'
-import { Tag, Masonry } from 'bloomui'
+import { Tag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [tags, setTags] = useState(['Tag 1', 'Tag 2', 'Tag 3'])
@@ -169,7 +169,7 @@ export default App`}
           title="Tags with Icons"
           description="Add icons to tags for better visual communication."
           code={`import React from 'react'
-import { Tag, Masonry } from 'bloomui'
+import { Tag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -272,7 +272,7 @@ export default App`}
           title="Tag Sizes"
           description="Four sizes available for tags."
           code={`import React from 'react'
-import { Tag, Masonry } from 'bloomui'
+import { Tag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 items-center flex-wrap">
@@ -313,7 +313,7 @@ export default App`}
           title="Custom Colors"
           description="Use custom hex colors for unique styling."
           code={`import React from 'react'
-import { Tag, Masonry } from 'bloomui'
+import { Tag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -340,7 +340,7 @@ export default App`}
           title="Checkable Tags"
           description="Tags that can be toggled on and off."
           code={`import React, { useState } from 'react'
-import { CheckableTag, Masonry } from 'bloomui'
+import { CheckableTag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [selectedTags, setSelectedTags] = useState<string[]>(['React'])
@@ -383,7 +383,7 @@ export default App`}
           title="Checkable Tags with Icons"
           description="Add icons to checkable tags."
           code={`import React, { useState } from 'react'
-import { CheckableTag, Masonry } from 'bloomui'
+import { CheckableTag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [checked1, setChecked1] = useState(false)
@@ -485,7 +485,7 @@ export default App`}
           title="Use Cases"
           description="Practical examples of tag usage."
           code={`import React from 'react'
-import { Tag, Masonry } from 'bloomui'
+import { Tag, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-4">

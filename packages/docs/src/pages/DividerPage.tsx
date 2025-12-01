@@ -1,4 +1,4 @@
-import { Divider, Masonry } from 'bloomui'
+import { Divider, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -48,7 +48,7 @@ export function DividerPage() {
           title="Basic Divider"
           description="Simple horizontal divider line."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>
@@ -71,7 +71,7 @@ export default App`}
           title="Divider with Text"
           description="Divider with centered text label."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>
@@ -94,7 +94,7 @@ export default App`}
           title="Text Position"
           description="Position text at start, center, or end."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>
@@ -117,7 +117,7 @@ export default App`}
           title="Vertical Divider"
           description="Divider for horizontal layouts."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex h-32 items-center">
@@ -144,7 +144,7 @@ export default App`}
           title="Color Variants"
           description="Dividers with different colors."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>
@@ -169,7 +169,7 @@ export default App`}
           title="Status Colors"
           description="Dividers with status colors."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>
@@ -194,7 +194,7 @@ export default App`}
           title="Form Sections"
           description="Use dividers to separate form sections."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="w-full max-w-md">
@@ -231,7 +231,7 @@ export default App`}
           title="Responsive Orientation"
           description="Change orientation based on screen size."
           code={`import React from 'react'
-import { Divider } from 'bloomui'
+import { Divider } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex flex-col lg:flex-row h-64 lg:h-32 items-center">

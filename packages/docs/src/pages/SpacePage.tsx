@@ -1,4 +1,4 @@
-import { Space, Button, Card, Badge, Masonry } from 'bloomui'
+import { Space, Button, Card, Badge, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -49,7 +49,7 @@ export function SpacePage() {
           title="Vertical Space"
           description="Default vertical spacing between elements."
           code={`import React from 'react'
-import { Space, Button } from 'bloomui'
+import { Space, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -72,7 +72,7 @@ export default App`}
           title="Horizontal Space"
           description="Horizontal spacing between elements."
           code={`import React from 'react'
-import { Space, Button } from 'bloomui'
+import { Space, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space direction="horizontal">
@@ -95,7 +95,7 @@ export default App`}
           title="Different Sizes"
           description="Control spacing size with the size prop."
           code={`import React from 'react'
-import { Space, Badge } from 'bloomui'
+import { Space, Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -160,7 +160,7 @@ export default App`}
           title="With Alignment"
           description="Align items within the space."
           code={`import React from 'react'
-import { Space, Button } from 'bloomui'
+import { Space, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space direction="horizontal" align="center">
@@ -183,7 +183,7 @@ export default App`}
           title="Wrap Items"
           description="Allow items to wrap to the next line."
           code={`import React from 'react'
-import { Space, Badge } from 'bloomui'
+import { Space, Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space direction="horizontal" wrap>
@@ -216,7 +216,7 @@ export default App`}
           title="Nested Spaces"
           description="Combine vertical and horizontal spacing."
           code={`import React from 'react'
-import { Space, Card, Button } from 'bloomui'
+import { Space, Card, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Navbar, ThemeController, Form, Input, Button, Card, Space } from 'bloomui'
+import { Navbar, ThemeController, Form, Input, Button, Card, Space } from '@edadma/bloomui'
 
 interface FormValues {
   username: string

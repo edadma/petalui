@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Range, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { Range, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -102,7 +102,7 @@ export function RangePage() {
           title="Basic Range"
           description="Simple range slider with default settings."
           code={`import React from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Range />
@@ -117,7 +117,7 @@ export default App`}
           title="With Value Display"
           description="Range slider showing the current value."
           code={`import React from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Range showValue />
@@ -132,7 +132,7 @@ export default App`}
           title="With Steps"
           description="Range slider with visible step markers."
           code={`import React from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Range showSteps step={10} />
@@ -147,7 +147,7 @@ export default App`}
           title="Controlled"
           description="Controlled range slider with state management."
           code={`import React, { useState } from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState(50)
@@ -172,7 +172,7 @@ export default App`}
           title="Custom Range"
           description="Range slider with custom min, max, and step values."
           code={`import React from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Range min={0} max={10} step={0.5} defaultValue={5} showValue />
@@ -187,7 +187,7 @@ export default App`}
           title="Different Colors"
           description="Range sliders in various theme colors."
           code={`import React from 'react'
-import { Range, Space } from 'bloomui'
+import { Range, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -218,7 +218,7 @@ export default App`}
           title="Different Sizes"
           description="Range sliders in various sizes."
           code={`import React from 'react'
-import { Range, Space } from 'bloomui'
+import { Range, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="lg">
@@ -243,7 +243,7 @@ export default App`}
           title="Disabled"
           description="Disabled range slider."
           code={`import React from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Range disabled defaultValue={60} />
@@ -258,7 +258,7 @@ export default App`}
           title="Volume Control Example"
           description="Real-world example of a volume control."
           code={`import React, { useState } from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [volume, setVolume] = useState(50)
@@ -307,7 +307,7 @@ export default App`}
           title="In Form"
           description="Range slider integrated with Form component."
           code={`import React from 'react'
-import { Range, Form, Button } from 'bloomui'
+import { Range, Form, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values) => {
@@ -356,7 +356,7 @@ export default App`}
           title="Price Range"
           description="Example of a price range selector."
           code={`import React, { useState } from 'react'
-import { Range } from 'bloomui'
+import { Range } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value1, setValue1] = useState(100)

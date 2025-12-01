@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Splitter, Menu, Button, Space, Masonry } from 'bloomui'
+import { Splitter, Menu, Button, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -95,7 +95,7 @@ export function SplitterPage() {
           title="Basic Horizontal Splitter"
           description="Drag the divider to resize the panels."
           code={`import React from 'react'
-import { Splitter } from 'bloomui'
+import { Splitter } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-64 border border-base-300 rounded-lg overflow-hidden">
@@ -148,7 +148,7 @@ export default App`}
           title="Vertical Splitter"
           description="Split panels vertically."
           code={`import React from 'react'
-import { Splitter } from 'bloomui'
+import { Splitter } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-64 border border-base-300 rounded-lg overflow-hidden">
@@ -189,7 +189,7 @@ export default App`}
           title="Controlled Sizes"
           description="Control panel sizes programmatically."
           code={`import React, { useState } from 'react'
-import { Splitter, Button, Space } from 'bloomui'
+import { Splitter, Button, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [sizes, setSizes] = useState([30, 70])
@@ -248,7 +248,7 @@ export default App`}
           title="Multiple Panels"
           description="Split into more than two panels."
           code={`import React from 'react'
-import { Splitter } from 'bloomui'
+import { Splitter } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-48 border border-base-300 rounded-lg overflow-hidden">
@@ -287,7 +287,7 @@ export default App`}
           title="With Min/Max Sizes"
           description="Constrain panel sizes with min and max values."
           code={`import React from 'react'
-import { Splitter } from 'bloomui'
+import { Splitter } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-48 border border-base-300 rounded-lg overflow-hidden">
@@ -328,7 +328,7 @@ export default App`}
           title="Nested Splitters"
           description="Combine horizontal and vertical splitters."
           code={`import React from 'react'
-import { Splitter } from 'bloomui'
+import { Splitter } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-72 border border-base-300 rounded-lg overflow-hidden">
@@ -387,7 +387,7 @@ export default App`}
           title="Custom Gutter Size"
           description="Adjust the gutter (divider) size."
           code={`import React from 'react'
-import { Splitter } from 'bloomui'
+import { Splitter } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-48 border border-base-300 rounded-lg overflow-hidden">
@@ -428,7 +428,7 @@ export default App`}
           title="IDE-Style Layout"
           description="Complex layout similar to an IDE."
           code={`import React from 'react'
-import { Splitter, Menu, Card } from 'bloomui'
+import { Splitter, Menu, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="h-80 border border-base-300 rounded-lg overflow-hidden">

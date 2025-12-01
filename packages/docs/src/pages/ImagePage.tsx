@@ -1,4 +1,4 @@
-import { Image, Skeleton } from 'bloomui'
+import { Image, Skeleton } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -72,7 +72,7 @@ export function ImagePage() {
           title="Basic"
           description="Simple image display."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Image
@@ -96,7 +96,7 @@ export default App`}
           title="With Preview"
           description="Click the image to preview in fullscreen (enabled by default)."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Image
@@ -123,7 +123,7 @@ export default App`}
           title="No Preview"
           description="Disable preview functionality."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Image
@@ -149,7 +149,7 @@ export default App`}
           title="With Placeholder"
           description="Show a placeholder while the image loads."
           code={`import React from 'react'
-import { Image, Skeleton } from 'bloomui'
+import { Image, Skeleton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Image
@@ -177,7 +177,7 @@ export default App`}
           title="Fallback"
           description="Display a fallback image if the source fails to load."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Image
@@ -203,7 +203,7 @@ export default App`}
           title="Error State"
           description="Show an error icon when image fails to load and no fallback is provided."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Image
@@ -229,7 +229,7 @@ export default App`}
           title="Custom Size"
           description="Set custom width and height."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -283,7 +283,7 @@ export default App`}
           title="With Custom Styling"
           description="Apply custom CSS classes."
           code={`import React from 'react'
-import { Image } from 'bloomui'
+import { Image } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">

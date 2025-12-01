@@ -1,4 +1,4 @@
-import { Rating, Space, Masonry } from 'bloomui'
+import { Rating, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -91,7 +91,7 @@ export function RatingPage() {
           title="Basic Rating"
           description="Simple 5-star rating."
           code={`import React from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Rating defaultValue={3}>
@@ -118,7 +118,7 @@ export default App`}
           title="With Hidden Clear"
           description="Hidden first item allows clearing rating."
           code={`import React from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Rating defaultValue={0}>
@@ -147,7 +147,7 @@ export default App`}
           title="Different Sizes"
           description="Rating in various sizes."
           code={`import React from 'react'
-import { Rating, Space } from 'bloomui'
+import { Rating, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -220,7 +220,7 @@ export default App`}
           title="Heart Shape"
           description="Rating with heart icons."
           code={`import React from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Rating defaultValue={4}>
@@ -247,7 +247,7 @@ export default App`}
           title="Custom Colors"
           description="Different colors for each rating level."
           code={`import React from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Rating defaultValue={3}>
@@ -274,7 +274,7 @@ export default App`}
           title="Read-Only"
           description="Display rating without interaction."
           code={`import React from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Rating value={4} readOnly>
@@ -301,7 +301,7 @@ export default App`}
           title="Controlled Rating"
           description="Control rating value externally."
           code={`import React, { useState } from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [rating, setRating] = useState(0)
@@ -340,7 +340,7 @@ export default App`}
           title="Alternative Star"
           description="Different star style."
           code={`import React from 'react'
-import { Rating } from 'bloomui'
+import { Rating } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Rating defaultValue={3}>

@@ -1,4 +1,4 @@
-import { Join, Button, Input, Select, Masonry } from 'bloomui'
+import { Join, Button, Input, Select, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -35,7 +35,7 @@ export function JoinPage() {
           title="Basic Join"
           description="Group buttons together horizontally."
           code={`import React from 'react'
-import { Join, Button } from 'bloomui'
+import { Join, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Join>
@@ -58,7 +58,7 @@ export default App`}
           title="Vertical Join"
           description="Stack elements vertically."
           code={`import React from 'react'
-import { Join, Button } from 'bloomui'
+import { Join, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Join vertical>
@@ -81,7 +81,7 @@ export default App`}
           title="Input Group"
           description="Combine inputs with buttons."
           code={`import React from 'react'
-import { Join, Input, Button } from 'bloomui'
+import { Join, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Join>
@@ -102,7 +102,7 @@ export default App`}
           title="With Select"
           description="Mix different form controls."
           code={`import React from 'react'
-import { Join, Select, Input, Button } from 'bloomui'
+import { Join, Select, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Join>
@@ -135,7 +135,7 @@ export default App`}
           title="Responsive Layout"
           description="Vertical on mobile, horizontal on desktop."
           code={`import React from 'react'
-import { Join, Button } from 'bloomui'
+import { Join, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Join className="join-vertical lg:join-horizontal">
@@ -158,7 +158,7 @@ export default App`}
           title="Custom Styling"
           description="Apply custom classes to items."
           code={`import React from 'react'
-import { Join, Button } from 'bloomui'
+import { Join, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Join>

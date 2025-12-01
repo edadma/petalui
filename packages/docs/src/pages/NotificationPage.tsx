@@ -1,4 +1,4 @@
-import { Button, notification, Masonry } from 'bloomui'
+import { Button, notification, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -180,7 +180,7 @@ export function NotificationPage() {
           title="Basic Types"
           description="Different notification types for various scenarios."
           code={`import React from 'react'
-import { Button, notification } from 'bloomui'
+import { Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-x-2">
@@ -250,7 +250,7 @@ export default App`}
           title="Placement"
           description="Position notifications at different screen corners."
           code={`import React from 'react'
-import { Button, notification } from 'bloomui'
+import { Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="grid grid-cols-2 gap-2">
@@ -315,7 +315,7 @@ export default App`}
           title="Custom Duration"
           description="Control auto-dismiss timing or disable it."
           code={`import React from 'react'
-import { Button, notification } from 'bloomui'
+import { Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-x-2">
@@ -359,7 +359,7 @@ export default App`}
           title="Multiple Notifications"
           description="Stack multiple notifications with FIFO auto-dismiss."
           code={`import React from 'react'
-import { Button, notification } from 'bloomui'
+import { Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Button
@@ -395,7 +395,7 @@ export default App`}
           title="With Callbacks"
           description="Handle click and close events."
           code={`import React from 'react'
-import { Button, notification } from 'bloomui'
+import { Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Button
@@ -428,7 +428,7 @@ export default App`}
           title="Destroy All"
           description="Close all notifications at once."
           code={`import React from 'react'
-import { Button, notification } from 'bloomui'
+import { Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-x-2">

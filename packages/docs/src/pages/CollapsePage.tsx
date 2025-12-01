@@ -1,4 +1,4 @@
-import { Collapse, Masonry } from 'bloomui'
+import { Collapse, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -82,7 +82,7 @@ export function CollapsePage() {
           title="Simple API"
           description="Use title prop for cleaner syntax."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse title="Click to expand">
@@ -101,7 +101,7 @@ export default App`}
           title="Compound Components"
           description="Use Title and Content for more control."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse>
@@ -126,7 +126,7 @@ export default App`}
           title="Default Open"
           description="Start with content expanded."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse title="Already expanded" defaultOpen>
@@ -145,7 +145,7 @@ export default App`}
           title="With Arrow Icon"
           description="Collapse with rotating arrow indicator."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse title="Click me" icon="arrow">
@@ -164,7 +164,7 @@ export default App`}
           title="With Plus Icon"
           description="Collapse with plus/minus indicator."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse icon="plus">
@@ -189,7 +189,7 @@ export default App`}
           title="No Icon"
           description="Collapse without any icon."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse icon="none">
@@ -214,7 +214,7 @@ export default App`}
           title="Multiple Collapses"
           description="Stack multiple collapse sections."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-2">
@@ -267,7 +267,7 @@ export default App`}
           title="With Border"
           description="Add border styling for definition."
           code={`import React from 'react'
-import { Collapse } from 'bloomui'
+import { Collapse } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Collapse icon="arrow" className="border border-base-300">
@@ -292,7 +292,7 @@ export default App`}
           title="Controlled Mode"
           description="Control open state externally."
           code={`import React, { useState } from 'react'
-import { Collapse, Button } from 'bloomui'
+import { Collapse, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)

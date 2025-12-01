@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Tree, Masonry } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree, Masonry } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -261,8 +261,8 @@ export function TreePage() {
           title="Basic Tree"
           description="Simple expandable tree structure."
           code={`import React from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const treeData: TreeDataNode[] = [
@@ -307,8 +307,8 @@ export default App`}
           title="Controlled Selection"
           description="Tree with controlled selection state."
           code={`import React, { useState } from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])
@@ -361,8 +361,8 @@ export default App`}
           title="Checkable Tree"
           description="Tree with checkbox selection. Parent nodes auto-check when all children are checked."
           code={`import React, { useState } from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [checkedKeys, setCheckedKeys] = useState<string[]>([])
@@ -417,8 +417,8 @@ export default App`}
           title="Controlled Expansion"
           description="Control which nodes are expanded."
           code={`import React, { useState } from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [expandedKeys, setExpandedKeys] = useState<string[]>(['parent-1'])
@@ -471,8 +471,8 @@ export default App`}
           title="With Icons"
           description="Tree with custom icons for files and folders."
           code={`import React from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const FolderIcon = () => (
   <svg className="w-4 h-4 text-warning" fill="currentColor" viewBox="0 0 24 24">
@@ -522,8 +522,8 @@ export default App`}
           title="With Connecting Lines"
           description="Show lines connecting parent and child nodes."
           code={`import React from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const treeData: TreeDataNode[] = [
@@ -552,8 +552,8 @@ export default App`}
           title="Disabled Nodes"
           description="Disable specific nodes from selection."
           code={`import React from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const treeData: TreeDataNode[] = [
@@ -590,8 +590,8 @@ export default App`}
           title="Multiple Selection"
           description="Allow selecting multiple nodes."
           code={`import React, { useState } from 'react'
-import { Tree } from 'bloomui'
-import type { TreeDataNode } from 'bloomui'
+import { Tree } from '@edadma/bloomui'
+import type { TreeDataNode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([])

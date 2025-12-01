@@ -1,4 +1,4 @@
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -62,7 +62,7 @@ export function ChatPage() {
           title="Basic"
           description="Simple chat bubbles with start and end positions."
           code={`import React from 'react'
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -84,7 +84,7 @@ export default App`}
           title="With Avatar"
           description="Add profile pictures using the avatar prop."
           code={`import React from 'react'
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -122,7 +122,7 @@ export default App`}
           title="With Header"
           description="Add sender name and timestamp."
           code={`import React from 'react'
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -164,7 +164,7 @@ export default App`}
           title="With Footer"
           description="Add delivery status or metadata below the bubble."
           code={`import React from 'react'
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -210,7 +210,7 @@ export default App`}
           title="Colored Bubbles"
           description="Use color prop for different bubble colors."
           code={`import React from 'react'
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -242,7 +242,7 @@ export default App`}
           title="Complete Conversation"
           description="A realistic chat conversation with all features."
           code={`import React from 'react'
-import { Chat, Space } from 'bloomui'
+import { Chat, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">

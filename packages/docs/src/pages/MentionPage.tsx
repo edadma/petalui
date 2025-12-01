@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Mention, Masonry } from 'bloomui'
-import type { MentionOption } from 'bloomui'
+import { Mention, Masonry } from '@edadma/bloomui'
+import type { MentionOption } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -180,7 +180,7 @@ export function MentionPage() {
           title="Basic Mention"
           description="Type @ to trigger the mention dropdown."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const users = [
   { value: 'john', label: 'John Doe' },
@@ -207,7 +207,7 @@ export default App`}
           title="With Avatars"
           description="Options can include avatar images."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const users = [
   { value: 'john', label: 'John Doe', avatar: 'https://...' },
@@ -233,7 +233,7 @@ export default App`}
           title="Controlled Value"
           description="Control the input value externally."
           code={`import React, { useState } from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState('')
@@ -272,7 +272,7 @@ export default App`}
           title="Multiple Prefixes"
           description="Support different triggers for different types of mentions."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const users = [
   { value: 'john', label: 'John Doe' },
@@ -321,7 +321,7 @@ export default App`}
           title="Async Loading"
           description="Load suggestions asynchronously from an API."
           code={`import React, { useState } from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [options, setOptions] = useState([])
@@ -362,7 +362,7 @@ export default App`}
           title="Auto Size"
           description="Automatically adjust height based on content."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Mention
@@ -385,7 +385,7 @@ export default App`}
           title="Disabled Options"
           description="Individual options can be disabled."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const users = [
   { value: 'john', label: 'John Doe' },
@@ -416,7 +416,7 @@ export default App`}
           title="Disabled Input"
           description="Disable the entire mention input."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Mention
@@ -439,7 +439,7 @@ export default App`}
           title="Custom Not Found"
           description="Customize the empty state message."
           code={`import React from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Mention
@@ -472,7 +472,7 @@ export default App`}
           title="Comment Box Example"
           description="Real-world example of a comment input."
           code={`import React, { useState } from 'react'
-import { Mention } from 'bloomui'
+import { Mention } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [comment, setComment] = useState('')

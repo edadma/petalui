@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Radio, Form, Modal, Space, Masonry } from 'bloomui'
+import { Radio, Form, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -90,7 +90,7 @@ export function RadioPage() {
           title="Basic Usage"
           description="Use Radio.Group to manage radio selection."
           code={`import React from 'react'
-import { Radio, Space } from 'bloomui'
+import { Radio, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Radio.Group defaultValue="1">
@@ -135,7 +135,7 @@ export default App`}
           title="Horizontal Layout"
           description="Radio buttons in a horizontal row."
           code={`import React from 'react'
-import { Radio, Space } from 'bloomui'
+import { Radio, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Radio.Group defaultValue="apple">
@@ -180,7 +180,7 @@ export default App`}
           title="Different Sizes"
           description="Radio buttons in various sizes."
           code={`import React from 'react'
-import { Radio, Space } from 'bloomui'
+import { Radio, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="sm">
@@ -237,7 +237,7 @@ export default App`}
           title="Colors"
           description="Colored radio button variants."
           code={`import React from 'react'
-import { Radio, Space } from 'bloomui'
+import { Radio, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex flex-wrap gap-4">
@@ -268,7 +268,7 @@ export default App`}
           title="Disabled State"
           description="Disabled radio buttons."
           code={`import React from 'react'
-import { Radio, Space } from 'bloomui'
+import { Radio, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="sm">
@@ -301,7 +301,7 @@ export default App`}
           title="In Form"
           description="Radio group in a form with validation."
           code={`import React from 'react'
-import { Radio, Form, Button } from 'bloomui'
+import { Radio, Form, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: { plan?: string }) => {

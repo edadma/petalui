@@ -1,4 +1,4 @@
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -65,7 +65,7 @@ export function MasonryPage() {
           title="Basic Masonry"
           description="Simple masonry layout with 3 columns."
           code={`import React from 'react'
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Masonry columns={3} gap={4}>
@@ -155,7 +155,7 @@ export default App`}
           title="2 Columns"
           description="Two-column masonry layout."
           code={`import React from 'react'
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Masonry columns={2} gap={4}>
@@ -235,7 +235,7 @@ export default App`}
           title="Responsive Columns"
           description="Adjust column count based on screen size."
           code={`import React from 'react'
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 4, xl: 5 }} gap={4}>
@@ -309,7 +309,7 @@ export default App`}
           title="Custom Gap"
           description="Control spacing between items."
           code={`import React from 'react'
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-6">
@@ -440,7 +440,7 @@ export default App`}
           title="With Images"
           description="Masonry layout with cards containing images of varying heights."
           code={`import React from 'react'
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Masonry columns={3}>
@@ -512,7 +512,7 @@ export default App`}
           title="Pinterest-style Gallery"
           description="Classic masonry gallery layout with colored blocks showing height variation."
           code={`import React from 'react'
-import { Masonry, Card } from 'bloomui'
+import { Masonry, Card } from '@edadma/bloomui'
 
 const items = [
   { id: 1, height: 'h-32', bg: 'bg-primary/20', title: 'Gallery 1', desc: 'Short item' },
@@ -629,7 +629,7 @@ export default App`}
           title="Simple Div Items"
           description="Masonry works with any content, not just cards."
           code={`import React from 'react'
-import { Masonry } from 'bloomui'
+import { Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Masonry columns={4} gap={3}>

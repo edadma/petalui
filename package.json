@@ -7,6 +7,6 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter docs dev",
     "test": "pnpm -r test",
-    "publish": "pnpm --filter bloomui publish"
+    "publish": "pnpm --filter @edadma/bloomui publish --access public"
   }
 }

@@ -1,4 +1,4 @@
-import { Dropdown, Button, notification, Masonry } from 'bloomui'
+import { Dropdown, Button, notification, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -119,7 +119,7 @@ export function DropdownPage() {
           title="Basic Dropdown"
           description="Simple dropdown with menu items."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -152,7 +152,7 @@ export default App`}
           title="With Click Handlers"
           description="Dropdown items with onClick handlers."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -185,7 +185,7 @@ export default App`}
           title="Dropdown on Hover"
           description="Opens on hover and click."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown hover>
@@ -218,7 +218,7 @@ export default App`}
           title="Dropdown Positions"
           description="Different opening directions."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 flex-wrap">
@@ -313,7 +313,7 @@ export default App`}
           title="Alignment Options"
           description="Different horizontal alignments."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 flex-wrap">
@@ -382,7 +382,7 @@ export default App`}
           title="Active Items"
           description="Menu items with active state."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -415,7 +415,7 @@ export default App`}
           title="Custom Menu Width"
           description="Customize menu styling with className."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -448,7 +448,7 @@ export default App`}
           title="Custom Trigger"
           description="Any element can be a trigger."
           code={`import React from 'react'
-import { Dropdown } from 'bloomui'
+import { Dropdown } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -489,7 +489,7 @@ export default App`}
           title="Combined Position & Align"
           description="Top position with end alignment."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown position="top" align="end">
@@ -522,7 +522,7 @@ export default App`}
           title="With Dividers"
           description="Separate menu sections with dividers."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -563,7 +563,7 @@ export default App`}
           title="Disabled Items"
           description="Prevent interaction with disabled items."
           code={`import React from 'react'
-import { Dropdown, Button } from 'bloomui'
+import { Dropdown, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>
@@ -604,7 +604,7 @@ export default App`}
           title="Danger Actions"
           description="Highlight destructive actions with danger styling."
           code={`import React from 'react'
-import { Dropdown, Button, notification } from 'bloomui'
+import { Dropdown, Button, notification } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Dropdown>

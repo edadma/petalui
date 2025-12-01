@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Table, Button, Tag, Masonry } from 'bloomui'
-import type { ColumnType } from 'bloomui'
+import { Table, Button, Tag, Masonry } from '@edadma/bloomui'
+import type { ColumnType } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -261,8 +261,8 @@ export function TablePage() {
           title="Basic Table"
           description="Simple table with default pagination (10 rows per page)."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -295,8 +295,8 @@ export default App`}
           title="Custom Rendering"
           description="Use render functions for badges, buttons, and custom content."
           code={`import React from 'react'
-import { Table, Badge, Button } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table, Badge, Button } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -344,8 +344,8 @@ export default App`}
           title="Striped Rows"
           description="Zebra striping for better readability."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -379,8 +379,8 @@ export default App`}
           title="Bordered Table"
           description="Add borders for a more defined look."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -414,8 +414,8 @@ export default App`}
           title="Compact Size"
           description="Extra small size for dense data display."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -456,8 +456,8 @@ export default App`}
           title="Large Size"
           description="Larger cells for better readability."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -491,8 +491,8 @@ export default App`}
           title="Text Alignment"
           description="Control text alignment per column."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -534,8 +534,8 @@ export default App`}
           title="Column Width"
           description="Set specific widths for columns."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -577,8 +577,8 @@ export default App`}
           title="Loading State"
           description="Show loading spinner while data is being fetched."
           code={`import React, { useState } from 'react'
-import { Table, Button } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table, Button } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -625,8 +625,8 @@ export default App`}
           title="Empty State"
           description="Table automatically handles empty data."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -654,8 +654,8 @@ export default App`}
           title="Row Click Handler"
           description="Handle row clicks with onRow callback."
           code={`import React, { useState } from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -717,8 +717,8 @@ export default App`}
           title="No Hover Effect"
           description="Disable row hover highlighting."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -757,8 +757,8 @@ export default App`}
           title="Custom Page Size"
           description="Control pagination page size."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -796,8 +796,8 @@ export default App`}
           title="Pinned Header"
           description="Keep header visible while scrolling (don't use bordered prop)."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -846,8 +846,8 @@ export default App`}
           title="Column Sorting"
           description="Click column headers to sort data in ascending or descending order."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -889,8 +889,8 @@ export default App`}
           title="Column Filtering"
           description="Add filter dropdowns to columns for data filtering."
           code={`import React from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType, FilterConfig  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType, FilterConfig  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -974,8 +974,8 @@ export default App`}
           title="Row Selection (Checkbox)"
           description="Enable row selection with checkboxes."
           code={`import React, { useState } from 'react'
-import { Table } from 'bloomui'
-import type { ColumnType, RowSelection  } from 'bloomui'
+import { Table } from '@edadma/bloomui'
+import type { ColumnType, RowSelection  } from '@edadma/bloomui'
 
 interface User {
   id: string
@@ -1045,8 +1045,8 @@ export default App`}
           title="Fixed Columns"
           description="Pin columns to left or right while scrolling horizontally. Requires explicit widths."
           code={`import React from 'react'
-import { Table, Badge } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table, Badge } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface Transaction {
   id: string
@@ -1162,8 +1162,8 @@ export default App`}
           title="Complete Example"
           description="Combining sorting, filtering, and selection together."
           code={`import React from 'react'
-import { Table, Badge, Button } from 'bloomui'
-import type { ColumnType  } from 'bloomui'
+import { Table, Badge, Button } from '@edadma/bloomui'
+import type { ColumnType  } from '@edadma/bloomui'
 
 interface User {
   id: string

@@ -1,4 +1,4 @@
-import { Label, Input, Select, Space, Masonry } from 'bloomui'
+import { Label, Input, Select, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -54,7 +54,7 @@ export function LabelPage() {
           title="Prefix Label"
           description="Label before the input (prefix)."
           code={`import React from 'react'
-import { Label, Input } from 'bloomui'
+import { Label, Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-0">
@@ -75,7 +75,7 @@ export default App`}
           title="Suffix Label"
           description="Label after the input (suffix)."
           code={`import React from 'react'
-import { Label, Input } from 'bloomui'
+import { Label, Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-0">
@@ -96,7 +96,7 @@ export default App`}
           title="With Select"
           description="Label with select dropdown."
           code={`import React from 'react'
-import { Label, Select } from 'bloomui'
+import { Label, Select } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ export default App`}
           title="Floating Label"
           description="Label that floats above input on focus."
           code={`import React from 'react'
-import { Label, Input } from 'bloomui'
+import { Label, Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Label.Floating label="Email">
@@ -144,7 +144,7 @@ export default App`}
           title="Floating Label Sizes"
           description="Different sizes for floating labels."
           code={`import React from 'react'
-import { Label, Input, Space } from 'bloomui'
+import { Label, Input, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -191,7 +191,7 @@ export default App`}
           title="Floating with Date Input"
           description="Floating label with date input."
           code={`import React from 'react'
-import { Label, Input } from 'bloomui'
+import { Label, Input } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Label.Floating label="Birth Date">

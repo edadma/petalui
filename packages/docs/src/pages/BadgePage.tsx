@@ -1,4 +1,4 @@
-import { Badge, Button, Avatar, Masonry } from 'bloomui'
+import { Badge, Button, Avatar, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -104,7 +104,7 @@ export function BadgePage() {
           title="Basic Notification Badges"
           description="Display count badges on elements."
           code={`import React from 'react'
-import { Badge, Button } from 'bloomui'
+import { Badge, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -139,7 +139,7 @@ export default App`}
           title="Overflow Count"
           description="Show count+ when exceeding the overflow threshold."
           code={`import React from 'react'
-import { Badge, Button, Avatar } from 'bloomui'
+import { Badge, Button, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap items-center">
@@ -186,7 +186,7 @@ export default App`}
           title="Badge Positioning"
           description="Position badges at any of the 9 corners."
           code={`import React from 'react'
-import { Badge, Avatar } from 'bloomui'
+import { Badge, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -253,7 +253,7 @@ export default App`}
           title="Offset Positioning"
           description="Fine-tune badge position with pixel offsets."
           code={`import React from 'react'
-import { Badge, Avatar } from 'bloomui'
+import { Badge, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -300,7 +300,7 @@ export default App`}
           title="Status Badges"
           description="Status indicators with optional text labels."
           code={`import React from 'react'
-import { Badge } from 'bloomui'
+import { Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex flex-col gap-2">
@@ -327,7 +327,7 @@ export default App`}
           title="Ribbon Badges"
           description="Decorative ribbon-style badges."
           code={`import React from 'react'
-import { Badge } from 'bloomui'
+import { Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -368,7 +368,7 @@ export default App`}
           title="Dot Badges"
           description="Small circular indicators for presence or status."
           code={`import React from 'react'
-import { Badge, Button } from 'bloomui'
+import { Badge, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -403,7 +403,7 @@ export default App`}
           title="Badge Colors"
           description="Standalone count badges with different colors."
           code={`import React from 'react'
-import { Badge } from 'bloomui'
+import { Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -436,7 +436,7 @@ export default App`}
           title="Badge Sizes"
           description="Four sizes available for badges."
           code={`import React from 'react'
-import { Badge } from 'bloomui'
+import { Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 items-center flex-wrap">
@@ -461,7 +461,7 @@ export default App`}
           title="Show Zero"
           description="Display badge even when count is 0."
           code={`import React from 'react'
-import { Badge, Button } from 'bloomui'
+import { Badge, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -490,7 +490,7 @@ export default App`}
           title="Outline Style"
           description="Subtle outline style for count badges."
           code={`import React from 'react'
-import { Badge } from 'bloomui'
+import { Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">

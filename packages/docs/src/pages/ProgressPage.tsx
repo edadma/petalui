@@ -1,4 +1,4 @@
-import { Progress, Masonry } from 'bloomui'
+import { Progress, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -42,7 +42,7 @@ export function ProgressPage() {
           title="Basic Progress"
           description="Simple progress bar with value."
           code={`import React from 'react'
-import { Progress } from 'bloomui'
+import { Progress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Progress value={70} className="w-56" />
@@ -57,7 +57,7 @@ export default App`}
           title="Color Variants"
           description="Different color schemes for progress bars."
           code={`import React from 'react'
-import { Progress } from 'bloomui'
+import { Progress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-4">
@@ -82,7 +82,7 @@ export default App`}
           title="Status Colors"
           description="Semantic colors for different states."
           code={`import React from 'react'
-import { Progress } from 'bloomui'
+import { Progress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-4">
@@ -107,7 +107,7 @@ export default App`}
           title="Indeterminate"
           description="Progress bar without specific value (animated)."
           code={`import React from 'react'
-import { Progress } from 'bloomui'
+import { Progress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Progress className="w-56" />
@@ -122,7 +122,7 @@ export default App`}
           title="Sizes"
           description="Control width with Tailwind classes."
           code={`import React from 'react'
-import { Progress } from 'bloomui'
+import { Progress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-4">
@@ -145,7 +145,7 @@ export default App`}
           title="With Label"
           description="Progress with text label."
           code={`import React from 'react'
-import { Progress } from 'bloomui'
+import { Progress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-2">

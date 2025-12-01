@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { InputNumber, Masonry } from 'bloomui'
+import { InputNumber, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -94,7 +94,7 @@ export default function InputNumberPage() {
         <ExampleSection
           title="Basic Usage"
           code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber defaultValue={0} />
@@ -109,7 +109,7 @@ export default App`}
           <ExampleSection
             title="Min and Max"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber defaultValue={5} min={0} max={10} />
@@ -123,7 +123,7 @@ export default App`}
           <ExampleSection
             title="Step"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber defaultValue={0} step={5} />
@@ -137,7 +137,7 @@ export default App`}
           <ExampleSection
             title="Decimal Precision"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber defaultValue={1.5} step={0.1} precision={2} />
@@ -151,7 +151,7 @@ export default App`}
           <ExampleSection
             title="Sizes"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-2">
@@ -176,7 +176,7 @@ export default App`}
         <ExampleSection
           title="Controlled Mode"
           code={`import React, { useState } from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState(5)
@@ -201,7 +201,7 @@ export default App`}
           <ExampleSection
             title="Formatter and Parser"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber
@@ -223,7 +223,7 @@ export default App`}
           <ExampleSection
             title="Percentage"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber
@@ -249,7 +249,7 @@ export default App`}
           <ExampleSection
             title="Without Controls"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber defaultValue={10} controls={false} />
@@ -263,7 +263,7 @@ export default App`}
           <ExampleSection
             title="Disabled"
             code={`import React from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <InputNumber defaultValue={5} disabled />
@@ -279,7 +279,7 @@ export default App`}
           title="Keyboard Support"
           description="Use arrow keys to increment/decrement the value"
           code={`import React, { useState } from 'react'
-import { InputNumber } from 'bloomui'
+import { InputNumber } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [value, setValue] = useState(0)

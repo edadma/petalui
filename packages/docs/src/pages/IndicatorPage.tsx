@@ -1,4 +1,4 @@
-import { Indicator, Avatar, Button, Masonry } from 'bloomui'
+import { Indicator, Avatar, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -37,7 +37,7 @@ export function IndicatorPage() {
           title="Basic Usage"
           description="Position an indicator at different corners."
           code={`import React from 'react'
-import { Indicator, Avatar } from 'bloomui'
+import { Indicator, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -90,7 +90,7 @@ export default App`}
           title="All 9 Positions"
           description="Demonstrate all available indicator positions."
           code={`import React from 'react'
-import { Indicator, Avatar } from 'bloomui'
+import { Indicator, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -215,7 +215,7 @@ export default App`}
           title="Status Dots"
           description="Display online/offline status with colored dots."
           code={`import React from 'react'
-import { Indicator, Avatar } from 'bloomui'
+import { Indicator, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -268,7 +268,7 @@ export default App`}
           title="Notification Badges"
           description="Add notification counts to buttons or elements."
           code={`import React from 'react'
-import { Indicator, Button } from 'bloomui'
+import { Indicator, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -309,7 +309,7 @@ export default App`}
           title="Custom Indicators"
           description="Use any element as an indicator."
           code={`import React from 'react'
-import { Indicator } from 'bloomui'
+import { Indicator } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -350,7 +350,7 @@ export default App`}
           title="Icon Indicators"
           description="Use icons as indicator elements."
           code={`import React from 'react'
-import { Indicator, Button } from 'bloomui'
+import { Indicator, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -415,7 +415,7 @@ export default App`}
           title="Multiple Indicators"
           description="Stack multiple indicators at different positions."
           code={`import React from 'react'
-import { Indicator } from 'bloomui'
+import { Indicator } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">
@@ -450,7 +450,7 @@ export default App`}
           title="Empty Indicator"
           description="Indicator without second child renders just the content."
           code={`import React from 'react'
-import { Indicator, Button } from 'bloomui'
+import { Indicator, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-6 flex-wrap">

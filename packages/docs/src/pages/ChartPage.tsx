@@ -1,4 +1,4 @@
-import { Chart, Masonry } from 'bloomui'
+import { Chart, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -52,7 +52,7 @@ export function ChartPage() {
           title="Line Chart"
           description="Basic line chart with multiple series."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -88,7 +88,7 @@ export default App`}
           title="Bar Chart"
           description="Vertical bar chart."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -127,7 +127,7 @@ export default App`}
           title="Area Chart"
           description="Area chart with gradient fill."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -165,7 +165,7 @@ export default App`}
           title="Pie Chart"
           description="Pie chart with labels."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -194,7 +194,7 @@ export default App`}
           title="Donut Chart"
           description="Donut variation of pie chart."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -223,7 +223,7 @@ export default App`}
           title="Radar Chart"
           description="Radar/spider chart for multivariate data."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -259,7 +259,7 @@ export default App`}
           title="Radial Bar"
           description="Circular progress indicators."
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart
@@ -302,7 +302,7 @@ export default App`}
           title="Theme Integration"
           description="Charts automatically use daisyUI theme colors. Try switching themes!"
           code={`import React from 'react'
-import { Chart } from 'bloomui'
+import { Chart } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Chart

@@ -1,4 +1,4 @@
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -202,7 +202,7 @@ export function TypographyPage() {
           title="Basic Typography Container"
           description="Wrap content in Typography component for prose styling."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Typography>
@@ -237,7 +237,7 @@ export default App`}
           title="Typography Sizes"
           description="Control the overall typography scale."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -272,7 +272,7 @@ export default App`}
           title="Title Component"
           description="Semantic headings with automatic ID generation."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div>
@@ -299,7 +299,7 @@ export default App`}
           title="Copyable Title"
           description="Hover to reveal copy button."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Typography.Title level={2} copyable>
@@ -318,7 +318,7 @@ export default App`}
           title="Title with Ellipsis"
           description="Truncate long titles with ellipsis."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="max-w-xs">
@@ -341,7 +341,7 @@ export default App`}
           title="Paragraph Component"
           description="Styled paragraphs with copyable functionality."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -370,7 +370,7 @@ export default App`}
           title="Paragraph Ellipsis"
           description="Truncate paragraphs with optional expand functionality."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -407,7 +407,7 @@ export default App`}
           title="Text Component - Code"
           description="Inline code styling."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Typography.Text code>
@@ -426,7 +426,7 @@ export default App`}
           title="Text Component - Mark"
           description="Highlighted text."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <p>
@@ -445,7 +445,7 @@ export default App`}
           title="Text Component - Strong"
           description="Bold text emphasis."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <p>
@@ -464,7 +464,7 @@ export default App`}
           title="Text Component - Italic"
           description="Italic text style."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <p>
@@ -483,7 +483,7 @@ export default App`}
           title="Text Component - Underline"
           description="Underlined text."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <p>
@@ -502,7 +502,7 @@ export default App`}
           title="Text Component - Delete"
           description="Strikethrough text."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <p>
@@ -521,7 +521,7 @@ export default App`}
           title="Text Component - Types"
           description="Semantic color types."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-2">
@@ -548,7 +548,7 @@ export default App`}
           title="Text Component - Combined"
           description="Combine multiple text styles."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-2">
@@ -595,7 +595,7 @@ export default App`}
           title="Link Component"
           description="Internal and external links with automatic icon."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-2">
@@ -642,7 +642,7 @@ export default App`}
           title="Complete Example"
           description="Combining all typography components."
           code={`import React from 'react'
-import { Typography, Masonry } from 'bloomui'
+import { Typography, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Typography>

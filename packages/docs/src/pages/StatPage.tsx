@@ -1,4 +1,4 @@
-import { Stats, Button, Masonry } from 'bloomui'
+import { Stats, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -70,7 +70,7 @@ export function StatPage() {
           title="Basic Stat"
           description="Simple stat with title and value."
           code={`import React from 'react'
-import { Stats } from 'bloomui'
+import { Stats } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
@@ -89,7 +89,7 @@ export default App`}
           title="With Description"
           description="Add description using desc prop."
           code={`import React from 'react'
-import { Stats } from 'bloomui'
+import { Stats } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
@@ -112,7 +112,7 @@ export default App`}
           title="Multiple Stats"
           description="Display multiple stats horizontally."
           code={`import React from 'react'
-import { Stats } from 'bloomui'
+import { Stats } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
@@ -147,7 +147,7 @@ export default App`}
           title="With Icons"
           description="Adding icons using figure prop."
           code={`import React from 'react'
-import { Stats } from 'bloomui'
+import { Stats } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
@@ -244,7 +244,7 @@ export default App`}
           title="Colored Values"
           description="Using className for colored values."
           code={`import React from 'react'
-import { Stats } from 'bloomui'
+import { Stats } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats className="shadow">
@@ -281,7 +281,7 @@ export default App`}
           title="Vertical Layout"
           description="Stack stats vertically."
           code={`import React from 'react'
-import { Stats } from 'bloomui'
+import { Stats } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats vertical className="shadow">
@@ -316,7 +316,7 @@ export default App`}
           title="With Actions"
           description="Adding buttons using actions prop."
           code={`import React from 'react'
-import { Stats, Button, Masonry } from 'bloomui'
+import { Stats, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Stats className="shadow">

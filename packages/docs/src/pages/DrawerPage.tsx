@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Drawer, Button, Masonry } from 'bloomui'
+import { Drawer, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -62,7 +62,7 @@ export function DrawerPage() {
           title="Basic"
           description="A basic drawer that slides in from the left."
           code={`import React, { useState } from 'react'
-import { Drawer, Button } from 'bloomui'
+import { Drawer, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -116,7 +116,7 @@ export default App`}
           title="With Menu"
           description="Drawer with a navigation menu."
           code={`import React, { useState } from 'react'
-import { Drawer, Button } from 'bloomui'
+import { Drawer, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)

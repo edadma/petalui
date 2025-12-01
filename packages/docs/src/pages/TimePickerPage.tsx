@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { TimePicker, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { TimePicker, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -83,7 +83,7 @@ export function TimePickerPage() {
           title="Basic TimePicker"
           description="Simple time picker with default 24-hour format."
           code={`import React from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <TimePicker placeholder="Select time" />
@@ -98,7 +98,7 @@ export default App`}
           title="12-Hour Format"
           description="Time picker with 12-hour format and AM/PM selection."
           code={`import React from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <TimePicker format="12" placeholder="Select time" />
@@ -113,7 +113,7 @@ export default App`}
           title="With Seconds"
           description="Time picker that includes seconds selection."
           code={`import React from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <TimePicker showSeconds placeholder="Select time" />
@@ -128,7 +128,7 @@ export default App`}
           title="Controlled"
           description="Controlled time picker with state management."
           code={`import React, { useState } from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [time, setTime] = useState<Date | null>(null)
@@ -157,7 +157,7 @@ export default App`}
           title="12-Hour with Seconds"
           description="Time picker with 12-hour format including seconds."
           code={`import React from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <TimePicker format="12" showSeconds placeholder="Select time" />
@@ -172,7 +172,7 @@ export default App`}
           title="Different Sizes"
           description="Time picker in various sizes."
           code={`import React from 'react'
-import { TimePicker, Space, Masonry } from 'bloomui'
+import { TimePicker, Space, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -197,7 +197,7 @@ export default App`}
           title="Disabled"
           description="Disabled time picker."
           code={`import React from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <TimePicker disabled defaultValue={new Date()} />
@@ -212,7 +212,7 @@ export default App`}
           title="In Form"
           description="TimePicker integrated with Form component."
           code={`import React from 'react'
-import { TimePicker, Form, Button, Masonry } from 'bloomui'
+import { TimePicker, Form, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values) => {
@@ -281,7 +281,7 @@ export default App`}
           title="Time Range Selection"
           description="Two time pickers for selecting a time range."
           code={`import React, { useState } from 'react'
-import { TimePicker, Masonry } from 'bloomui'
+import { TimePicker, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [startTime, setStartTime] = useState<Date | null>(null)

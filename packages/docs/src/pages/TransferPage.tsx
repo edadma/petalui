@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Transfer, Masonry } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer, Masonry } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -154,8 +154,8 @@ export function TransferPage() {
           title="Basic Transfer"
           description="Simple transfer between two lists."
           code={`import React, { useState } from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [targetKeys, setTargetKeys] = useState<string[]>(['item-3', 'item-5'])
@@ -189,8 +189,8 @@ export default App`}
           title="With Search"
           description="Transfer with search functionality."
           code={`import React, { useState } from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [targetKeys, setTargetKeys] = useState<string[]>([])
@@ -232,8 +232,8 @@ export default App`}
           title="Custom Render"
           description="Customize how items are rendered."
           code={`import React, { useState } from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [targetKeys, setTargetKeys] = useState<string[]>(['john', 'alice'])
@@ -291,8 +291,8 @@ export default App`}
           title="Permissions Example"
           description="Assign permissions using transfer."
           code={`import React, { useState } from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [targetKeys, setTargetKeys] = useState<string[]>(['read'])
@@ -332,8 +332,8 @@ export default App`}
           title="Disabled Items"
           description="Some items cannot be transferred."
           code={`import React from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const dataSource: TransferItem[] = [
@@ -367,8 +367,8 @@ export default App`}
           title="Disabled Transfer"
           description="Entire transfer component disabled."
           code={`import React from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const dataSource: TransferItem[] = Array.from({ length: 10 }, (_, i) => ({
@@ -400,8 +400,8 @@ export default App`}
           title="Custom List Style"
           description="Customize the size of transfer lists."
           code={`import React from 'react'
-import { Transfer } from 'bloomui'
-import type { TransferItem } from 'bloomui'
+import { Transfer } from '@edadma/bloomui'
+import type { TransferItem } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const userDataSource: TransferItem[] = [

@@ -1,4 +1,4 @@
-import { Modal, Button, Input, Masonry } from 'bloomui'
+import { Modal, Button, Input, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -144,7 +144,7 @@ export function ModalPage() {
           title="Basic Modal"
           description="Simple modal with title and cancel button."
           code={`import React, { useState } from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -176,7 +176,7 @@ export default App`}
           title="Modal with OK and Cancel"
           description="Modal with both OK and Cancel buttons."
           code={`import React, { useState } from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -221,7 +221,7 @@ export default App`}
           title="Modal Positions"
           description="Position modal at top or bottom."
           code={`import React, { useState } from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [topOpen, setTopOpen] = useState(false)
@@ -275,7 +275,7 @@ export default App`}
           title="Responsive Position"
           description="Bottom on mobile, middle on desktop."
           code={`import React, { useState } from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -312,7 +312,7 @@ export default App`}
           title="Modal with Form"
           description="Modal containing form inputs with custom footer."
           code={`import React, { useState } from 'react'
-import { Modal, Button, Input } from 'bloomui'
+import { Modal, Button, Input } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -383,7 +383,7 @@ export default App`}
           title="Custom Footer"
           description="Modal with custom footer buttons."
           code={`import React, { useState } from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
@@ -436,7 +436,7 @@ export default App`}
           title="Modal.confirm()"
           description="Confirmation dialog with OK and Cancel buttons."
           code={`import React from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleDelete = () => {
@@ -479,7 +479,7 @@ export default App`}
           title="Modal.info()"
           description="Informational modal with info styling."
           code={`import React from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const showInfo = () => {
@@ -512,7 +512,7 @@ export default App`}
           title="Modal.success()"
           description="Success modal with success styling."
           code={`import React from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const showSuccess = () => {
@@ -543,7 +543,7 @@ export default App`}
           title="Modal.warning()"
           description="Warning modal with warning styling."
           code={`import React from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const showWarning = () => {
@@ -574,7 +574,7 @@ export default App`}
           title="Modal.error()"
           description="Error modal with error styling."
           code={`import React from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const showError = () => {
@@ -605,7 +605,7 @@ export default App`}
           title="Async Operations"
           description="Handle async operations with loading state."
           code={`import React from 'react'
-import { Modal, Button } from 'bloomui'
+import { Modal, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = () => {

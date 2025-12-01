@@ -1,4 +1,4 @@
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -109,7 +109,7 @@ export function PaginationPage() {
           title="Basic Pagination"
           description="Simple pagination with page numbers."
           code={`import React, { useState } from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [current, setCurrent] = useState(1)
@@ -137,7 +137,7 @@ export default App`}
           title="With Size Changer"
           description="Allow users to change page size."
           code={`import React, { useState } from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [current, setCurrent] = useState(1)
@@ -176,7 +176,7 @@ export default App`}
           title="Show Total"
           description="Display total count of items."
           code={`import React from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Pagination
@@ -195,7 +195,7 @@ export default App`}
           title="Custom Total"
           description="Custom rendering of total count."
           code={`import React from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Pagination
@@ -219,7 +219,7 @@ export default App`}
           title="Quick Jumper"
           description="Allow users to jump to a specific page."
           code={`import React from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Pagination
@@ -238,7 +238,7 @@ export default App`}
           title="All Features"
           description="Pagination with all features enabled."
           code={`import React, { useState } from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [current, setCurrent] = useState(1)
@@ -274,7 +274,7 @@ export default App`}
           title="Simple Mode"
           description="Minimal pagination with only prev/next controls."
           code={`import React from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Pagination
@@ -293,7 +293,7 @@ export default App`}
           title="Sizes"
           description="Different sizes for pagination controls."
           code={`import React from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-4">
@@ -331,7 +331,7 @@ export default App`}
           title="Disabled"
           description="Disabled state for pagination."
           code={`import React from 'react'
-import { Pagination } from 'bloomui'
+import { Pagination } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Pagination

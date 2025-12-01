@@ -1,4 +1,4 @@
-import { Steps, Masonry } from 'bloomui'
+import { Steps, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -58,7 +58,7 @@ export function StepsPage() {
           title="Basic Steps"
           description="Horizontal step progression."
           code={`import React from 'react'
-import { Steps, Masonry } from 'bloomui'
+import { Steps, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Steps>
@@ -83,7 +83,7 @@ export default App`}
           title="Vertical Steps"
           description="Steps in vertical orientation."
           code={`import React from 'react'
-import { Steps, Masonry } from 'bloomui'
+import { Steps, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Steps vertical>
@@ -108,7 +108,7 @@ export default App`}
           title="Different Colors"
           description="Steps with various semantic colors."
           code={`import React from 'react'
-import { Steps, Masonry } from 'bloomui'
+import { Steps, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Steps>
@@ -133,7 +133,7 @@ export default App`}
           title="Custom Content"
           description="Custom indicators using dataContent."
           code={`import React from 'react'
-import { Steps, Masonry } from 'bloomui'
+import { Steps, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Steps>
@@ -162,7 +162,7 @@ export default App`}
           title="Responsive Layout"
           description="Vertical on mobile, horizontal on desktop."
           code={`import React from 'react'
-import { Steps, Masonry } from 'bloomui'
+import { Steps, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Steps className="steps-vertical lg:steps-horizontal">

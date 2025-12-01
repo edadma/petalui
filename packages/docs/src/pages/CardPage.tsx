@@ -1,4 +1,4 @@
-import { Card, Button, Tag, Space, Masonry } from 'bloomui'
+import { Card, Button, Tag, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -81,7 +81,7 @@ export function CardPage() {
           title="Basic Card"
           description="Simple card with title and content."
           code={`import React from 'react'
-import { Card } from 'bloomui'
+import { Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card title="Card Title" className="w-96">
@@ -100,7 +100,7 @@ export default App`}
           title="Card with Image"
           description="Card with a cover image at the top."
           code={`import React from 'react'
-import { Card } from 'bloomui'
+import { Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card
@@ -127,7 +127,7 @@ export default App`}
           title="Card with Actions"
           description="Card with action buttons."
           code={`import React from 'react'
-import { Card, Button } from 'bloomui'
+import { Card, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card
@@ -164,7 +164,7 @@ export default App`}
           title="Bordered Card"
           description="Card with a border."
           code={`import React from 'react'
-import { Card } from 'bloomui'
+import { Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card title="Bordered Card" className="w-96" bordered>
@@ -183,7 +183,7 @@ export default App`}
           title="Card Sizes"
           description="Cards in different sizes."
           code={`import React from 'react'
-import { Card, Space } from 'bloomui'
+import { Card, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -218,7 +218,7 @@ export default App`}
           title="Side Layout"
           description="Horizontal card with image on the side."
           code={`import React from 'react'
-import { Card, Button } from 'bloomui'
+import { Card, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card
@@ -261,7 +261,7 @@ export default App`}
           title="Full Background Image"
           description="Card with image as full background overlay."
           code={`import React from 'react'
-import { Card, Button } from 'bloomui'
+import { Card, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card
@@ -292,7 +292,7 @@ export default App`}
           title="Card with Badge in Title"
           description="Card with badge in title using ReactNode."
           code={`import React from 'react'
-import { Card, Badge, Button } from 'bloomui'
+import { Card, Badge, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card
@@ -331,7 +331,7 @@ export default App`}
           title="Custom Colors"
           description="Card with custom background colors using className."
           code={`import React from 'react'
-import { Card, Space } from 'bloomui'
+import { Card, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -366,7 +366,7 @@ export default App`}
           title="Action Alignment"
           description="Different action button alignments."
           code={`import React from 'react'
-import { Card, Button, Space } from 'bloomui'
+import { Card, Button, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space className="w-96">
@@ -415,7 +415,7 @@ export default App`}
           title="With Inline Styles"
           description="Card with inline styles using style prop."
           code={`import React from 'react'
-import { Card } from 'bloomui'
+import { Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Card

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { Upload, Button, Masonry } from 'bloomui'
-import type { UploadFile } from 'bloomui'
+import { Upload, Button, Masonry } from '@edadma/bloomui'
+import type { UploadFile } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -152,7 +152,7 @@ export default function UploadPage() {
         <ExampleSection
           title="Basic Usage"
           code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload>
@@ -170,7 +170,7 @@ export default App`}
         <ExampleSection
           title="Default Drag and Drop"
           code={`import React from 'react'
-import { Upload } from 'bloomui'
+import { Upload } from '@edadma/bloomui'
 
 const App: React.FC = () => <Upload />
 
@@ -183,7 +183,7 @@ export default App`}
           <ExampleSection
             title="Multiple Files"
             code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload multiple>
@@ -201,7 +201,7 @@ export default App`}
           <ExampleSection
             title="Accept Specific Types"
             code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload accept="image/*">
@@ -219,7 +219,7 @@ export default App`}
           <ExampleSection
             title="Max Count"
             code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload maxCount={3}>
@@ -237,7 +237,7 @@ export default App`}
           <ExampleSection
             title="Max Size"
             code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload maxSize={1024 * 1024}>
@@ -256,7 +256,7 @@ export default App`}
         <ExampleSection
           title="Picture List"
           code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload listType="picture" multiple>
@@ -274,7 +274,7 @@ export default App`}
         <ExampleSection
           title="Picture Card List"
           code={`import React from 'react'
-import { Upload } from 'bloomui'
+import { Upload } from '@edadma/bloomui'
 
 const App: React.FC = () => <Upload listType="picture-card" multiple />
 
@@ -286,8 +286,8 @@ export default App`}
         <ExampleSection
           title="Controlled Mode"
           code={`import React, { useState } from 'react'
-import { Upload, Button } from 'bloomui'
-import type { UploadFile } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
+import type { UploadFile } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [fileList, setFileList] = useState<UploadFile[]>([])
@@ -315,7 +315,7 @@ export default App`}
         <ExampleSection
           title="Custom Request"
           code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload
@@ -358,7 +358,7 @@ export default App`}
         <ExampleSection
           title="Disabled"
           code={`import React from 'react'
-import { Upload, Button } from 'bloomui'
+import { Upload, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Upload disabled>

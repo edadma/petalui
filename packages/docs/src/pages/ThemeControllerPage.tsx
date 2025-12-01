@@ -1,4 +1,4 @@
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -71,7 +71,7 @@ export function ThemeControllerPage() {
           title="Swap (Sun/Moon)"
           description="Toggle between light and dark themes with animated icons."
           code={`import React from 'react'
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ThemeController.Swap />
@@ -87,7 +87,7 @@ export default App`}
           title="Custom Themes"
           description="Use custom theme names for light and dark modes."
           code={`import React from 'react'
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ThemeController.Swap
@@ -106,7 +106,7 @@ export default App`}
           title="With onChange Callback"
           description="Handle theme changes with a callback."
           code={`import React from 'react'
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ThemeController.Swap
@@ -131,7 +131,7 @@ export default App`}
           title="Dropdown (Multiple Themes)"
           description="Select from multiple themes using a dropdown menu."
           code={`import React from 'react'
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ThemeController.Dropdown
@@ -195,7 +195,7 @@ export default App`}
           title="Dropdown with Default Theme"
           description="Set an initial theme for the dropdown."
           code={`import React from 'react'
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ThemeController.Dropdown
@@ -217,7 +217,7 @@ export default App`}
           title="Dropdown with onChange"
           description="Handle theme selection changes."
           code={`import React from 'react'
-import { ThemeController } from 'bloomui'
+import { ThemeController } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <ThemeController.Dropdown

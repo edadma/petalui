@@ -1,4 +1,4 @@
-import { Result, Button, Space, Masonry } from 'bloomui'
+import { Result, Button, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -61,7 +61,7 @@ export default function ResultPage() {
         <ExampleSection
           title="Success Result"
           code={`import React from 'react'
-import { Result, Button, Space } from 'bloomui'
+import { Result, Button, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result
@@ -95,7 +95,7 @@ export default App`}
         <ExampleSection
           title="Error Result"
           code={`import React from 'react'
-import { Result, Button } from 'bloomui'
+import { Result, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result
@@ -119,7 +119,7 @@ export default App`}
         <ExampleSection
           title="Info Result"
           code={`import React from 'react'
-import { Result } from 'bloomui'
+import { Result } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result
@@ -141,7 +141,7 @@ export default App`}
         <ExampleSection
           title="Warning Result"
           code={`import React from 'react'
-import { Result, Button } from 'bloomui'
+import { Result, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result
@@ -165,7 +165,7 @@ export default App`}
         <ExampleSection
           title="404 Page Not Found"
           code={`import React from 'react'
-import { Result, Button } from 'bloomui'
+import { Result, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result
@@ -189,7 +189,7 @@ export default App`}
         <ExampleSection
           title="403 Forbidden"
           code={`import React from 'react'
-import { Result, Button } from 'bloomui'
+import { Result, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result
@@ -213,7 +213,7 @@ export default App`}
         <ExampleSection
           title="500 Server Error"
           code={`import React from 'react'
-import { Result, Button } from 'bloomui'
+import { Result, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Result

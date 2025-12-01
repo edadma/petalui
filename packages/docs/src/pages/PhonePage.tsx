@@ -1,4 +1,4 @@
-import { Phone, Button, Masonry } from 'bloomui'
+import { Phone, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'

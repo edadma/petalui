@@ -1,4 +1,4 @@
-import { Skeleton, Space } from 'bloomui'
+import { Skeleton, Space } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -53,7 +53,7 @@ export function SkeletonPage() {
           title="Basic"
           description="Simple skeleton shapes with different dimensions."
           code={`import React from 'react'
-import { Skeleton, Space } from 'bloomui'
+import { Skeleton, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -79,7 +79,7 @@ export default App`}
           title="Circle"
           description="Circular skeleton for avatars."
           code={`import React from 'react'
-import { Skeleton } from 'bloomui'
+import { Skeleton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -103,7 +103,7 @@ export default App`}
           title="Text Variant"
           description="Skeleton that animates text color instead of background."
           code={`import React from 'react'
-import { Skeleton, Space } from 'bloomui'
+import { Skeleton, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -133,7 +133,7 @@ export default App`}
           title="Width and Height Props"
           description="Use width and height props for precise sizing."
           code={`import React from 'react'
-import { Skeleton } from 'bloomui'
+import { Skeleton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -157,7 +157,7 @@ export default App`}
           title="Avatar with Text"
           description="Common pattern for user profiles."
           code={`import React from 'react'
-import { Skeleton, Space } from 'bloomui'
+import { Skeleton, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -185,7 +185,7 @@ export default App`}
           title="Card Skeleton"
           description="Loading placeholder for card content."
           code={`import React from 'react'
-import { Skeleton } from 'bloomui'
+import { Skeleton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="card bg-base-100 border border-base-300">
@@ -217,7 +217,7 @@ export default App`}
           title="List Skeleton"
           description="Loading placeholder for list items."
           code={`import React from 'react'
-import { Skeleton, Space } from 'bloomui'
+import { Skeleton, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -253,7 +253,7 @@ export default App`}
           title="Complex Layout"
           description="Skeleton for more complex content layouts."
           code={`import React from 'react'
-import { Skeleton } from 'bloomui'
+import { Skeleton } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="space-y-6">

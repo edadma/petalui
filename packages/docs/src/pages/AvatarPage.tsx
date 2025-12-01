@@ -1,4 +1,4 @@
-import { Avatar, Masonry } from 'bloomui'
+import { Avatar, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -97,7 +97,7 @@ export function AvatarPage() {
           title="Basic Avatar"
           description="Simple avatar with image using the src prop."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Avatar
@@ -115,7 +115,7 @@ export default App`}
           title="Sizes"
           description="Control avatar size with the size prop."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 items-center">
@@ -157,7 +157,7 @@ export default App`}
           title="Shapes"
           description="Circle or square avatars."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -184,7 +184,7 @@ export default App`}
           title="Status Indicators"
           description="Show online or offline presence."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -211,7 +211,7 @@ export default App`}
           title="Text Avatars"
           description="Display initials or text."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 items-center">
@@ -246,7 +246,7 @@ export default App`}
           title="Icon Avatars"
           description="Display icons instead of images."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -288,7 +288,7 @@ export default App`}
           title="Avatar Group"
           description="Group multiple avatars with overlap."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Avatar.Group>
@@ -313,7 +313,7 @@ export default App`}
           title="Avatar Group with Max Count"
           description="Show overflow count when exceeding max."
           code={`import React from 'react'
-import { Avatar } from 'bloomui'
+import { Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Avatar.Group max={3}>

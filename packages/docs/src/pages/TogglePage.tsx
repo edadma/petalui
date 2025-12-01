@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Toggle, Form, Button, Modal, Space, Masonry } from 'bloomui'
+import { Toggle, Form, Button, Modal, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -61,7 +61,7 @@ export function TogglePage() {
           title="Basic Toggle"
           description="Simple toggle with label."
           code={`import React from 'react'
-import { Toggle, Masonry } from 'bloomui'
+import { Toggle, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-2">
@@ -82,7 +82,7 @@ export default App`}
           title="Checked"
           description="Toggle in checked state."
           code={`import React from 'react'
-import { Toggle, Masonry } from 'bloomui'
+import { Toggle, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-2">
@@ -103,7 +103,7 @@ export default App`}
           title="Sizes"
           description="Five sizes: xs, sm, md, lg, and xl."
           code={`import React from 'react'
-import { Toggle, Masonry } from 'bloomui'
+import { Toggle, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex items-center gap-4">
@@ -130,7 +130,7 @@ export default App`}
           title="Colors"
           description="Color variants for different themes."
           code={`import React from 'react'
-import { Toggle, Space, Masonry } from 'bloomui'
+import { Toggle, Space, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -203,7 +203,7 @@ export default App`}
           title="Disabled State"
           description="Non-interactive disabled toggle."
           code={`import React from 'react'
-import { Toggle, Space, Masonry } from 'bloomui'
+import { Toggle, Space, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space size="xs">
@@ -236,7 +236,7 @@ export default App`}
           title="In Form"
           description="Toggle working with Form validation."
           code={`import React from 'react'
-import { Form, Toggle, Button, Masonry } from 'bloomui'
+import { Form, Toggle, Button, Masonry } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const handleSubmit = (values: any) => {

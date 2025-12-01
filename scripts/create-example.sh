@@ -34,7 +34,7 @@ cat > "$APP_DIR/package.json" << 'EOF'
     "preview": "vite preview"
   },
   "dependencies": {
-    "bloomui": "workspace:*",
+    "@edadma/bloomui": "workspace:*",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
@@ -155,7 +155,7 @@ EOF
 
 # Create src/App.tsx
 cat > "$APP_DIR/src/App.tsx" << EOF
-import { Navbar, ThemeController } from 'bloomui'
+import { Navbar, ThemeController } from '@edadma/bloomui'
 
 function App() {
   return (

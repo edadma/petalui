@@ -1,4 +1,4 @@
-import { Alert, Button, Space, Masonry } from 'bloomui'
+import { Alert, Button, Space, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -60,7 +60,7 @@ export function AlertPage() {
           title="Basic Alert"
           description="Simple alert with icon and text."
           code={`import React from 'react'
-import { Alert } from 'bloomui'
+import { Alert } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Alert>
@@ -105,7 +105,7 @@ export default App`}
           title="Alert Types"
           description="Different color variants for context."
           code={`import React from 'react'
-import { Alert, Space } from 'bloomui'
+import { Alert, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>
@@ -256,7 +256,7 @@ export default App`}
           title="With Action Button"
           description="Alert with dismissal or action button."
           code={`import React from 'react'
-import { Alert, Button } from 'bloomui'
+import { Alert, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Alert type="warning">
@@ -307,7 +307,7 @@ export default App`}
           title="Outline Style"
           description="Alert with outline variant."
           code={`import React from 'react'
-import { Alert, Space } from 'bloomui'
+import { Alert, Space } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Space>

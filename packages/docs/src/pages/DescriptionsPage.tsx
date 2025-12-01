@@ -1,4 +1,4 @@
-import { Descriptions, Masonry } from 'bloomui'
+import { Descriptions, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -105,7 +105,7 @@ export function DescriptionsPage() {
           title="Basic"
           description="Simple descriptions with labels and content."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Descriptions title="User Info">
@@ -134,7 +134,7 @@ export default App`}
           title="Bordered"
           description="Add borders for better visual separation."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Descriptions title="Product Details" bordered>
@@ -163,7 +163,7 @@ export default App`}
           title="Column Span"
           description="Items can span multiple columns."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Descriptions title="Order Details" bordered>
@@ -200,7 +200,7 @@ export default App`}
           title="Sizes"
           description="Control the text size."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -237,7 +237,7 @@ export default App`}
           title="Vertical Layout"
           description="Display labels above content."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Descriptions title="Server Info" layout="vertical" bordered>
@@ -266,7 +266,7 @@ export default App`}
           title="Custom Columns"
           description="Control the number of columns."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -309,7 +309,7 @@ export default App`}
           title="Without Colon"
           description="Hide the colon separator."
           code={`import React from 'react'
-import { Descriptions } from 'bloomui'
+import { Descriptions } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Descriptions title="User Profile" colon={false} bordered>

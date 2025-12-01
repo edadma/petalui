@@ -1,4 +1,4 @@
-import { List, Avatar, Button, Badge, Masonry } from 'bloomui'
+import { List, Avatar, Button, Badge, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -44,7 +44,7 @@ export function ListPage() {
           title="Basic List"
           description="Simple list with rows."
           code={`import React from 'react'
-import { List } from 'bloomui'
+import { List } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <List className="bg-base-100 rounded-box shadow-md">
@@ -85,7 +85,7 @@ export default App`}
           title="With Icons and Actions"
           description="List with icons and action buttons."
           code={`import React from 'react'
-import { List, Button } from 'bloomui'
+import { List, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <List className="bg-base-100 rounded-box shadow-md">
@@ -142,7 +142,7 @@ export default App`}
           title="With Avatars"
           description="List with user avatars."
           code={`import React from 'react'
-import { List, Avatar } from 'bloomui'
+import { List, Avatar } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <List className="bg-base-100 rounded-box shadow-md">
@@ -215,7 +215,7 @@ export default App`}
           title="With Badges"
           description="List rows with status badges."
           code={`import React from 'react'
-import { List, Badge } from 'bloomui'
+import { List, Badge } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <List className="bg-base-100 rounded-box shadow-md">
@@ -256,7 +256,7 @@ export default App`}
           title="Custom Growing Column"
           description="Use list-col-grow to control which column expands."
           code={`import React from 'react'
-import { List } from 'bloomui'
+import { List } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <List className="bg-base-100 rounded-box shadow-md">
@@ -291,7 +291,7 @@ export default App`}
           title="Wrapped Content"
           description="Use list-col-wrap to force content to next line."
           code={`import React from 'react'
-import { List } from 'bloomui'
+import { List } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <List className="bg-base-100 rounded-box shadow-md">

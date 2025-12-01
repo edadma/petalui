@@ -1,4 +1,4 @@
-import { Button, Masonry } from 'bloomui'
+import { Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -106,7 +106,7 @@ export function ButtonPage() {
         title="Brand Colors"
         description="Primary brand colors for common actions."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -129,7 +129,7 @@ export default App`}
         title="State Colors"
         description="Semantic colors for different states and feedback."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -152,7 +152,7 @@ export default App`}
         title="Minimal Styles"
         description="Ghost and link variants for subtle actions."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -173,7 +173,7 @@ export default App`}
         title="Sizes"
         description="Five sizes: xs, sm, md (default), lg, and xl."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 items-center flex-wrap">
@@ -198,7 +198,7 @@ export default App`}
         title="Outline"
         description="Outline variant with transparent background."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -219,7 +219,7 @@ export default App`}
         title="Dashed Border"
         description="Buttons with dashed border styling."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -240,7 +240,7 @@ export default App`}
         title="Soft Colors"
         description="Muted color backgrounds for subtle emphasis."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -265,7 +265,7 @@ export default App`}
         title="States"
         description="Active, loading, and disabled states."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -288,7 +288,7 @@ export default App`}
         title="Shapes"
         description="Square and circle shapes for icon buttons."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 items-center flex-wrap">
@@ -315,7 +315,7 @@ export default App`}
         title="Wide"
         description="Extra wide buttons for emphasis."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex flex-col gap-2">
@@ -334,7 +334,7 @@ export default App`}
         title="Block"
         description="Full width buttons."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex flex-col gap-2">
@@ -353,7 +353,7 @@ export default App`}
         title="Loading States"
         description="Loading spinner with different colors."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
@@ -374,14 +374,14 @@ export default App`}
         title="Link Buttons"
         description="Buttons that navigate to URLs. Renders as anchor element when href is provided."
         code={`import React from 'react'
-import { Button } from 'bloomui'
+import { Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-2 flex-wrap">
     <Button type="primary" href="https://github.com/edadma/bloomui" target="_blank">
       GitHub
     </Button>
-    <Button type="ghost" href="https://www.npmjs.com/package/bloomui" target="_blank">
+    <Button type="ghost" href="https://www.npmjs.com/package/@edadma/bloomui" target="_blank">
       npm
     </Button>
     <Button href="/components" type="link">
@@ -393,7 +393,7 @@ const App: React.FC = () => (
 export default App`}
       >
         <Button type="primary" href="https://github.com/edadma/bloomui" target="_blank">GitHub</Button>
-        <Button type="ghost" href="https://www.npmjs.com/package/bloomui" target="_blank">npm</Button>
+        <Button type="ghost" href="https://www.npmjs.com/package/@edadma/bloomui" target="_blank">npm</Button>
         <Button href="#" type="link">Internal Link</Button>
       </ExampleSection>
       </Masonry>

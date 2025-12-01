@@ -1,4 +1,4 @@
-import { Popover, Button, Masonry } from 'bloomui'
+import { Popover, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -67,7 +67,7 @@ export default function PopoverPage() {
         <ExampleSection
           title="Basic Usage"
           code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popover content="This is a simple popover">
@@ -85,7 +85,7 @@ export default App`}
         <ExampleSection
           title="With Title"
           code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Popover
@@ -109,7 +109,7 @@ export default App`}
         <ExampleSection
           title="Trigger Types"
           code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -144,7 +144,7 @@ export default App`}
           <ExampleSection
             title="Placement - Top"
             code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 justify-center">
@@ -178,7 +178,7 @@ export default App`}
           <ExampleSection
             title="Placement - Bottom"
             code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 justify-center">
@@ -212,7 +212,7 @@ export default App`}
           <ExampleSection
             title="Placement - Left"
             code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 justify-center">
@@ -246,7 +246,7 @@ export default App`}
           <ExampleSection
             title="Placement - Right"
             code={`import React from 'react'
-import { Popover, Button } from 'bloomui'
+import { Popover, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 justify-center">

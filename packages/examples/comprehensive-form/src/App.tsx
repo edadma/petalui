@@ -23,7 +23,7 @@ import {
   Row,
   Col,
   Divider,
-} from 'bloomui'
+} from '@edadma/bloomui'
 
 interface ComprehensiveFormData {
   // Text inputs

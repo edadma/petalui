@@ -1,4 +1,4 @@
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -59,7 +59,7 @@ export function RadialProgressPage() {
           title="Basic"
           description="Simple radial progress with value."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <RadialProgress value={70} />
@@ -75,7 +75,7 @@ export default App`}
           title="Different Values"
           description="Radial progress with various completion percentages."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -103,7 +103,7 @@ export default App`}
           title="Colors"
           description="Radial progress with different colors."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -135,7 +135,7 @@ export default App`}
           title="Custom Size"
           description="Adjust size using the size prop."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 items-center">
@@ -161,7 +161,7 @@ export default App`}
           title="Custom Thickness"
           description="Adjust ring thickness."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -187,7 +187,7 @@ export default App`}
           title="Custom Content"
           description="Display custom content instead of percentage."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -233,7 +233,7 @@ export default App`}
           title="No Value Display"
           description="Hide the percentage text."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">
@@ -257,7 +257,7 @@ export default App`}
           title="With Background"
           description="Add background and border styling."
           code={`import React from 'react'
-import { RadialProgress } from 'bloomui'
+import { RadialProgress } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4">

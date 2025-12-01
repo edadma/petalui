@@ -1,5 +1,5 @@
-import { Cascader, Form, Button, Space, Masonry } from 'bloomui'
-import type { CascaderOption } from 'bloomui'
+import { Cascader, Form, Button, Space, Masonry } from '@edadma/bloomui'
+import type { CascaderOption } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -261,7 +261,7 @@ export function CascaderPage() {
           title="Basic Cascader"
           description="Select from a hierarchical list of options."
           code={`import React, { useState } from 'react'
-import { Cascader } from 'bloomui'
+import { Cascader } from '@edadma/bloomui'
 
 const options = [
   {

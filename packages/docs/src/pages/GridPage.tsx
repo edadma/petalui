@@ -1,4 +1,4 @@
-import { Row, Col, Card, Masonry } from 'bloomui'
+import { Row, Col, Card, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -104,7 +104,7 @@ export function GridPage() {
           title="Basic Grid"
           description="Simple 24-column grid layout."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={[4, 4]}>
@@ -145,7 +145,7 @@ export default App`}
           title="Gutter"
           description="Add spacing between columns with gutter prop."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={4}>
@@ -178,7 +178,7 @@ export default App`}
           title="Horizontal & Vertical Gutter"
           description="Different horizontal and vertical spacing."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={[4, 8]}>
@@ -211,7 +211,7 @@ export default App`}
           title="Column Offset"
           description="Offset columns from the left."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={4}>
@@ -244,7 +244,7 @@ export default App`}
           title="Responsive Grid"
           description="Different column spans at different breakpoints."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={4}>
@@ -285,7 +285,7 @@ export default App`}
           title="Alignment"
           description="Align grid items horizontally and vertically."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <>
@@ -338,7 +338,7 @@ export default App`}
           title="Order"
           description="Change the display order of columns."
           code={`import React from 'react'
-import { Row, Col } from 'bloomui'
+import { Row, Col } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={4}>
@@ -371,7 +371,7 @@ export default App`}
           title="Nested Grid"
           description="Grids can be nested inside columns."
           code={`import React from 'react'
-import { Row, Col, Card } from 'bloomui'
+import { Row, Col, Card } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <Row gutter={4}>

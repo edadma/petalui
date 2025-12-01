@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { QRCode, Button, Masonry } from 'bloomui'
+import { QRCode, Button, Masonry } from '@edadma/bloomui'
 import { ExampleSection } from '../components/ExampleSection'
 import { ApiTable } from '../components/ApiTable'
 import type { ApiProperty } from '../components/ApiTable'
@@ -98,7 +98,7 @@ export function QRCodePage() {
           title="Basic QR Code"
           description="Simple QR code with default settings."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <QRCode value="https://github.com/anthropics/claude-code" />
@@ -113,7 +113,7 @@ export default App`}
           title="Custom Size"
           description="Different QR code sizes."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 items-center flex-wrap">
@@ -138,7 +138,7 @@ export default App`}
           title="Custom Colors"
           description="Customize foreground and background colors."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 flex-wrap">
@@ -173,7 +173,7 @@ export default App`}
           title="With Icon"
           description="QR code with centered logo/icon."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <QRCode
@@ -196,7 +196,7 @@ export default App`}
           title="Error Correction Level"
           description="Different error correction levels affect QR code density."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 flex-wrap">
@@ -245,7 +245,7 @@ export default App`}
           title="Without Border"
           description="Remove the border for seamless integration."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <div className="flex gap-4 flex-wrap">
@@ -266,7 +266,7 @@ export default App`}
           title="Loading Status"
           description="Show loading state while generating or fetching QR code data."
           code={`import React from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => (
   <QRCode
@@ -284,7 +284,7 @@ export default App`}
           title="Expired Status"
           description="Show expired state with optional refresh functionality."
           code={`import React, { useState } from 'react'
-import { QRCode } from 'bloomui'
+import { QRCode } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [status, setStatus] = useState<'active' | 'loading' | 'expired'>('expired')
@@ -312,7 +312,7 @@ export default App`}
           title="Dynamic QR Code"
           description="Update QR code value dynamically."
           code={`import React, { useState } from 'react'
-import { QRCode, Input, Button } from 'bloomui'
+import { QRCode, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const [text, setText] = useState('https://github.com/anthropics/claude-code')
@@ -348,7 +348,7 @@ export default App`}
           title="Download QR Code"
           description="Example of downloading QR code as image."
           code={`import React, { useRef } from 'react'
-import { QRCode, Button } from 'bloomui'
+import { QRCode, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
   const qrRef = useRef<HTMLDivElement>(null)
