@@ -13,7 +13,7 @@ const docPages = new Set([
   'hero', 'image', 'indicator', 'input', 'inputnumber', 'join', 'label', 'layout',
   'list', 'loading', 'masonry', 'mention', 'menu', 'modal', 'navbar', 'notification',
   'otpinput', 'pagelayout', 'pagination', 'phone', 'popconfirm', 'popover', 'progress', 'qrcode', 'radialprogress',
-  'radio', 'range', 'rating', 'result', 'select', 'skeleton', 'space',
+  'radio', 'range', 'rating', 'responsive', 'result', 'select', 'skeleton', 'space',
   'splitter', 'stack', 'stat', 'steps', 'table', 'tabs', 'tag', 'textarea',
   'themecontroller', 'timeline', 'timepicker', 'toggle', 'tooltip', 'transfer', 'tree',
   'treeselect', 'typography', 'upload', 'window'
@@ -55,6 +55,14 @@ const componentCategories = [
       { name: 'Space', slug: 'space', description: 'Inline element spacing wrapper', props: ['size', 'direction', 'wrap', 'align'] },
       { name: 'Splitter', slug: 'splitter', description: 'Resizable split panes layout', props: ['direction', 'sizes', 'minSizes', 'onResize'] },
       { name: 'Stack', slug: 'stack', description: 'Vertical or horizontal stack layout', props: ['direction', 'gap', 'align', 'justify'] },
+    ]
+  },
+  {
+    name: 'Responsive',
+    components: [
+      { name: 'Show', slug: 'responsive', description: 'Conditionally render content based on breakpoint', props: ['above', 'below', 'at', 'between', 'children'] },
+      { name: 'Hide', slug: 'responsive', description: 'Conditionally hide content based on breakpoint', props: ['above', 'below', 'at', 'between', 'children'] },
+      { name: 'useBreakpoint', slug: 'responsive', description: 'Hook for detecting current breakpoint', props: ['breakpoint', 'width', 'isAbove', 'isBelow', 'isAt', 'isBetween'] },
     ]
   },
   {

@@ -257,3 +257,9 @@ export type {
 
 export { Upload } from './components/Upload'
 export type { UploadProps, UploadFile } from './components/Upload'
+
+export { Show, Hide } from './components/Responsive'
+export type { ShowProps, HideProps } from './components/Responsive'
+
+export { useBreakpoint } from './hooks/useBreakpoint'
+export type { Breakpoint, UseBreakpointReturn } from './hooks/useBreakpoint'

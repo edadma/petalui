@@ -170,6 +170,10 @@ export default function App() {
 - **Space** - Layout component for consistent spacing between elements
 - **Splitter** - Resizable split panes for adjustable layouts
 
+### Responsive
+- **Show/Hide** - Conditionally render content based on breakpoint
+- **useBreakpoint** - Hook for detecting current breakpoint and screen width
+
 ### Navigation
 - **Breadcrumb** - Breadcrumb navigation trail
 - **Menu** - Menu with vertical, horizontal, and inline modes
