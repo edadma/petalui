@@ -39,41 +39,37 @@ export default App
 
 ### Form Validation
 
-Form with validation rules for required fields and email pattern.
+Form with validation rules. Rules can be a single object or an array of rules.
 
 ```tsx
 import React from 'react'
 import { Form, Input, Button } from '@edadma/bloomui'
 
 const App: React.FC = () => {
-  const handleFinish = (values: any) => {
-    console.log('Success:', values)
-  }
-
-  const handleFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
-    <Form onFinish={handleFinish} onFinishFailed={handleFinishFailed}>
+    <Form onFinish={(values) => console.log('Success:', values)}>
       <Form.Item
         name="email"
         label="Email"
-        rules={{ required: true, type: 'email' }}
+        rules={[{ required: true }, { type: 'email' }]}
       >
         <Input placeholder="name@example.com" />
       </Form.Item>
       <Form.Item
         name="password"
         label="Password"
-        rules={{ required: true, min: 6 }}
+        rules={[
+          { required: true },
+          { min: 8, message: 'Password must be at least 8 characters' },
+          { pattern: /[A-Z]/, message: 'Must contain an uppercase letter' },
+          { pattern: /[a-z]/, message: 'Must contain a lowercase letter' },
+          { pattern: /[0-9]/, message: 'Must contain a number' },
+        ]}
       >
         <Input type="password" placeholder="Enter password" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
+        <Button type="primary" htmlType="submit">Submit</Button>
       </Form.Item>
     </Form>
   )
@@ -223,7 +219,7 @@ export default App
 
 ### Validation Rules
 
-The `rules` prop accepts an object with:
+The `rules` prop accepts a single rule object or an array of rules. Each rule can have:
 
 | Property | Description | Type |
 |----------|-------------|------|
@@ -231,5 +227,20 @@ The `rules` prop accepts an object with:
 | `type` | Built-in type validation | `'email' \| 'url' \| 'number'` |
 | `min` | Minimum length | `number \| { value: number; message: string }` |
 | `max` | Maximum length | `number \| { value: number; message: string }` |
-| `pattern` | Custom regex validation | `{ value: RegExp; message: string }` |
-| `validate` | Custom validation function | `(value: any) => boolean \| string`
+| `pattern` | Regex validation | `RegExp \| { value: RegExp; message: string }` |
+| `message` | Error message for this rule | `string` |
+| `validate` | Custom validation function | `(value: any) => boolean \| string` |
+
+**Array rules example:**
+```tsx
+rules={[
+  { required: true },
+  { min: 8, message: 'At least 8 characters' },
+  { pattern: /[A-Z]/, message: 'Must contain uppercase' },
+]}
+```
+
+**Single object (also supported):**
+```tsx
+rules={{ required: true, type: 'email' }}
+```

@@ -80,7 +80,7 @@ export { Footer } from './components/Footer'
 export type { FooterProps, FooterTitleProps } from './components/Footer'
 
 export { Form, useFormInstance } from './components/Form'
-export type { FormProps, FormItemProps, FormInstance } from './components/Form'
+export type { FormProps, FormItemProps, FormRule, FormInstance } from './components/Form'
 
 export { Grid, Row, Col } from './components/Grid'
 export type { RowProps, ColProps } from './components/Grid'

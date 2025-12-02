@@ -9,7 +9,7 @@ const docPages = new Set([
   'affix', 'alert', 'autocomplete', 'avatar', 'badge', 'breadcrumb', 'browser', 'button',
   'card', 'carousel', 'cascader', 'chart', 'chat', 'checkbox', 'code',
   'collapse', 'colorpicker', 'container', 'contextmenu', 'countdown', 'datepicker', 'descriptions', 'divider', 'drawer',
-  'dropdown', 'empty', 'fieldset', 'fileinput', 'floatbutton', 'footer', 'form', 'grid',
+  'dropdown', 'empty', 'fieldset', 'fileinput', 'flex', 'floatbutton', 'footer', 'form', 'grid',
   'hero', 'image', 'indicator', 'input', 'inputnumber', 'join', 'label', 'layout',
   'list', 'loading', 'masonry', 'mention', 'menu', 'modal', 'navbar', 'notification',
   'otpinput', 'pagelayout', 'pagination', 'phone', 'popconfirm', 'popover', 'progress', 'qrcode', 'radialprogress',
@@ -44,6 +44,7 @@ const componentCategories = [
       { name: 'Container', slug: 'container', description: 'Centered content container with max-width', props: ['size', 'centered'] },
       { name: 'Divider', slug: 'divider', description: 'Visual separator for content sections', props: ['type', 'orientation', 'dashed'] },
       { name: 'Fieldset', slug: 'fieldset', description: 'Grouping container with legend', props: ['legend', 'disabled'] },
+      { name: 'Flex', slug: 'flex', description: 'Flexible box layout component', props: ['direction', 'justify', 'align', 'wrap', 'gap', 'flex', 'inline', 'minHeight', 'minWidth'] },
       { name: 'Footer', slug: 'footer', description: 'Page footer with links and social', props: ['links', 'social', 'copyright'] },
       { name: 'Grid', slug: 'grid', description: 'Responsive 24-column grid system with Row and Col', props: ['gutter', 'span', 'offset', 'xs', 'sm', 'md', 'lg', 'xl', 'xxl'] },
       { name: 'Hero', slug: 'hero', description: 'Hero section with background and CTA', props: ['title', 'subtitle', 'actions', 'background'] },
@@ -145,8 +146,6 @@ const componentCategories = [
     ]
   },
 ];
-
-const totalComponents = componentCategories.reduce((sum, cat) => sum + cat.components.length, 0);
 ---
 
 <Layout title="Components - BloomUI" description="Browse all 80+ BloomUI components with props and descriptions">
@@ -154,30 +153,9 @@ const totalComponents = componentCategories.reduce((sum, cat) => sum + cat.compo
     <header class="mb-8">
       <h1 class="text-4xl font-bold">Components</h1>
       <p class="text-lg text-base-content/70 mt-2">
-        Browse all {totalComponents}+ BloomUI components. Each component is fully typed, test-friendly, and follows familiar API patterns.
+        Browse all 80+ BloomUI components. Each component is fully typed, test-friendly, and follows familiar API patterns.
       </p>
-      <div class="mt-4 flex gap-4">
-        <a href={docsBase} class="btn btn-primary btn-sm">
-          Interactive Demos
-        </a>
-        <a href="https://github.com/edadma/bloomui" class="btn btn-outline btn-sm">
-          GitHub
-        </a>
-      </div>
     </header>
-
-    <section class="mb-8 bg-base-200 rounded-lg p-4">
-      <h2 class="text-lg font-semibold mb-2">Installation</h2>
-      <div class="mockup-code">
-        <pre data-prefix="$"><code>npm install @edadma/bloomui</code></pre>
-      </div>
-      <div class="mt-4">
-        <h3 class="font-semibold mb-2">Import Components</h3>
-        <div class="bg-base-300 rounded-lg p-3">
-          <pre><code class="language-tsx">{`import { Button, Table, Form, Modal } from '@edadma/bloomui';`}</code></pre>
-        </div>
-      </div>
-    </section>
 
     {componentCategories.map(category => (
       <section class="mb-12" aria-labelledby={`category-${category.name.toLowerCase().replace(/\s+/g, '-')}`}>

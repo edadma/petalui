@@ -47,29 +47,47 @@ yarn add bloomui
 ## Usage
 
 ```tsx
-import { Form, Input, Button } from '@edadma/bloomui'
+import { Form, Input, Checkbox, Button, Modal, Card, Space, Flex, Typography } from '@edadma/bloomui'
 
-function App() {
-  const handleSubmit = (values) => {
-    console.log(values)
-  }
+const { Link } = Typography
 
+export default function App() {
   return (
-    <Form onFinish={handleSubmit}>
-      <Form.Item name="email" label="Email" required>
-        <Input type="email" placeholder="you@example.com" />
-      </Form.Item>
-
-      <Form.Item name="password" label="Password" required>
-        <Input type="password" />
-      </Form.Item>
-
-      <Form.Item>
-        <Button htmlType="submit" type="primary">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+    <Flex justify="center" align="center" minHeight="screen" className="bg-base-200">
+      <Card title="Sign In" className="w-full max-w-md">
+        <Form onFinish={(values) => Modal.success({ title: 'Login Successful' })}>
+          <Form.Item
+            name="email"
+            label="Email"
+            rules={[{ required: true }, { type: 'email' }]}
+          >
+            <Input placeholder="you@example.com" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              { required: true },
+              { min: 8, message: 'At least 8 characters' },
+              { pattern: /[A-Z]/, message: 'Needs uppercase letter' },
+              { pattern: /[a-z]/, message: 'Needs lowercase letter' },
+              { pattern: /[0-9]/, message: 'Needs a number' },
+            ]}
+          >
+            <Input type="password" placeholder="Enter your password" />
+          </Form.Item>
+          <Space justify="between" align="center" className="mb-4">
+            <Form.Item name="remember" valuePropName="checked" inline>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+            <Link size="sm">Forgot password?</Link>
+          </Space>
+          <Button type="primary" htmlType="submit" shape="block">
+            Sign In
+          </Button>
+        </Form>
+      </Card>
+    </Flex>
   )
 }
 ```

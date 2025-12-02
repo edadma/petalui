@@ -36,19 +36,22 @@ export interface FormProps<TFieldValues extends FieldValues = FieldValues>
   children: React.ReactNode
 }
 
+export interface FormRule {
+  required?: boolean | string
+  type?: 'email' | 'url' | 'number'
+  min?: number | { value: number; message: string }
+  max?: number | { value: number; message: string }
+  pattern?: RegExp | { value: RegExp; message: string }
+  message?: string
+  validate?: (value: any) => boolean | string | Promise<boolean | string>
+}
+
 export interface FormItemProps {
   name?: string | string[]
   label?: string
   help?: string
   required?: boolean
-  rules?: {
-    required?: boolean | string
-    type?: 'email' | 'url' | 'number'
-    min?: number | { value: number; message: string }
-    max?: number | { value: number; message: string }
-    pattern?: { value: RegExp; message: string }
-    validate?: (value: any) => boolean | string | Promise<boolean | string>
-  }
+  rules?: FormRule | FormRule[]
   valuePropName?: string
   inline?: boolean
   className?: string
@@ -152,36 +155,94 @@ function FormItem({
   const error = getErrorByPath(fieldName)
   const errorMessage = error?.message as string | undefined
 
+  // Normalize rules to array
+  const rulesArray: FormRule[] = rules
+    ? Array.isArray(rules) ? rules : [rules]
+    : []
+
   // Build validation rules
   const validationRules: any = {}
-  if (required || rules?.required) {
-    validationRules.required = typeof rules?.required === 'string'
-      ? rules.required
-      : 'This field is required'
+  const patternValidators: Array<{ pattern: RegExp; message: string }> = []
+  const customValidators: Array<(value: any) => boolean | string | Promise<boolean | string>> = []
+
+  // Handle top-level required prop
+  if (required) {
+    validationRules.required = 'This field is required'
   }
 
-  // Add type validator
-  if (rules?.type && TYPE_VALIDATORS[rules.type]) {
-    validationRules.pattern = TYPE_VALIDATORS[rules.type]
+  // Process each rule
+  for (const rule of rulesArray) {
+    // Required
+    if (rule.required) {
+      validationRules.required = typeof rule.required === 'string'
+        ? rule.required
+        : rule.message || 'This field is required'
+    }
+
+    // Type validator
+    if (rule.type && TYPE_VALIDATORS[rule.type]) {
+      patternValidators.push({
+        pattern: TYPE_VALIDATORS[rule.type].value,
+        message: rule.message || TYPE_VALIDATORS[rule.type].message,
+      })
+    }
+
+    // Min length
+    if (rule.min !== undefined) {
+      const minValue = typeof rule.min === 'object' ? rule.min.value : rule.min
+      const minMessage = typeof rule.min === 'object'
+        ? rule.min.message
+        : rule.message || `Minimum length is ${minValue} characters`
+      validationRules.minLength = { value: minValue, message: minMessage }
+    }
+
+    // Max length
+    if (rule.max !== undefined) {
+      const maxValue = typeof rule.max === 'object' ? rule.max.value : rule.max
+      const maxMessage = typeof rule.max === 'object'
+        ? rule.max.message
+        : rule.message || `Maximum length is ${maxValue} characters`
+      validationRules.maxLength = { value: maxValue, message: maxMessage }
+    }
+
+    // Pattern - collect all patterns
+    if (rule.pattern) {
+      const patternValue = rule.pattern instanceof RegExp ? rule.pattern : rule.pattern.value
+      const patternMessage = rule.pattern instanceof RegExp
+        ? rule.message || 'Invalid format'
+        : rule.pattern.message
+      patternValidators.push({ pattern: patternValue, message: patternMessage })
+    }
+
+    // Custom validator
+    if (rule.validate) {
+      customValidators.push(rule.validate)
+    }
   }
 
-  if (rules?.min) {
-    // Use minLength for string validation
-    validationRules.minLength = typeof rules.min === 'object'
-      ? rules.min
-      : { value: rules.min, message: `Minimum length is ${rules.min} characters` }
-  }
-  if (rules?.max) {
-    // Use maxLength for string validation
-    validationRules.maxLength = typeof rules.max === 'object'
-      ? rules.max
-      : { value: rules.max, message: `Maximum length is ${rules.max} characters` }
-  }
-  if (rules?.pattern) {
-    validationRules.pattern = rules.pattern
-  }
-  if (rules?.validate) {
-    validationRules.validate = rules.validate
+  // Combine all pattern and custom validators into a single validate function
+  if (patternValidators.length > 0 || customValidators.length > 0) {
+    validationRules.validate = async (value: any) => {
+      // Skip validation if empty (required rule handles that)
+      if (!value && !validationRules.required) return true
+
+      // Check all patterns
+      for (const { pattern, message } of patternValidators) {
+        if (value && !pattern.test(value)) {
+          return message
+        }
+      }
+
+      // Run all custom validators
+      for (const validator of customValidators) {
+        const result = await validator(value)
+        if (result !== true) {
+          return result
+        }
+      }
+
+      return true
+    }
   }
 
   return (

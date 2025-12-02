@@ -160,7 +160,7 @@ import { Form, Input, Button, Table, Checkbox } from '@edadma/bloomui';
 |------|------|---------|-------------|
 | name | string | - | Field name (required for validation) |
 | label | string | - | Field label text |
-| rules | object | - | Validation rules (see below) |
+| rules | FormRule \| FormRule[] | - | Validation rules (see below) |
 | required | boolean | false | Mark field as required (shorthand) |
 | valuePropName | string | 'value' | Prop name for value (e.g., 'checked' for checkboxes) |
 | inline | boolean | false | Render with auto width instead of full width |
@@ -169,13 +169,23 @@ import { Form, Input, Button, Table, Checkbox } from '@edadma/bloomui';
 
 ### Validation Rules
 
-The `rules` prop accepts an object with:
+The `rules` prop accepts a single rule object or an array of rules:
 - `required`: boolean | string - Field is required
 - `type`: 'email' | 'url' | 'number' - Built-in type validation
 - `min`: number | { value: number; message: string } - Minimum length
 - `max`: number | { value: number; message: string } - Maximum length
-- `pattern`: { value: RegExp; message: string } - Custom regex validation
+- `pattern`: RegExp | { value: RegExp; message: string } - Regex validation
+- `message`: string - Error message for this rule
 - `validate`: (value) => boolean | string - Custom validation function
+
+**Array syntax for multiple validations:**
+```tsx
+rules={[
+  { required: true },
+  { min: 8, message: 'At least 8 characters' },
+  { pattern: /[A-Z]/, message: 'Must contain uppercase' },
+]}
+```
 
 ## Testing
 

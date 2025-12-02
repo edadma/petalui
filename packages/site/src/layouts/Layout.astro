@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import fs from 'node:fs';
 import path from 'node:path';
+import { siNpm, siGithub } from 'simple-icons';
 
 const pkgPath = path.join(process.cwd(), 'node_modules/@edadma/bloomui/package.json');
 const { version } = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
@@ -69,10 +70,17 @@ const ogImage = 'https://bloomui.io/logo.png';
         <span class="badge badge-ghost">v{version}</span>
       </div>
       <div class="navbar-end">
-        <nav class="flex gap-4 items-center">
-          <a href="/components" class="btn btn-ghost">Components</a>
-          <a href="https://www.npmjs.com/package/@edadma/bloomui" class="btn btn-ghost">npm</a>
-          <a href="https://github.com/edadma/bloomui" class="btn btn-ghost">GitHub</a>
+        <nav class="flex gap-2 items-center">
+          <a href="https://www.npmjs.com/package/@edadma/bloomui" class="btn btn-ghost btn-square" aria-label="npm">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d={siNpm.path}/>
+            </svg>
+          </a>
+          <a href="https://github.com/edadma/bloomui" class="btn btn-ghost btn-square" aria-label="GitHub">
+            <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+              <path d={siGithub.path}/>
+            </svg>
+          </a>
           <label class="swap swap-rotate btn btn-ghost btn-square">
             <input type="checkbox" class="theme-controller" value="light" />
             <!-- sun icon -->
