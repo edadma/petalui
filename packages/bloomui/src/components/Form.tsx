@@ -153,7 +153,9 @@ function FormItem({
   // Build validation rules
   const validationRules: any = {}
   if (required || rules?.required) {
-    validationRules.required = typeof rules?.required === 'string' ? rules.required : required ? 'This field is required' : false
+    validationRules.required = typeof rules?.required === 'string'
+      ? rules.required
+      : 'This field is required'
   }
 
   // Add type validator
@@ -162,10 +164,16 @@ function FormItem({
   }
 
   if (rules?.min) {
-    validationRules.min = typeof rules.min === 'object' ? rules.min : { value: rules.min, message: `Minimum value is ${rules.min}` }
+    // Use minLength for string validation
+    validationRules.minLength = typeof rules.min === 'object'
+      ? rules.min
+      : { value: rules.min, message: `Minimum length is ${rules.min} characters` }
   }
   if (rules?.max) {
-    validationRules.max = typeof rules.max === 'object' ? rules.max : { value: rules.max, message: `Maximum value is ${rules.max}` }
+    // Use maxLength for string validation
+    validationRules.maxLength = typeof rules.max === 'object'
+      ? rules.max
+      : { value: rules.max, message: `Maximum length is ${rules.max} characters` }
   }
   if (rules?.pattern) {
     validationRules.pattern = rules.pattern

@@ -1,7 +1,7 @@
 {
   "name": "site",
   "type": "module",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "scripts": {
     "clean": "rm -rf .astro node_modules/.vite",
     "dev": "pnpm clean && astro dev",

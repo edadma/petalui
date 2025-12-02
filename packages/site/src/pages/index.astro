@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { Code } from 'astro:components';
 
 const features = [
   {
@@ -7,7 +8,7 @@ const features = [
     description: 'Familiar API patterns from Ant Design. Form.Item, Table columns, Modal, and more.'
   },
   {
-    title: 'DaisyUI Styling',
+    title: 'DaisyUI v5 Styling',
     description: 'Beautiful, themeable components with 30+ DaisyUI themes out of the box.'
   },
   {
@@ -24,24 +25,59 @@ const features = [
   },
   {
     title: 'Lightweight',
-    description: 'No heavy dependencies. Just React, DaisyUI, and Tailwind CSS v4.'
+    description: 'No heavy dependencies. Just React, DaisyUI v5, and Tailwind CSS v4.'
   }
 ];
 
-const codeExample = `import { Form, Input, Button, Table } from '@edadma/bloomui';
+const viteConfigCode = `import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
-function App() {
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})`;
+
+const cssConfigCode = `@import "tailwindcss";
+@plugin "daisyui";
+@source "../node_modules/@edadma/bloomui";`;
+
+const usageExample = `import { Form, Input, Button, Modal } from '@edadma/bloomui';
+
+function ContactForm() {
+  const handleSubmit = (values) => {
+    Modal.success({
+      title: 'Message Sent!',
+      content: \`Thanks \${values.name}, we'll be in touch.\`,
+    });
+  };
+
   return (
     <Form onFinish={handleSubmit}>
-      <Form.Item name="email" label="Email" rules={[{ required: true }]}>
-        <Input />
+      <Form.Item
+        name="name"
+        label="Name"
+        rules={{ required: true, min: 2 }}
+      >
+        <Input placeholder="Your name" />
+      </Form.Item>
+      <Form.Item
+        name="email"
+        label="Email"
+        rules={{ required: true, type: 'email' }}
+      >
+        <Input placeholder="you@example.com" />
       </Form.Item>
       <Button type="primary" htmlType="submit">
-        Submit
+        Send Message
       </Button>
     </Form>
   );
 }`;
+
+const testingExample = `// React Testing Library
+screen.getByRole('button', { name: 'Submit' });
+screen.getByTestId('form-item-email');
+expect(modal).toHaveAttribute('data-state', 'open');`;
 ---
 
 <Layout title="BloomUI - React Components for DaisyUI">
@@ -73,14 +109,83 @@ function App() {
     </section>
 
     <section class="py-12">
-      <h2 class="text-3xl font-bold text-center mb-8">Quick Start</h2>
-      <div class="max-w-2xl mx-auto">
-        <div class="mockup-code mb-6">
-          <pre data-prefix="$"><code>npm install @edadma/bloomui</code></pre>
+      <h2 class="text-3xl font-bold text-center mb-8">Installation</h2>
+      <div class="max-w-3xl mx-auto space-y-8">
+
+        <!-- Step 1: Prerequisites -->
+        <div class="card bg-base-200">
+          <div class="card-body">
+            <h3 class="card-title">
+              <span class="badge badge-primary mr-2">1</span>
+              Prerequisites
+            </h3>
+            <p class="text-base-content/70 mb-4">
+              BloomUI requires Tailwind CSS v4 and DaisyUI v5 in your project.
+            </p>
+            <div class="mockup-code">
+              <pre data-prefix="$"><code>npm install -D tailwindcss @tailwindcss/vite daisyui</code></pre>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-base-200 rounded-lg p-4">
-          <pre><code class="language-tsx">{codeExample}</code></pre>
+        <!-- Step 2: Configure Vite -->
+        <div class="card bg-base-200">
+          <div class="card-body">
+            <h3 class="card-title">
+              <span class="badge badge-primary mr-2">2</span>
+              Configure Vite
+            </h3>
+            <p class="text-base-content/70 mb-4">
+              Add the Tailwind plugin to your <code class="bg-base-300 px-1 rounded">vite.config.ts</code>:
+            </p>
+            <div class="rounded-lg overflow-hidden">
+              <Code code={viteConfigCode} lang="ts" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Configure CSS -->
+        <div class="card bg-base-200">
+          <div class="card-body">
+            <h3 class="card-title">
+              <span class="badge badge-primary mr-2">3</span>
+              Configure CSS
+            </h3>
+            <p class="text-base-content/70 mb-4">
+              Add these directives to your CSS file (e.g., <code class="bg-base-300 px-1 rounded">src/index.css</code>):
+            </p>
+            <div class="rounded-lg overflow-hidden">
+              <Code code={cssConfigCode} lang="css" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+            </div>
+            <p class="text-sm text-base-content/60 mt-2">
+              The <code class="bg-base-300 px-1 rounded">@source</code> directive tells Tailwind to scan BloomUI for classes.
+            </p>
+          </div>
+        </div>
+
+        <!-- Step 4: Install BloomUI -->
+        <div class="card bg-base-200">
+          <div class="card-body">
+            <h3 class="card-title">
+              <span class="badge badge-primary mr-2">4</span>
+              Install BloomUI
+            </h3>
+            <div class="mockup-code">
+              <pre data-prefix="$"><code>npm install @edadma/bloomui</code></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-12">
+      <h2 class="text-3xl font-bold text-center mb-8">Quick Example</h2>
+      <div class="max-w-3xl mx-auto">
+        <p class="text-center text-base-content/70 mb-6">
+          Create forms with built-in validation:
+        </p>
+        <div class="rounded-lg overflow-hidden">
+          <Code code={usageExample} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
         </div>
       </div>
     </section>
@@ -118,11 +223,8 @@ function App() {
         <p class="text-center text-base-content/70 mb-6">
           Every component includes test-friendly attributes for reliable automated testing.
         </p>
-        <div class="bg-base-200 rounded-lg p-4">
-          <pre><code class="language-tsx">{`// React Testing Library
-screen.getByRole('button', { name: 'Submit' });
-screen.getByTestId('form-item-email');
-expect(modal).toHaveAttribute('data-state', 'open');`}</code></pre>
+        <div class="rounded-lg overflow-hidden">
+          <Code code={testingExample} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
         </div>
       </div>
     </section>

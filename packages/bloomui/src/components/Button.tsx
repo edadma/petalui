@@ -99,10 +99,11 @@ export const Button: React.FC<ButtonProps> = ({
     )
   }
 
-  const { htmlType = 'button', ...buttonProps } = props as ButtonAsButton
+  const { htmlType, ...buttonProps } = props as Omit<ButtonAsButton, keyof BaseButtonProps>
+  const buttonType: 'button' | 'submit' | 'reset' = htmlType ?? 'button'
   return (
     <button
-      type={htmlType}
+      type={buttonType}
       className={classes}
       aria-busy={loading ? 'true' : undefined}
       disabled={loading || buttonProps.disabled}
