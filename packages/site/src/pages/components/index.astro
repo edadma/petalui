@@ -13,7 +13,7 @@ const docPages = new Set([
   'hero', 'image', 'indicator', 'input', 'inputnumber', 'join', 'label', 'layout',
   'list', 'loading', 'masonry', 'mention', 'menu', 'modal', 'navbar', 'notification',
   'otpinput', 'pagelayout', 'pagination', 'phone', 'popconfirm', 'popover', 'progress', 'qrcode', 'radialprogress',
-  'radio', 'range', 'rating', 'responsive', 'result', 'select', 'skeleton', 'space',
+  'radio', 'range', 'rating', 'responsive', 'result', 'segmented', 'select', 'skeleton', 'space',
   'splitter', 'stack', 'stat', 'steps', 'table', 'tabs', 'tag', 'textarea',
   'themecontroller', 'timeline', 'timepicker', 'toggle', 'tooltip', 'transfer', 'tree',
   'treeselect', 'typography', 'upload', 'window'
@@ -95,6 +95,7 @@ const componentCategories = [
       { name: 'Radio', slug: 'radio', description: 'Radio button with group support', props: ['value', 'onChange', 'disabled', 'optionType'] },
       { name: 'Range', slug: 'range', description: 'Slider range input', props: ['value', 'onChange', 'min', 'max', 'step', 'marks', 'range'] },
       { name: 'Rating', slug: 'rating', description: 'Star rating input', props: ['value', 'onChange', 'count', 'allowHalf', 'disabled', 'character'] },
+      { name: 'Segmented', slug: 'segmented', description: 'Inline toggle for switching between options', props: ['options', 'value', 'defaultValue', 'onChange', 'size', 'block', 'disabled'] },
       { name: 'Select', slug: 'select', description: 'Dropdown selection with search and multi-select', props: ['options', 'value', 'onChange', 'mode', 'loading', 'searchable', 'allowClear'] },
       { name: 'Textarea', slug: 'textarea', description: 'Multi-line text input', props: ['value', 'onChange', 'rows', 'autoSize', 'maxLength', 'showCount'] },
       { name: 'TimePicker', slug: 'timepicker', description: 'Time selection control', props: ['value', 'onChange', 'format', 'hourStep', 'minuteStep', 'use12Hours'] },
@@ -159,6 +160,12 @@ const componentCategories = [
 <Layout title="Components - AsterUI" description="Browse all 80+ AsterUI components with props and descriptions">
   <article>
     <header class="mb-8">
+      <nav class="text-sm breadcrumbs mb-4">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li>Components</li>
+        </ul>
+      </nav>
       <h1 class="text-4xl font-bold">Components</h1>
       <p class="text-lg text-base-content/70 mt-2">
         Browse all 80+ AsterUI components. Each component is fully typed, test-friendly, and follows familiar API patterns.
