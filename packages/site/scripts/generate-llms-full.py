@@ -107,7 +107,7 @@ def extract_title_description(content: str) -> tuple[str, str]:
     desc_match = re.search(r'description="([^"]*)"', content)
     title = title_match.group(1) if title_match else "Unknown"
     description = desc_match.group(1) if desc_match else ""
-    title = re.sub(r'\s*-\s*PetalUI$', '', title)
+    title = re.sub(r'\s*-\s*AsterUI$', '', title)
     return title, description
 
 def format_api_table(name: str, rows: list[dict]) -> str:
@@ -141,7 +141,7 @@ def process_component(filepath: Path) -> tuple[str, str, str]:
     if description:
         lines.append(f"{description}\n")
 
-    lines.append(f"**Import:** `import {{ {title.replace(' ', '')} }} from '@edadma/petalui'`\n")
+    lines.append(f"**Import:** `import {{ {title.replace(' ', '')} }} from '@aster-ui/react'`\n")
 
     # Add code examples
     if examples_array:
@@ -174,13 +174,13 @@ def process_component(filepath: Path) -> tuple[str, str, str]:
 def generate_llms_txt(component_map: dict[str, str]) -> str:
     """Generate the llms.txt content with categorized links."""
     lines = [
-        "# PetalUI",
+        "# AsterUI",
         "",
         "> React component library built on DaisyUI v5 with enterprise-level developer convenience",
         "",
         "## Overview",
         "",
-        "PetalUI provides 80+ production-ready React components with:",
+        "AsterUI provides 80+ production-ready React components with:",
         "- Familiar, intuitive API patterns (Form.Item, Table columns, etc.)",
         "- DaisyUI v5 styling and theming",
         "- Full TypeScript support",
@@ -190,7 +190,7 @@ def generate_llms_txt(component_map: dict[str, str]) -> str:
         "## Installation",
         "",
         "```bash",
-        "npm install @edadma/petalui",
+        "npm install @aster-ui/react",
         "```",
         "",
         "## Component Documentation",
@@ -212,7 +212,7 @@ def generate_llms_txt(component_map: dict[str, str]) -> str:
         "## Quick Start",
         "",
         "```tsx",
-        "import { Form, Input, Button, Table } from '@edadma/petalui';",
+        "import { Form, Input, Button, Table } from '@aster-ui/react';",
         "",
         "// Form example",
         "<Form onFinish={handleSubmit}>",
@@ -244,7 +244,7 @@ def generate_llms_txt(component_map: dict[str, str]) -> str:
         "",
         "```tsx",
         "import { render, screen } from '@testing-library/react';",
-        "import { Button, Modal } from '@edadma/petalui';",
+        "import { Button, Modal } from '@aster-ui/react';",
         "",
         "screen.getByRole('button', { name: 'Submit' });",
         "screen.getByTestId('form-item-email');",

@@ -1,11 +1,11 @@
 {
-  "name": "@edadma/bloomui",
+  "name": "asterui",
   "version": "0.10.2",
   "description": "React UI component library with DaisyUI",
-  "homepage": "https://bloomui.io",
+  "homepage": "https://asterui.com",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/edadma/bloomui.git"
+    "url": "git+https://github.com/edadma/asterui.git"
   },
   "bugs": {
     "url": "https://github.com/edadma/bloomui/issues"

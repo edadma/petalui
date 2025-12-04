@@ -1,5 +1,5 @@
 {
-  "name": "bloomui",
+  "name": "asterui",
   "version": "0.0.0",
   "private": true,
   "packageManager": "pnpm@9.15.0",
@@ -7,6 +7,6 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter site dev",
     "test": "pnpm -r test",
-    "publish": "pnpm --filter @edadma/bloomui publish --access public"
+    "publish": "pnpm --filter asterui publish --access public"
   }
 }
