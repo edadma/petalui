@@ -66,7 +66,7 @@ const CountdownUnit: React.FC<{
   const content = (
     <span className={`countdown font-mono ${sizeClasses[size || 'md']}`}>
       <span
-        style={{ '--value': value } as React.CSSProperties}
+        style={{ '--value': value, '--digits': 2 } as React.CSSProperties}
         aria-live="polite"
         aria-label={String(value)}
       >
@@ -84,14 +84,16 @@ const CountdownUnit: React.FC<{
     )
   }
 
-  return (
-    <div className="flex flex-col items-center">
-      {content}
-      {showLabel && label && (
-        <span className="text-xs text-base-content/70 mt-1">{label}</span>
-      )}
-    </div>
-  )
+  if (showLabel) {
+    return (
+      <div className="flex flex-col items-center">
+        {content}
+        {label && <span className="text-xs text-base-content/70">{label}</span>}
+      </div>
+    )
+  }
+
+  return content
 }
 
 export const Countdown: React.FC<CountdownProps> = ({
@@ -142,9 +144,10 @@ export const Countdown: React.FC<CountdownProps> = ({
   const showSeconds = format.includes('S')
 
   const separatorSize = size === 'lg' || size === 'xl' ? 'text-3xl' : size === 'md' ? 'text-2xl' : 'text-xl'
+  const showSeparators = !showLabels && !boxed
 
   return (
-    <div className={`flex gap-2 items-center ${className}`}>
+    <div className={`flex gap-4 items-center ${className}`}>
       {showDays && (
         <>
           <CountdownUnit
@@ -154,7 +157,7 @@ export const Countdown: React.FC<CountdownProps> = ({
             showLabel={showLabels}
             boxed={boxed}
           />
-          {(showHours || showMinutes || showSeconds) && !boxed && (
+          {showSeparators && (showHours || showMinutes || showSeconds) && (
             <span className={separatorSize}>:</span>
           )}
         </>
@@ -168,7 +171,7 @@ export const Countdown: React.FC<CountdownProps> = ({
             showLabel={showLabels}
             boxed={boxed}
           />
-          {(showMinutes || showSeconds) && !boxed && (
+          {showSeparators && (showMinutes || showSeconds) && (
             <span className={separatorSize}>:</span>
           )}
         </>
@@ -182,7 +185,7 @@ export const Countdown: React.FC<CountdownProps> = ({
             showLabel={showLabels}
             boxed={boxed}
           />
-          {showSeconds && !boxed && <span className={separatorSize}>:</span>}
+          {showSeparators && showSeconds && <span className={separatorSize}>:</span>}
         </>
       )}
       {showSeconds && (
