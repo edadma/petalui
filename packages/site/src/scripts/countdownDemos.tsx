@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { Countdown, Space } from 'asterui'
+import { Countdown, Space, notification } from 'asterui'
 
 const BasicDemo = () => {
   const target = Date.now() + 60 * 60 * 1000
@@ -49,13 +49,12 @@ const BoxedDemo = () => {
 }
 
 const CallbackDemo = () => {
-  const target = Date.now() + 5 * 60 * 1000 // 5 minutes
+  const target = Date.now() + 20 * 1000 // 20 seconds
   return (
     <Countdown
       value={target}
       format="MM:SS"
-      onFinish={() => console.log('Countdown finished!')}
-      onChange={(remaining) => console.log('Remaining:', remaining)}
+      onFinish={() => notification.success({ message: 'Countdown finished!' })}
     />
   )
 }
