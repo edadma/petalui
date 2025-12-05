@@ -4,8 +4,8 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const diffApi = [
-  { property: 'item1', description: 'First item (shown on left/revealed side)', type: 'React.ReactNode', default: '-' },
-  { property: 'item2', description: 'Second item (shown on right/hidden side)', type: 'React.ReactNode', default: '-' },
+  { property: 'left', description: 'Left side content (revealed when dragging)', type: 'React.ReactNode', default: '-' },
+  { property: 'right', description: 'Right side content (hidden when dragging)', type: 'React.ReactNode', default: '-' },
   { property: 'aspect', description: 'Aspect ratio class', type: 'string', default: "'aspect-16/9'" },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
 ];
@@ -21,8 +21,8 @@ import { Diff } from 'asterui'
 export default function App() {
   return (
     <Diff
-      item1={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="Original" />}
-      item2={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="Blurred" />}
+      left={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="Original" />}
+      right={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="Blurred" />}
     />
   )
 }`,
@@ -37,12 +37,12 @@ import { Diff } from 'asterui'
 export default function App() {
   return (
     <Diff
-      item1={
+      left={
         <div className="bg-primary text-primary-content grid place-content-center text-7xl font-black h-full">
           DAISY
         </div>
       }
-      item2={
+      right={
         <div className="bg-base-200 grid place-content-center text-7xl font-black h-full">
           DAISY
         </div>
@@ -64,14 +64,14 @@ export default function App() {
       <Diff
         aspect="aspect-square"
         className="max-w-xs"
-        item1={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="Original" />}
-        item2={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="Blurred" />}
+        left={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="Original" />}
+        right={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="Blurred" />}
       />
       <Diff
         aspect="aspect-4/3"
         className="max-w-md"
-        item1={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="Original" />}
-        item2={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="Blurred" />}
+        left={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a.webp" alt="Original" />}
+        right={<img src="https://img.daisyui.com/images/stock/photo-1560717789-0ac7c58ac90a-blur.webp" alt="Blurred" />}
       />
     </Space>
   )
