@@ -13,6 +13,6 @@ npm run dev
 
 ## Deployment
 
-Automatically deploys to GitHub Pages on push to `main`.
+Automatically deploys to GitHub Pages when a version tag is pushed (e.g., `v0.11.0`).
 
 Live at [asterui.com](https://asterui.com)

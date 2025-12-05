@@ -131,9 +131,11 @@ export default function App() {
 - **InputNumber** - Numeric input with increment/decrement controls
 - **Label** - Form labels with required indicator and floating labels
 - **Mention** - Input with @mention support for tagging users
+- **OTPInput** - One-time password input with auto-focus
 - **Radio** - Radio buttons with group support
 - **Range** - Range slider with min, max, and step support
 - **Rating** - Star rating component
+- **Segmented** - Inline toggle for switching between mutually exclusive options
 - **Select** - Select dropdown with sizes and colors
 - **Textarea** - Multiline text input
 - **TimePicker** - Time input with hour and minute selection
@@ -200,6 +202,7 @@ export default function App() {
 - **Result** - Result pages for operation outcomes
 - **Skeleton** - Loading placeholder with animated shimmer effect
 - **Tooltip** - Tooltips with multiple placements
+- **Tour** - Guided tour with spotlight and step navigation
 
 ### Mockup
 - **Browser** - Browser window mockup with URL bar
