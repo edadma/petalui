@@ -287,9 +287,11 @@ function FormItem({
           }
         }
 
-        // Apply error styling
+        // Apply error styling and accessibility
         if (error) {
           childProps.color = 'error'
+          childProps['aria-invalid'] = true
+          childProps.className = `${(children as React.ReactElement<any>)?.props?.className || ''} validator`.trim()
         }
 
         const enhancedChild = isValidElement(children)
@@ -314,18 +316,14 @@ function FormItem({
               </div>
             </div>
             {!isHorizontal && !inline && (
-              <div className="label">
-                <span id={errorId} className="label-text-alt text-error min-h-[1.25rem]" role={errorMessage ? 'alert' : undefined}>
-                  {errorMessage || (help && <span className="text-base-content/70">{help}</span>) || '\u00A0'}
-                </span>
-              </div>
+              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
+                {errorMessage || (help && <span className="text-base-content/70">{help}</span>) || '\u00A0'}
+              </p>
             )}
             {isHorizontal && (errorMessage || help) && (
-              <div className="label">
-                <span id={errorId} className="label-text-alt text-error min-h-[1.25rem] ml-auto" role={errorMessage ? 'alert' : undefined}>
-                  {errorMessage || (help && <span className="text-base-content/70">{help}</span>)}
-                </span>
-              </div>
+              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem] ml-auto`} role={errorMessage ? 'alert' : undefined}>
+                {errorMessage || (help && <span className="text-base-content/70">{help}</span>)}
+              </p>
             )}
           </div>
         )
