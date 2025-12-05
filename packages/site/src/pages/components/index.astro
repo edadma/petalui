@@ -14,7 +14,7 @@ const docPages = new Set([
   'list', 'loading', 'masonry', 'mention', 'menu', 'modal', 'navbar', 'notification',
   'otpinput', 'pagelayout', 'pagination', 'phone', 'popconfirm', 'popover', 'progress', 'qrcode', 'radialprogress',
   'radio', 'range', 'rating', 'responsive', 'result', 'segmented', 'select', 'skeleton', 'space',
-  'splitter', 'stack', 'stat', 'steps', 'table', 'tabs', 'tag', 'textarea',
+  'splitter', 'stack', 'stat', 'steps', 'table', 'tabs', 'tag', 'textarea', 'textrotate',
   'themecontroller', 'timeline', 'timepicker', 'toggle', 'tooltip', 'tour', 'transfer', 'tree',
   'treeselect', 'typography', 'upload', 'window'
 ]);
@@ -35,6 +35,7 @@ const componentCategories = [
     name: 'General',
     components: [
       { name: 'Kbd', slug: 'kbd', description: 'Display keyboard keys and shortcuts', props: ['size', 'children'] },
+      { name: 'TextRotate', slug: 'textrotate', description: 'Animated text that cycles through multiple options', props: ['items', 'duration', 'centered', 'className'] },
       { name: 'Typography', slug: 'typography', description: 'Text display with Title, Text, Paragraph, and Link subcomponents', props: ['level', 'type', 'copyable', 'ellipsis', 'mark', 'code'] },
     ]
   },

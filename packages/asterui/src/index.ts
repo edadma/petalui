@@ -229,6 +229,9 @@ export type { TabsProps, TabPanelProps } from './components/Tabs'
 export { Textarea } from './components/Textarea'
 export type { TextareaProps } from './components/Textarea'
 
+export { TextRotate } from './components/TextRotate'
+export type { TextRotateProps, TextRotateDuration } from './components/TextRotate'
+
 export { Tag, CheckableTag } from './components/Tag'
 export type { TagProps, CheckableTagProps } from './components/Tag'
 
