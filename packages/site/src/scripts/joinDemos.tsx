@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import { Join, Button, Input, Radio } from 'asterui'
+import { Join, Button, Input } from 'asterui'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
 import { CheckIconSvg } from './icons'
 
@@ -25,19 +25,6 @@ const demos: Record<string, React.ReactNode> = {
       <Button type="primary">
         <MagnifyingGlassIcon className="w-5 h-5" />
       </Button>
-    </Join>
-  ),
-  'radio-group': (
-    <Join>
-      <Radio name="options" aria-label="Option 1">
-        Radio 1
-      </Radio>
-      <Radio name="options" aria-label="Option 2">
-        Radio 2
-      </Radio>
-      <Radio name="options" aria-label="Option 3">
-        Radio 3
-      </Radio>
     </Join>
   ),
 }

@@ -2,32 +2,59 @@ import React from 'react'
 
 export interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  overlay?: boolean
-  overlayClassName?: string
-  contentClassName?: string
-  wrapperClassName?: string
 }
 
-export function Hero({
+export interface HeroContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode
+}
+
+export interface HeroOverlayProps extends React.HTMLAttributes<HTMLDivElement> {
+  children?: React.ReactNode
+}
+
+function HeroRoot({
   children,
-  overlay = false,
-  overlayClassName = '',
-  contentClassName = '',
-  wrapperClassName,
   className = '',
-  style,
   ...rest
 }: HeroProps) {
-  const classes = ['hero', 'min-h-screen', className].filter(Boolean).join(' ')
-  const contentClasses = ['hero-content', contentClassName].filter(Boolean).join(' ')
-  const overlayClasses = ['hero-overlay', overlayClassName].filter(Boolean).join(' ')
+  const classes = ['hero', className].filter(Boolean).join(' ')
 
   return (
-    <div className={classes} style={style} {...rest}>
-      {overlay && <div className={overlayClasses} />}
-      <div className={contentClasses}>
-        {wrapperClassName ? <div className={wrapperClassName}>{children}</div> : children}
-      </div>
+    <div className={classes} {...rest}>
+      {children}
     </div>
   )
 }
+
+function HeroContent({
+  children,
+  className = '',
+  ...rest
+}: HeroContentProps) {
+  const classes = ['hero-content', className].filter(Boolean).join(' ')
+
+  return (
+    <div className={classes} {...rest}>
+      {children}
+    </div>
+  )
+}
+
+function HeroOverlay({
+  children,
+  className = '',
+  ...rest
+}: HeroOverlayProps) {
+  const classes = ['hero-overlay', 'bg-opacity-60', className].filter(Boolean).join(' ')
+
+  return (
+    <div className={classes} {...rest}>
+      {children}
+    </div>
+  )
+}
+
+export const Hero = Object.assign(HeroRoot, {
+  Content: HeroContent,
+  Overlay: HeroOverlay,
+})

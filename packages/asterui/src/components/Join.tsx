@@ -2,11 +2,11 @@ import React from 'react'
 
 export interface JoinProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  vertical?: boolean
+  direction?: 'horizontal' | 'vertical'
 }
 
-export function Join({ children, vertical = false, className = '', ...rest }: JoinProps) {
-  const classes = ['join', vertical && 'join-vertical', className].filter(Boolean).join(' ')
+export function Join({ children, direction = 'horizontal', className = '', ...rest }: JoinProps) {
+  const classes = ['join', direction === 'vertical' && 'join-vertical', className].filter(Boolean).join(' ')
 
   // Automatically add join-item class to all children
   const childrenWithJoinItem = React.Children.map(children, (child) => {

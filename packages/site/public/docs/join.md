@@ -63,31 +63,6 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Joined Radio Buttons
-
-Create segmented controls with joined radio buttons.
-
-```tsx
-import React from 'react'
-import { Join, Radio } from 'asterui'
-
-const App: React.FC = () => (
-  <Join>
-    <Radio name="options" aria-label="Option 1">
-      Radio 1
-    </Radio>
-    <Radio name="options" aria-label="Option 2">
-      Radio 2
-    </Radio>
-    <Radio name="options" aria-label="Option 3">
-      Radio 3
-    </Radio>
-  </Join>
-)
-
-export default App
-```
-
 ## API
 
 ### Join
