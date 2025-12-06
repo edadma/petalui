@@ -2,6 +2,8 @@
 
 Data visualization with ApexCharts integration.
 
+**Installation:** `npm install apexcharts`
+
 **Import:** `import { Chart } from 'asterui'`
 
 ## Examples

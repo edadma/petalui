@@ -2,6 +2,8 @@
 
 Generate QR codes with customizable appearance, icons, and status states.
 
+**Installation:** `npm install qrcode`
+
 **Import:** `import { QRCode } from 'asterui'`
 
 ## Examples
