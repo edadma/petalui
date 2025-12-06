@@ -191,7 +191,7 @@ export default App`,
   {
     id: 'full-page',
     title: 'Full Page Layout',
-    description: 'Use minHeight="screen" for full viewport layouts like login pages.',
+    description: 'Use minHeight="screen" for full viewport layouts. Demo shows scaled version.',
     code: `import React from 'react'
 import { Flex, Card, Button, Typography } from 'asterui'
 
@@ -201,10 +201,10 @@ const App: React.FC = () => (
   <Flex
     justify="center"
     align="center"
-    minHeight="screen"
-    className="bg-base-200"
+    className="bg-base-200 rounded-lg"
+    style={{ height: '200px' }}
   >
-    <Card title="Welcome" className="w-80">
+    <Card title="Welcome" className="w-64">
       <Flex direction="column" gap="md">
         <Title level={5}>Sign in to continue</Title>
         <Button type="primary" shape="block">Login</Button>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-const GridContext = React.createContext<{ cols: 24 | 120 }>({ cols: 24 })
+const GridContext = React.createContext<{ cols: 24 | 120; gutter: [number, number] }>({ cols: 24, gutter: [0, 0] })
 
 export interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -285,13 +285,8 @@ const COL_START_120_CLASSES: Record<number, string> = {
   121: 'col-start-121',
 }
 
-export function Row({ children, cols = 24, gutter = 0, justify, align, className = '', style: userStyle, ...rest }: RowProps) {
+export function Row({ children, cols = 24, gutter = 16, justify, align, className = '', style: userStyle, ...rest }: RowProps) {
   const [gutterX, gutterY] = Array.isArray(gutter) ? gutter : [gutter, 0]
-
-  // Scale gutter for 120-column grids to maintain consistent visual spacing
-  // 120 columns creates 5x more grid tracks than 24 columns, so gutter needs to be 1/5
-  const actualGutterX = cols === 120 ? gutterX / 5 : gutterX
-  const actualGutterY = cols === 120 ? gutterY / 5 : gutterY
 
   const justifyClasses: Record<string, string> = {
     start: 'justify-items-start',
@@ -327,14 +322,15 @@ export function Row({ children, cols = 24, gutter = 0, justify, align, className
     .filter(Boolean)
     .join(' ')
 
+  // Use negative margin to compensate for column padding (classic grid gutter technique)
   const style: React.CSSProperties = {
-    ...(actualGutterX && { columnGap: `${actualGutterX}px` }),
-    ...(actualGutterY && { rowGap: `${actualGutterY}px` }),
+    ...(gutterX && { marginLeft: `-${gutterX / 2}px`, marginRight: `-${gutterX / 2}px` }),
+    ...(gutterY && { rowGap: `${gutterY}px` }),
     ...userStyle,
   }
 
   return (
-    <GridContext.Provider value={{ cols }}>
+    <GridContext.Provider value={{ cols, gutter: [gutterX, gutterY] }}>
       <div className={classes} style={style} {...rest}>
         {children}
       </div>
@@ -342,8 +338,9 @@ export function Row({ children, cols = 24, gutter = 0, justify, align, className
   )
 }
 
-export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, className = '', ...rest }: ColProps) {
-  const { cols } = React.useContext(GridContext)
+export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, className = '', style: userStyle, ...rest }: ColProps) {
+  const { cols, gutter } = React.useContext(GridContext)
+  const [gutterX] = gutter
   const classes: string[] = []
 
   // Select mapping objects based on column count
@@ -355,8 +352,8 @@ export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, cl
   const xxlColSpanClasses = cols === 120 ? XXL_COL_SPAN_120_CLASSES : XXL_COL_SPAN_CLASSES
   const colStartClasses = cols === 120 ? COL_START_120_CLASSES : COL_START_CLASSES
 
-  // Base span or xs (mobile-first)
-  const baseSpan = span || xs
+  // Base span or xs (mobile-first), default to full width if nothing specified
+  const baseSpan = span ?? xs ?? cols
   if (baseSpan && colSpanClasses[baseSpan]) {
     classes.push(colSpanClasses[baseSpan])
   }
@@ -380,7 +377,13 @@ export function Col({ children, span, offset, order, xs, sm, md, lg, xl, xxl, cl
 
   if (className) classes.push(className)
 
-  return <div className={classes.join(' ')} {...rest}>{children}</div>
+  // Apply horizontal padding for gutter spacing
+  const style: React.CSSProperties = {
+    ...(gutterX && { paddingLeft: `${gutterX / 2}px`, paddingRight: `${gutterX / 2}px` }),
+    ...userStyle,
+  }
+
+  return <div className={classes.join(' ')} style={style} {...rest}>{children}</div>
 }
 
 export const Grid = {

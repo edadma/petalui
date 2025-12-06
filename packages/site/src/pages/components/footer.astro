@@ -6,6 +6,8 @@ import { Code } from 'astro:components';
 const footerApi = [
   { property: 'children', description: 'Footer content', type: 'React.ReactNode' },
   { property: 'center', description: 'Center the footer content', type: 'boolean', default: 'false' },
+  { property: 'horizontal', description: 'Display columns horizontally', type: 'boolean', default: 'false' },
+  { property: 'vertical', description: 'Display columns vertically (default)', type: 'boolean', default: 'false' },
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
@@ -18,18 +20,16 @@ const examples = [
   {
     id: 'basic',
     title: 'Basic Footer',
-    description: 'Simple footer with links.',
+    description: 'Simple left-aligned footer with horizontal links.',
     code: `import React from 'react'
 import { Footer } from 'asterui'
 
 const App: React.FC = () => (
-  <Footer>
-    <nav>
-      <a href="#" className="link link-hover">About</a>
-      <a href="#" className="link link-hover">Contact</a>
-      <a href="#" className="link link-hover">Privacy</a>
-      <a href="#" className="link link-hover">Terms</a>
-    </nav>
+  <Footer horizontal className="bg-base-200 p-4">
+    <a href="#" className="link link-hover">About</a>
+    <a href="#" className="link link-hover">Contact</a>
+    <a href="#" className="link link-hover">Privacy</a>
+    <a href="#" className="link link-hover">Terms</a>
   </Footer>
 )
 
@@ -38,30 +38,30 @@ export default App`,
   {
     id: 'with-title',
     title: 'Footer with Sections',
-    description: 'Footer with titled sections.',
+    description: 'Footer with titled sections in columns.',
     code: `import React from 'react'
 import { Footer } from 'asterui'
 
 const App: React.FC = () => (
-  <Footer>
-    <div>
+  <Footer horizontal className="bg-base-200 p-10">
+    <nav>
       <Footer.Title>Services</Footer.Title>
       <a href="#" className="link link-hover">Branding</a>
       <a href="#" className="link link-hover">Design</a>
       <a href="#" className="link link-hover">Marketing</a>
-    </div>
-    <div>
+    </nav>
+    <nav>
       <Footer.Title>Company</Footer.Title>
       <a href="#" className="link link-hover">About us</a>
       <a href="#" className="link link-hover">Contact</a>
       <a href="#" className="link link-hover">Jobs</a>
-    </div>
-    <div>
+    </nav>
+    <nav>
       <Footer.Title>Legal</Footer.Title>
       <a href="#" className="link link-hover">Terms of use</a>
       <a href="#" className="link link-hover">Privacy policy</a>
       <a href="#" className="link link-hover">Cookie policy</a>
-    </div>
+    </nav>
   </Footer>
 )
 
@@ -75,18 +75,16 @@ export default App`,
 import { Footer } from 'asterui'
 
 const App: React.FC = () => (
-  <Footer center>
-    <div className="flex flex-col items-center gap-4">
-      <div className="flex gap-4">
-        <a href="#" className="link link-hover">About</a>
-        <a href="#" className="link link-hover">Contact</a>
-        <a href="#" className="link link-hover">Privacy</a>
-        <a href="#" className="link link-hover">Terms</a>
-      </div>
-      <p className="text-sm text-base-content/70">
-        © 2024 Company Name. All rights reserved.
-      </p>
-    </div>
+  <Footer center horizontal className="bg-base-200 p-4">
+    <nav className="flex gap-4">
+      <a href="#" className="link link-hover">About</a>
+      <a href="#" className="link link-hover">Contact</a>
+      <a href="#" className="link link-hover">Privacy</a>
+      <a href="#" className="link link-hover">Terms</a>
+    </nav>
+    <aside>
+      <p>© 2024 Company Name. All rights reserved.</p>
+    </aside>
   </Footer>
 )
 

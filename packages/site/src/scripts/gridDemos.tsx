@@ -30,7 +30,7 @@ const demos: Record<string, React.ReactNode> = {
     </Row>
   ),
   'gutter': (
-    <Row gutter={16}>
+    <Row gutter={32}>
       <Col span={6}>
         <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
           col-6
@@ -82,7 +82,7 @@ const demos: Record<string, React.ReactNode> = {
     </Space>
   ),
   'responsive': (
-    <Row gutter={16}>
+    <Row gutter={24}>
       <Col xs={24} sm={12} md={8} lg={6}>
         <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
           Responsive
@@ -101,6 +101,25 @@ const demos: Record<string, React.ReactNode> = {
       <Col xs={24} sm={12} md={8} lg={6}>
         <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
           Responsive
+        </div>
+      </Col>
+    </Row>
+  ),
+  'cols-120': (
+    <Row cols={120} gutter={8}>
+      <Col span={30}>
+        <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
+          30/120
+        </div>
+      </Col>
+      <Col span={45}>
+        <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
+          45/120
+        </div>
+      </Col>
+      <Col span={45}>
+        <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
+          45/120
         </div>
       </Col>
     </Row>

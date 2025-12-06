@@ -54,19 +54,19 @@ import { Flex, Button } from 'asterui'
 
 const App: React.FC = () => (
   <Flex direction="column" gap="md">
-    <Flex justify="start" gap="sm">
+    <Flex justify="start" gap="sm" className="bg-base-200 p-2 rounded">
       <Button size="sm">Start</Button>
       <Button size="sm">Items</Button>
     </Flex>
-    <Flex justify="center" gap="sm">
+    <Flex justify="center" gap="sm" className="bg-base-200 p-2 rounded">
       <Button size="sm">Center</Button>
       <Button size="sm">Items</Button>
     </Flex>
-    <Flex justify="end" gap="sm">
+    <Flex justify="end" gap="sm" className="bg-base-200 p-2 rounded">
       <Button size="sm">End</Button>
       <Button size="sm">Items</Button>
     </Flex>
-    <Flex justify="between">
+    <Flex justify="between" className="bg-base-200 p-2 rounded">
       <Button size="sm">Between</Button>
       <Button size="sm">Items</Button>
     </Flex>
@@ -86,15 +86,15 @@ import { Flex, Button } from 'asterui'
 
 const App: React.FC = () => (
   <Flex gap="md">
-    <Flex align="start" gap="sm" className="h-24">
+    <Flex align="start" gap="sm" className="bg-base-200 p-2 rounded h-24">
       <Button size="xs">Top</Button>
       <Button size="sm">Aligned</Button>
     </Flex>
-    <Flex align="center" gap="sm" className="h-24">
+    <Flex align="center" gap="sm" className="bg-base-200 p-2 rounded h-24">
       <Button size="xs">Center</Button>
       <Button size="sm">Aligned</Button>
     </Flex>
-    <Flex align="end" gap="sm" className="h-24">
+    <Flex align="end" gap="sm" className="bg-base-200 p-2 rounded h-24">
       <Button size="xs">Bottom</Button>
       <Button size="sm">Aligned</Button>
     </Flex>
@@ -193,7 +193,7 @@ export default App
 
 ### Full Page Layout
 
-Use minHeight="screen" for full viewport layouts like login pages.
+Use minHeight="screen" for full viewport layouts. Demo shows scaled version.
 
 ```tsx
 import React from 'react'
@@ -205,10 +205,10 @@ const App: React.FC = () => (
   <Flex
     justify="center"
     align="center"
-    minHeight="screen"
-    className="bg-base-200"
+    className="bg-base-200 rounded-lg"
+    style={{ height: '200px' }}
   >
-    <Card title="Welcome" className="w-80">
+    <Card title="Welcome" className="w-64">
       <Flex direction="column" gap="md">
         <Title level={5}>Sign in to continue</Title>
         <Button type="primary" shape="block">Login</Button>
