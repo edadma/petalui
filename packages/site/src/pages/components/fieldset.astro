@@ -14,6 +14,12 @@ const legendApi = [
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
+const labelApi = [
+  { property: 'children', description: 'Label text or content', type: 'React.ReactNode' },
+  { property: 'htmlFor', description: 'ID of the form element the label is for', type: 'string' },
+  { property: 'className', description: 'Additional CSS classes', type: 'string' },
+];
+
 const examples = [
   {
     id: 'basic',
@@ -23,7 +29,7 @@ const examples = [
 import { Fieldset } from 'asterui'
 
 const App: React.FC = () => (
-  <Fieldset>
+  <Fieldset className="bg-base-200 border border-base-300 rounded-box p-4">
     <Fieldset.Legend>User Information</Fieldset.Legend>
     <p className="text-sm text-base-content/70">
       Group related form controls with a descriptive legend.
@@ -36,27 +42,19 @@ export default App`,
   {
     id: 'with-inputs',
     title: 'With Form Inputs',
-    description: 'Fieldset containing form inputs.',
+    description: 'Fieldset containing form inputs with labels.',
     code: `import React from 'react'
-import { Fieldset, Input, Space } from 'asterui'
+import { Fieldset, Input } from 'asterui'
 
 const App: React.FC = () => (
-  <Fieldset>
+  <Fieldset className="bg-base-200 border border-base-300 rounded-box p-4">
     <Fieldset.Legend>Contact Details</Fieldset.Legend>
-    <Space direction="vertical" size="sm" className="w-full">
-      <div>
-        <label className="block text-sm font-medium mb-1">Name</label>
-        <Input placeholder="Enter your name" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Email</label>
-        <Input type="email" placeholder="Enter your email" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Phone</label>
-        <Input type="tel" placeholder="Enter your phone" />
-      </div>
-    </Space>
+    <Fieldset.Label>Name</Fieldset.Label>
+    <Input placeholder="Enter your name" />
+    <Fieldset.Label>Email</Fieldset.Label>
+    <Input type="email" placeholder="Enter your email" />
+    <Fieldset.Label>Phone</Fieldset.Label>
+    <Input type="tel" placeholder="Enter your phone" />
   </Fieldset>
 )
 
@@ -67,21 +65,15 @@ export default App`,
     title: 'Disabled Fieldset',
     description: 'All form controls within are disabled.',
     code: `import React from 'react'
-import { Fieldset, Input, Space } from 'asterui'
+import { Fieldset, Input } from 'asterui'
 
 const App: React.FC = () => (
-  <Fieldset disabled>
+  <Fieldset disabled className="bg-base-200 border border-base-300 rounded-box p-4">
     <Fieldset.Legend>Disabled Form Section</Fieldset.Legend>
-    <Space direction="vertical" size="sm" className="w-full">
-      <div>
-        <label className="block text-sm font-medium mb-1">Username</label>
-        <Input placeholder="Cannot edit" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Password</label>
-        <Input type="password" placeholder="Cannot edit" />
-      </div>
-    </Space>
+    <Fieldset.Label>Username</Fieldset.Label>
+    <Input placeholder="Cannot edit" />
+    <Fieldset.Label>Password</Fieldset.Label>
+    <Input type="password" placeholder="Cannot edit" />
   </Fieldset>
 )
 
@@ -155,6 +147,9 @@ export default App`,
       <ApiTable title="Fieldset" data={fieldsetApi} />
       <div class="mt-6">
         <ApiTable title="Fieldset.Legend" data={legendApi} />
+      </div>
+      <div class="mt-6">
+        <ApiTable title="Fieldset.Label" data={labelApi} />
       </div>
     </section>
   </div>

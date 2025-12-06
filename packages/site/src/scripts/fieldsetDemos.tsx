@@ -1,11 +1,11 @@
 import { createRoot } from 'react-dom/client';
-import { Fieldset, Input, Space } from 'asterui';
+import { Fieldset, Input } from 'asterui';
 import { CheckIconSvg } from './icons'
 
 // Demo components for each example
 const demos: Record<string, React.ReactNode> = {
   'basic': (
-    <Fieldset>
+    <Fieldset className="bg-base-200 border border-base-300 rounded-box p-4">
       <Fieldset.Legend>User Information</Fieldset.Legend>
       <p className="text-sm text-base-content/70">
         Group related form controls with a descriptive legend.
@@ -13,37 +13,23 @@ const demos: Record<string, React.ReactNode> = {
     </Fieldset>
   ),
   'with-inputs': (
-    <Fieldset>
+    <Fieldset className="bg-base-200 border border-base-300 rounded-box p-4">
       <Fieldset.Legend>Contact Details</Fieldset.Legend>
-      <Space direction="vertical" size="sm" className="w-full">
-        <div>
-          <label className="block text-sm font-medium mb-1">Name</label>
-          <Input placeholder="Enter your name" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Email</label>
-          <Input type="email" placeholder="Enter your email" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Phone</label>
-          <Input type="tel" placeholder="Enter your phone" />
-        </div>
-      </Space>
+      <Fieldset.Label>Name</Fieldset.Label>
+      <Input placeholder="Enter your name" />
+      <Fieldset.Label>Email</Fieldset.Label>
+      <Input type="email" placeholder="Enter your email" />
+      <Fieldset.Label>Phone</Fieldset.Label>
+      <Input type="tel" placeholder="Enter your phone" />
     </Fieldset>
   ),
   'disabled': (
-    <Fieldset disabled>
+    <Fieldset disabled className="bg-base-200 border border-base-300 rounded-box p-4">
       <Fieldset.Legend>Disabled Form Section</Fieldset.Legend>
-      <Space direction="vertical" size="sm" className="w-full">
-        <div>
-          <label className="block text-sm font-medium mb-1">Username</label>
-          <Input placeholder="Cannot edit" />
-        </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Password</label>
-          <Input type="password" placeholder="Cannot edit" />
-        </div>
-      </Space>
+      <Fieldset.Label>Username</Fieldset.Label>
+      <Input placeholder="Cannot edit" />
+      <Fieldset.Label>Password</Fieldset.Label>
+      <Input type="password" placeholder="Cannot edit" />
     </Fieldset>
   ),
 };

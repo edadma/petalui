@@ -32,4 +32,19 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Hatched background pattern for demos (like DaisyUI docs) */
+.demo-hatched,
+.demo-container {
+  --stripe-color: rgba(0, 0, 0, 0.1);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--stripe-color),
+    var(--stripe-color) 1px,
+    transparent 1px,
+    transparent 6px
+  );
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
+
 

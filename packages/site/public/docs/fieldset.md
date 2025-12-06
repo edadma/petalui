@@ -1,5 +1,7 @@
 # Fieldset
 
+Group related form controls with an optional legend and disabled state.
+
 **Import:** `import { Fieldset } from 'asterui'`
 
 ## Examples
@@ -13,7 +15,7 @@ import React from 'react'
 import { Fieldset } from 'asterui'
 
 const App: React.FC = () => (
-  <Fieldset>
+  <Fieldset className="bg-base-200 border border-base-300 rounded-box p-4">
     <Fieldset.Legend>User Information</Fieldset.Legend>
     <p className="text-sm text-base-content/70">
       Group related form controls with a descriptive legend.
@@ -26,29 +28,21 @@ export default App
 
 ### With Form Inputs
 
-Fieldset containing form inputs.
+Fieldset containing form inputs with labels.
 
 ```tsx
 import React from 'react'
-import { Fieldset, Input, Space } from 'asterui'
+import { Fieldset, Input } from 'asterui'
 
 const App: React.FC = () => (
-  <Fieldset>
+  <Fieldset className="bg-base-200 border border-base-300 rounded-box p-4">
     <Fieldset.Legend>Contact Details</Fieldset.Legend>
-    <Space direction="vertical" size="sm" className="w-full">
-      <div>
-        <label className="block text-sm font-medium mb-1">Name</label>
-        <Input placeholder="Enter your name" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Email</label>
-        <Input type="email" placeholder="Enter your email" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Phone</label>
-        <Input type="tel" placeholder="Enter your phone" />
-      </div>
-    </Space>
+    <Fieldset.Label>Name</Fieldset.Label>
+    <Input placeholder="Enter your name" />
+    <Fieldset.Label>Email</Fieldset.Label>
+    <Input type="email" placeholder="Enter your email" />
+    <Fieldset.Label>Phone</Fieldset.Label>
+    <Input type="tel" placeholder="Enter your phone" />
   </Fieldset>
 )
 
@@ -61,21 +55,15 @@ All form controls within are disabled.
 
 ```tsx
 import React from 'react'
-import { Fieldset, Input, Space } from 'asterui'
+import { Fieldset, Input } from 'asterui'
 
 const App: React.FC = () => (
-  <Fieldset disabled>
+  <Fieldset disabled className="bg-base-200 border border-base-300 rounded-box p-4">
     <Fieldset.Legend>Disabled Form Section</Fieldset.Legend>
-    <Space direction="vertical" size="sm" className="w-full">
-      <div>
-        <label className="block text-sm font-medium mb-1">Username</label>
-        <Input placeholder="Cannot edit" />
-      </div>
-      <div>
-        <label className="block text-sm font-medium mb-1">Password</label>
-        <Input type="password" placeholder="Cannot edit" />
-      </div>
-    </Space>
+    <Fieldset.Label>Username</Fieldset.Label>
+    <Input placeholder="Cannot edit" />
+    <Fieldset.Label>Password</Fieldset.Label>
+    <Input type="password" placeholder="Cannot edit" />
   </Fieldset>
 )
 
@@ -92,9 +80,17 @@ export default App
 | `disabled` | Disables all form controls within | `boolean` | `false` |
 | `className` | Additional CSS classes | `string` | `-` |
 
-### Legend
+### Fieldset.Legend
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `children` | Legend text or content | `React.ReactNode` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### Fieldset.Label
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Label text or content | `React.ReactNode` | `-` |
+| `htmlFor` | ID of the form element the label is for | `string` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |

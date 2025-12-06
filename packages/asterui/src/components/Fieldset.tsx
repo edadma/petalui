@@ -10,6 +10,11 @@ export interface FieldsetLegendProps {
   className?: string
 }
 
+export interface FieldsetLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
+  children: React.ReactNode
+  className?: string
+}
+
 function FieldsetRoot({ children, className = '', ...props }: FieldsetProps) {
   const classes = ['fieldset', className].filter(Boolean).join(' ')
 
@@ -24,6 +29,12 @@ function FieldsetLegend({ children, className = '' }: FieldsetLegendProps) {
   return <legend className={`fieldset-legend ${className}`}>{children}</legend>
 }
 
+function FieldsetLabel({ children, className = '', ...props }: FieldsetLabelProps) {
+  const classes = ['fieldset-label', className].filter(Boolean).join(' ')
+  return <label className={classes} {...props}>{children}</label>
+}
+
 export const Fieldset = Object.assign(FieldsetRoot, {
   Legend: FieldsetLegend,
+  Label: FieldsetLabel,
 })
