@@ -18,9 +18,9 @@ const demos: Record<string, React.ReactNode> = {
       </Dropdown.Menu>
     </Dropdown>
   ),
-  'placement': (
+  'position': (
     <Space direction="horizontal" size="sm" wrap>
-      <Dropdown placement="top">
+      <Dropdown position="top">
         <Dropdown.Trigger>
           <Button>Top</Button>
         </Dropdown.Trigger>
@@ -31,7 +31,7 @@ const demos: Record<string, React.ReactNode> = {
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown placement="bottom">
+      <Dropdown position="bottom">
         <Dropdown.Trigger>
           <Button>Bottom</Button>
         </Dropdown.Trigger>
@@ -42,7 +42,7 @@ const demos: Record<string, React.ReactNode> = {
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown placement="left">
+      <Dropdown position="left">
         <Dropdown.Trigger>
           <Button>Left</Button>
         </Dropdown.Trigger>
@@ -53,7 +53,7 @@ const demos: Record<string, React.ReactNode> = {
         </Dropdown.Menu>
       </Dropdown>
 
-      <Dropdown placement="right">
+      <Dropdown position="right">
         <Dropdown.Trigger>
           <Button>Right</Button>
         </Dropdown.Trigger>
@@ -98,6 +98,67 @@ const demos: Record<string, React.ReactNode> = {
         </Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
+  ),
+  'with-divider': (
+    <Dropdown>
+      <Dropdown.Trigger>
+        <Button>Account</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item>Profile</Dropdown.Item>
+        <Dropdown.Item>Settings</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item>Help</Dropdown.Item>
+        <Dropdown.Item danger>Sign out</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  ),
+  'item-states': (
+    <Dropdown>
+      <Dropdown.Trigger>
+        <Button>States</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item active>Active Item</Dropdown.Item>
+        <Dropdown.Item>Normal Item</Dropdown.Item>
+        <Dropdown.Item disabled>Disabled Item</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item danger>Delete Account</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  ),
+  'align': (
+    <Space direction="horizontal" size="sm" wrap>
+      <Dropdown align="start">
+        <Dropdown.Trigger>
+          <Button>Start</Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>Option 1</Dropdown.Item>
+          <Dropdown.Item>Option 2</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown align="center">
+        <Dropdown.Trigger>
+          <Button>Center</Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>Option 1</Dropdown.Item>
+          <Dropdown.Item>Option 2</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown align="end">
+        <Dropdown.Trigger>
+          <Button>End</Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>Option 1</Dropdown.Item>
+          <Dropdown.Item>Option 2</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Space>
   ),
 };
 

@@ -42,3 +42,5 @@ coverage/
 .cache/
 .temp/
 .tmp/
+
+qa.md

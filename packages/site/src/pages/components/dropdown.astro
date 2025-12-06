@@ -5,10 +5,22 @@ import { Code } from 'astro:components';
 
 const dropdownApi = [
   { property: 'children', description: 'Trigger element and dropdown content (use Dropdown.Trigger and Dropdown.Menu)', type: 'React.ReactNode' },
-  { property: 'placement', description: 'Dropdown menu placement', type: "'top' | 'bottom' | 'left' | 'right' | 'top-start' | 'top-end' | 'bottom-start' | 'bottom-end' | 'left-start' | 'left-end' | 'right-start' | 'right-end'", default: "'bottom-start'" },
+  { property: 'position', description: 'Dropdown menu position', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'" },
+  { property: 'align', description: 'Dropdown menu alignment', type: "'start' | 'center' | 'end'", default: "'start'" },
   { property: 'hover', description: 'Open on hover instead of click', type: 'boolean', default: 'false' },
   { property: 'open', description: 'Controlled open state', type: 'boolean' },
   { property: 'onOpenChange', description: 'Callback when open state changes', type: '(open: boolean) => void' },
+  { property: 'disabled', description: 'Disable the dropdown', type: 'boolean', default: 'false' },
+  { property: 'arrow', description: 'Show arrow pointing to trigger', type: 'boolean', default: 'false' },
+  { property: 'className', description: 'Additional CSS classes', type: 'string' },
+];
+
+const itemApi = [
+  { property: 'children', description: 'Item content', type: 'React.ReactNode' },
+  { property: 'onClick', description: 'Click handler', type: '() => void' },
+  { property: 'active', description: 'Active/selected state', type: 'boolean', default: 'false' },
+  { property: 'disabled', description: 'Disable the item', type: 'boolean', default: 'false' },
+  { property: 'danger', description: 'Danger/destructive styling', type: 'boolean', default: 'false' },
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
@@ -36,15 +48,15 @@ const App: React.FC = () => (
 export default App`,
   },
   {
-    id: 'placement',
-    title: 'Placement',
+    id: 'position',
+    title: 'Position',
     description: 'Dropdown menu can be positioned in different directions.',
     code: `import React from 'react'
 import { Dropdown, Button, Space } from 'asterui'
 
 const App: React.FC = () => (
   <Space direction="horizontal" size="sm" wrap>
-    <Dropdown placement="top">
+    <Dropdown position="top">
       <Dropdown.Trigger>
         <Button>Top</Button>
       </Dropdown.Trigger>
@@ -55,7 +67,7 @@ const App: React.FC = () => (
       </Dropdown.Menu>
     </Dropdown>
 
-    <Dropdown placement="bottom">
+    <Dropdown position="bottom">
       <Dropdown.Trigger>
         <Button>Bottom</Button>
       </Dropdown.Trigger>
@@ -66,7 +78,7 @@ const App: React.FC = () => (
       </Dropdown.Menu>
     </Dropdown>
 
-    <Dropdown placement="left">
+    <Dropdown position="left">
       <Dropdown.Trigger>
         <Button>Left</Button>
       </Dropdown.Trigger>
@@ -77,7 +89,7 @@ const App: React.FC = () => (
       </Dropdown.Menu>
     </Dropdown>
 
-    <Dropdown placement="right">
+    <Dropdown position="right">
       <Dropdown.Trigger>
         <Button>Right</Button>
       </Dropdown.Trigger>
@@ -147,6 +159,97 @@ const App: React.FC = () => (
 
 export default App`,
   },
+  {
+    id: 'with-divider',
+    title: 'With Divider',
+    description: 'Separate menu sections with dividers.',
+    code: `import React from 'react'
+import { Dropdown, Button } from 'asterui'
+
+const App: React.FC = () => (
+  <Dropdown>
+    <Dropdown.Trigger>
+      <Button>Account</Button>
+    </Dropdown.Trigger>
+    <Dropdown.Menu>
+      <Dropdown.Item>Profile</Dropdown.Item>
+      <Dropdown.Item>Settings</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item>Help</Dropdown.Item>
+      <Dropdown.Item danger>Sign out</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+)
+
+export default App`,
+  },
+  {
+    id: 'item-states',
+    title: 'Item States',
+    description: 'Items can be active, disabled, or styled as danger.',
+    code: `import React from 'react'
+import { Dropdown, Button } from 'asterui'
+
+const App: React.FC = () => (
+  <Dropdown>
+    <Dropdown.Trigger>
+      <Button>States</Button>
+    </Dropdown.Trigger>
+    <Dropdown.Menu>
+      <Dropdown.Item active>Active Item</Dropdown.Item>
+      <Dropdown.Item>Normal Item</Dropdown.Item>
+      <Dropdown.Item disabled>Disabled Item</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item danger>Delete Account</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+)
+
+export default App`,
+  },
+  {
+    id: 'align',
+    title: 'Alignment',
+    description: 'Align the dropdown menu to start, center, or end.',
+    code: `import React from 'react'
+import { Dropdown, Button, Space } from 'asterui'
+
+const App: React.FC = () => (
+  <Space direction="horizontal" size="sm" wrap>
+    <Dropdown align="start">
+      <Dropdown.Trigger>
+        <Button>Start</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item>Option 1</Dropdown.Item>
+        <Dropdown.Item>Option 2</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Dropdown align="center">
+      <Dropdown.Trigger>
+        <Button>Center</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item>Option 1</Dropdown.Item>
+        <Dropdown.Item>Option 2</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Dropdown align="end">
+      <Dropdown.Trigger>
+        <Button>End</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item>Option 1</Dropdown.Item>
+        <Dropdown.Item>Option 2</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  </Space>
+)
+
+export default App`,
+  },
 ];
 ---
 
@@ -181,13 +284,13 @@ export default App`,
 
       <div class="columns-1 lg:columns-2 gap-6">
       {examples.map((example, i) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg overflow-hidden break-inside-avoid">
-          <div class="p-4 bg-base-100">
+        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
+          <div class="p-4 bg-base-100 rounded-t-lg">
             <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
             <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
             <div class="demo-container" data-example={example.id}></div>
           </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200">
+          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
             <div class="tooltip tooltip-top" data-tip="Show code">
               <button class="toggle-code btn btn-ghost btn-sm font-mono">
                 &lt;&#8201;&gt;
@@ -213,6 +316,8 @@ export default App`,
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-6">API</h2>
       <ApiTable title="Dropdown" data={dropdownApi} />
+      <div class="mt-6"></div>
+      <ApiTable title="Dropdown.Item" data={itemApi} />
     </section>
 
     <!-- Accessibility -->

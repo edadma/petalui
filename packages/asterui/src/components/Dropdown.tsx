@@ -12,6 +12,8 @@ interface DropdownContextValue {
   registerItem: (index: number, ref: HTMLElement | null, disabled: boolean) => void
   itemCount: number
   setItemCount: (count: number) => void
+  disabled: boolean
+  arrow: boolean
 }
 
 const DropdownContext = createContext<DropdownContextValue | undefined>(undefined)
@@ -29,6 +31,14 @@ export interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
   hover?: boolean
   position?: 'top' | 'bottom' | 'left' | 'right'
   align?: 'start' | 'center' | 'end'
+  /** Controlled open state */
+  open?: boolean
+  /** Callback when open state changes */
+  onOpenChange?: (open: boolean) => void
+  /** Disable the dropdown */
+  disabled?: boolean
+  /** Show arrow pointing to trigger */
+  arrow?: boolean
 }
 
 export interface DropdownTriggerProps {
@@ -60,16 +70,32 @@ function DropdownRoot({
   hover = false,
   position = 'bottom',
   align = 'start',
+  open: controlledOpen,
+  onOpenChange,
+  disabled = false,
+  arrow = false,
   className = '',
   ...rest
 }: DropdownProps) {
   const menuId = useId()
   const triggerId = useId()
-  const [isOpen, setIsOpen] = useState(false)
+  const [internalOpen, setInternalOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const [itemCount, setItemCount] = useState(0)
   const itemRefs = useRef<Map<number, { ref: HTMLElement | null; disabled: boolean }>>(new Map())
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Use controlled or uncontrolled open state
+  const isControlled = controlledOpen !== undefined
+  const isOpen = isControlled ? controlledOpen : internalOpen
+
+  const setIsOpen = useCallback((open: boolean) => {
+    if (disabled) return
+    if (!isControlled) {
+      setInternalOpen(open)
+    }
+    onOpenChange?.(open)
+  }, [disabled, isControlled, onOpenChange])
 
   const registerItem = useCallback((index: number, ref: HTMLElement | null, disabled: boolean) => {
     if (ref) {
@@ -132,15 +158,17 @@ function DropdownRoot({
         registerItem,
         itemCount,
         setItemCount,
+        disabled,
+        arrow,
       }}
     >
-      <div ref={dropdownRef} className={dropdownClasses} data-state={isOpen ? 'open' : 'closed'} {...rest}>{children}</div>
+      <div ref={dropdownRef} className={dropdownClasses} data-state={isOpen ? 'open' : 'closed'} aria-disabled={disabled || undefined} {...rest}>{children}</div>
     </DropdownContext.Provider>
   )
 }
 
 function DropdownTrigger({ children, className = '' }: DropdownTriggerProps) {
-  const { menuId, triggerId, isOpen, setIsOpen, setFocusedIndex, itemCount } = useDropdownContext()
+  const { menuId, triggerId, isOpen, setIsOpen, setFocusedIndex, itemCount, disabled } = useDropdownContext()
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     switch (event.key) {
@@ -175,11 +203,12 @@ function DropdownTrigger({ children, className = '' }: DropdownTriggerProps) {
     <button
       id={triggerId}
       type="button"
-      tabIndex={0}
+      tabIndex={disabled ? -1 : 0}
       className={`btn ${className}`}
       aria-haspopup="menu"
       aria-expanded={isOpen}
       aria-controls={menuId}
+      disabled={disabled}
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
@@ -189,7 +218,7 @@ function DropdownTrigger({ children, className = '' }: DropdownTriggerProps) {
 }
 
 function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
-  const { menuId, triggerId, isOpen, setIsOpen, focusedIndex, setFocusedIndex, setItemCount } = useDropdownContext()
+  const { menuId, triggerId, isOpen, setIsOpen, focusedIndex, setFocusedIndex, setItemCount, arrow, position } = useDropdownContext()
   const menuRef = useRef<HTMLUListElement>(null)
 
   // Count children and set item count
@@ -252,7 +281,7 @@ function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
     'menu',
     'bg-base-100',
     'rounded-box',
-    'z-[1]',
+    'z-50',
     'shadow',
     className,
   ]
@@ -267,6 +296,21 @@ function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
     return child
   })
 
+  // Arrow position classes based on menu position
+  const arrowPositionClasses: Record<string, string> = {
+    top: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-full border-t-base-100 border-l-transparent border-r-transparent border-b-transparent',
+    bottom: 'top-0 left-1/2 -translate-x-1/2 -translate-y-full border-b-base-100 border-l-transparent border-r-transparent border-t-transparent',
+    left: 'right-0 top-1/2 -translate-y-1/2 translate-x-full border-l-base-100 border-t-transparent border-b-transparent border-r-transparent',
+    right: 'left-0 top-1/2 -translate-y-1/2 -translate-x-full border-r-base-100 border-t-transparent border-b-transparent border-l-transparent',
+  }
+
+  const arrowElement = arrow ? (
+    <span
+      className={`absolute w-0 h-0 border-8 border-solid ${arrowPositionClasses[position || 'bottom']}`}
+      aria-hidden="true"
+    />
+  ) : null
+
   return (
     <ul
       ref={menuRef}
@@ -274,9 +318,10 @@ function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
       role="menu"
       aria-labelledby={triggerId}
       tabIndex={-1}
-      className={menuClasses}
+      className={`${menuClasses} ${arrow ? 'relative' : ''}`}
       onKeyDown={handleKeyDown}
     >
+      {arrowElement}
       {childrenWithIndex}
     </ul>
   )

@@ -203,13 +203,13 @@ export default App`,
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
       <div class="columns-1 lg:columns-2 gap-6">
       {examples.map((example) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg overflow-hidden break-inside-avoid">
-          <div class="p-4 bg-base-100">
+        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
+          <div class="p-4 bg-base-100 rounded-t-lg">
             <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
             <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
             <div class="demo-container" data-example={example.id}></div>
           </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200">
+          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
             <div class="tooltip tooltip-top" data-tip="Show code">
               <button class="toggle-code btn btn-ghost btn-sm font-mono">&lt;&#8201;&gt;</button>
             </div>
