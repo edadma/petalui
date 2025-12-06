@@ -4,86 +4,40 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const floatButtonApi = [
-  {
-    property: 'icon',
-    description: 'Icon to display in the button',
-    type: 'React.ReactNode',
-  },
-  {
-    property: 'onClick',
-    description: 'Click event handler',
-    type: '() => void',
-  },
-  {
-    property: 'type',
-    description: 'Button type',
-    type: "'primary' | 'default'",
-    default: "'default'",
-  },
-  {
-    property: 'shape',
-    description: 'Button shape',
-    type: "'circle' | 'square'",
-    default: "'circle'",
-  },
-  {
-    property: 'tooltip',
-    description: 'Tooltip text on hover',
-    type: 'string',
-  },
-  {
-    property: 'badge',
-    description: 'Badge content to show',
-    type: 'number | React.ReactNode',
-  },
-  {
-    property: 'className',
-    description: 'Additional CSS classes',
-    type: 'string',
-  },
+  { property: 'icon', description: 'Icon to display in the button', type: 'React.ReactNode' },
+  { property: 'description', description: 'Description text below icon', type: 'React.ReactNode' },
+  { property: 'type', description: 'Button type/color', type: "'default' | 'primary'", default: "'default'" },
+  { property: 'shape', description: 'Button shape', type: "'circle' | 'square'", default: "'circle'" },
+  { property: 'tooltip', description: 'Tooltip text on hover', type: 'string' },
+  { property: 'tooltipPlacement', description: 'Tooltip position', type: "'left' | 'right' | 'top' | 'bottom'", default: "'left'" },
+  { property: 'badge', description: 'Badge content to show', type: 'number | React.ReactNode' },
+  { property: 'href', description: 'Link URL (renders as anchor)', type: 'string' },
+  { property: 'target', description: 'Link target', type: 'string' },
+  { property: 'onClick', description: 'Click event handler', type: '() => void' },
+  { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
 const floatButtonGroupApi = [
-  {
-    property: 'children',
-    description: 'FloatButton components to group',
-    type: 'React.ReactNode',
-  },
-  {
-    property: 'trigger',
-    description: 'Trigger method to open the group',
-    type: "'click' | 'hover'",
-    default: "'click'",
-  },
-  {
-    property: 'className',
-    description: 'Additional CSS classes',
-    type: 'string',
-  },
+  { property: 'children', description: 'FloatButton components to group', type: 'React.ReactNode' },
+  { property: 'flower', description: 'Arrange buttons in quarter-circle (radial) layout', type: 'boolean', default: 'false' },
+  { property: 'shape', description: 'Button shape for children', type: "'circle' | 'square'", default: "'circle'" },
+  { property: 'icon', description: 'Main trigger button icon', type: 'React.ReactNode' },
+  { property: 'mainAction', description: 'Main action button icon (replaces trigger when open)', type: 'React.ReactNode' },
+  { property: 'onMainAction', description: 'Click handler for main action button', type: '() => void' },
+  { property: 'showClose', description: 'Show close button when open', type: 'boolean', default: 'false' },
+  { property: 'type', description: 'Button type/color', type: "'default' | 'primary'", default: "'default'" },
+  { property: 'position', description: 'Position on screen', type: "'bottom-right' | 'bottom-left' | 'top-right' | 'top-left'", default: "'bottom-right'" },
+  { property: 'offset', description: 'Distance from edge in pixels', type: 'number', default: '24' },
 ];
 
 const floatButtonBackTopApi = [
-  {
-    property: 'visibilityHeight',
-    description: 'Height at which button becomes visible (pixels)',
-    type: 'number',
-    default: '400',
-  },
-  {
-    property: 'onClick',
-    description: 'Click event handler',
-    type: '() => void',
-  },
-  {
-    property: 'target',
-    description: 'Scroll target element',
-    type: '() => HTMLElement | Window',
-  },
-  {
-    property: 'className',
-    description: 'Additional CSS classes',
-    type: 'string',
-  },
+  { property: 'visibilityHeight', description: 'Scroll distance before button appears (pixels)', type: 'number', default: '400' },
+  { property: 'target', description: 'Scroll target element', type: '() => HTMLElement | Window' },
+  { property: 'onClick', description: 'Click event handler (called before scrolling)', type: '() => void' },
+  { property: 'icon', description: 'Custom icon', type: 'React.ReactNode' },
+  { property: 'duration', description: 'Scroll animation duration in ms', type: 'number', default: '450' },
+  { property: 'position', description: 'Position on screen', type: "'bottom-right' | 'bottom-left'", default: "'bottom-right'" },
+  { property: 'offset', description: 'Distance from edge in pixels', type: 'number', default: '24' },
 ];
 
 const examples = [
@@ -92,13 +46,13 @@ const examples = [
     title: 'Basic',
     description: 'Simple floating action button.',
     code: `import React from 'react'
-import { FloatButton } from 'asterui'
+import { FloatButton, Modal } from 'asterui'
 import { PlusIcon } from '@heroicons/react/24/outline'
 
 const App: React.FC = () => (
   <FloatButton
     icon={<PlusIcon className="w-5 h-5" />}
-    onClick={() => console.log('Clicked!')}
+    onClick={() => Modal.info({ title: 'FloatButton', content: 'Button clicked!' })}
   />
 )
 
@@ -109,7 +63,7 @@ export default App`,
     title: 'With Tooltip',
     description: 'Float button with tooltip on hover.',
     code: `import React from 'react'
-import { FloatButton } from 'asterui'
+import { FloatButton, Modal } from 'asterui'
 import { PlusIcon } from '@heroicons/react/24/outline'
 
 const App: React.FC = () => (
@@ -117,7 +71,67 @@ const App: React.FC = () => (
     icon={<PlusIcon className="w-5 h-5" />}
     tooltip="Add new item"
     type="primary"
-    onClick={() => console.log('Add clicked!')}
+    onClick={() => Modal.info({ title: 'Add Item', content: 'Add clicked!' })}
+  />
+)
+
+export default App`,
+  },
+  {
+    id: 'types',
+    title: 'Types',
+    description: 'Default and primary button types.',
+    code: `import React from 'react'
+import { FloatButton, Modal } from 'asterui'
+import { PlusIcon, HeartIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => (
+  <>
+    <FloatButton
+      icon={<PlusIcon className="w-5 h-5" />}
+      type="default"
+      onClick={() => Modal.info({ title: 'Default', content: 'Default type' })}
+    />
+    <FloatButton
+      icon={<HeartIcon className="w-5 h-5" />}
+      type="primary"
+      onClick={() => Modal.info({ title: 'Primary', content: 'Primary type' })}
+    />
+  </>
+)
+
+export default App`,
+  },
+  {
+    id: 'shapes',
+    title: 'Shapes',
+    description: 'Circle and square button shapes.',
+    code: `import React from 'react'
+import { FloatButton } from 'asterui'
+import { PlusIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => (
+  <>
+    <FloatButton icon={<PlusIcon className="w-5 h-5" />} shape="circle" />
+    <FloatButton icon={<PlusIcon className="w-5 h-5" />} shape="square" />
+  </>
+)
+
+export default App`,
+  },
+  {
+    id: 'badge',
+    title: 'With Badge',
+    description: 'Float button with notification badge.',
+    code: `import React from 'react'
+import { FloatButton, Modal } from 'asterui'
+import { ChatBubbleLeftRightIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => (
+  <FloatButton
+    icon={<ChatBubbleLeftRightIcon className="w-5 h-5" />}
+    badge={5}
+    onClick={() => Modal.info({ title: 'Messages', content: 'You have 5 unread messages' })}
   />
 )
 
@@ -128,25 +142,54 @@ export default App`,
     title: 'Float Button Group',
     description: 'Group of float buttons that expand on click.',
     code: `import React from 'react'
-import { FloatButton } from 'asterui'
-import { QuestionMarkCircleIcon, ChatBubbleLeftRightIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
+import { FloatButton, Modal } from 'asterui'
+import { PlusIcon, QuestionMarkCircleIcon, ChatBubbleLeftRightIcon, ArrowPathIcon } from '@heroicons/react/24/outline'
 
 const App: React.FC = () => (
-  <FloatButton.Group trigger="click">
+  <FloatButton.Group icon={<PlusIcon className="w-5 h-5" />}>
     <FloatButton
       icon={<QuestionMarkCircleIcon className="w-5 h-5" />}
-      tooltip="Help"
-      onClick={() => console.log('Help')}
+      onClick={() => Modal.info({ title: 'Help', content: 'Help section' })}
     />
     <FloatButton
       icon={<ChatBubbleLeftRightIcon className="w-5 h-5" />}
-      tooltip="Support"
-      onClick={() => console.log('Support')}
+      onClick={() => Modal.info({ title: 'Support', content: 'Contact support' })}
     />
     <FloatButton
       icon={<ArrowPathIcon className="w-5 h-5" />}
-      tooltip="Refresh"
-      onClick={() => console.log('Refresh')}
+      onClick={() => Modal.info({ title: 'Refresh', content: 'Refreshing...' })}
+    />
+  </FloatButton.Group>
+)
+
+export default App`,
+  },
+  {
+    id: 'flower',
+    title: 'Flower Layout',
+    description: 'Radial quarter-circle arrangement using the flower prop. The mainAction button replaces the trigger when open.',
+    code: `import React from 'react'
+import { FloatButton, Modal } from 'asterui'
+import { PlusIcon, HeartIcon, CameraIcon, PhotoIcon, MicrophoneIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => (
+  <FloatButton.Group
+    flower
+    icon={<PlusIcon className="w-5 h-5" />}
+    mainAction={<HeartIcon className="w-5 h-5" />}
+    onMainAction={() => Modal.info({ title: 'Main Action', content: 'Main action clicked!' })}
+  >
+    <FloatButton
+      icon={<CameraIcon className="w-5 h-5" />}
+      onClick={() => Modal.info({ title: 'Camera', content: 'Open camera' })}
+    />
+    <FloatButton
+      icon={<PhotoIcon className="w-5 h-5" />}
+      onClick={() => Modal.info({ title: 'Gallery', content: 'Open gallery' })}
+    />
+    <FloatButton
+      icon={<MicrophoneIcon className="w-5 h-5" />}
+      onClick={() => Modal.info({ title: 'Voice', content: 'Record voice' })}
     />
   </FloatButton.Group>
 )
@@ -161,10 +204,7 @@ export default App`,
 import { FloatButton } from 'asterui'
 
 const App: React.FC = () => (
-  <FloatButton.BackTop
-    visibilityHeight={400}
-    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-  />
+  <FloatButton.BackTop visibilityHeight={400} />
 )
 
 export default App`,
@@ -248,6 +288,7 @@ export default App`,
       <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
       <ul class="list-disc list-inside space-y-2 text-base-content/80">
         <li>Uses native <code class="bg-base-200 px-1 rounded">&lt;button&gt;</code> element for proper keyboard support</li>
+        <li>Supports <code class="bg-base-200 px-1 rounded">href</code> prop to render as anchor for link functionality</li>
         <li>Tooltips provide context for screen readers when present</li>
         <li>Focus states are clearly visible for keyboard navigation</li>
         <li>Group expansion is keyboard accessible</li>

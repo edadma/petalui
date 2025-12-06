@@ -1,6 +1,6 @@
 {
   "name": "asterui",
-  "version": "0.12.6",
+  "version": "0.12.7",
   "description": "React UI component library with DaisyUI",
   "homepage": "https://asterui.com",
   "repository": {
@@ -51,7 +51,7 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.1",
     "apexcharts": "^5.3.6",
-    "daisyui": "^5.5.5",
+    "daisyui": "^5.5.8",
     "qrcode": "^1.5.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

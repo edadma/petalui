@@ -29,8 +29,8 @@ importers:
         specifier: ^5.3.6
         version: 5.3.6
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       qrcode:
         specifier: ^1.5.4
         version: 1.5.4
@@ -81,8 +81,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -121,8 +121,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -161,8 +161,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -201,8 +201,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -241,8 +241,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -278,8 +278,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -315,8 +315,8 @@ importers:
         specifier: ^5.1.0
         version: 5.1.1(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       daisyui:
-        specifier: ^5.5.5
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -339,7 +339,7 @@ importers:
         specifier: ^2.2.0
         version: 2.2.0(react@19.2.0)
       '@tailwindcss/vite':
-        specifier: ^4.0.0
+        specifier: ^4.1.17
         version: 4.1.17(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2))
       asterui:
         specifier: workspace:*
@@ -348,8 +348,8 @@ importers:
         specifier: ^5.9.0
         version: 5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(typescript@5.9.3)
       daisyui:
-        specifier: ^5.0.0
-        version: 5.5.5
+        specifier: ^5.5.8
+        version: 5.5.8
       prism-react-renderer:
         specifier: ^2.4.1
         version: 2.4.1(react@19.2.0)
@@ -363,7 +363,7 @@ importers:
         specifier: ^16.0.0
         version: 16.0.0
       tailwindcss:
-        specifier: ^4.0.0
+        specifier: ^4.1.17
         version: 4.1.17
 
 packages:
@@ -1459,8 +1459,8 @@ packages:
   csstype@3.2.3:
     resolution: {integrity: sha512-z1HGKcYy2xA8AGQfwrn0PAy+PB7X/GSj3UVJW9qKyn43xWa+gl5nXmU4qqLMRzWVLFC8KusUX8T/0kCiOYpAIQ==}
 
-  daisyui@5.5.5:
-    resolution: {integrity: sha512-ekvI93ZkWIJoCOtDl0D2QMxnWvTejk9V5nWBqRv+7t0xjiBXqAK5U6o6JE2RPvlIC3EqwNyUoIZSdHX9MZK3nw==}
+  daisyui@5.5.8:
+    resolution: {integrity: sha512-6psL9jIEOFOw68V10j/BKCWcRgx8dh81mmNxShr+g7HDM6UHNoPharlp9zq/PQkHNuGU1ZQsajR3HgpvavbRKQ==}
 
   de-indent@1.0.2:
     resolution: {integrity: sha512-e/1zu3xH5MQryN2zdVaF0OrdNLUbvWxzMbi+iNA6Bky7l1RoP8a2fIbRocyHclXt/arDrrR6lL3TqFD9pMQTsg==}
@@ -3875,7 +3875,7 @@ snapshots:
 
   csstype@3.2.3: {}
 
-  daisyui@5.5.5: {}
+  daisyui@5.5.8: {}
 
   de-indent@1.0.2: {}
 
