@@ -21,13 +21,49 @@ const contextMenuItemApi = [
   { property: 'children', description: 'Submenu items', type: 'ContextMenuItem[]', default: '-' },
 ];
 
+const contextMenuItemCompoundApi = [
+  { property: 'itemKey', description: 'Unique key for the item', type: 'string', default: '-' },
+  { property: 'children', description: 'Item content', type: 'React.ReactNode', default: '-' },
+  { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
+  { property: 'disabled', description: 'Whether the item is disabled', type: 'boolean', default: 'false' },
+  { property: 'danger', description: 'Show as danger/destructive action', type: 'boolean', default: 'false' },
+];
+
+const contextMenuSubMenuApi = [
+  { property: 'itemKey', description: 'Unique key for the submenu', type: 'string', default: '-' },
+  { property: 'label', description: 'Submenu label', type: 'React.ReactNode', default: '-' },
+  { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
+  { property: 'disabled', description: 'Whether the submenu is disabled', type: 'boolean', default: 'false' },
+  { property: 'children', description: 'Submenu items', type: 'React.ReactNode', default: '-' },
+];
+
 const examples = [
   {
     id: 'basic',
     title: 'Basic Context Menu',
     description: 'Right-click on the element to show the menu.',
     code: `import React from 'react'
-import { ContextMenu } from 'asterui'
+import { ContextMenu, notification } from 'asterui'
+
+const App: React.FC = () => (
+  <ContextMenu onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
+    <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
+      Right-click here
+    </div>
+    <ContextMenu.Item itemKey="copy">Copy</ContextMenu.Item>
+    <ContextMenu.Item itemKey="paste">Paste</ContextMenu.Item>
+    <ContextMenu.Item itemKey="cut">Cut</ContextMenu.Item>
+  </ContextMenu>
+)
+
+export default App`,
+  },
+  {
+    id: 'datadriven',
+    title: 'Data-Driven Pattern',
+    description: 'Use items prop for data-driven menus.',
+    code: `import React from 'react'
+import { ContextMenu, notification } from 'asterui'
 
 const App: React.FC = () => {
   const items = [
@@ -37,8 +73,8 @@ const App: React.FC = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
-      <div className="p-8 bg-base-200 rounded-lg text-center">
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
+      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click here
       </div>
     </ContextMenu>
@@ -52,7 +88,7 @@ export default App`,
     title: 'With Icons',
     description: 'Menu items with icons.',
     code: `import React from 'react'
-import { ContextMenu } from 'asterui'
+import { ContextMenu, notification } from 'asterui'
 
 const App: React.FC = () => {
   const items = [
@@ -62,8 +98,8 @@ const App: React.FC = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
-      <div className="p-8 bg-base-200 rounded-lg text-center">
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
+      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click for options
       </div>
     </ContextMenu>
@@ -77,7 +113,7 @@ export default App`,
     title: 'With Dividers',
     description: 'Separate menu sections with dividers.',
     code: `import React from 'react'
-import { ContextMenu } from 'asterui'
+import { ContextMenu, notification } from 'asterui'
 
 const App: React.FC = () => {
   const items = [
@@ -92,8 +128,8 @@ const App: React.FC = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
-      <div className="p-8 bg-base-200 rounded-lg text-center">
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
+      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click for menu with sections
       </div>
     </ContextMenu>
@@ -107,7 +143,7 @@ export default App`,
     title: 'Nested Submenu',
     description: 'Menu items with nested submenus.',
     code: `import React from 'react'
-import { ContextMenu } from 'asterui'
+import { ContextMenu, notification } from 'asterui'
 
 const App: React.FC = () => {
   const items = [
@@ -127,8 +163,8 @@ const App: React.FC = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
-      <div className="p-8 bg-base-200 rounded-lg text-center">
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
+      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click for nested menu
       </div>
     </ContextMenu>
@@ -142,7 +178,7 @@ export default App`,
     title: 'Disabled Items',
     description: 'Some menu items can be disabled.',
     code: `import React from 'react'
-import { ContextMenu } from 'asterui'
+import { ContextMenu, notification } from 'asterui'
 
 const App: React.FC = () => {
   const items = [
@@ -153,8 +189,8 @@ const App: React.FC = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
-      <div className="p-8 bg-base-200 rounded-lg text-center">
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
+      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click (some items disabled)
       </div>
     </ContextMenu>
@@ -219,7 +255,13 @@ export default App`,
       <h2 class="text-2xl font-bold mb-6">API</h2>
       <ApiTable title="ContextMenu" data={contextMenuApi} />
       <div class="mt-8">
-        <ApiTable title="ContextMenuItem" data={contextMenuItemApi} />
+        <ApiTable title="ContextMenuItem (for items prop)" data={contextMenuItemApi} />
+      </div>
+      <div class="mt-8">
+        <ApiTable title="ContextMenu.Item (compound pattern)" data={contextMenuItemCompoundApi} />
+      </div>
+      <div class="mt-8">
+        <ApiTable title="ContextMenu.SubMenu (compound pattern)" data={contextMenuSubMenuApi} />
       </div>
     </section>
 

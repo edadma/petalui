@@ -50,7 +50,7 @@ export { Container } from './components/Container'
 export type { ContainerProps } from './components/Container'
 
 export { ContextMenu } from './components/ContextMenu'
-export type { ContextMenuProps, ContextMenuItem } from './components/ContextMenu'
+export type { ContextMenuProps, ContextMenuItem, ContextMenuItemProps, ContextMenuDividerProps, ContextMenuSubMenuProps } from './components/ContextMenu'
 
 export { Countdown } from './components/Countdown'
 export type { CountdownProps } from './components/Countdown'

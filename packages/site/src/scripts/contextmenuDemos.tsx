@@ -1,8 +1,19 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import { ContextMenu } from 'asterui'
+import { ContextMenu, notification } from 'asterui'
 
-const BasicDemo = () => {
+const BasicDemo = () => (
+  <ContextMenu onSelect={(key) => notification.info({ message: `Selected: ${key}` })}>
+    <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
+      Right-click here
+    </div>
+    <ContextMenu.Item itemKey="copy">Copy</ContextMenu.Item>
+    <ContextMenu.Item itemKey="paste">Paste</ContextMenu.Item>
+    <ContextMenu.Item itemKey="cut">Cut</ContextMenu.Item>
+  </ContextMenu>
+)
+
+const DataDrivenDemo = () => {
   const items = [
     { key: 'copy', label: 'Copy' },
     { key: 'paste', label: 'Paste' },
@@ -10,7 +21,7 @@ const BasicDemo = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: `Selected: ${key}` })}>
       <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click here
       </div>
@@ -26,7 +37,7 @@ const IconsDemo = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: `Selected: ${key}` })}>
       <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click for options
       </div>
@@ -47,7 +58,7 @@ const DividersDemo = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: `Selected: ${key}` })}>
       <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click for menu with sections
       </div>
@@ -73,7 +84,7 @@ const SubmenuDemo = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: `Selected: ${key}` })}>
       <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click for nested menu
       </div>
@@ -90,7 +101,7 @@ const DisabledDemo = () => {
   ]
 
   return (
-    <ContextMenu items={items} onSelect={(key) => console.log(key)}>
+    <ContextMenu items={items} onSelect={(key) => notification.info({ message: `Selected: ${key}` })}>
       <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
         Right-click (some items disabled)
       </div>
@@ -100,6 +111,7 @@ const DisabledDemo = () => {
 
 const demos: Record<string, React.FC> = {
   basic: BasicDemo,
+  datadriven: DataDrivenDemo,
   icons: IconsDemo,
   dividers: DividersDemo,
   submenu: SubmenuDemo,
