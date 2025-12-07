@@ -4,17 +4,26 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const drawerApi = [
-  { property: 'open', description: 'Controlled open state', type: 'boolean' },
+  { property: 'children', description: 'Drawer content', type: 'React.ReactNode' },
+  { property: 'open', description: 'Controlled open state', type: 'boolean', default: 'false' },
   { property: 'onClose', description: 'Close handler', type: '() => void' },
   { property: 'title', description: 'Drawer title', type: 'React.ReactNode' },
-  { property: 'children', description: 'Drawer content', type: 'React.ReactNode' },
   { property: 'placement', description: 'Drawer position', type: "'left' | 'right' | 'top' | 'bottom'", default: "'right'" },
-  { property: 'width', description: 'Drawer width (for left/right)', type: 'string | number', default: '320' },
-  { property: 'height', description: 'Drawer height (for top/bottom)', type: 'string | number', default: '256' },
+  { property: 'size', description: 'Preset size', type: "'default' | 'large' | number", default: "'default'" },
+  { property: 'width', description: 'Custom width (overrides size for left/right)', type: 'string | number' },
+  { property: 'height', description: 'Custom height (overrides size for top/bottom)', type: 'string | number' },
+  { property: 'closable', description: 'Show close button', type: 'boolean', default: 'true' },
   { property: 'mask', description: 'Show overlay mask', type: 'boolean', default: 'true' },
   { property: 'maskClosable', description: 'Close on mask click', type: 'boolean', default: 'true' },
+  { property: 'keyboard', description: 'Close on ESC key', type: 'boolean', default: 'true' },
   { property: 'footer', description: 'Footer content', type: 'React.ReactNode' },
-  { property: 'className', description: 'Additional CSS classes', type: 'string' },
+  { property: 'extra', description: 'Extra content in header (right side)', type: 'React.ReactNode' },
+  { property: 'destroyOnClose', description: 'Destroy content when closed', type: 'boolean', default: 'false' },
+  { property: 'initialFocus', description: 'Initial focus placement', type: "'close' | 'content'", default: "'close'" },
+  { property: 'zIndex', description: 'z-index of drawer', type: 'number', default: '1000' },
+  { property: 'className', description: 'CSS class for drawer panel', type: 'string' },
+  { property: 'rootClassName', description: 'CSS class for drawer wrapper', type: 'string' },
+  { property: 'style', description: 'Style for drawer panel', type: 'React.CSSProperties' },
 ];
 
 const examples = [
@@ -165,8 +174,13 @@ export default App`,
       </nav>
       <h1 class="text-4xl font-bold mb-2">Drawer</h1>
       <p class="text-base-content/70 text-lg">
-        Slide-out panel for forms, details, or secondary content.
+        A panel that slides in from the edge of the screen. Use for forms, details, or task panels.
       </p>
+      <div class="mt-4 p-4 bg-info/10 border border-info/20 rounded-lg">
+        <p class="text-sm">
+          <strong>Note:</strong> For responsive sidebar navigation that toggles on mobile, use <a href="/components/sidebardrawer" class="link link-primary">SidebarDrawer</a> instead.
+        </p>
+      </div>
     </div>
 
     <!-- Import -->

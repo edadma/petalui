@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useId, useCallback } from 'react'
+import React, { useEffect, useRef, useId, useCallback, useState } from 'react'
 import { createPortal } from 'react-dom'
 
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left'
@@ -80,7 +80,13 @@ export function Drawer({
   const previousActiveElement = useRef<HTMLElement | null>(null)
   const titleId = useId()
   const contentId = useId()
-  const [shouldRender, setShouldRender] = React.useState(open)
+  const [mounted, setMounted] = useState(false)
+  const [shouldRender, setShouldRender] = useState(open)
+
+  // Handle SSR - only render portal after mounting in browser
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   // Calculate dimensions
   const getSizeValue = (): number => {
@@ -103,7 +109,7 @@ export function Drawer({
 
   // Focus trap
   const trapFocus = useCallback((e: KeyboardEvent) => {
-    if (!drawerRef.current || e.key !== 'Tab') return
+    if (!drawerRef.current || e.key !== 'Tab' || typeof document === 'undefined') return
 
     const focusableElements = drawerRef.current.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -130,13 +136,15 @@ export function Drawer({
 
   // Open/close effects
   useEffect(() => {
+    if (typeof document === 'undefined') return
+
     if (open) {
       setShouldRender(true)
       previousActiveElement.current = document.activeElement as HTMLElement
       document.body.style.overflow = 'hidden'
 
       // Set initial focus
-      setTimeout(() => {
+      const focusTimeout = setTimeout(() => {
         if (initialFocus === 'close' && closeButtonRef.current) {
           closeButtonRef.current.focus()
         } else if (contentRef.current) {
@@ -150,25 +158,25 @@ export function Drawer({
       // Add event listeners
       document.addEventListener('keydown', handleKeyDown)
       document.addEventListener('keydown', trapFocus)
-    } else {
-      document.body.style.overflow = ''
-      previousActiveElement.current?.focus()
 
-      // Remove event listeners
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('keydown', trapFocus)
+      return () => {
+        clearTimeout(focusTimeout)
+        document.body.style.overflow = ''
+        document.removeEventListener('keydown', handleKeyDown)
+        document.removeEventListener('keydown', trapFocus)
+      }
+    } else {
+      // Restore focus to previously focused element if it's still in the DOM
+      const prevElement = previousActiveElement.current
+      if (prevElement && document.body.contains(prevElement)) {
+        prevElement.focus()
+      }
 
       // Handle destroyOnClose
       if (destroyOnClose) {
         const timeout = setTimeout(() => setShouldRender(false), 300)
         return () => clearTimeout(timeout)
       }
-    }
-
-    return () => {
-      document.body.style.overflow = ''
-      document.removeEventListener('keydown', handleKeyDown)
-      document.removeEventListener('keydown', trapFocus)
     }
   }, [open, handleKeyDown, trapFocus, destroyOnClose, initialFocus])
 
@@ -201,7 +209,7 @@ export function Drawer({
 
   const drawerContent = (
     <div
-      className={`fixed inset-0 ${rootClassName}`}
+      className={`fixed inset-0 ${open ? '' : 'pointer-events-none'} ${rootClassName}`}
       style={{ zIndex }}
       role="presentation"
       data-state={open ? 'open' : 'closed'}
@@ -210,7 +218,7 @@ export function Drawer({
       {mask && (
         <div
           className={`absolute inset-0 bg-black transition-opacity duration-300 ${
-            open ? 'opacity-50' : 'opacity-0 pointer-events-none'
+            open ? 'opacity-50' : 'opacity-0'
           }`}
           onClick={handleMaskClick}
           aria-hidden="true"
@@ -289,7 +297,8 @@ export function Drawer({
     </div>
   )
 
-  if (!shouldRender && !open) return null
+  // Don't render during SSR or when not needed
+  if (!mounted || (!shouldRender && !open)) return null
 
   return createPortal(drawerContent, document.body)
 }

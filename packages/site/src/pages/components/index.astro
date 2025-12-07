@@ -13,7 +13,7 @@ const docPages = new Set([
   'hero', 'image', 'indicator', 'input', 'inputnumber', 'join', 'kbd', 'label', 'layout',
   'list', 'loading', 'mask', 'masonry', 'mention', 'menu', 'modal', 'navbar', 'notification',
   'otpinput', 'pagelayout', 'pagination', 'phone', 'popconfirm', 'popover', 'progress', 'qrcode', 'radialprogress',
-  'radio', 'range', 'rating', 'responsive', 'result', 'segmented', 'select', 'skeleton', 'space',
+  'radio', 'range', 'rating', 'responsive', 'result', 'segmented', 'select', 'sidebardrawer', 'skeleton', 'space',
   'splitter', 'stat', 'status', 'steps', 'table', 'tabs', 'tag', 'textarea', 'textrotate',
   'themecontroller', 'timeline', 'timepicker', 'toggle', 'tooltip', 'tour', 'transfer', 'tree',
   'treeselect', 'typography', 'upload', 'window'
@@ -55,6 +55,7 @@ const componentCategories = [
       { name: 'Layout', slug: 'layout', description: 'Page layout with Header, Sider, Content, and Footer sections', props: ['hasSider', 'className'] },
       { name: 'Masonry', slug: 'masonry', description: 'Pinterest-style masonry grid layout', props: ['columns', 'gap'] },
       { name: 'PageLayout', slug: 'pagelayout', description: 'Simple page wrapper with background and padding', props: ['background', 'padding', 'minHeight', 'children'] },
+      { name: 'SidebarDrawer', slug: 'sidebardrawer', description: 'Responsive sidebar layout using DaisyUI drawer', props: ['children', 'sidebar', 'open', 'onOpenChange', 'end', 'sidebarClassName'] },
       { name: 'Space', slug: 'space', description: 'Inline element spacing wrapper', props: ['size', 'direction', 'wrap', 'align'] },
       { name: 'Splitter', slug: 'splitter', description: 'Resizable split panes layout', props: ['direction', 'sizes', 'minSizes', 'onResize'] },
     ]
