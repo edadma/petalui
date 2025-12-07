@@ -6,23 +6,30 @@ import { Code } from 'astro:components';
 const inputNumberApi = [
   {
     property: 'value',
-    description: 'Current number value',
+    description: 'Current number value (controlled)',
+    type: 'number',
+  },
+  {
+    property: 'defaultValue',
+    description: 'Initial value (uncontrolled)',
     type: 'number',
   },
   {
     property: 'onChange',
     description: 'Callback when value changes',
-    type: '(value: number) => void',
+    type: '(value: number | null) => void',
   },
   {
     property: 'min',
     description: 'Minimum value',
     type: 'number',
+    default: '-Infinity',
   },
   {
     property: 'max',
     description: 'Maximum value',
     type: 'number',
+    default: 'Infinity',
   },
   {
     property: 'step',
@@ -34,6 +41,16 @@ const inputNumberApi = [
     property: 'precision',
     description: 'Decimal precision for display',
     type: 'number',
+  },
+  {
+    property: 'formatter',
+    description: 'Format display value',
+    type: '(value: number | undefined) => string',
+  },
+  {
+    property: 'parser',
+    description: 'Parse display value to number',
+    type: '(displayValue: string) => number',
   },
   {
     property: 'controls',
@@ -50,8 +67,13 @@ const inputNumberApi = [
   {
     property: 'size',
     description: 'Input size',
-    type: "'xs' | 'sm' | 'md' | 'lg'",
-    default: "'md'",
+    type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+  },
+  {
+    property: 'block',
+    description: 'Full width input',
+    type: 'boolean',
+    default: 'true',
   },
   {
     property: 'className',
@@ -296,9 +318,9 @@ export default App`,
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
       <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Uses native <code class="bg-base-200 px-1 rounded">&lt;input type="number"&gt;</code> for proper keyboard support</li>
-        <li>Increment/decrement buttons are keyboard accessible with appropriate ARIA labels</li>
-        <li>Min/max constraints are properly communicated to assistive technologies</li>
+        <li>Uses <code class="bg-base-200 px-1 rounded">role="spinbutton"</code> with <code class="bg-base-200 px-1 rounded">inputMode="decimal"</code> for proper semantics</li>
+        <li>Exposes <code class="bg-base-200 px-1 rounded">aria-valuemin</code>, <code class="bg-base-200 px-1 rounded">aria-valuemax</code>, and <code class="bg-base-200 px-1 rounded">aria-valuenow</code> for screen readers</li>
+        <li>Increment/decrement buttons have <code class="bg-base-200 px-1 rounded">aria-label</code> for screen reader users</li>
         <li>Disabled state is properly announced to screen readers</li>
         <li>Focus states are clearly visible for keyboard navigation</li>
         <li>Arrow keys can be used to increment/decrement values</li>

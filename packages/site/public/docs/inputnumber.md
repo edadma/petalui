@@ -187,13 +187,17 @@ export default App
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `value` | Current number value | `number` | `-` |
-| `onChange` | Callback when value changes | `(value: number) => void` | `-` |
-| `min` | Minimum value | `number` | `-` |
-| `max` | Maximum value | `number` | `-` |
+| `value` | Current number value (controlled) | `number` | `-` |
+| `defaultValue` | Initial value (uncontrolled) | `number` | `-` |
+| `onChange` | Callback when value changes | `(value: number \| null) => void` | `-` |
+| `min` | Minimum value | `number` | `-Infinity` |
+| `max` | Maximum value | `number` | `Infinity` |
 | `step` | Value increment/decrement step | `number` | `1` |
 | `precision` | Decimal precision for display | `number` | `-` |
+| `formatter` | Format display value | `(value: number \| undefined) => string` | `-` |
+| `parser` | Parse display value to number | `(displayValue: string) => number` | `-` |
 | `controls` | Show increment/decrement buttons | `boolean` | `true` |
 | `disabled` | Disabled state | `boolean` | `false` |
-| `size` | Input size | `xs' \| 'sm' \| 'md' \| 'lg` | `md` |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
+| `block` | Full width input | `boolean` | `true` |
 | `className` | Additional CSS classes | `string` | `-` |

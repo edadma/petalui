@@ -151,6 +151,11 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
         <input
           ref={inputRef}
           type="text"
+          inputMode="decimal"
+          role="spinbutton"
+          aria-valuemin={min !== -Infinity ? min : undefined}
+          aria-valuemax={max !== Infinity ? max : undefined}
+          aria-valuenow={value ?? undefined}
           className={inputClasses}
           value={formatValue(value)}
           onChange={handleInputChange}
@@ -163,6 +168,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
           <div className="absolute right-1 top-1/2 -translate-y-1/2 flex flex-col gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
               type="button"
+              aria-label="Increase value"
               className={`btn ${buttonSize} btn-ghost px-1 min-h-0 h-3.5`}
               onClick={handleIncrement}
               disabled={disabled || (value !== null && value >= max)}
@@ -173,6 +179,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -184,6 +191,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             </button>
             <button
               type="button"
+              aria-label="Decrease value"
               className={`btn ${buttonSize} btn-ghost px-1 min-h-0 h-3.5`}
               onClick={handleDecrement}
               disabled={disabled || (value !== null && value <= min)}
@@ -194,6 +202,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
