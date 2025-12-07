@@ -111,7 +111,7 @@ export default App
 
 ### Sizes
 
-Four sizes: xs, sm, md (default), and lg.
+Five sizes: xs, sm, md, lg, and xl.
 
 ```tsx
 import React, { useState } from 'react'
@@ -122,6 +122,7 @@ const App: React.FC = () => {
   const [value2, setValue2] = useState(0)
   const [value3, setValue3] = useState(0)
   const [value4, setValue4] = useState(0)
+  const [value5, setValue5] = useState(0)
 
   return (
     <Space direction="vertical" size="sm">
@@ -129,6 +130,7 @@ const App: React.FC = () => {
       <InputNumber size="sm" value={value2} onChange={setValue2} />
       <InputNumber size="md" value={value3} onChange={setValue3} />
       <InputNumber size="lg" value={value4} onChange={setValue4} />
+      <InputNumber size="xl" value={value5} onChange={setValue5} />
     </Space>
   )
 }
@@ -199,5 +201,5 @@ export default App
 | `controls` | Show increment/decrement buttons | `boolean` | `true` |
 | `disabled` | Disabled state | `boolean` | `false` |
 | `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
-| `block` | Full width input | `boolean` | `true` |
+| `block` | Full width input | `boolean` | `false` |
 | `className` | Additional CSS classes | `string` | `-` |

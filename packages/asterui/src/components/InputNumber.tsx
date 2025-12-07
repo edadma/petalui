@@ -33,7 +33,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       parser,
       className = '',
       controls = true,
-      block = true,
+      block = false,
       ...props
     },
     ref

@@ -70,6 +70,7 @@ const SizesDemo: React.FC = () => {
   const [value2, setValue2] = useState(0);
   const [value3, setValue3] = useState(0);
   const [value4, setValue4] = useState(0);
+  const [value5, setValue5] = useState(0);
 
   return (
     <Space direction="vertical" size="sm">
@@ -77,6 +78,7 @@ const SizesDemo: React.FC = () => {
       <InputNumber size="sm" value={value2} onChange={setValue2} />
       <InputNumber size="md" value={value3} onChange={setValue3} />
       <InputNumber size="lg" value={value4} onChange={setValue4} />
+      <InputNumber size="xl" value={value5} onChange={setValue5} />
     </Space>
   );
 };
