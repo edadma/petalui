@@ -27,6 +27,10 @@ export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDialogElement>
   centered?: boolean
   /** Callback when modal is closed */
   onClose?: () => void
+  /** Where to place initial focus: 'ok', 'cancel', or 'close' button */
+  initialFocus?: 'ok' | 'cancel' | 'close'
+  /** Use alertdialog role for urgent messages */
+  alertDialog?: boolean
 }
 
 export interface ModalFuncProps {
@@ -55,10 +59,15 @@ export function Modal({
   width,
   centered,
   onClose,
+  initialFocus,
+  alertDialog = false,
   className = '',
   ...rest
 }: ModalProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const okButtonRef = useRef<HTMLButtonElement>(null)
+  const cancelButtonRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
   const previousActiveElement = useRef<HTMLElement | null>(null)
   const [loading, setLoading] = React.useState(false)
   const titleId = useId()
@@ -76,6 +85,23 @@ export function Modal({
         // Save currently focused element for restoration
         previousActiveElement.current = document.activeElement as HTMLElement
         dialog.showModal()
+
+        // Handle custom initial focus placement
+        if (initialFocus) {
+          setTimeout(() => {
+            switch (initialFocus) {
+              case 'ok':
+                okButtonRef.current?.focus()
+                break
+              case 'cancel':
+                cancelButtonRef.current?.focus()
+                break
+              case 'close':
+                closeButtonRef.current?.focus()
+                break
+            }
+          }, 0)
+        }
       }
     } else {
       if (dialog.open) {
@@ -84,7 +110,7 @@ export function Modal({
         previousActiveElement.current?.focus()
       }
     }
-  }, [open])
+  }, [open, initialFocus])
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -212,6 +238,8 @@ export function Modal({
   return (
     <dialog
       ref={dialogRef}
+      role={alertDialog ? 'alertdialog' : 'dialog'}
+      aria-modal="true"
       className={classes}
       data-state={open ? 'open' : 'closed'}
       aria-labelledby={title ? titleId : undefined}
@@ -230,15 +258,17 @@ export function Modal({
         {shouldRenderDefaultFooter && (
           <div className="modal-action">
             {onCancel && (
-              <button className="btn" onClick={onCancel}>
+              <button ref={cancelButtonRef} className="btn" onClick={onCancel}>
                 {cancelText}
               </button>
             )}
             {onOk && (
               <button
+                ref={okButtonRef}
                 className={`btn btn-primary ${loading ? 'loading' : ''}`}
                 onClick={handleOk}
                 disabled={loading}
+                aria-busy={loading || undefined}
               >
                 {okText}
               </button>
@@ -249,7 +279,9 @@ export function Modal({
       </div>
       {closable && maskClosable && (
         <form method="dialog" className="modal-backdrop">
-          <button onClick={handleBackdropClick}>close</button>
+          <button ref={closeButtonRef} onClick={handleBackdropClick}>
+            <span className="sr-only">Close modal</span>
+          </button>
         </form>
       )}
     </dialog>
@@ -319,6 +351,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
               className="stroke-current shrink-0 h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -335,6 +368,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
               className="stroke-current shrink-0 h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -351,6 +385,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
               className="stroke-current shrink-0 h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -368,6 +403,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
               fill="none"
               viewBox="0 0 24 24"
               className="stroke-current shrink-0 w-6 h-6"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -380,11 +416,15 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
       }
     }
 
+    // Use alertdialog role for warning/error types
+    const isAlert = config.type === 'warning' || config.type === 'error'
+
     return (
       <Modal
         open={open}
         onOk={config.showCancel ? undefined : handleOk}
         onCancel={handleCancel}
+        alertDialog={isAlert}
         title={
           config.type ? (
             <div className={`alert ${getAlertClass()}`}>
