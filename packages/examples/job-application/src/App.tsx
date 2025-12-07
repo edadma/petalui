@@ -195,7 +195,7 @@ function App() {
                           <div className="flex justify-between items-center">
                             <h3 className="font-semibold">Education {index + 1}</h3>
                             {fields.length > 1 && (
-                              <Button size="sm" onClick={() => remove(index)} type="error">
+                              <Button size="sm" onClick={() => remove(index)} color="error">
                                 Remove
                               </Button>
                             )}
@@ -320,7 +320,7 @@ function App() {
                         <Space key={field.id} className="border border-base-300 rounded-lg p-4">
                           <div className="flex justify-between items-center">
                             <h3 className="font-semibold">Reference {index + 1}</h3>
-                            <Button size="sm" onClick={() => remove(index)} type="error">
+                            <Button size="sm" onClick={() => remove(index)} color="error">
                               Remove
                             </Button>
                           </div>
@@ -436,7 +436,7 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
       <div className="flex justify-between items-center">
         <h3 className="font-semibold">Work Experience {index + 1}</h3>
         {canRemove && (
-          <Button size="sm" onClick={() => remove(index)} type="error">
+          <Button size="sm" onClick={() => remove(index)} color="error">
             Remove
           </Button>
         )}
