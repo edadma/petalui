@@ -233,7 +233,7 @@ export { Table } from './components/Table'
 export type { TableProps, ColumnType, PaginationConfig, FilterConfig, RowSelection } from './components/Table'
 
 export { Tabs } from './components/Tabs'
-export type { TabsProps, TabPanelProps } from './components/Tabs'
+export type { TabsProps, TabPanelProps, TabItem, TabsVariant, TabsSize, TabsPosition } from './components/Tabs'
 
 export { Textarea } from './components/Textarea'
 export type { TextareaProps } from './components/Textarea'

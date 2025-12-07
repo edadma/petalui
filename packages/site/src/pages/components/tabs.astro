@@ -4,19 +4,30 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const tabsApi = [
-  { property: 'children', description: 'Tabs.Panel components', type: 'React.ReactNode', default: '-' },
+  { property: 'children', description: 'Tab panels (compound pattern)', type: 'React.ReactNode', default: '-' },
+  { property: 'items', description: 'Tab items (data-driven pattern)', type: 'TabItem[]', default: '-' },
   { property: 'activeKey', description: 'Current active tab key (controlled)', type: 'string', default: '-' },
   { property: 'defaultActiveKey', description: 'Default active tab key (uncontrolled)', type: 'string', default: '-' },
   { property: 'onChange', description: 'Callback when tab changes', type: '(key: string) => void', default: '-' },
   { property: 'variant', description: 'Visual style variant', type: "'box' | 'border' | 'lift'", default: '-' },
-  { property: 'size', description: 'Tab size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'" },
+  { property: 'size', description: 'Tab size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: '-' },
+  { property: 'position', description: 'Tab position relative to content', type: "'top' | 'bottom'", default: "'top'" },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
+];
+
+const tabItemApi = [
+  { property: 'key', description: 'Unique identifier', type: 'string', default: '-' },
+  { property: 'label', description: 'Tab button label', type: 'React.ReactNode', default: '-' },
+  { property: 'children', description: 'Tab panel content', type: 'React.ReactNode', default: '-' },
+  { property: 'disabled', description: 'Disable the tab', type: 'boolean', default: 'false' },
+  { property: 'icon', description: 'Tab icon', type: 'React.ReactNode', default: '-' },
 ];
 
 const tabPanelApi = [
   { property: 'tab', description: 'Tab button label', type: 'React.ReactNode', default: '-' },
   { property: 'tabKey', description: 'Unique identifier for the tab', type: 'string', default: '-' },
-  { property: 'disabled', description: 'Disable the tab', type: 'boolean', default: '-' },
+  { property: 'disabled', description: 'Disable the tab', type: 'boolean', default: 'false' },
+  { property: 'icon', description: 'Tab icon', type: 'React.ReactNode', default: '-' },
   { property: 'children', description: 'Tab panel content', type: 'React.ReactNode', default: '-' },
 ];
 
@@ -26,18 +37,18 @@ const examples = [
     title: 'Basic Usage',
     description: 'Simple tabs with content switching handled automatically.',
     code: `import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs>
     <Tabs.Panel tab="Tab 1" tabKey="1">
-      Content of Tab 1
+      <Typography.Text>Content of Tab 1</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Tab 2" tabKey="2">
-      Content of Tab 2
+      <Typography.Text>Content of Tab 2</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Tab 3" tabKey="3">
-      Content of Tab 3
+      <Typography.Text>Content of Tab 3</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -47,33 +58,33 @@ export default App`,
   {
     id: 'settings',
     title: 'Settings Page',
-    description: 'Complete settings page with forms.',
+    description: 'Complete settings page with forms using Space and Label components.',
     code: `import React from 'react'
-import { Tabs, Input, Button } from 'asterui'
+import { Tabs, Input, Button, Label, Space } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs defaultActiveKey="account" variant="border">
     <Tabs.Panel tab="Account" tabKey="account">
-      <div className="space-y-4">
-        <div>
-          <label className="label">
-            <span className="label-text">Username</span>
-          </label>
+      <Space direction="vertical" size="md">
+        <Label.Floating label="Username">
           <Input placeholder="john_doe" />
-        </div>
-        <Button type="primary">Save</Button>
-      </div>
+        </Label.Floating>
+        <Label.Floating label="Email">
+          <Input type="email" placeholder="john@example.com" />
+        </Label.Floating>
+        <Button color="primary">Save</Button>
+      </Space>
     </Tabs.Panel>
     <Tabs.Panel tab="Security" tabKey="security">
-      <div className="space-y-4">
-        <div>
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
+      <Space direction="vertical" size="md">
+        <Label.Floating label="Current Password">
           <Input type="password" />
-        </div>
-        <Button type="primary">Update</Button>
-      </div>
+        </Label.Floating>
+        <Label.Floating label="New Password">
+          <Input type="password" />
+        </Label.Floating>
+        <Button color="primary">Update</Button>
+      </Space>
     </Tabs.Panel>
   </Tabs>
 )
@@ -85,18 +96,18 @@ export default App`,
     title: 'Boxed Variant',
     description: 'Tabs with enclosed box styling.',
     code: `import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs variant="box">
     <Tabs.Panel tab="Home" tabKey="home">
-      Home content
+      <Typography.Text>Home content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Profile" tabKey="profile">
-      Profile content
+      <Typography.Text>Profile content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Settings" tabKey="settings">
-      Settings content
+      <Typography.Text>Settings content</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -108,18 +119,18 @@ export default App`,
     title: 'Lifted Variant',
     description: 'Tabs with 3D lifted appearance.',
     code: `import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs variant="lift">
     <Tabs.Panel tab="Overview" tabKey="1">
-      Overview content
+      <Typography.Text>Overview content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Reports" tabKey="2">
-      Reports content
+      <Typography.Text>Reports content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Analytics" tabKey="3">
-      Analytics content
+      <Typography.Text>Analytics content</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -129,29 +140,27 @@ export default App`,
   {
     id: 'sizes',
     title: 'Different Sizes',
-    description: 'Tabs in various sizes.',
+    description: 'Tabs in various sizes using Space and Typography components.',
     code: `import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Space, Typography } from 'asterui'
 
 const App: React.FC = () => (
-  <div className="space-y-4">
-    <Tabs size="sm">
-      <Tabs.Panel tab="Small" tabKey="1">
-        Small tabs
-      </Tabs.Panel>
-      <Tabs.Panel tab="Tab 2" tabKey="2">
-        Content 2
-      </Tabs.Panel>
-    </Tabs>
-    <Tabs size="lg">
-      <Tabs.Panel tab="Large" tabKey="1">
-        Large tabs
-      </Tabs.Panel>
-      <Tabs.Panel tab="Tab 2" tabKey="2">
-        Content 2
-      </Tabs.Panel>
-    </Tabs>
-  </div>
+  <Space direction="vertical" size="md">
+    <div>
+      <Typography.Text strong>Small</Typography.Text>
+      <Tabs size="sm">
+        <Tabs.Panel tab="Tab 1" tabKey="1"><Typography.Text>Small tabs content</Typography.Text></Tabs.Panel>
+        <Tabs.Panel tab="Tab 2" tabKey="2"><Typography.Text>Content 2</Typography.Text></Tabs.Panel>
+      </Tabs>
+    </div>
+    <div>
+      <Typography.Text strong>Large</Typography.Text>
+      <Tabs size="lg">
+        <Tabs.Panel tab="Tab 1" tabKey="1"><Typography.Text>Large tabs content</Typography.Text></Tabs.Panel>
+        <Tabs.Panel tab="Tab 2" tabKey="2"><Typography.Text>Content 2</Typography.Text></Tabs.Panel>
+      </Tabs>
+    </div>
+  </Space>
 )
 
 export default App`,
@@ -161,18 +170,73 @@ export default App`,
     title: 'Disabled Tab',
     description: 'Disable specific tabs.',
     code: `import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs>
     <Tabs.Panel tab="Active" tabKey="1">
-      Active content
+      <Typography.Text>Active content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Disabled" tabKey="2" disabled>
-      Cannot see this
+      <Typography.Text>Cannot see this</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Also Active" tabKey="3">
-      Active content
+      <Typography.Text>Active content</Typography.Text>
+    </Tabs.Panel>
+  </Tabs>
+)
+
+export default App`,
+  },
+  {
+    id: 'datadriven',
+    title: 'Data-Driven Pattern',
+    description: 'Use items prop for data-driven tabs with icons.',
+    code: `import React, { useState } from 'react'
+import { Tabs, Typography, notification } from 'asterui'
+import { HomeIcon, UserIcon, CogIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => {
+  const [activeKey, setActiveKey] = useState('home')
+
+  const items = [
+    { key: 'home', label: 'Home', icon: <HomeIcon className="w-4 h-4" />, children: <Typography.Text>Home content</Typography.Text> },
+    { key: 'profile', label: 'Profile', icon: <UserIcon className="w-4 h-4" />, children: <Typography.Text>Profile content</Typography.Text> },
+    { key: 'settings', label: 'Settings', icon: <CogIcon className="w-4 h-4" />, children: <Typography.Text>Settings content</Typography.Text> },
+  ]
+
+  return (
+    <Tabs
+      items={items}
+      activeKey={activeKey}
+      onChange={(key) => {
+        setActiveKey(key)
+        notification.info({ message: \`Switched to \${key}\` })
+      }}
+      variant="border"
+    />
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'position',
+    title: 'Bottom Position',
+    description: 'Tabs positioned below the content.',
+    code: `import React from 'react'
+import { Tabs, Typography } from 'asterui'
+
+const App: React.FC = () => (
+  <Tabs position="bottom" variant="border">
+    <Tabs.Panel tab="Tab 1" tabKey="1">
+      <Typography.Text>Content appears above the tabs</Typography.Text>
+    </Tabs.Panel>
+    <Tabs.Panel tab="Tab 2" tabKey="2">
+      <Typography.Text>Second tab content</Typography.Text>
+    </Tabs.Panel>
+    <Tabs.Panel tab="Tab 3" tabKey="3">
+      <Typography.Text>Third tab content</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -235,18 +299,25 @@ export default App`,
       <h2 class="text-2xl font-bold mb-6">API</h2>
       <ApiTable title="Tabs" data={tabsApi} />
       <div class="mt-8">
-        <ApiTable title="Tabs.Panel" data={tabPanelApi} />
+        <ApiTable title="TabItem (for items prop)" data={tabItemApi} />
+      </div>
+      <div class="mt-8">
+        <ApiTable title="Tabs.Panel (compound pattern)" data={tabPanelApi} />
       </div>
     </section>
 
     <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Uses ARIA tablist, tab, and tabpanel roles</li>
-        <li>Arrow key navigation between tabs</li>
-        <li>Disabled tabs are properly announced</li>
-        <li>Focus management follows WAI-ARIA patterns</li>
-      </ul>
+      <div class="alert alert-info">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <div>
+          <strong>Usage Tips:</strong>
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li>Use <code>activeKey</code> for controlled tabs, <code>defaultActiveKey</code> for uncontrolled</li>
+            <li>Use <code>items</code> prop for data-driven tabs, <code>Tabs.Panel</code> for compound pattern</li>
+            <li>Use <code>position="bottom"</code> to place tabs below content</li>
+          </ul>
+        </div>
+      </div>
     </section>
   </div>
 </Layout>

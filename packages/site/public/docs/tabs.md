@@ -10,18 +10,18 @@ Organize content into separate views where only one view is visible at a time.
 
 ```tsx
 import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs>
     <Tabs.Panel tab="Tab 1" tabKey="1">
-      Content of Tab 1
+      <Typography.Text>Content of Tab 1</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Tab 2" tabKey="2">
-      Content of Tab 2
+      <Typography.Text>Content of Tab 2</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Tab 3" tabKey="3">
-      Content of Tab 3
+      <Typography.Text>Content of Tab 3</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -29,35 +29,35 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Settings
+### Settings Page
 
 ```tsx
 import React from 'react'
-import { Tabs, Input, Button } from 'asterui'
+import { Tabs, Input, Button, Label, Space } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs defaultActiveKey="account" variant="border">
     <Tabs.Panel tab="Account" tabKey="account">
-      <div className="space-y-4">
-        <div>
-          <label className="label">
-            <span className="label-text">Username</span>
-          </label>
+      <Space direction="vertical" size="md">
+        <Label.Floating label="Username">
           <Input placeholder="john_doe" />
-        </div>
-        <Button type="primary">Save</Button>
-      </div>
+        </Label.Floating>
+        <Label.Floating label="Email">
+          <Input type="email" placeholder="john@example.com" />
+        </Label.Floating>
+        <Button color="primary">Save</Button>
+      </Space>
     </Tabs.Panel>
     <Tabs.Panel tab="Security" tabKey="security">
-      <div className="space-y-4">
-        <div>
-          <label className="label">
-            <span className="label-text">Password</span>
-          </label>
+      <Space direction="vertical" size="md">
+        <Label.Floating label="Current Password">
           <Input type="password" />
-        </div>
-        <Button type="primary">Update</Button>
-      </div>
+        </Label.Floating>
+        <Label.Floating label="New Password">
+          <Input type="password" />
+        </Label.Floating>
+        <Button color="primary">Update</Button>
+      </Space>
     </Tabs.Panel>
   </Tabs>
 )
@@ -65,22 +65,22 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Box
+### Boxed Variant
 
 ```tsx
 import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs variant="box">
     <Tabs.Panel tab="Home" tabKey="home">
-      Home content
+      <Typography.Text>Home content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Profile" tabKey="profile">
-      Profile content
+      <Typography.Text>Profile content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Settings" tabKey="settings">
-      Settings content
+      <Typography.Text>Settings content</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -88,22 +88,22 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Lift
+### Lifted Variant
 
 ```tsx
 import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs variant="lift">
     <Tabs.Panel tab="Overview" tabKey="1">
-      Overview content
+      <Typography.Text>Overview content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Reports" tabKey="2">
-      Reports content
+      <Typography.Text>Reports content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Analytics" tabKey="3">
-      Analytics content
+      <Typography.Text>Analytics content</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -111,52 +111,105 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Sizes
+### Different Sizes
 
 ```tsx
 import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Space, Typography } from 'asterui'
 
 const App: React.FC = () => (
-  <div className="space-y-4">
-    <Tabs size="sm">
-      <Tabs.Panel tab="Small" tabKey="1">
-        Small tabs
-      </Tabs.Panel>
-      <Tabs.Panel tab="Tab 2" tabKey="2">
-        Content 2
-      </Tabs.Panel>
-    </Tabs>
-    <Tabs size="lg">
-      <Tabs.Panel tab="Large" tabKey="1">
-        Large tabs
-      </Tabs.Panel>
-      <Tabs.Panel tab="Tab 2" tabKey="2">
-        Content 2
-      </Tabs.Panel>
-    </Tabs>
-  </div>
+  <Space direction="vertical" size="md">
+    <div>
+      <Typography.Text strong>Small</Typography.Text>
+      <Tabs size="sm">
+        <Tabs.Panel tab="Tab 1" tabKey="1"><Typography.Text>Small tabs content</Typography.Text></Tabs.Panel>
+        <Tabs.Panel tab="Tab 2" tabKey="2"><Typography.Text>Content 2</Typography.Text></Tabs.Panel>
+      </Tabs>
+    </div>
+    <div>
+      <Typography.Text strong>Large</Typography.Text>
+      <Tabs size="lg">
+        <Tabs.Panel tab="Tab 1" tabKey="1"><Typography.Text>Large tabs content</Typography.Text></Tabs.Panel>
+        <Tabs.Panel tab="Tab 2" tabKey="2"><Typography.Text>Content 2</Typography.Text></Tabs.Panel>
+      </Tabs>
+    </div>
+  </Space>
 )
 
 export default App
 ```
 
-### Disabled
+### Disabled Tab
 
 ```tsx
 import React from 'react'
-import { Tabs } from 'asterui'
+import { Tabs, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs>
     <Tabs.Panel tab="Active" tabKey="1">
-      Active content
+      <Typography.Text>Active content</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Disabled" tabKey="2" disabled>
-      Cannot see this
+      <Typography.Text>Cannot see this</Typography.Text>
     </Tabs.Panel>
     <Tabs.Panel tab="Also Active" tabKey="3">
-      Active content
+      <Typography.Text>Active content</Typography.Text>
+    </Tabs.Panel>
+  </Tabs>
+)
+
+export default App
+```
+
+### Data-Driven Pattern
+
+```tsx
+import React, { useState } from 'react'
+import { Tabs, Typography, notification } from 'asterui'
+import { HomeIcon, UserIcon, CogIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => {
+  const [activeKey, setActiveKey] = useState('home')
+
+  const items = [
+    { key: 'home', label: 'Home', icon: <HomeIcon className="w-4 h-4" />, children: <Typography.Text>Home content</Typography.Text> },
+    { key: 'profile', label: 'Profile', icon: <UserIcon className="w-4 h-4" />, children: <Typography.Text>Profile content</Typography.Text> },
+    { key: 'settings', label: 'Settings', icon: <CogIcon className="w-4 h-4" />, children: <Typography.Text>Settings content</Typography.Text> },
+  ]
+
+  return (
+    <Tabs
+      items={items}
+      activeKey={activeKey}
+      onChange={(key) => {
+        setActiveKey(key)
+        notification.info({ message: `Switched to ${key}` })
+      }}
+      variant="border"
+    />
+  )
+}
+
+export default App
+```
+
+### Bottom Position
+
+```tsx
+import React from 'react'
+import { Tabs, Typography } from 'asterui'
+
+const App: React.FC = () => (
+  <Tabs position="bottom" variant="border">
+    <Tabs.Panel tab="Tab 1" tabKey="1">
+      <Typography.Text>Content appears above the tabs</Typography.Text>
+    </Tabs.Panel>
+    <Tabs.Panel tab="Tab 2" tabKey="2">
+      <Typography.Text>Second tab content</Typography.Text>
+    </Tabs.Panel>
+    <Tabs.Panel tab="Tab 3" tabKey="3">
+      <Typography.Text>Third tab content</Typography.Text>
     </Tabs.Panel>
   </Tabs>
 )
@@ -170,19 +223,32 @@ export default App
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `children` | Tabs.Panel components | `React.ReactNode` | `-` |
+| `children` | Tab panels (compound pattern) | `React.ReactNode` | `-` |
+| `items` | Tab items (data-driven pattern) | `TabItem[]` | `-` |
 | `activeKey` | Current active tab key (controlled) | `string` | `-` |
 | `defaultActiveKey` | Default active tab key (uncontrolled) | `string` | `-` |
 | `onChange` | Callback when tab changes | `(key: string) => void` | `-` |
-| `variant` | Visual style variant | `box' \| 'border' \| 'lift` | `-` |
-| `size` | Tab size | `xs' \| 'sm' \| 'md' \| 'lg' \| 'xl` | `md` |
+| `variant` | Visual style variant | `'box' \| 'border' \| 'lift'` | `-` |
+| `size` | Tab size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
+| `position` | Tab position relative to content | `'top' \| 'bottom'` | `'top'` |
 | `className` | Additional CSS classes | `string` | `-` |
 
-### Tab Panel
+### TabItem (for items prop)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | `-` |
+| `label` | Tab button label | `React.ReactNode` | `-` |
+| `children` | Tab panel content | `React.ReactNode` | `-` |
+| `disabled` | Disable the tab | `boolean` | `false` |
+| `icon` | Tab icon | `React.ReactNode` | `-` |
+
+### Tabs.Panel (compound pattern)
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `tab` | Tab button label | `React.ReactNode` | `-` |
 | `tabKey` | Unique identifier for the tab | `string` | `-` |
-| `disabled` | Disable the tab | `boolean` | `-` |
+| `disabled` | Disable the tab | `boolean` | `false` |
+| `icon` | Tab icon | `React.ReactNode` | `-` |
 | `children` | Tab panel content | `React.ReactNode` | `-` |
