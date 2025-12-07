@@ -1,5 +1,7 @@
 # Navbar
 
+Navigation bar component with flexible layout for headers and app bars.
+
 **Import:** `import { Navbar } from 'asterui'`
 
 ## Examples
@@ -10,17 +12,17 @@ Simple navbar with title and navigation buttons.
 
 ```tsx
 import React from 'react'
-import { Navbar, Button } from 'asterui'
+import { Navbar, Button, Typography, Flex } from 'asterui'
 
 const App: React.FC = () => (
   <Navbar
-    start={<a className="text-xl font-bold">AsterUI</a>}
+    start={<Typography.Text strong className="text-xl">AsterUI</Typography.Text>}
     end={
-      <>
+      <Flex gap="sm">
         <Button type="ghost">Home</Button>
         <Button type="ghost">About</Button>
         <Button type="primary">Sign In</Button>
-      </>
+      </Flex>
     }
   />
 )
@@ -34,14 +36,14 @@ Navbar with a dropdown menu for additional options.
 
 ```tsx
 import React from 'react'
-import { Navbar, Button, Dropdown } from 'asterui'
+import { Navbar, Button, Dropdown, Typography, Flex } from 'asterui'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 
 const App: React.FC = () => (
   <Navbar
-    start={<a className="text-xl font-bold">AsterUI</a>}
+    start={<Typography.Text strong className="text-xl">AsterUI</Typography.Text>}
     end={
-      <>
+      <Flex gap="sm">
         <Button type="ghost">Home</Button>
         <Dropdown>
           <Dropdown.Trigger>
@@ -58,7 +60,7 @@ const App: React.FC = () => (
         </Dropdown>
         <Button type="ghost">About</Button>
         <Button type="primary">Sign In</Button>
-      </>
+      </Flex>
     }
   />
 )
@@ -66,64 +68,110 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Centered Content
+### With Menu Icon
 
-Navbar with content in all three sections for balanced layout.
-
-```tsx
-import React from 'react'
-import { Navbar, Button } from 'asterui'
-
-const App: React.FC = () => (
-  <Navbar
-    start={<Button type="ghost" shape="circle">☰</Button>}
-    center={<a className="text-xl font-bold">AsterUI</a>}
-    end={<Button type="ghost" shape="circle">⚙</Button>}
-  />
-)
-
-export default App
-```
-
-### Responsive with Mobile Menu
-
-Navbar that adapts to mobile with a menu icon and dropdown.
+Navbar with a hamburger menu dropdown.
 
 ```tsx
 import React from 'react'
-import { Navbar, Button, Dropdown } from 'asterui'
-import { Bars3Icon } from '@heroicons/react/24/outline'
+import { Navbar, Button, Dropdown, Typography } from 'asterui'
 
 const App: React.FC = () => (
   <Navbar
     start={
-      <>
-        <Dropdown>
-          <Dropdown.Trigger>
-            <Button type="ghost" shape="circle" className="lg:hidden">
-              <Bars3Icon className="w-6 h-6" />
-            </Button>
-          </Dropdown.Trigger>
-          <Dropdown.Menu>
-            <Dropdown.Item>Home</Dropdown.Item>
-            <Dropdown.Item>Products</Dropdown.Item>
-            <Dropdown.Item>About</Dropdown.Item>
-            <Dropdown.Item>Contact</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-        <a className="text-xl font-bold ml-2">AsterUI</a>
-      </>
+      <Dropdown>
+        <Dropdown.Trigger>
+          <Button type="ghost" shape="circle">☰</Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>Home</Dropdown.Item>
+          <Dropdown.Item>Products</Dropdown.Item>
+          <Dropdown.Item>About</Dropdown.Item>
+          <Dropdown.Item>Contact</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
     }
+    center={<Typography.Text strong className="text-xl">AsterUI</Typography.Text>}
+    end={<Button type="primary">Sign In</Button>}
+  />
+)
+
+export default App
+```
+
+### Color Variants
+
+Navbar with different background color variants.
+
+```tsx
+import React from 'react'
+import { Navbar, Button, Typography, Flex } from 'asterui'
+
+const App: React.FC = () => (
+  <Flex direction="column" gap="md">
+    <Navbar
+      color="neutral"
+      start={<Typography.Text strong className="text-xl">Neutral</Typography.Text>}
+      end={<Button type="ghost">Action</Button>}
+    />
+    <Navbar
+      color="primary"
+      start={<Typography.Text strong className="text-xl">Primary</Typography.Text>}
+      end={<Button type="ghost">Action</Button>}
+    />
+    <Navbar
+      color="secondary"
+      start={<Typography.Text strong className="text-xl">Secondary</Typography.Text>}
+      end={<Button type="ghost">Action</Button>}
+    />
+  </Flex>
+)
+
+export default App
+```
+
+### With Shadow
+
+Navbar with shadow for elevated appearance.
+
+```tsx
+import React from 'react'
+import { Navbar, Button, Typography, Flex } from 'asterui'
+
+const App: React.FC = () => (
+  <Navbar
+    shadow="md"
+    start={<Typography.Text strong className="text-xl">AsterUI</Typography.Text>}
     end={
-      <>
-        <div className="hidden lg:flex gap-2">
-          <Button type="ghost">Home</Button>
-          <Button type="ghost">Products</Button>
-          <Button type="ghost">About</Button>
-          <Button type="ghost">Contact</Button>
-        </div>
+      <Flex gap="sm">
+        <Button type="ghost">Home</Button>
         <Button type="primary">Sign In</Button>
-      </>
+      </Flex>
+    }
+  />
+)
+
+export default App
+```
+
+### Rounded Corners
+
+Navbar with rounded corners for a softer look.
+
+```tsx
+import React from 'react'
+import { Navbar, Button, Typography, Flex } from 'asterui'
+
+const App: React.FC = () => (
+  <Navbar
+    color="neutral"
+    rounded="lg"
+    start={<Typography.Text strong className="text-xl">AsterUI</Typography.Text>}
+    end={
+      <Flex gap="sm">
+        <Button type="ghost">Home</Button>
+        <Button type="primary">Sign In</Button>
+      </Flex>
     }
   />
 )
@@ -141,4 +189,8 @@ export default App
 | `center` | Content for the center section of the navbar | `React.ReactNode` | `-` |
 | `end` | Content for the end section of the navbar (typically actions/menu) | `React.ReactNode` | `-` |
 | `children` | Custom content that replaces the three-section layout | `React.ReactNode` | `-` |
+| `color` | Background color variant | `'base' \| 'neutral' \| 'primary' \| 'secondary' \| 'accent'` | `'base'` |
+| `sticky` | Make navbar sticky at the top | `boolean` | `false` |
+| `shadow` | Shadow depth | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'none'` |
+| `rounded` | Border radius | `'none' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'full'` | `'none'` |
 | `className` | Additional CSS classes | `string` | `-` |

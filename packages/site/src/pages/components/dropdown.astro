@@ -4,19 +4,26 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const dropdownApi = [
-  { property: 'children', description: 'Trigger element and dropdown content (use Dropdown.Trigger and Dropdown.Menu)', type: 'React.ReactNode' },
+  { property: 'children', description: 'Trigger element and dropdown content (compound pattern)', type: 'React.ReactNode' },
+  { property: 'items', description: 'Menu items (data-driven pattern)', type: 'DropdownMenuItemType[]' },
+  { property: 'trigger', description: 'Trigger mode(s) for dropdown', type: "('click' | 'hover' | 'contextMenu')[]", default: "['click']" },
   { property: 'position', description: 'Dropdown menu position', type: "'top' | 'bottom' | 'left' | 'right'", default: "'bottom'" },
   { property: 'align', description: 'Dropdown menu alignment', type: "'start' | 'center' | 'end'", default: "'start'" },
-  { property: 'hover', description: 'Open on hover instead of click', type: 'boolean', default: 'false' },
   { property: 'open', description: 'Controlled open state', type: 'boolean' },
-  { property: 'onOpenChange', description: 'Callback when open state changes', type: '(open: boolean) => void' },
+  { property: 'onOpenChange', description: 'Callback when open state changes', type: '(open: boolean, info?: { source }) => void' },
   { property: 'disabled', description: 'Disable the dropdown', type: 'boolean', default: 'false' },
-  { property: 'arrow', description: 'Show arrow pointing to trigger', type: 'boolean', default: 'false' },
+  { property: 'arrow', description: 'Show arrow pointing to trigger', type: 'boolean | { pointAtCenter?: boolean }', default: 'false' },
+  { property: 'mouseEnterDelay', description: 'Delay before showing on hover (seconds)', type: 'number', default: '0.15' },
+  { property: 'mouseLeaveDelay', description: 'Delay before hiding on mouse leave (seconds)', type: 'number', default: '0.1' },
+  { property: 'destroyOnHidden', description: 'Destroy dropdown when hidden', type: 'boolean', default: 'false' },
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
 const itemApi = [
   { property: 'children', description: 'Item content', type: 'React.ReactNode' },
+  { property: 'label', description: 'Item label (alternative to children)', type: 'React.ReactNode' },
+  { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode' },
+  { property: 'itemKey', description: 'Unique key for the item', type: 'string' },
   { property: 'onClick', description: 'Click handler', type: '() => void' },
   { property: 'active', description: 'Active/selected state', type: 'boolean', default: 'false' },
   { property: 'disabled', description: 'Disable the item', type: 'boolean', default: 'false' },
@@ -24,11 +31,29 @@ const itemApi = [
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
+const menuItemTypeApi = [
+  { property: 'key', description: 'Unique key for the item', type: 'string', default: '-' },
+  { property: 'label', description: 'Item label content', type: 'React.ReactNode', default: '-' },
+  { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
+  { property: 'disabled', description: 'Disable the item', type: 'boolean', default: 'false' },
+  { property: 'danger', description: 'Danger/destructive styling', type: 'boolean', default: 'false' },
+  { property: 'onClick', description: 'Click handler', type: '() => void', default: '-' },
+  { property: 'children', description: 'Submenu items', type: 'DropdownMenuItem[]', default: '-' },
+];
+
+const subMenuApi = [
+  { property: 'children', description: 'Submenu items', type: 'React.ReactNode', default: '-' },
+  { property: 'title', description: 'Submenu title/label', type: 'React.ReactNode', default: '-' },
+  { property: 'icon', description: 'Icon to display before title', type: 'React.ReactNode', default: '-' },
+  { property: 'itemKey', description: 'Unique key for the submenu', type: 'string', default: '-' },
+  { property: 'disabled', description: 'Disable the submenu', type: 'boolean', default: 'false' },
+];
+
 const examples = [
   {
     id: 'basic',
     title: 'Basic Dropdown',
-    description: 'Simple dropdown menu with items.',
+    description: 'Simple dropdown menu with items using compound pattern.',
     code: `import React from 'react'
 import { Dropdown, Button } from 'asterui'
 
@@ -44,6 +69,34 @@ const App: React.FC = () => (
     </Dropdown.Menu>
   </Dropdown>
 )
+
+export default App`,
+  },
+  {
+    id: 'items-prop',
+    title: 'Data-Driven (items prop)',
+    description: 'Define menu items via the items prop instead of compound components.',
+    code: `import React from 'react'
+import { Dropdown, Button } from 'asterui'
+import type { DropdownMenuItemType } from 'asterui'
+import { PencilIcon, DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => {
+  const items: DropdownMenuItemType[] = [
+    { key: 'edit', label: 'Edit', icon: <PencilIcon className="w-4 h-4" /> },
+    { key: 'duplicate', label: 'Duplicate', icon: <DocumentDuplicateIcon className="w-4 h-4" /> },
+    { type: 'divider' },
+    { key: 'delete', label: 'Delete', danger: true, icon: <TrashIcon className="w-4 h-4" /> },
+  ]
+
+  return (
+    <Dropdown items={items}>
+      <Dropdown.Trigger>
+        <Button type="primary">Data-Driven</Button>
+      </Dropdown.Trigger>
+    </Dropdown>
+  )
+}
 
 export default App`,
   },
@@ -105,24 +158,34 @@ const App: React.FC = () => (
 export default App`,
   },
   {
-    id: 'hover',
-    title: 'Hover to Open',
-    description: 'Dropdown opens on hover instead of click.',
+    id: 'trigger',
+    title: 'Trigger Modes',
+    description: 'Control how the dropdown opens: click, hover, or both.',
     code: `import React from 'react'
-import { Dropdown, Button } from 'asterui'
+import { Dropdown, Button, Space } from 'asterui'
 
 const App: React.FC = () => (
-  <Dropdown hover>
-    <Dropdown.Trigger>
-      <Button type="secondary">Hover Me</Button>
-    </Dropdown.Trigger>
-    <Dropdown.Menu>
-      <Dropdown.Item>Dashboard</Dropdown.Item>
-      <Dropdown.Item>Settings</Dropdown.Item>
-      <Dropdown.Item>Profile</Dropdown.Item>
-      <Dropdown.Item>Sign out</Dropdown.Item>
-    </Dropdown.Menu>
-  </Dropdown>
+  <Space direction="horizontal" size="sm" wrap>
+    <Dropdown trigger={['click']}>
+      <Dropdown.Trigger>
+        <Button>Click</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item>Option 1</Dropdown.Item>
+        <Dropdown.Item>Option 2</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+
+    <Dropdown trigger={['hover']}>
+      <Dropdown.Trigger>
+        <Button>Hover</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item>Option 1</Dropdown.Item>
+        <Dropdown.Item>Option 2</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  </Space>
 )
 
 export default App`,
@@ -250,6 +313,64 @@ const App: React.FC = () => (
 
 export default App`,
   },
+  {
+    id: 'context-menu',
+    title: 'Context Menu',
+    description: 'Open dropdown on right-click using contextMenu trigger.',
+    code: `import React from 'react'
+import { Dropdown, Typography } from 'asterui'
+import { PencilIcon, DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => (
+  <Dropdown trigger={['contextMenu']}>
+    <Dropdown.Trigger>
+      <div className="p-8 border-2 border-dashed border-base-300 rounded-lg text-center cursor-context-menu">
+        <Typography.Text type="secondary">Right-click here</Typography.Text>
+      </div>
+    </Dropdown.Trigger>
+    <Dropdown.Menu>
+      <Dropdown.Item icon={<PencilIcon className="w-4 h-4" />}>Edit</Dropdown.Item>
+      <Dropdown.Item icon={<DocumentDuplicateIcon className="w-4 h-4" />}>Copy</Dropdown.Item>
+      <Dropdown.Divider />
+      <Dropdown.Item icon={<TrashIcon className="w-4 h-4" />} danger>Delete</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+)
+
+export default App`,
+  },
+  {
+    id: 'submenu',
+    title: 'With Submenu',
+    description: 'Nested submenus for hierarchical options.',
+    code: `import React from 'react'
+import { Dropdown, Button } from 'asterui'
+import { PencilIcon, FolderIcon, Cog6ToothIcon } from '@heroicons/react/24/outline'
+
+const App: React.FC = () => (
+  <Dropdown>
+    <Dropdown.Trigger>
+      <Button>With Submenu</Button>
+    </Dropdown.Trigger>
+    <Dropdown.Menu>
+      <Dropdown.Item icon={<PencilIcon className="w-4 h-4" />}>Edit</Dropdown.Item>
+      <Dropdown.SubMenu title="More Options" icon={<FolderIcon className="w-4 h-4" />}>
+        <Dropdown.Item>Option A</Dropdown.Item>
+        <Dropdown.Item>Option B</Dropdown.Item>
+        <Dropdown.Item>Option C</Dropdown.Item>
+      </Dropdown.SubMenu>
+      <Dropdown.SubMenu title="Settings" icon={<Cog6ToothIcon className="w-4 h-4" />}>
+        <Dropdown.Item>Preferences</Dropdown.Item>
+        <Dropdown.Item>Account</Dropdown.Item>
+      </Dropdown.SubMenu>
+      <Dropdown.Divider />
+      <Dropdown.Item danger>Delete</Dropdown.Item>
+    </Dropdown.Menu>
+  </Dropdown>
+)
+
+export default App`,
+  },
 ];
 ---
 
@@ -318,6 +439,10 @@ export default App`,
       <ApiTable title="Dropdown" data={dropdownApi} />
       <div class="mt-6"></div>
       <ApiTable title="Dropdown.Item" data={itemApi} />
+      <div class="mt-6"></div>
+      <ApiTable title="Dropdown.SubMenu" data={subMenuApi} />
+      <div class="mt-6"></div>
+      <ApiTable title="DropdownMenuItem (for items prop)" data={menuItemTypeApi} />
     </section>
 
     <!-- Accessibility -->

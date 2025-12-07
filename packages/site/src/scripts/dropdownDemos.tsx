@@ -1,7 +1,8 @@
 import { createRoot } from 'react-dom/client';
 import React from 'react';
-import { Dropdown, Button, Space } from 'asterui';
-import { PencilIcon, DocumentDuplicateIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { Dropdown, Button, Space, Typography } from 'asterui';
+import type { DropdownMenuItemType } from 'asterui';
+import { PencilIcon, DocumentDuplicateIcon, TrashIcon, FolderIcon, Cog6ToothIcon } from '@heroicons/react/24/outline';
 import { CheckIconSvg } from './icons'
 
 // Demo components for each example
@@ -18,6 +19,21 @@ const demos: Record<string, React.ReactNode> = {
       </Dropdown.Menu>
     </Dropdown>
   ),
+  'items-prop': (() => {
+    const items: DropdownMenuItemType[] = [
+      { key: 'edit', label: 'Edit', icon: <PencilIcon className="w-4 h-4" /> },
+      { key: 'duplicate', label: 'Duplicate', icon: <DocumentDuplicateIcon className="w-4 h-4" /> },
+      { type: 'divider' },
+      { key: 'delete', label: 'Delete', danger: true, icon: <TrashIcon className="w-4 h-4" /> },
+    ]
+    return (
+      <Dropdown items={items}>
+        <Dropdown.Trigger>
+          <Button type="primary">Data-Driven</Button>
+        </Dropdown.Trigger>
+      </Dropdown>
+    )
+  })(),
   'position': (
     <Space direction="horizontal" size="sm" wrap>
       <Dropdown position="top">
@@ -159,6 +175,65 @@ const demos: Record<string, React.ReactNode> = {
         </Dropdown.Menu>
       </Dropdown>
     </Space>
+  ),
+  'trigger': (
+    <Space direction="horizontal" size="sm" wrap>
+      <Dropdown trigger={['click']}>
+        <Dropdown.Trigger>
+          <Button>Click</Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>Option 1</Dropdown.Item>
+          <Dropdown.Item>Option 2</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+
+      <Dropdown trigger={['hover']}>
+        <Dropdown.Trigger>
+          <Button>Hover</Button>
+        </Dropdown.Trigger>
+        <Dropdown.Menu>
+          <Dropdown.Item>Option 1</Dropdown.Item>
+          <Dropdown.Item>Option 2</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+    </Space>
+  ),
+  'context-menu': (
+    <Dropdown trigger={['contextMenu']}>
+      <Dropdown.Trigger>
+        <div className="p-8 border-2 border-dashed border-base-300 rounded-lg text-center cursor-context-menu">
+          <Typography.Text type="secondary">Right-click here</Typography.Text>
+        </div>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item icon={<PencilIcon className="w-4 h-4" />}>Edit</Dropdown.Item>
+        <Dropdown.Item icon={<DocumentDuplicateIcon className="w-4 h-4" />}>Copy</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item icon={<TrashIcon className="w-4 h-4" />} danger>Delete</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  ),
+  'submenu': (
+    <Dropdown>
+      <Dropdown.Trigger>
+        <Button>With Submenu</Button>
+      </Dropdown.Trigger>
+      <Dropdown.Menu>
+        <Dropdown.Item icon={<PencilIcon className="w-4 h-4" />}>Edit</Dropdown.Item>
+        <Dropdown.SubMenu title="More Options" icon={<FolderIcon className="w-4 h-4" />}>
+          <Dropdown.Item>Option A</Dropdown.Item>
+          <Dropdown.Item>Option B</Dropdown.Item>
+          <Dropdown.Item>Option C</Dropdown.Item>
+        </Dropdown.SubMenu>
+        <Dropdown.SubMenu title="Settings" icon={<Cog6ToothIcon className="w-4 h-4" />}>
+          <Dropdown.Item>Preferences</Dropdown.Item>
+          <Dropdown.Item>Account</Dropdown.Item>
+        </Dropdown.SubMenu>
+        <Dropdown.Divider />
+        <Dropdown.Item danger>Delete</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   ),
 };
 

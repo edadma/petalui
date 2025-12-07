@@ -1,5 +1,25 @@
 import React, { createContext, useContext, useId, useRef, useState, useCallback, useEffect } from 'react'
 
+// Types for data-driven items prop
+export type DropdownTriggerType = 'click' | 'hover' | 'contextMenu'
+
+export interface DropdownMenuItem {
+  key: string
+  label: React.ReactNode
+  icon?: React.ReactNode
+  disabled?: boolean
+  danger?: boolean
+  onClick?: () => void
+  children?: DropdownMenuItem[] // For submenus
+}
+
+export interface DropdownMenuDivider {
+  type: 'divider'
+  key?: string
+}
+
+export type DropdownMenuItemType = DropdownMenuItem | DropdownMenuDivider
+
 interface DropdownContextValue {
   position?: 'top' | 'bottom' | 'left' | 'right'
   align?: 'start' | 'center' | 'end'
@@ -14,6 +34,7 @@ interface DropdownContextValue {
   setItemCount: (count: number) => void
   disabled: boolean
   arrow: boolean
+  closeDropdown: () => void
 }
 
 const DropdownContext = createContext<DropdownContextValue | undefined>(undefined)
@@ -26,19 +47,33 @@ function useDropdownContext() {
   return context
 }
 
-export interface DropdownProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
+export interface DropdownProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  /** Trigger element and dropdown content (compound pattern) */
+  children?: React.ReactNode
+  /** Menu items (data-driven pattern) */
+  items?: DropdownMenuItemType[]
+  /** @deprecated Use trigger={['hover']} instead */
   hover?: boolean
+  /** Trigger mode(s) for dropdown */
+  trigger?: DropdownTriggerType[]
   position?: 'top' | 'bottom' | 'left' | 'right'
   align?: 'start' | 'center' | 'end'
   /** Controlled open state */
   open?: boolean
   /** Callback when open state changes */
-  onOpenChange?: (open: boolean) => void
+  onOpenChange?: (open: boolean, info?: { source: 'trigger' | 'menu' }) => void
   /** Disable the dropdown */
   disabled?: boolean
   /** Show arrow pointing to trigger */
-  arrow?: boolean
+  arrow?: boolean | { pointAtCenter?: boolean }
+  /** Delay before showing dropdown on hover (seconds) */
+  mouseEnterDelay?: number
+  /** Delay before hiding dropdown on mouse leave (seconds) */
+  mouseLeaveDelay?: number
+  /** Container for the dropdown menu */
+  getPopupContainer?: (triggerNode: HTMLElement) => HTMLElement
+  /** Destroy dropdown when hidden */
+  destroyOnHidden?: boolean
 }
 
 export interface DropdownTriggerProps {
@@ -47,12 +82,18 @@ export interface DropdownTriggerProps {
 }
 
 export interface DropdownMenuProps {
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
 }
 
 export interface DropdownItemProps {
-  children: React.ReactNode
+  children?: React.ReactNode
+  /** Unique key for the item */
+  itemKey?: string
+  /** Icon to display before label */
+  icon?: React.ReactNode
+  /** Item label (alternative to children) */
+  label?: React.ReactNode
   onClick?: () => void
   active?: boolean
   disabled?: boolean
@@ -61,19 +102,37 @@ export interface DropdownItemProps {
   _index?: number // Internal prop passed by DropdownMenu
 }
 
+export interface DropdownSubMenuProps {
+  children: React.ReactNode
+  /** Unique key for the submenu */
+  itemKey?: string
+  /** Submenu title/label */
+  title: React.ReactNode
+  /** Icon to display before title */
+  icon?: React.ReactNode
+  disabled?: boolean
+  className?: string
+}
+
 export interface DropdownDividerProps {
   className?: string
 }
 
 function DropdownRoot({
   children,
+  items,
   hover = false,
+  trigger = ['click'],
   position = 'bottom',
   align = 'start',
   open: controlledOpen,
   onOpenChange,
   disabled = false,
   arrow = false,
+  mouseEnterDelay = 0.15,
+  mouseLeaveDelay = 0.1,
+  getPopupContainer,
+  destroyOnHidden = false,
   className = '',
   ...rest
 }: DropdownProps) {
@@ -82,34 +141,56 @@ function DropdownRoot({
   const [internalOpen, setInternalOpen] = useState(false)
   const [focusedIndex, setFocusedIndex] = useState(-1)
   const [itemCount, setItemCount] = useState(0)
+  const [shouldRender, setShouldRender] = useState(!destroyOnHidden)
   const itemRefs = useRef<Map<number, { ref: HTMLElement | null; disabled: boolean }>>(new Map())
   const dropdownRef = useRef<HTMLDivElement>(null)
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Normalize trigger - support both hover boolean (deprecated) and trigger array
+  const triggers = hover ? ['hover'] : trigger
 
   // Use controlled or uncontrolled open state
   const isControlled = controlledOpen !== undefined
   const isOpen = isControlled ? controlledOpen : internalOpen
 
-  const setIsOpen = useCallback((open: boolean) => {
+  const setIsOpen = useCallback((open: boolean, source: 'trigger' | 'menu' = 'trigger') => {
     if (disabled) return
     if (!isControlled) {
       setInternalOpen(open)
     }
-    onOpenChange?.(open)
+    if (open) {
+      setShouldRender(true)
+    }
+    onOpenChange?.(open, { source })
   }, [disabled, isControlled, onOpenChange])
 
-  const registerItem = useCallback((index: number, ref: HTMLElement | null, disabled: boolean) => {
+  const closeDropdown = useCallback(() => {
+    setIsOpen(false, 'menu')
+    setFocusedIndex(-1)
+    document.getElementById(triggerId)?.focus()
+  }, [setIsOpen, triggerId])
+
+  const registerItem = useCallback((index: number, ref: HTMLElement | null, itemDisabled: boolean) => {
     if (ref) {
-      itemRefs.current.set(index, { ref, disabled })
+      itemRefs.current.set(index, { ref, disabled: itemDisabled })
     } else {
       itemRefs.current.delete(index)
     }
   }, [])
 
+  // Handle destroyOnHidden
+  useEffect(() => {
+    if (destroyOnHidden && !isOpen) {
+      const timeout = setTimeout(() => setShouldRender(false), 300)
+      return () => clearTimeout(timeout)
+    }
+  }, [isOpen, destroyOnHidden])
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false)
+        setIsOpen(false, 'trigger')
         setFocusedIndex(-1)
       }
     }
@@ -118,7 +199,45 @@ function DropdownRoot({
       document.addEventListener('mousedown', handleClickOutside)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [isOpen])
+  }, [isOpen, setIsOpen])
+
+  // Hover handlers with delay
+  const handleMouseEnter = useCallback(() => {
+    if (!triggers.includes('hover')) return
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsOpen(true, 'trigger')
+    }, mouseEnterDelay * 1000)
+  }, [triggers, mouseEnterDelay, setIsOpen])
+
+  const handleMouseLeave = useCallback(() => {
+    if (!triggers.includes('hover')) return
+    if (hoverTimeoutRef.current) {
+      clearTimeout(hoverTimeoutRef.current)
+    }
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsOpen(false, 'trigger')
+      setFocusedIndex(-1)
+    }, mouseLeaveDelay * 1000)
+  }, [triggers, mouseLeaveDelay, setIsOpen])
+
+  // Context menu handler
+  const handleContextMenu = useCallback((event: React.MouseEvent) => {
+    if (!triggers.includes('contextMenu')) return
+    event.preventDefault()
+    setIsOpen(true, 'trigger')
+  }, [triggers, setIsOpen])
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (hoverTimeoutRef.current) {
+        clearTimeout(hoverTimeoutRef.current)
+      }
+    }
+  }, [])
 
   const positionClasses: Record<string, string> = {
     top: 'dropdown-top',
@@ -133,16 +252,79 @@ function DropdownRoot({
     end: 'dropdown-end',
   }
 
+  const showArrow = typeof arrow === 'boolean' ? arrow : !!arrow
+
   const dropdownClasses = [
     'dropdown',
     positionClasses[position],
     alignClasses[align],
-    hover && 'dropdown-hover',
+    triggers.includes('hover') && 'dropdown-hover',
     isOpen && 'dropdown-open',
     className,
   ]
     .filter(Boolean)
     .join(' ')
+
+  // Render items from data-driven prop
+  const renderItems = () => {
+    if (!items) return null
+    return items.map((item, index) => {
+      if ('type' in item && item.type === 'divider') {
+        return <DropdownDivider key={item.key || `divider-${index}`} />
+      }
+      const menuItem = item as DropdownMenuItem
+      if (menuItem.children && menuItem.children.length > 0) {
+        return (
+          <DropdownSubMenu
+            key={menuItem.key}
+            itemKey={menuItem.key}
+            title={menuItem.label}
+            icon={menuItem.icon}
+            disabled={menuItem.disabled}
+          >
+            {menuItem.children.map((child) => (
+              <DropdownItem
+                key={child.key}
+                itemKey={child.key}
+                icon={child.icon}
+                disabled={child.disabled}
+                danger={child.danger}
+                onClick={child.onClick}
+              >
+                {child.label}
+              </DropdownItem>
+            ))}
+          </DropdownSubMenu>
+        )
+      }
+      return (
+        <DropdownItem
+          key={menuItem.key}
+          itemKey={menuItem.key}
+          icon={menuItem.icon}
+          disabled={menuItem.disabled}
+          danger={menuItem.danger}
+          onClick={menuItem.onClick}
+        >
+          {menuItem.label}
+        </DropdownItem>
+      )
+    })
+  }
+
+  // Determine content - either compound children or items-generated menu
+  const content = items ? (
+    <>
+      {React.Children.toArray(children).find(
+        (child) => React.isValidElement(child) && child.type === DropdownTrigger
+      )}
+      {(shouldRender || !destroyOnHidden) && (
+        <DropdownMenu>{renderItems()}</DropdownMenu>
+      )}
+    </>
+  ) : (
+    children
+  )
 
   return (
     <DropdownContext.Provider
@@ -159,10 +341,22 @@ function DropdownRoot({
         itemCount,
         setItemCount,
         disabled,
-        arrow,
+        arrow: showArrow,
+        closeDropdown,
       }}
     >
-      <div ref={dropdownRef} className={dropdownClasses} data-state={isOpen ? 'open' : 'closed'} aria-disabled={disabled || undefined} {...rest}>{children}</div>
+      <div
+        ref={dropdownRef}
+        className={dropdownClasses}
+        data-state={isOpen ? 'open' : 'closed'}
+        aria-disabled={disabled || undefined}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onContextMenu={handleContextMenu}
+        {...rest}
+      >
+        {content}
+      </div>
     </DropdownContext.Provider>
   )
 }
@@ -199,22 +393,33 @@ function DropdownTrigger({ children, className = '' }: DropdownTriggerProps) {
     }
   }
 
-  return (
-    <button
-      id={triggerId}
-      type="button"
-      tabIndex={disabled ? -1 : 0}
-      className={`btn ${className}`}
-      aria-haspopup="menu"
-      aria-expanded={isOpen}
-      aria-controls={menuId}
-      disabled={disabled}
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-    >
-      {children}
-    </button>
-  )
+  // Clone the child element to add event handlers and ARIA attributes
+  const child = React.Children.only(children) as React.ReactElement<
+    React.HTMLAttributes<HTMLElement> & {
+      onClick?: (e: React.MouseEvent) => void
+      onKeyDown?: (e: React.KeyboardEvent) => void
+      className?: string
+    }
+  >
+
+  const childProps = child.props
+
+  return React.cloneElement(child, {
+    id: triggerId,
+    tabIndex: disabled ? -1 : 0,
+    'aria-haspopup': 'menu' as const,
+    'aria-expanded': isOpen,
+    'aria-controls': menuId,
+    onClick: (e: React.MouseEvent) => {
+      handleClick()
+      childProps.onClick?.(e)
+    },
+    onKeyDown: (e: React.KeyboardEvent) => {
+      handleKeyDown(e)
+      childProps.onKeyDown?.(e)
+    },
+    className: `${childProps.className || ''} ${className}`.trim(),
+  })
 }
 
 function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
@@ -329,21 +534,22 @@ function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
 
 function DropdownItem({
   children,
+  itemKey,
+  icon,
+  label,
   onClick,
   active = false,
   disabled = false,
   danger = false,
   className = '',
 }: DropdownItemProps) {
-  const { setIsOpen, setFocusedIndex, triggerId } = useDropdownContext()
+  const { closeDropdown } = useDropdownContext()
   const itemClasses = [active && 'active', disabled && 'disabled', className].filter(Boolean).join(' ')
 
   const handleClick = () => {
     if (!disabled) {
       onClick?.()
-      setIsOpen(false)
-      setFocusedIndex(-1)
-      document.getElementById(triggerId)?.focus()
+      closeDropdown()
     }
   }
 
@@ -354,8 +560,10 @@ function DropdownItem({
     }
   }
 
+  const content = label || children
+
   return (
-    <li className={itemClasses} role="none">
+    <li className={itemClasses} role="none" data-key={itemKey}>
       <a
         role="menuitem"
         tabIndex={disabled ? -1 : 0}
@@ -364,8 +572,58 @@ function DropdownItem({
         onClick={handleClick}
         onKeyDown={handleKeyDown}
       >
-        {children}
+        {icon && <span className="mr-2 inline-flex items-center">{icon}</span>}
+        {content}
       </a>
+    </li>
+  )
+}
+
+function DropdownSubMenu({
+  children,
+  itemKey,
+  title,
+  icon,
+  disabled = false,
+  className = '',
+}: DropdownSubMenuProps) {
+  const [isSubOpen, setIsSubOpen] = useState(false)
+  const subMenuRef = useRef<HTMLLIElement>(null)
+
+  const handleMouseEnter = () => {
+    if (!disabled) setIsSubOpen(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsSubOpen(false)
+  }
+
+  const itemClasses = [disabled && 'disabled', className].filter(Boolean).join(' ')
+
+  return (
+    <li
+      ref={subMenuRef}
+      className={itemClasses}
+      role="none"
+      data-key={itemKey}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
+      <details open={isSubOpen}>
+        <summary
+          role="menuitem"
+          tabIndex={disabled ? -1 : 0}
+          aria-disabled={disabled || undefined}
+          aria-haspopup="menu"
+          aria-expanded={isSubOpen}
+        >
+          {icon && <span className="mr-2 inline-flex items-center">{icon}</span>}
+          {title}
+        </summary>
+        <ul className="menu bg-base-100 rounded-box z-50 shadow" role="menu">
+          {children}
+        </ul>
+      </details>
     </li>
   )
 }
@@ -383,5 +641,6 @@ export const Dropdown = Object.assign(DropdownRoot, {
   Trigger: DropdownTrigger,
   Menu: DropdownMenu,
   Item: DropdownItem,
+  SubMenu: DropdownSubMenu,
   Divider: DropdownDivider,
 })

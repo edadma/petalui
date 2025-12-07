@@ -107,7 +107,18 @@ export { Indicator } from './components/Indicator'
 export type { IndicatorProps, IndicatorPosition } from './components/Indicator'
 
 export { Dropdown } from './components/Dropdown'
-export type { DropdownProps, DropdownTriggerProps, DropdownMenuProps, DropdownItemProps, DropdownDividerProps } from './components/Dropdown'
+export type {
+  DropdownProps,
+  DropdownTriggerProps,
+  DropdownMenuProps,
+  DropdownItemProps,
+  DropdownSubMenuProps,
+  DropdownDividerProps,
+  DropdownMenuItem,
+  DropdownMenuDivider,
+  DropdownMenuItemType,
+  DropdownTriggerType,
+} from './components/Dropdown'
 
 export { Empty } from './components/Empty'
 export type { EmptyProps } from './components/Empty'
@@ -164,7 +175,7 @@ export { Modal } from './components/Modal'
 export type { ModalProps, ModalFuncProps, ModalPosition, ModalAlign, ResponsivePosition } from './components/Modal'
 
 export { Navbar } from './components/Navbar'
-export type { NavbarProps } from './components/Navbar'
+export type { NavbarProps, NavbarColor, NavbarShadow, NavbarRounded } from './components/Navbar'
 
 export { notification } from './components/Notification'
 export type { NotificationConfig, NotificationType, NotificationPlacement } from './components/Notification'
