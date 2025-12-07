@@ -21,6 +21,16 @@ const autocompleteApi = [
     type: '(value: string) => void',
   },
   {
+    property: 'onSelect',
+    description: 'Callback when an option is selected',
+    type: '(value: string, option: AutocompleteOption) => void',
+  },
+  {
+    property: 'onSearch',
+    description: 'Callback when input value changes (for async filtering)',
+    type: '(value: string) => void',
+  },
+  {
     property: 'options',
     description: 'Array of options to display',
     type: 'string[] | AutocompleteOption[]',
@@ -40,8 +50,18 @@ const autocompleteApi = [
   {
     property: 'size',
     description: 'Input size',
-    type: "'xs' | 'sm' | 'md' | 'lg'",
+    type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
     default: "'md'",
+  },
+  {
+    property: 'color',
+    description: 'Input color variant',
+    type: "'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'",
+  },
+  {
+    property: 'status',
+    description: 'Validation status (sets aria-invalid)',
+    type: "'error' | 'warning'",
   },
   {
     property: 'allowCustomValue',
@@ -61,6 +81,39 @@ const autocompleteApi = [
     default: '"No results found"',
   },
   {
+    property: 'allowClear',
+    description: 'Show clear button when input has value',
+    type: 'boolean | { clearIcon?: ReactNode }',
+    default: 'false',
+  },
+  {
+    property: 'onClear',
+    description: 'Callback when clear button is clicked',
+    type: '() => void',
+  },
+  {
+    property: 'open',
+    description: 'Controlled open state of dropdown',
+    type: 'boolean',
+  },
+  {
+    property: 'defaultOpen',
+    description: 'Default open state (uncontrolled)',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'onOpenChange',
+    description: 'Callback when open state changes',
+    type: '(open: boolean) => void',
+  },
+  {
+    property: 'defaultActiveFirstOption',
+    description: 'Activate first option by default when filtering',
+    type: 'boolean',
+    default: 'true',
+  },
+  {
     property: 'className',
     description: 'Additional CSS classes',
     type: 'string',
@@ -77,6 +130,11 @@ const optionTypeApi = [
     property: 'label',
     description: 'The display text of the option',
     type: 'string',
+  },
+  {
+    property: 'disabled',
+    description: 'Whether the option is disabled',
+    type: 'boolean',
   },
 ];
 
@@ -154,10 +212,35 @@ const App: React.FC = () => {
         options={countries}
         placeholder="Select a country"
       />
-      <p className="mt-2 text-sm">
+      <p className="mt-2 text-sm text-base-content/70">
         Selected: {country || 'None'}
       </p>
     </div>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'allowClear',
+    title: 'Allow Clear',
+    description: 'Autocomplete with clear button.',
+    code: `import React, { useState } from 'react'
+import { Autocomplete } from 'asterui'
+
+const fruits = ['Apple', 'Banana', 'Cherry', 'Orange']
+
+const App: React.FC = () => {
+  const [value, setValue] = useState('Apple')
+
+  return (
+    <Autocomplete
+      value={value}
+      onChange={setValue}
+      options={fruits}
+      allowClear
+      placeholder="Select a fruit"
+    />
   )
 }
 
@@ -229,6 +312,53 @@ const App: React.FC = () => (
     <Autocomplete size="sm" options={options} placeholder="Small" />
     <Autocomplete size="md" options={options} placeholder="Medium" />
     <Autocomplete size="lg" options={options} placeholder="Large" />
+    <Autocomplete size="xl" options={options} placeholder="Extra large" />
+  </Space>
+)
+
+export default App`,
+  },
+  {
+    id: 'colors',
+    title: 'Colors',
+    description: 'Different color variants.',
+    code: `import React from 'react'
+import { Autocomplete, Space } from 'asterui'
+
+const options = ['Option 1', 'Option 2', 'Option 3']
+
+const App: React.FC = () => (
+  <Space direction="vertical" size="sm">
+    <Autocomplete color="primary" options={options} placeholder="Primary" />
+    <Autocomplete color="secondary" options={options} placeholder="Secondary" />
+    <Autocomplete color="accent" options={options} placeholder="Accent" />
+    <Autocomplete color="success" options={options} placeholder="Success" />
+    <Autocomplete color="warning" options={options} placeholder="Warning" />
+    <Autocomplete color="error" options={options} placeholder="Error" />
+  </Space>
+)
+
+export default App`,
+  },
+  {
+    id: 'status',
+    title: 'Validation Status',
+    description: 'Autocomplete with validation status for form feedback.',
+    code: `import React from 'react'
+import { Autocomplete, Space } from 'asterui'
+
+const options = ['Option 1', 'Option 2', 'Option 3']
+
+const App: React.FC = () => (
+  <Space direction="vertical" size="sm">
+    <div>
+      <Autocomplete status="error" options={options} placeholder="Error status" />
+      <p className="text-error text-sm mt-1">This field is required</p>
+    </div>
+    <div>
+      <Autocomplete status="warning" options={options} placeholder="Warning status" />
+      <p className="text-warning text-sm mt-1">Please verify this value</p>
+    </div>
   </Space>
 )
 
@@ -241,11 +371,38 @@ export default App`,
     code: `import React from 'react'
 import { Autocomplete } from 'asterui'
 
+const fruits = [
+  { value: 'apple', label: 'Apple' },
+  { value: 'banana', label: 'Banana' },
+]
+
 const App: React.FC = () => (
   <Autocomplete
-    options={['Option 1', 'Option 2']}
+    options={fruits}
     disabled
-    defaultValue="Option 1"
+    defaultValue="apple"
+  />
+)
+
+export default App`,
+  },
+  {
+    id: 'disabled-options',
+    title: 'Disabled Options',
+    description: 'Individual options can be disabled.',
+    code: `import React from 'react'
+import { Autocomplete } from 'asterui'
+
+const options = [
+  { value: 'opt1', label: 'Available option' },
+  { value: 'opt2', label: 'Disabled option', disabled: true },
+  { value: 'opt3', label: 'Another available' },
+]
+
+const App: React.FC = () => (
+  <Autocomplete
+    options={options}
+    placeholder="Some options are disabled"
   />
 )
 
@@ -285,12 +442,17 @@ const App: React.FC = () => {
     : domains.map(domain => email + domain)
 
   return (
-    <Autocomplete
-      value={email}
-      onChange={setEmail}
-      options={emailOptions}
-      placeholder="Enter email address"
-    />
+    <div>
+      <Autocomplete
+        value={email}
+        onChange={setEmail}
+        options={emailOptions}
+        placeholder="Enter email address"
+      />
+      <p className="mt-2 text-sm text-base-content/70">
+        Email: {email || 'None'}
+      </p>
+    </div>
   )
 }
 
@@ -424,9 +586,14 @@ export default App`,
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
       <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Full keyboard navigation support</li>
-        <li>ARIA attributes for screen readers</li>
-        <li>Focus management when dropdown opens/closes</li>
+        <li>Uses <code class="bg-base-200 px-1 rounded">role="combobox"</code> with proper ARIA attributes</li>
+        <li>Dropdown uses <code class="bg-base-200 px-1 rounded">role="listbox"</code> with <code class="bg-base-200 px-1 rounded">role="option"</code> items</li>
+        <li><code class="bg-base-200 px-1 rounded">aria-expanded</code> indicates dropdown open state</li>
+        <li><code class="bg-base-200 px-1 rounded">aria-activedescendant</code> tracks the highlighted option</li>
+        <li><code class="bg-base-200 px-1 rounded">aria-selected</code> indicates the currently highlighted option</li>
+        <li>Use <code class="bg-base-200 px-1 rounded">status="error"</code> to set <code class="bg-base-200 px-1 rounded">aria-invalid</code> automatically</li>
+        <li>Disabled options use <code class="bg-base-200 px-1 rounded">aria-disabled</code></li>
+        <li>Clear button has <code class="bg-base-200 px-1 rounded">aria-label</code> for screen readers</li>
       </ul>
     </section>
   </div>

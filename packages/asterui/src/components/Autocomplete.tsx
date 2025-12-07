@@ -1,47 +1,106 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useId } from 'react'
 
 export interface AutocompleteOption {
   value: string
   label: string
+  disabled?: boolean
 }
 
-export interface AutocompleteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface AutocompleteProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'onSelect'> {
   value?: string
   defaultValue?: string
   onChange?: (value: string) => void
+  onSelect?: (value: string, option: AutocompleteOption) => void
+  onSearch?: (value: string) => void
   options: AutocompleteOption[] | string[]
   placeholder?: string
   disabled?: boolean
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
+  /** Validation status */
+  status?: 'error' | 'warning'
   allowCustomValue?: boolean
   filterOption?: (option: AutocompleteOption, inputValue: string) => boolean
   notFoundContent?: React.ReactNode
+  /** Show clear button when input has value */
+  allowClear?: boolean | { clearIcon?: React.ReactNode }
+  /** Callback when clear button is clicked */
+  onClear?: () => void
+  /** Controlled open state */
+  open?: boolean
+  /** Default open state */
+  defaultOpen?: boolean
+  /** Callback when open state changes */
+  onOpenChange?: (open: boolean) => void
+  /** Activate first option by default */
+  defaultActiveFirstOption?: boolean
 }
+
+// Clear icon component
+const ClearIcon: React.FC<{ onClick: (e: React.MouseEvent) => void; className?: string }> = ({ onClick, className }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    className={`flex items-center justify-center opacity-50 hover:opacity-100 transition-opacity ${className || ''}`}
+    aria-label="Clear input"
+    tabIndex={-1}
+  >
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+)
 
 export const Autocomplete: React.FC<AutocompleteProps> = ({
   value,
   defaultValue = '',
   onChange,
+  onSelect,
+  onSearch,
   options: rawOptions,
   placeholder = 'Type to search...',
   disabled = false,
   size = 'md',
+  color,
+  status,
   className = '',
   allowCustomValue = true,
   filterOption,
   notFoundContent = 'No results found',
+  allowClear,
+  onClear,
+  open: controlledOpen,
+  defaultOpen = false,
+  onOpenChange,
+  defaultActiveFirstOption = true,
   ...rest
 }) => {
+  // Generate unique IDs for ARIA
+  const baseId = useId()
+  const inputId = `${baseId}-input`
+  const listboxId = `${baseId}-listbox`
+
   // Normalize options to AutocompleteOption[]
   const options: AutocompleteOption[] = rawOptions.map((opt) =>
     typeof opt === 'string' ? { value: opt, label: opt } : opt
   )
 
   const [inputValue, setInputValue] = useState(defaultValue)
-  const [isOpen, setIsOpen] = useState(false)
+  const [internalOpen, setInternalOpen] = useState(defaultOpen)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
   const inputRef = useRef<HTMLInputElement>(null)
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const dropdownRef = useRef<HTMLUListElement>(null)
+
+  // Determine if open state is controlled
+  const isOpenControlled = controlledOpen !== undefined
+  const isOpen = isOpenControlled ? controlledOpen : internalOpen
+
+  const setIsOpen = (newOpen: boolean) => {
+    if (!isOpenControlled) {
+      setInternalOpen(newOpen)
+    }
+    onOpenChange?.(newOpen)
+  }
 
   // Update input value when controlled value changes
   useEffect(() => {
@@ -59,11 +118,21 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
     filterOption ? filterOption(option, inputValue) : defaultFilter(option, inputValue)
   )
 
+  // Get only enabled options for keyboard navigation
+  const enabledOptions = filteredOptions.filter(opt => !opt.disabled)
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = e.target.value
     setInputValue(newInputValue)
     setIsOpen(true)
-    setHighlightedIndex(0)
+
+    if (defaultActiveFirstOption && enabledOptions.length > 0) {
+      setHighlightedIndex(0)
+    } else {
+      setHighlightedIndex(-1)
+    }
+
+    onSearch?.(newInputValue)
 
     if (allowCustomValue) {
       onChange?.(newInputValue)
@@ -71,36 +140,53 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   }
 
   const handleOptionClick = (option: AutocompleteOption) => {
+    if (option.disabled) return
+
     setInputValue(option.label)
     setIsOpen(false)
     setHighlightedIndex(-1)
 
     onChange?.(option.value)
+    onSelect?.(option.value, option)
     inputRef.current?.focus()
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (!isOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
       setIsOpen(true)
-      setHighlightedIndex(0)
+      if (defaultActiveFirstOption && enabledOptions.length > 0) {
+        setHighlightedIndex(0)
+      }
       return
     }
 
     switch (e.key) {
       case 'ArrowDown':
         e.preventDefault()
-        setHighlightedIndex((prev) => (prev < filteredOptions.length - 1 ? prev + 1 : prev))
+        setHighlightedIndex((prev) => {
+          // Find next enabled option
+          for (let i = prev + 1; i < filteredOptions.length; i++) {
+            if (!filteredOptions[i].disabled) return i
+          }
+          return prev
+        })
         break
       case 'ArrowUp':
         e.preventDefault()
-        setHighlightedIndex((prev) => (prev > 0 ? prev - 1 : 0))
+        setHighlightedIndex((prev) => {
+          // Find previous enabled option
+          for (let i = prev - 1; i >= 0; i--) {
+            if (!filteredOptions[i].disabled) return i
+          }
+          return prev
+        })
         break
       case 'Enter':
         e.preventDefault()
-        if (highlightedIndex >= 0 && filteredOptions[highlightedIndex]) {
+        if (highlightedIndex >= 0 && filteredOptions[highlightedIndex] && !filteredOptions[highlightedIndex].disabled) {
           handleOptionClick(filteredOptions[highlightedIndex])
-        } else if (!allowCustomValue && filteredOptions.length > 0) {
-          handleOptionClick(filteredOptions[0])
+        } else if (!allowCustomValue && enabledOptions.length > 0) {
+          handleOptionClick(enabledOptions[0])
         }
         break
       case 'Escape':
@@ -113,7 +199,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
 
   const handleFocus = () => {
     setIsOpen(true)
-    if (filteredOptions.length > 0) {
+    if (defaultActiveFirstOption && enabledOptions.length > 0) {
       setHighlightedIndex(0)
     }
   }
@@ -126,12 +212,40 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
     setTimeout(() => setIsOpen(false), 200)
   }
 
-  const sizeClass = {
+  const handleClear = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setInputValue('')
+    onChange?.('')
+    onClear?.()
+    inputRef.current?.focus()
+  }
+
+  const sizeClasses = {
     xs: 'input-xs',
     sm: 'input-sm',
     md: 'input-md',
     lg: 'input-lg',
-  }[size]
+    xl: 'input-xl',
+  }
+
+  const colorClasses = {
+    neutral: 'input-neutral',
+    primary: 'input-primary',
+    secondary: 'input-secondary',
+    accent: 'input-accent',
+    info: 'input-info',
+    success: 'input-success',
+    warning: 'input-warning',
+    error: 'input-error',
+  }
+
+  const statusClasses = {
+    error: 'input-error',
+    warning: 'input-warning',
+  }
+
+  // Status takes precedence over color for validation feedback
+  const effectiveColorClass = status ? statusClasses[status] : (color ? colorClasses[color] : '')
 
   // Scroll highlighted option into view
   useEffect(() => {
@@ -141,48 +255,95 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
     }
   }, [highlightedIndex])
 
+  // Determine if we should show clear button
+  const showClear = allowClear && inputValue && !disabled
+
+  // Get custom clear icon if provided
+  const clearIcon = typeof allowClear === 'object' && allowClear.clearIcon
+    ? allowClear.clearIcon
+    : null
+
+  // Get option ID for ARIA
+  const getOptionId = (index: number) => `${baseId}-option-${index}`
+
+  const inputClasses = [
+    'input input-bordered w-full',
+    sizeClasses[size],
+    effectiveColorClass,
+    showClear && 'pr-10',
+  ].filter(Boolean).join(' ')
+
   return (
-    <div className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
-      <input
-        ref={inputRef}
-        type="text"
-        value={inputValue}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyDown}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        placeholder={placeholder}
-        disabled={disabled}
-        className={`input input-bordered w-full ${sizeClass}`}
-      />
+    <div
+      className={`dropdown dropdown-bottom w-full ${isOpen && !disabled ? 'dropdown-open' : ''} ${className}`}
+      data-state={isOpen ? 'open' : 'closed'}
+      {...rest}
+    >
+      <div className="relative w-full">
+        <input
+          ref={inputRef}
+          id={inputId}
+          type="text"
+          role="combobox"
+          aria-expanded={isOpen}
+          aria-haspopup="listbox"
+          aria-controls={listboxId}
+          aria-autocomplete="list"
+          aria-activedescendant={highlightedIndex >= 0 ? getOptionId(highlightedIndex) : undefined}
+          aria-invalid={status === 'error' ? true : undefined}
+          value={inputValue}
+          onChange={handleInputChange}
+          onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          placeholder={placeholder}
+          disabled={disabled}
+          className={inputClasses}
+        />
+        {showClear && (
+          <span className="absolute right-3 top-1/2 -translate-y-1/2 z-10">
+            {clearIcon || <ClearIcon onClick={handleClear} />}
+          </span>
+        )}
+      </div>
 
       {isOpen && !disabled && (
-        <div
+        <ul
           ref={dropdownRef}
-          className="absolute z-50 w-full mt-1 bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-60 overflow-auto"
+          id={listboxId}
+          role="listbox"
+          aria-label="Suggestions"
+          tabIndex={-1}
+          className="dropdown-content menu bg-base-100 rounded-box z-50 w-full shadow-lg border border-base-300 max-h-60 overflow-auto flex-nowrap"
         >
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (
-              <div
-                key={option.value}
-                onMouseDown={(e) => {
-                  e.preventDefault()
-                  handleOptionClick(option)
-                }}
-                onMouseEnter={() => setHighlightedIndex(index)}
-                className={`px-4 py-2 cursor-pointer transition-colors ${
-                  index === highlightedIndex
-                    ? 'bg-primary text-primary-content'
-                    : 'hover:bg-base-200'
-                }`}
-              >
-                {option.label}
-              </div>
+              <li key={option.value}>
+                <a
+                  id={getOptionId(index)}
+                  role="option"
+                  aria-selected={highlightedIndex === index}
+                  aria-disabled={option.disabled}
+                  onMouseDown={(e) => {
+                    e.preventDefault()
+                    handleOptionClick(option)
+                  }}
+                  onMouseEnter={() => !option.disabled && setHighlightedIndex(index)}
+                  className={[
+                    index === highlightedIndex && !option.disabled && 'active',
+                    option.disabled && 'disabled text-base-content/40 cursor-not-allowed',
+                  ].filter(Boolean).join(' ')}
+                >
+                  {option.label}
+                </a>
+              </li>
             ))
           ) : (
-            <div className="px-4 py-2 text-base-content/60 text-center">{notFoundContent}</div>
+            <li className="disabled">
+              <span className="text-base-content/60 text-center cursor-default">{notFoundContent}</span>
+            </li>
           )}
-        </div>
+        </ul>
       )}
     </div>
   )

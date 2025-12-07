@@ -16,6 +16,12 @@ const languages = ['JavaScript', 'TypeScript', 'Python', 'Java', 'C++']
 
 const options = ['Option 1', 'Option 2', 'Option 3']
 
+const disabledOptions = [
+  { value: 'opt1', label: 'Available option' },
+  { value: 'opt2', label: 'Disabled option', disabled: true },
+  { value: 'opt3', label: 'Another available' },
+]
+
 // Demo components for each example
 const demos: Record<string, React.ReactNode> = {
   basic: <Autocomplete options={countries} placeholder="Select a country" />,
@@ -36,9 +42,35 @@ const demos: Record<string, React.ReactNode> = {
       <Autocomplete size="sm" options={options} placeholder="Small" />
       <Autocomplete size="md" options={options} placeholder="Medium" />
       <Autocomplete size="lg" options={options} placeholder="Large" />
+      <Autocomplete size="xl" options={options} placeholder="Extra large" />
+    </Space>
+  ),
+  colors: (
+    <Space direction="vertical" size="sm">
+      <Autocomplete color="primary" options={options} placeholder="Primary" />
+      <Autocomplete color="secondary" options={options} placeholder="Secondary" />
+      <Autocomplete color="accent" options={options} placeholder="Accent" />
+      <Autocomplete color="success" options={options} placeholder="Success" />
+      <Autocomplete color="warning" options={options} placeholder="Warning" />
+      <Autocomplete color="error" options={options} placeholder="Error" />
+    </Space>
+  ),
+  status: (
+    <Space direction="vertical" size="sm">
+      <div>
+        <Autocomplete status="error" options={options} placeholder="Error status" />
+        <p className="text-error text-sm mt-1">This field is required</p>
+      </div>
+      <div>
+        <Autocomplete status="warning" options={options} placeholder="Warning status" />
+        <p className="text-warning text-sm mt-1">Please verify this value</p>
+      </div>
     </Space>
   ),
   disabled: <Autocomplete options={fruits} disabled defaultValue="apple" />,
+  'disabled-options': (
+    <Autocomplete options={disabledOptions} placeholder="Some options are disabled" />
+  ),
   'not-found': (
     <Autocomplete
       options={['Apple', 'Banana', 'Cherry']}
@@ -62,6 +94,20 @@ const ControlledDemo: React.FC = () => {
       />
       <p className="mt-2 text-sm text-base-content/70">Selected: {country || 'None'}</p>
     </div>
+  )
+}
+
+const AllowClearDemo: React.FC = () => {
+  const [value, setValue] = useState('Apple')
+
+  return (
+    <Autocomplete
+      value={value}
+      onChange={setValue}
+      options={['Apple', 'Banana', 'Cherry', 'Orange']}
+      allowClear
+      placeholder="Select a fruit"
+    />
   )
 }
 
@@ -118,6 +164,7 @@ const FormDemo: React.FC = () => {
 
 const statefulDemos: Record<string, React.FC> = {
   controlled: ControlledDemo,
+  allowClear: AllowClearDemo,
   email: EmailDemo,
   form: FormDemo,
 }
@@ -143,8 +190,7 @@ document.querySelectorAll('.copy-btn').forEach((btn) => {
     if (code) {
       await navigator.clipboard.writeText(code)
       const originalHTML = btn.innerHTML
-      btn.innerHTML =
-        CheckIconSvg
+      btn.innerHTML = CheckIconSvg
       setTimeout(() => {
         btn.innerHTML = originalHTML
       }, 2000)
