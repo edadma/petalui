@@ -4,13 +4,75 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const masonryApi = [
-  { property: 'columns', description: 'Number of columns or responsive column configuration', type: "number | { xs?: number, sm?: number, md?: number, lg?: number, xl?: number }", default: '3' },
+  { property: 'columns', description: 'Number of columns or responsive column configuration', type: "number | { xs?: number, sm?: number, md?: number, lg?: number, xl?: number, '2xl'?: number }", default: '3' },
   { property: 'gap', description: 'Spacing between items in pixels', type: 'number', default: '16' },
   { property: 'children', description: 'Items to display in masonry layout', type: 'React.ReactNode' },
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
 ];
 
 const examples = [
+  {
+    id: 'dynamic',
+    title: 'Dynamic Items',
+    description: 'Add and remove items dynamically. New items are placed in the shortest column.',
+    code: `import React, { useState } from 'react'
+import { Masonry, Button } from 'asterui'
+
+const COLORS = ['#0092ff', '#00d084', '#ff6b6b', '#ffd93d', '#a29bfe', '#fd79a8']
+const HEIGHTS = [100, 120, 140, 160, 180, 200]
+
+interface Item { id: number; color: string; height: number }
+
+const App: React.FC = () => {
+  const [items, setItems] = useState<Item[]>([
+    { id: 1, color: COLORS[0], height: 120 },
+    { id: 2, color: COLORS[1], height: 180 },
+    { id: 3, color: COLORS[2], height: 140 },
+  ])
+  const [nextId, setNextId] = useState(4)
+
+  const addItem = () => {
+    setItems([...items, {
+      id: nextId,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      height: HEIGHTS[Math.floor(Math.random() * HEIGHTS.length)],
+    }])
+    setNextId(nextId + 1)
+  }
+
+  const removeItem = (id: number) => setItems(items.filter(item => item.id !== id))
+
+  return (
+    <div>
+      <div className="mb-4">
+        <Button type="primary" onClick={addItem}>Add Item</Button>
+      </div>
+      <Masonry columns={3} gap={16}>
+        {items.map(item => (
+          <div
+            key={item.id}
+            className="relative rounded-lg"
+            style={{ background: item.color, padding: '16px', color: 'white', height: item.height }}
+          >
+            <Button
+              type="ghost"
+              size="sm"
+              shape="circle"
+              className="absolute top-1 right-1 min-h-0 h-6 w-6 text-white hover:bg-black/20"
+              onClick={() => removeItem(item.id)}
+            >
+              ×
+            </Button>
+            Item {item.id}
+          </div>
+        ))}
+      </Masonry>
+    </div>
+  )
+}
+
+export default App`,
+  },
   {
     id: 'basic',
     title: 'Basic Masonry',
@@ -189,7 +251,7 @@ export default App`,
         <li>Items flow into the shortest column to create a balanced layout</li>
         <li>Use the <code class="bg-base-200 px-1 rounded">columns</code> prop to set a fixed number of columns or make it responsive</li>
         <li>The <code class="bg-base-200 px-1 rounded">gap</code> prop controls spacing between items in pixels</li>
-        <li>Responsive breakpoints: xs (&lt;640px), sm (≥640px), md (≥768px), lg (≥1024px), xl (≥1280px)</li>
+        <li>Responsive breakpoints: xs (&lt;640px), sm (≥640px), md (≥768px), lg (≥1024px), xl (≥1280px), 2xl (≥1536px)</li>
         <li>Items can have varying heights - the layout will automatically distribute them efficiently</li>
         <li>Great for image galleries, product grids, and content cards</li>
       </ul>

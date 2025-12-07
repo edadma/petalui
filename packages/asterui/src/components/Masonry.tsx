@@ -1,176 +1,180 @@
-import React from 'react'
+import React, { useRef, useState, useLayoutEffect, useCallback } from 'react'
 
 export interface MasonryProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  columns?: number | {
-    xs?: number
-    sm?: number
-    md?: number
-    lg?: number
-    xl?: number
-    '2xl'?: number
+  columns?:
+    | number
+    | {
+        xs?: number
+        sm?: number
+        md?: number
+        lg?: number
+        xl?: number
+        '2xl'?: number
+      }
+  gap?: number
+}
+
+// Tailwind breakpoints in pixels
+const BREAKPOINTS = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+  xl: 1280,
+  '2xl': 1536,
+}
+
+function getColumnsForWidth(
+  columns: MasonryProps['columns'],
+  width: number
+): number {
+  if (typeof columns === 'number') {
+    return columns
   }
-  gap?: number | string
+
+  if (!columns) return 3
+
+  // Find the appropriate column count for current width
+  // Start from largest breakpoint and work down
+  if (columns['2xl'] !== undefined && width >= BREAKPOINTS['2xl']) {
+    return columns['2xl']
+  }
+  if (columns.xl !== undefined && width >= BREAKPOINTS.xl) {
+    return columns.xl
+  }
+  if (columns.lg !== undefined && width >= BREAKPOINTS.lg) {
+    return columns.lg
+  }
+  if (columns.md !== undefined && width >= BREAKPOINTS.md) {
+    return columns.md
+  }
+  if (columns.sm !== undefined && width >= BREAKPOINTS.sm) {
+    return columns.sm
+  }
+  if (columns.xs !== undefined) {
+    return columns.xs
+  }
+
+  // Default fallback
+  return 3
 }
 
 export const Masonry: React.FC<MasonryProps> = ({
   children,
   columns = 3,
-  gap = 4,
+  gap = 16,
   className = '',
+  style,
   ...rest
 }) => {
-  // Map gap values to Tailwind classes
-  const getGapClass = () => {
-    if (typeof gap === 'string') {
-      return gap
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [positions, setPositions] = useState<
+    Array<{ left: number; top: number }>
+  >([])
+  const [containerHeight, setContainerHeight] = useState(0)
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([])
+
+  const childArray = React.Children.toArray(children)
+
+  const calculateLayout = useCallback(() => {
+    const container = containerRef.current
+    if (!container || childArray.length === 0) return
+
+    const containerWidth = container.offsetWidth
+    // Use viewport width for responsive breakpoints (matches Tailwind behavior)
+    const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : containerWidth
+    const numColumns = getColumnsForWidth(columns, viewportWidth)
+    const columnWidth = (containerWidth - gap * (numColumns - 1)) / numColumns
+
+    // Track height of each column
+    const columnHeights = new Array(numColumns).fill(0)
+    const newPositions: Array<{ left: number; top: number }> = []
+
+    // Place each item in the shortest column
+    childArray.forEach((_, index) => {
+      const itemEl = itemRefs.current[index]
+      if (!itemEl) return
+
+      // Find shortest column
+      let shortestColumn = 0
+      let minHeight = columnHeights[0]
+      for (let i = 1; i < numColumns; i++) {
+        if (columnHeights[i] < minHeight) {
+          minHeight = columnHeights[i]
+          shortestColumn = i
+        }
+      }
+
+      // Calculate position
+      const left = shortestColumn * (columnWidth + gap)
+      const top = columnHeights[shortestColumn]
+
+      newPositions[index] = { left, top }
+
+      // Update column height
+      const itemHeight = itemEl.offsetHeight
+      columnHeights[shortestColumn] += itemHeight + gap
+    })
+
+    setPositions(newPositions)
+    setContainerHeight(Math.max(...columnHeights) - gap)
+  }, [children, columns, gap, childArray.length])
+
+  // Calculate layout after render and on resize
+  useLayoutEffect(() => {
+    calculateLayout()
+
+    const handleResize = () => {
+      calculateLayout()
     }
 
-    const gapMap: Record<number, string> = {
-      0: 'gap-0',
-      1: 'gap-1',
-      2: 'gap-2',
-      3: 'gap-3',
-      4: 'gap-4',
-      5: 'gap-5',
-      6: 'gap-6',
-      7: 'gap-7',
-      8: 'gap-8',
-      9: 'gap-9',
-      10: 'gap-10',
-      11: 'gap-11',
-      12: 'gap-12',
-    }
-    return gapMap[gap] || 'gap-4'
-  }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [calculateLayout])
 
-  // Static column class mappings for Tailwind JIT
-  const baseColumnMap: Record<number, string> = {
-    1: 'columns-1',
-    2: 'columns-2',
-    3: 'columns-3',
-    4: 'columns-4',
-    5: 'columns-5',
-    6: 'columns-6',
-    7: 'columns-7',
-    8: 'columns-8',
-    9: 'columns-9',
-    10: 'columns-10',
-    11: 'columns-11',
-    12: 'columns-12',
-  }
+  // Recalculate when children change
+  useLayoutEffect(() => {
+    // Small delay to ensure refs are populated
+    const timer = setTimeout(calculateLayout, 0)
+    return () => clearTimeout(timer)
+  }, [children, calculateLayout])
 
-  const smColumnMap: Record<number, string> = {
-    1: 'sm:columns-1',
-    2: 'sm:columns-2',
-    3: 'sm:columns-3',
-    4: 'sm:columns-4',
-    5: 'sm:columns-5',
-    6: 'sm:columns-6',
-    7: 'sm:columns-7',
-    8: 'sm:columns-8',
-    9: 'sm:columns-9',
-    10: 'sm:columns-10',
-    11: 'sm:columns-11',
-    12: 'sm:columns-12',
-  }
-
-  const mdColumnMap: Record<number, string> = {
-    1: 'md:columns-1',
-    2: 'md:columns-2',
-    3: 'md:columns-3',
-    4: 'md:columns-4',
-    5: 'md:columns-5',
-    6: 'md:columns-6',
-    7: 'md:columns-7',
-    8: 'md:columns-8',
-    9: 'md:columns-9',
-    10: 'md:columns-10',
-    11: 'md:columns-11',
-    12: 'md:columns-12',
-  }
-
-  const lgColumnMap: Record<number, string> = {
-    1: 'lg:columns-1',
-    2: 'lg:columns-2',
-    3: 'lg:columns-3',
-    4: 'lg:columns-4',
-    5: 'lg:columns-5',
-    6: 'lg:columns-6',
-    7: 'lg:columns-7',
-    8: 'lg:columns-8',
-    9: 'lg:columns-9',
-    10: 'lg:columns-10',
-    11: 'lg:columns-11',
-    12: 'lg:columns-12',
-  }
-
-  const xlColumnMap: Record<number, string> = {
-    1: 'xl:columns-1',
-    2: 'xl:columns-2',
-    3: 'xl:columns-3',
-    4: 'xl:columns-4',
-    5: 'xl:columns-5',
-    6: 'xl:columns-6',
-    7: 'xl:columns-7',
-    8: 'xl:columns-8',
-    9: 'xl:columns-9',
-    10: 'xl:columns-10',
-    11: 'xl:columns-11',
-    12: 'xl:columns-12',
-  }
-
-  const xl2ColumnMap: Record<number, string> = {
-    1: '2xl:columns-1',
-    2: '2xl:columns-2',
-    3: '2xl:columns-3',
-    4: '2xl:columns-4',
-    5: '2xl:columns-5',
-    6: '2xl:columns-6',
-    7: '2xl:columns-7',
-    8: '2xl:columns-8',
-    9: '2xl:columns-9',
-    10: '2xl:columns-10',
-    11: '2xl:columns-11',
-    12: '2xl:columns-12',
-  }
-
-  // Convert columns to Tailwind classes
-  const getColumnClasses = () => {
-    if (typeof columns === 'number') {
-      return baseColumnMap[columns] || 'columns-3'
-    }
-
-    // Handle responsive columns object
-    const classes: string[] = []
-    if (columns.xs !== undefined) classes.push(baseColumnMap[columns.xs] || 'columns-3')
-    if (columns.sm !== undefined) classes.push(smColumnMap[columns.sm] || 'sm:columns-3')
-    if (columns.md !== undefined) classes.push(mdColumnMap[columns.md] || 'md:columns-3')
-    if (columns.lg !== undefined) classes.push(lgColumnMap[columns.lg] || 'lg:columns-3')
-    if (columns.xl !== undefined) classes.push(xlColumnMap[columns.xl] || 'xl:columns-3')
-    if (columns['2xl'] !== undefined) classes.push(xl2ColumnMap[columns['2xl']] || '2xl:columns-3')
-
-    return classes.join(' ')
-  }
-
-  const containerClasses = [
-    getColumnClasses(),
-    getGapClass(),
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ')
-
-  // Wrap children in break-inside-avoid containers
-  const wrappedChildren = React.Children.map(children, (child, index) => (
-    <div key={index} className="break-inside-avoid mb-4">
-      {child}
-    </div>
-  ))
+  const containerWidth = containerRef.current?.offsetWidth ?? 0
+  const viewportWidth = typeof window !== 'undefined' ? window.innerWidth : containerWidth
+  const numColumns = getColumnsForWidth(columns, viewportWidth)
+  const columnWidth =
+    containerWidth > 0
+      ? (containerWidth - gap * (numColumns - 1)) / numColumns
+      : 0
 
   return (
-    <div className={containerClasses} {...rest}>
-      {wrappedChildren}
+    <div
+      ref={containerRef}
+      className={className}
+      style={{
+        position: 'relative',
+        height: containerHeight > 0 ? containerHeight : undefined,
+        ...style,
+      }}
+      {...rest}
+    >
+      {childArray.map((child, index) => (
+        <div
+          key={index}
+          ref={(el) => {
+            itemRefs.current[index] = el
+          }}
+          style={{
+            position: positions.length > 0 ? 'absolute' : 'relative',
+            left: positions[index]?.left ?? 0,
+            top: positions[index]?.top ?? 0,
+            width: columnWidth > 0 ? columnWidth : '100%',
+            visibility: positions.length > 0 ? 'visible' : 'hidden',
+          }}
+        >
+          {child}
+        </div>
+      ))}
     </div>
   )
 }
