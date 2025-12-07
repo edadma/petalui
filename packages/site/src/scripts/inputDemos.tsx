@@ -81,6 +81,13 @@ const demos: Record<string, React.ReactNode> = {
       </div>
     </Space>
   ),
+  'addons': (
+    <Space direction="vertical" size="md">
+      <Input addonBefore="https://" placeholder="your-site.com" />
+      <Input addonAfter=".com" placeholder="username" />
+      <Input addonBefore="$" addonAfter=".00" placeholder="0" />
+    </Space>
+  ),
 };
 
 // Stateful demo components
@@ -116,9 +123,32 @@ const AllowClearDemo: React.FC = () => {
   );
 };
 
+const FloatingLabelDemo: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  return (
+    <Space direction="vertical" size="md">
+      <Input
+        floatingLabel="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <Input
+        floatingLabel="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </Space>
+  );
+};
+
 const statefulDemos: Record<string, React.FC> = {
   'controlled': ControlledDemo,
   'allowClear': AllowClearDemo,
+  'floating-label': FloatingLabelDemo,
 };
 
 // Mount React demos

@@ -59,6 +59,8 @@ export type ValidateTrigger = 'onChange' | 'onBlur' | 'onSubmit' | ('onChange' |
 export interface FormItemProps {
   name?: string | string[]
   label?: string
+  /** Floating label text (alternative to label, uses DaisyUI floating-label) */
+  floatingLabel?: string
   help?: string
   required?: boolean
   rules?: FormRule | FormRule[]
@@ -80,6 +82,10 @@ export interface FormItemProps {
   initialValue?: any
   /** Hide this field (still validates and submits) */
   hidden?: boolean
+  /** Text/element before input (outside, using DaisyUI label) */
+  addonBefore?: React.ReactNode
+  /** Text/element after input (outside, using DaisyUI label) */
+  addonAfter?: React.ReactNode
 }
 
 export interface FormListProps<TFieldValues extends FieldValues = FieldValues> {
@@ -173,6 +179,7 @@ function FormRoot<TFieldValues extends FieldValues = FieldValues>({
 function FormItem({
   name,
   label,
+  floatingLabel,
   help,
   required = false,
   rules,
@@ -187,6 +194,8 @@ function FormItem({
   validateTrigger = 'onChange',
   initialValue,
   hidden = false,
+  addonBefore,
+  addonAfter,
 }: FormItemProps) {
   const { form, size, listName, layout, labelWidth, disabled: formDisabled } = useFormContext()
   const inputId = useId()
@@ -455,6 +464,12 @@ function FormItem({
           childProps.disabled = true
         }
 
+        // When wrapped with addons, the child input should be unstyled (the wrapper has the styling)
+        const hasAddons = addonBefore || addonAfter
+        if (hasAddons) {
+          childProps.unstyled = true
+        }
+
         const enhancedChild = isValidElement(children)
           ? cloneElement(children as React.ReactElement<any>, childProps)
           : children
@@ -462,30 +477,85 @@ function FormItem({
         const isHorizontal = layout === 'horizontal'
         const isInline = layout === 'inline'
 
+        // Size class for floating label
+        const floatingSizeClasses: Record<string, string> = {
+          xs: 'input-xs',
+          sm: 'input-sm',
+          md: 'input-md',
+          lg: 'input-lg',
+          xl: 'input-xl',
+        }
+
+        // Build the input element with optional floating label wrapper
+        const renderInputElement = () => {
+          const inputWithFeedback = (
+            <div className={`${isHorizontal ? 'flex-1' : ''} ${hasFeedback ? 'relative' : ''}`}>
+              {enhancedChild}
+              {hasFeedback && fieldState.isTouched && (
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                  <FeedbackIcon hasError={!!error} isValidating={isValidating} />
+                </span>
+              )}
+            </div>
+          )
+
+          // Floating label variant
+          if (floatingLabel) {
+            const floatingClasses = [
+              'floating-label',
+              size && floatingSizeClasses[size],
+            ].filter(Boolean).join(' ')
+
+            return (
+              <label className={floatingClasses}>
+                {enhancedChild}
+                <span>{floatingLabel}{required && <span className="text-error ml-1">*</span>}</span>
+              </label>
+            )
+          }
+
+          return inputWithFeedback
+        }
+
+        // Wrap with external addons if specified using DaisyUI input wrapper pattern
+        const renderWithAddons = (input: React.ReactNode) => {
+          if (!addonBefore && !addonAfter) return input
+
+          const addonClasses = [
+            'input',
+            'input-bordered',
+            'flex',
+            'items-center',
+            'gap-2',
+            size && floatingSizeClasses[size],
+          ].filter(Boolean).join(' ')
+
+          return (
+            <label className={addonClasses}>
+              {addonBefore && <span className="text-base-content/70">{addonBefore}</span>}
+              {input}
+              {addonAfter && <span className="text-base-content/70">{addonAfter}</span>}
+            </label>
+          )
+        }
+
         return (
           <div className={`form-control ${inline ? 'w-auto' : 'w-full'} ${isHorizontal ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined}>
             <div className={isHorizontal ? 'flex items-center gap-4' : ''}>
-              {label && (
+              {label && !floatingLabel && (
                 <label
                   htmlFor={inputId}
-                  className={`label ${isHorizontal ? 'flex-shrink-0 justify-end py-0' : ''} ${!isHorizontal && !isInline ? 'pb-1' : ''}`}
+                  className={`block text-sm font-medium ${isHorizontal ? 'flex-shrink-0 text-right' : ''} ${!isHorizontal && !isInline ? 'mb-1' : ''}`}
                   style={isHorizontal ? { width: labelWidth } : undefined}
                 >
-                  <span className="label-text flex items-center">
+                  <span className="flex items-center">
                     {label}
                     {required && <span className="text-error ml-1">*</span>}
                     {tooltip && <TooltipIcon />}
                   </span>
                 </label>
               )}
-              <div className={`${isHorizontal ? 'flex-1' : ''} ${hasFeedback ? 'relative' : ''}`}>
-                {enhancedChild}
-                {hasFeedback && fieldState.isTouched && (
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <FeedbackIcon hasError={!!error} isValidating={isValidating} />
-                  </span>
-                )}
-              </div>
+              {renderWithAddons(renderInputElement())}
             </div>
             {!isHorizontal && !inline && (
               <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>

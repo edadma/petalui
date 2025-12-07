@@ -267,6 +267,62 @@ const ErrorListDemo: React.FC = () => {
   )
 }
 
+const FloatingLabelDemo: React.FC = () => {
+  const handleFinish = (values: any) => {
+    Modal.success({
+      title: 'Form Submitted',
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+
+  return (
+    <Form onFinish={handleFinish}>
+      <Form.Item name="fullName" floatingLabel="Full Name" required>
+        <Input />
+      </Form.Item>
+      <Form.Item name="email" floatingLabel="Email Address" required>
+        <Input type="email" />
+      </Form.Item>
+      <Form.Item name="password" floatingLabel="Password" required>
+        <Input type="password" />
+      </Form.Item>
+      <Form.Item>
+        <Button color="primary" htmlType="submit">
+          Sign Up
+        </Button>
+      </Form.Item>
+    </Form>
+  )
+}
+
+const AddonsDemo: React.FC = () => {
+  const handleFinish = (values: any) => {
+    Modal.success({
+      title: 'Form Submitted',
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+
+  return (
+    <Form onFinish={handleFinish}>
+      <Form.Item name="website" label="Website" addonBefore="https://">
+        <Input placeholder="your-site.com" />
+      </Form.Item>
+      <Form.Item name="price" label="Price" addonBefore="$" addonAfter=".00">
+        <Input type="number" placeholder="0" />
+      </Form.Item>
+      <Form.Item name="email" label="Email" addonAfter="@company.com">
+        <Input placeholder="username" />
+      </Form.Item>
+      <Form.Item>
+        <Button color="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  )
+}
+
 const statefulDemos: Record<string, React.FC> = {
   basic: BasicDemo,
   validation: ValidationDemo,
@@ -277,6 +333,8 @@ const statefulDemos: Record<string, React.FC> = {
   'dependencies': DependenciesDemo,
   'validate-trigger': ValidateTriggerDemo,
   'error-list': ErrorListDemo,
+  'floating-label': FloatingLabelDemo,
+  'addons': AddonsDemo,
 }
 
 // Mount React demos

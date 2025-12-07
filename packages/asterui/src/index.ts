@@ -141,9 +141,6 @@ export type { JoinProps } from './components/Join'
 export { Kbd } from './components/Kbd'
 export type { KbdProps } from './components/Kbd'
 
-export { Label } from './components/Label'
-export type { LabelProps, FloatingLabelProps } from './components/Label'
-
 export { Layout, useSiderContext } from './components/Layout'
 export type { LayoutProps, LayoutHeaderProps, LayoutFooterProps, LayoutContentProps, LayoutSiderProps } from './components/Layout'
 

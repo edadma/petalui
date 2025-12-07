@@ -79,7 +79,6 @@ npm install asterui
 - [Form](https://asterui.com/docs/form.md)
 - [Input](https://asterui.com/docs/input.md)
 - [InputNumber](https://asterui.com/docs/inputnumber.md)
-- [Label](https://asterui.com/docs/label.md)
 - [Mention](https://asterui.com/docs/mention.md)
 - [OTPInput](https://asterui.com/docs/otpinput.md)
 - [Radio](https://asterui.com/docs/radio.md)

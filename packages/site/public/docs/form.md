@@ -238,6 +238,9 @@ export default App
 |----------|-------------|------|---------|
 | `name` | Field name (required for validation) | `string` | `-` |
 | `label` | Field label text | `string` | `-` |
+| `floatingLabel` | Floating label text (alternative to label) | `string` | `-` |
+| `addonBefore` | Text/element before input (outside) | `React.ReactNode` | `-` |
+| `addonAfter` | Text/element after input (outside) | `React.ReactNode` | `-` |
 | `rules` | Validation rules (see below) | `object` | `-` |
 | `required` | Mark field as required (shorthand) | `boolean` | `false` |
 | `valuePropName` | Prop name for value (e.g., `'checked'` for checkboxes) | `string` | `'value'` |
@@ -364,6 +367,84 @@ Show checkmark or X icons inside inputs.
 >
   <Input placeholder="you@example.com" />
 </Form.Item>
+```
+
+### Floating Labels
+
+Form.Item with floating labels that animate when focused.
+
+```tsx
+import React from 'react'
+import { Form, Input, Button, Modal } from 'asterui'
+
+const App: React.FC = () => {
+  const handleFinish = (values: any) => {
+    Modal.success({
+      title: 'Form Submitted',
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+
+  return (
+    <Form onFinish={handleFinish}>
+      <Form.Item name="fullName" floatingLabel="Full Name" required>
+        <Input />
+      </Form.Item>
+      <Form.Item name="email" floatingLabel="Email Address" required>
+        <Input type="email" />
+      </Form.Item>
+      <Form.Item name="password" floatingLabel="Password" required>
+        <Input type="password" />
+      </Form.Item>
+      <Form.Item>
+        <Button color="primary" htmlType="submit">
+          Sign Up
+        </Button>
+      </Form.Item>
+    </Form>
+  )
+}
+
+export default App
+```
+
+### Form Addons
+
+Form.Item with text/elements before or after inputs.
+
+```tsx
+import React from 'react'
+import { Form, Input, Button, Modal } from 'asterui'
+
+const App: React.FC = () => {
+  const handleFinish = (values: any) => {
+    Modal.success({
+      title: 'Form Submitted',
+      content: <pre>{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+
+  return (
+    <Form onFinish={handleFinish}>
+      <Form.Item name="website" label="Website" addonBefore="https://">
+        <Input placeholder="your-site.com" />
+      </Form.Item>
+      <Form.Item name="price" label="Price" addonBefore="$" addonAfter=".00">
+        <Input type="number" placeholder="0" />
+      </Form.Item>
+      <Form.Item name="email" label="Email" addonAfter="@company.com">
+        <Input placeholder="username" />
+      </Form.Item>
+      <Form.Item>
+        <Button color="primary" htmlType="submit">
+          Submit
+        </Button>
+      </Form.Item>
+    </Form>
+  )
+}
+
+export default App
 ```
 
 ### Form.ErrorList

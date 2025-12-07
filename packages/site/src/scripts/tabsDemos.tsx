@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { Tabs, Input, Button, notification, Label, Space, Typography } from 'asterui'
+import { Tabs, Input, Button, notification, Space, Typography } from 'asterui'
 import { HomeIcon, UserIcon, CogIcon } from '@heroicons/react/24/outline'
 
 // Basic demo
@@ -23,23 +23,15 @@ const SettingsDemo: React.FC = () => (
   <Tabs defaultActiveKey="account" variant="border">
     <Tabs.Panel tab="Account" tabKey="account">
       <Space direction="vertical" size="md">
-        <Label.Floating label="Username">
-          <Input placeholder="john_doe" />
-        </Label.Floating>
-        <Label.Floating label="Email">
-          <Input type="email" placeholder="john@example.com" />
-        </Label.Floating>
+        <Input floatingLabel="Username" placeholder="john_doe" />
+        <Input floatingLabel="Email" type="email" placeholder="john@example.com" />
         <Button color="primary">Save</Button>
       </Space>
     </Tabs.Panel>
     <Tabs.Panel tab="Security" tabKey="security">
       <Space direction="vertical" size="md">
-        <Label.Floating label="Current Password">
-          <Input type="password" />
-        </Label.Floating>
-        <Label.Floating label="New Password">
-          <Input type="password" />
-        </Label.Floating>
+        <Input floatingLabel="Current Password" type="password" />
+        <Input floatingLabel="New Password" type="password" />
         <Button color="primary">Update</Button>
       </Space>
     </Tabs.Panel>

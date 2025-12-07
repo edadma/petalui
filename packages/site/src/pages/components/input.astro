@@ -50,13 +50,28 @@ const inputApi = [
   },
   {
     property: 'prefix',
-    description: 'Prefix icon or element',
+    description: 'Prefix icon or element (inside input)',
     type: 'React.ReactNode',
   },
   {
     property: 'suffix',
-    description: 'Suffix icon or element',
+    description: 'Suffix icon or element (inside input)',
     type: 'React.ReactNode',
+  },
+  {
+    property: 'addonBefore',
+    description: 'Text/element before input (outside, using DaisyUI label)',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'addonAfter',
+    description: 'Text/element after input (outside, using DaisyUI label)',
+    type: 'React.ReactNode',
+  },
+  {
+    property: 'floatingLabel',
+    description: 'Floating label text (uses DaisyUI floating-label)',
+    type: 'string',
   },
   {
     property: 'mask',
@@ -314,6 +329,54 @@ const App: React.FC = () => (
       <Input status="warning" placeholder="Warning status" />
       <p className="text-warning text-sm mt-1">Please verify this value</p>
     </div>
+  </Space>
+)
+
+export default App`,
+  },
+  {
+    id: 'floating-label',
+    title: 'Floating Label',
+    description: 'Input with animated floating label that moves above when focused or filled.',
+    code: `import React, { useState } from 'react'
+import { Input, Space } from 'asterui'
+
+const App: React.FC = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  return (
+    <Space direction="vertical" size="md">
+      <Input
+        floatingLabel="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <Input
+        floatingLabel="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </Space>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'addons',
+    title: 'Addons',
+    description: 'Input with text or elements before/after (outside the input field).',
+    code: `import React from 'react'
+import { Input, Space } from 'asterui'
+
+const App: React.FC = () => (
+  <Space direction="vertical" size="md">
+    <Input addonBefore="https://" placeholder="your-site.com" />
+    <Input addonAfter=".com" placeholder="username" />
+    <Input addonBefore="$" addonAfter=".00" placeholder="0" />
   </Space>
 )
 

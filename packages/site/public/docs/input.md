@@ -172,6 +172,58 @@ const App: React.FC = () => (
 export default App
 ```
 
+### Floating Label
+
+Input with animated floating label that moves above when focused or filled.
+
+```tsx
+import React, { useState } from 'react'
+import { Input, Space } from 'asterui'
+
+const App: React.FC = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  return (
+    <Space direction="vertical" size="md">
+      <Input
+        floatingLabel="Email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <Input
+        floatingLabel="Password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+    </Space>
+  )
+}
+
+export default App
+```
+
+### Addons
+
+Input with text or elements before/after (outside the input field).
+
+```tsx
+import React from 'react'
+import { Input, Space } from 'asterui'
+
+const App: React.FC = () => (
+  <Space direction="vertical" size="md">
+    <Input addonBefore="https://" placeholder="your-site.com" />
+    <Input addonAfter=".com" placeholder="username" />
+    <Input addonBefore="$" addonAfter=".00" placeholder="0" />
+  </Space>
+)
+
+export default App
+```
+
 ## API
 
 ### Input
@@ -185,6 +237,9 @@ export default App
 | `bordered` | Show border (set to false to remove) | `boolean` | `true` |
 | `mask` | Input mask pattern. Use # for digits, A for letters, * for alphanumeric | `string` | `-` |
 | `maskPlaceholder` | Placeholder character shown in mask | `string` | `_` |
+| `floatingLabel` | Floating label text (uses DaisyUI floating-label) | `string` | `-` |
+| `addonBefore` | Text/element before input (outside) | `React.ReactNode` | `-` |
+| `addonAfter` | Text/element after input (outside) | `React.ReactNode` | `-` |
 | `disabled` | Disabled state | `boolean` | `false` |
 | `placeholder` | Placeholder text | `string` | `-` |
 | `value` | Input value | `string` | `-` |

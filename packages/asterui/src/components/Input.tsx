@@ -17,12 +17,20 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   allowClear?: boolean | { clearIcon?: React.ReactNode }
   /** Callback when clear button is clicked */
   onClear?: () => void
-  /** Prefix icon or element */
+  /** Prefix icon or element (inside input) */
   prefix?: React.ReactNode
-  /** Suffix icon or element */
+  /** Suffix icon or element (inside input) */
   suffix?: React.ReactNode
+  /** Text/element before input (outside, using DaisyUI label) */
+  addonBefore?: React.ReactNode
+  /** Text/element after input (outside, using DaisyUI label) */
+  addonAfter?: React.ReactNode
+  /** Floating label text (uses DaisyUI floating-label) */
+  floatingLabel?: string
   /** ID for error message element (for aria-describedby) */
   errorId?: string
+  /** Render as unstyled input (for use inside styled wrappers) */
+  unstyled?: boolean
 }
 
 // Helper to apply mask to raw value
@@ -108,7 +116,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       onClear,
       prefix,
       suffix,
+      addonBefore,
+      addonAfter,
+      floatingLabel,
       errorId,
+      unstyled = false,
       value,
       defaultValue,
       onChange,
@@ -146,16 +158,21 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     // Status takes precedence over color for validation feedback
     const effectiveColorClass = status ? statusClasses[status] : (color ? colorClasses[color] : '')
 
-    const inputClasses = [
-      'input',
-      !bordered && 'border-0',
-      ghost && 'input-ghost',
-      size && sizeClasses[size],
-      effectiveColorClass,
-      className,
-    ]
-      .filter(Boolean)
-      .join(' ')
+    // When wrapped with external addons OR unstyled prop, the wrapper has the input styling
+    // Inner input should be unstyled (grow to fill space)
+    const hasExternalAddons = addonBefore || addonAfter
+    const shouldBeUnstyled = hasExternalAddons || unstyled
+
+    const inputClasses = shouldBeUnstyled
+      ? ['grow', 'bg-transparent', 'border-0', 'outline-none', 'focus:outline-none', className].filter(Boolean).join(' ')
+      : [
+          'input',
+          !bordered && 'border-0',
+          ghost && 'input-ghost',
+          size && sizeClasses[size],
+          effectiveColorClass,
+          className,
+        ].filter(Boolean).join(' ')
 
     // Mask handling
     const innerRef = useRef<HTMLInputElement>(null)
@@ -339,17 +356,35 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     }
 
     // If we have prefix, suffix, or allowClear, wrap in a container
-    const hasAddons = prefix || suffix || allowClear
+    const hasInternalAddons = prefix || suffix || allowClear
 
-    // Build the input element
-    const renderInput = (inputClassName: string, inputValue?: string, inputOnChange?: typeof onChange) => (
+    // Size class for floating label
+    const floatingSizeClasses = {
+      xs: 'input-xs',
+      sm: 'input-sm',
+      md: 'input-md',
+      lg: 'input-lg',
+      xl: 'input-xl',
+    }
+
+    // Build the masked value if needed
+    const maskedValue = mask ? applyMask(rawValue, mask, maskPlaceholder) : undefined
+
+    // Build the core input element
+    const buildInput = (extraClasses?: string) => (
       <input
         ref={inputRef}
         type={mask ? 'text' : type}
-        className={inputClassName}
-        value={inputValue ?? value}
-        defaultValue={!inputValue && !value ? defaultValue : undefined}
-        onChange={inputOnChange ?? onChange}
+        className={[
+          inputClasses,
+          hasInternalAddons && 'w-full',
+          prefix && 'pl-10',
+          (suffix || showClear) && 'pr-10',
+          extraClasses,
+        ].filter(Boolean).join(' ')}
+        value={maskedValue ?? (value !== undefined ? value : (hasInternalAddons ? internalValue : value))}
+        defaultValue={value === undefined && !mask ? defaultValue : undefined}
+        onChange={mask ? handleMaskedChange : (hasInternalAddons ? handleChange : onChange)}
         onKeyDown={mask ? handleMaskedKeyDown : onKeyDown}
         disabled={disabled}
         required={required}
@@ -358,36 +393,83 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       />
     )
 
-    // If no mask and no addons, render simple input
-    if (!mask && !hasAddons) {
-      return renderInput(inputClasses)
+    // Build input with internal addons (prefix icon, suffix icon, clear button)
+    const buildInputWithInternalAddons = (extraClasses?: string) => {
+      if (!hasInternalAddons) {
+        return buildInput(extraClasses)
+      }
+
+      return (
+        <div className={`relative flex items-center ${extraClasses || ''}`}>
+          {prefix && (
+            <span className="absolute left-3 flex items-center text-base-content/70 pointer-events-none z-10">
+              {prefix}
+            </span>
+          )}
+          {buildInput()}
+          {(suffix || showClear) && (
+            <span className="absolute right-3 flex items-center gap-1 z-10">
+              {showClear && (clearIcon || <ClearIcon onClick={handleClear} />)}
+              {suffix && <span className="text-base-content/70">{suffix}</span>}
+            </span>
+          )}
+        </div>
+      )
     }
 
-    // Render masked input without addons
-    if (mask && !hasAddons) {
-      const maskedValue = applyMask(rawValue, mask, maskPlaceholder)
-      return renderInput(inputClasses, maskedValue, handleMaskedChange)
+    // Wrap with floating label if specified
+    const wrapWithFloatingLabel = (input: React.ReactNode) => {
+      if (!floatingLabel) return input
+
+      const floatingClasses = [
+        'floating-label',
+        size && floatingSizeClasses[size],
+      ].filter(Boolean).join(' ')
+
+      return (
+        <label className={floatingClasses}>
+          {input}
+          <span>{floatingLabel}</span>
+        </label>
+      )
     }
 
-    // Render with addons (prefix/suffix/clear)
-    const maskedValue = mask ? applyMask(rawValue, mask, maskPlaceholder) : undefined
+    // Wrap with external addons (addonBefore/addonAfter) using DaisyUI input wrapper pattern
+    const wrapWithExternalAddons = (input: React.ReactNode) => {
+      if (!hasExternalAddons) return input
 
-    return (
-      <div className="relative flex items-center">
-        {prefix && (
-          <span className="absolute left-3 flex items-center text-base-content/70 pointer-events-none z-10">
-            {prefix}
-          </span>
-        )}
+      const addonClasses = [
+        'input',
+        'input-bordered',
+        'flex',
+        'items-center',
+        'gap-2',
+        size && sizeClasses[size],
+        effectiveColorClass,
+      ].filter(Boolean).join(' ')
+
+      return (
+        <label className={addonClasses}>
+          {addonBefore && <span className="text-base-content/70">{addonBefore}</span>}
+          {input}
+          {addonAfter && <span className="text-base-content/70">{addonAfter}</span>}
+        </label>
+      )
+    }
+
+    // Build the final element
+    const inputElement = buildInputWithInternalAddons(
+      floatingLabel ? 'input input-bordered w-full' : undefined
+    )
+
+    // Apply wrappers
+    return wrapWithExternalAddons(wrapWithFloatingLabel(
+      floatingLabel ? (
+        // For floating label, use raw input (label wrapper provides styling)
         <input
           ref={inputRef}
           type={mask ? 'text' : type}
-          className={[
-            inputClasses,
-            'w-full',
-            prefix && 'pl-10',
-            (suffix || showClear) && 'pr-10',
-          ].filter(Boolean).join(' ')}
+          className="input input-bordered w-full"
           value={maskedValue ?? (value !== undefined ? value : internalValue)}
           defaultValue={value === undefined && !mask ? defaultValue : undefined}
           onChange={mask ? handleMaskedChange : handleChange}
@@ -397,20 +479,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           {...ariaProps}
           {...props}
         />
-        {(suffix || showClear) && (
-          <span className="absolute right-3 flex items-center gap-1 z-10">
-            {showClear && (
-              clearIcon || <ClearIcon onClick={handleClear} />
-            )}
-            {suffix && (
-              <span className="text-base-content/70">
-                {suffix}
-              </span>
-            )}
-          </span>
-        )}
-      </div>
-    )
+      ) : inputElement
+    ))
   }
 )
 

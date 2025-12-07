@@ -58,31 +58,23 @@ export default App`,
   {
     id: 'settings',
     title: 'Settings Page',
-    description: 'Complete settings page with forms using Space and Label components.',
+    description: 'Complete settings page with forms using floating label inputs.',
     code: `import React from 'react'
-import { Tabs, Input, Button, Label, Space } from 'asterui'
+import { Tabs, Input, Button, Space } from 'asterui'
 
 const App: React.FC = () => (
   <Tabs defaultActiveKey="account" variant="border">
     <Tabs.Panel tab="Account" tabKey="account">
       <Space direction="vertical" size="md">
-        <Label.Floating label="Username">
-          <Input placeholder="john_doe" />
-        </Label.Floating>
-        <Label.Floating label="Email">
-          <Input type="email" placeholder="john@example.com" />
-        </Label.Floating>
+        <Input floatingLabel="Username" placeholder="john_doe" />
+        <Input floatingLabel="Email" type="email" placeholder="john@example.com" />
         <Button color="primary">Save</Button>
       </Space>
     </Tabs.Panel>
     <Tabs.Panel tab="Security" tabKey="security">
       <Space direction="vertical" size="md">
-        <Label.Floating label="Current Password">
-          <Input type="password" />
-        </Label.Floating>
-        <Label.Floating label="New Password">
-          <Input type="password" />
-        </Label.Floating>
+        <Input floatingLabel="Current Password" type="password" />
+        <Input floatingLabel="New Password" type="password" />
         <Button color="primary">Update</Button>
       </Space>
     </Tabs.Panel>
