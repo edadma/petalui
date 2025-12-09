@@ -36,6 +36,20 @@ const demos: Record<string, React.ReactNode> = {
       <Code.Line prefix="5" highlight>greet('World')</Code.Line>
     </Code>
   ),
+  'copyable': (
+    <Code copyable>
+      <Code.Line prefix="$">npm install asterui</Code.Line>
+    </Code>
+  ),
+  'copyable-multiline': (
+    <Code copyable>
+      <Code.Line prefix="1">import {'{ Button }'} from 'asterui'</Code.Line>
+      <Code.Line prefix="2"></Code.Line>
+      <Code.Line prefix="3">export default function App() {'{'}</Code.Line>
+      <Code.Line prefix="4">  return &lt;Button&gt;Click me&lt;/Button&gt;</Code.Line>
+      <Code.Line prefix="5">{'}'}</Code.Line>
+    </Code>
+  ),
 };
 
 // Mount React demos

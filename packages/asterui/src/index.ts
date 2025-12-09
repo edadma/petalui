@@ -22,6 +22,9 @@ export type { BreadcrumbProps, BreadcrumbItemProps } from './components/Breadcru
 export { Button } from './components/Button'
 export type { ButtonProps } from './components/Button'
 
+export { CopyButton } from './components/CopyButton'
+export type { CopyButtonProps } from './components/CopyButton'
+
 export { Checkbox } from './components/Checkbox'
 export type { CheckboxProps, CheckboxGroupProps, CheckboxOptionType, CheckboxSwapConfig } from './components/Checkbox'
 
