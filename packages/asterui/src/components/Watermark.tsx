@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 
 export type WatermarkGap = [number, number]
 export type WatermarkOffset = [number, number]
@@ -111,14 +111,20 @@ export const Watermark: React.FC<WatermarkProps> = ({
   const gapY = gap?.[1] ?? 120
   const offsetX = offset?.[0] ?? gapX / 2
   const offsetY = offset?.[1] ?? gapY / 2
-  const textLines =
-    typeof content === 'string'
-      ? [content]
-      : Array.isArray(content)
-        ? content
-        : [DEFAULT_CONTENT]
+  const textLines = useMemo(
+    () =>
+      typeof content === 'string'
+        ? [content]
+        : Array.isArray(content)
+          ? content
+          : [DEFAULT_CONTENT],
+    [content]
+  )
   const resolvedColor = resolveThemeColor(font?.color)
-  const fontSettings = getFontSettings(font, resolvedColor)
+  const fontSettings = useMemo(
+    () => getFontSettings(font, resolvedColor),
+    [font, resolvedColor]
+  )
   const rotationInRadians = (Math.PI / 180) * rotate
   const textKey = textLines.join('|')
 
@@ -166,9 +172,8 @@ export const Watermark: React.FC<WatermarkProps> = ({
       const img = new Image()
       img.crossOrigin = 'anonymous'
       img.referrerPolicy = 'no-referrer'
-      img.src = image
 
-      img.onload = () => {
+      const handleLoad = () => {
         ctx.save()
         ctx.translate((gapX / 2 + width / 2) * ratio, (gapY / 2 + height / 2) * ratio)
         ctx.rotate(rotationInRadians)
@@ -183,8 +188,18 @@ export const Watermark: React.FC<WatermarkProps> = ({
         commitWatermark()
       }
 
-      img.onerror = () => {
+      const handleError = () => {
         if (!cancelled) setWatermark(null)
+      }
+
+      img.addEventListener('load', handleLoad)
+      img.addEventListener('error', handleError)
+      img.src = image
+
+      return () => {
+        cancelled = true
+        img.removeEventListener('load', handleLoad)
+        img.removeEventListener('error', handleError)
       }
     } else {
       drawText()
@@ -195,13 +210,7 @@ export const Watermark: React.FC<WatermarkProps> = ({
       cancelled = true
     }
   }, [
-    fontSettings.color,
-    fontSettings.fontFamily,
-    fontSettings.fontSize,
-    fontSettings.fontStyle,
-    fontSettings.fontWeight,
-    fontSettings.lineHeight,
-    resolvedColor,
+    fontSettings,
     gapX,
     gapY,
     height,
