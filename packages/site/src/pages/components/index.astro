@@ -7,7 +7,7 @@ const siteBase = import.meta.env.DEV ? '' : 'https://asterui.com';
 // Components with documentation pages
 const docPages = new Set([
   'affix', 'alert', 'anchor', 'autocomplete', 'avatar', 'badge', 'breadcrumb', 'browser', 'button',
-  'card', 'carousel', 'cascader', 'chart', 'chat', 'checkbox', 'code',
+  'card', 'carousel', 'cascader', 'chart', 'chat', 'checkbox', 'code', 'copybutton',
   'collapse', 'colorpicker', 'container', 'contextmenu', 'countdown', 'datepicker', 'descriptions', 'diff', 'divider', 'dock', 'drawer',
   'dropdown', 'empty', 'fieldset', 'fileinput', 'filter', 'flex', 'floatbutton', 'footer', 'form', 'grid',
   'hero', 'hovergallery', 'image', 'indicator', 'input', 'inputnumber', 'join', 'kbd', 'label', 'layout',
@@ -25,6 +25,7 @@ const componentCategories = [
     name: 'Actions',
     components: [
       { name: 'Button', slug: 'button', description: 'Versatile button with DaisyUI styling, multiple variants, sizes, and states', props: ['type', 'size', 'outline', 'dash', 'soft', 'active', 'loading', 'shape', 'noAnimation', 'disabled', 'href', 'htmlType'] },
+      { name: 'CopyButton', slug: 'copybutton', description: 'Button for copying text to clipboard with visual feedback', props: ['text', 'timeout', 'color', 'variant', 'size', 'shape', 'showTooltip', 'onCopy', 'onError'] },
       { name: 'Dropdown', slug: 'dropdown', description: 'Dropdown menu overlay', props: ['menu', 'trigger', 'placement', 'arrow', 'open'] },
       { name: 'FloatButton', slug: 'floatbutton', description: 'Floating action button', props: ['icon', 'onClick', 'type', 'tooltip', 'badge'] },
       { name: 'Modal', slug: 'modal', description: 'Dialog overlay with customizable content', props: ['open', 'onClose', 'title', 'footer', 'width', 'centered', 'maskClosable'] },

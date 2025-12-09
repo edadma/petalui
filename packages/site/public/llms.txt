@@ -22,6 +22,7 @@ npm install asterui
 ### Actions
 
 - [Button](https://asterui.com/docs/button.md)
+- [CopyButton](https://asterui.com/docs/copybutton.md)
 - [Dropdown](https://asterui.com/docs/dropdown.md)
 - [FloatButton](https://asterui.com/docs/floatbutton.md)
 - [Modal](https://asterui.com/docs/modal.md)

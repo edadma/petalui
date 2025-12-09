@@ -1,0 +1,374 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ApiTable from '../../components/ApiTable.astro';
+import { Code } from 'astro:components';
+
+const copyButtonApi = [
+  {
+    property: 'text',
+    description: 'Text to copy to clipboard',
+    type: 'string',
+    default: '-',
+  },
+  {
+    property: 'timeout',
+    description: 'Duration in ms to show copied state',
+    type: 'number',
+    default: '2000',
+  },
+  {
+    property: 'color',
+    description: 'Button color',
+    type: "'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral'",
+    default: '-',
+  },
+  {
+    property: 'variant',
+    description: 'Button style variant',
+    type: "'solid' | 'outline' | 'dash' | 'soft' | 'ghost' | 'link'",
+    default: '-',
+  },
+  {
+    property: 'size',
+    description: 'Button size',
+    type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
+    default: "'md'",
+  },
+  {
+    property: 'shape',
+    description: 'Button shape',
+    type: "'square' | 'circle'",
+    default: '-',
+  },
+  {
+    property: 'icon',
+    description: 'Custom icon for default state',
+    type: 'ReactNode',
+    default: 'Copy icon',
+  },
+  {
+    property: 'copiedIcon',
+    description: 'Custom icon for copied state',
+    type: 'ReactNode',
+    default: 'Check icon',
+  },
+  {
+    property: 'children',
+    description: 'Custom content for default state (overrides icon)',
+    type: 'ReactNode',
+    default: '-',
+  },
+  {
+    property: 'copiedChildren',
+    description: 'Custom content for copied state',
+    type: 'ReactNode',
+    default: '-',
+  },
+  {
+    property: 'onCopy',
+    description: 'Callback when copy succeeds',
+    type: '() => void',
+    default: '-',
+  },
+  {
+    property: 'onError',
+    description: 'Callback when copy fails',
+    type: '(error: Error) => void',
+    default: '-',
+  },
+  {
+    property: 'showTooltip',
+    description: 'Show tooltip with copy status',
+    type: 'boolean',
+    default: 'false',
+  },
+  {
+    property: 'tooltipText',
+    description: 'Tooltip text for default state',
+    type: 'string',
+    default: "'Copy'",
+  },
+  {
+    property: 'copiedTooltipText',
+    description: 'Tooltip text for copied state',
+    type: 'string',
+    default: "'Copied!'",
+  },
+  {
+    property: 'disabled',
+    description: 'Disable the button',
+    type: 'boolean',
+    default: 'false',
+  },
+];
+
+const examples = [
+  {
+    id: 'basic',
+    title: 'Basic Usage',
+    description: 'Simple copy button with default icon. Enable tooltip for visual feedback.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="Hello, World!" />
+    <CopyButton text="Copy this text" showTooltip />
+  </>
+)`,
+  },
+  {
+    id: 'with-text',
+    title: 'With Text Content',
+    description: 'Display text content instead of the default icon.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="npm install asterui">
+      npm install asterui
+    </CopyButton>
+    <CopyButton text="pnpm add asterui" copiedChildren="Copied!">
+      pnpm add asterui
+    </CopyButton>
+  </>
+)`,
+  },
+  {
+    id: 'colors',
+    title: 'Colors',
+    description: 'Apply different color themes to the button.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="primary" color="primary" showTooltip />
+    <CopyButton text="secondary" color="secondary" showTooltip />
+    <CopyButton text="accent" color="accent" showTooltip />
+    <CopyButton text="success" color="success" showTooltip />
+  </>
+)`,
+  },
+  {
+    id: 'variants',
+    title: 'Variants',
+    description: 'Different button style variants.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="solid" color="primary" />
+    <CopyButton text="outline" color="primary" variant="outline" />
+    <CopyButton text="ghost" variant="ghost" />
+    <CopyButton text="soft" color="primary" variant="soft" />
+  </>
+)`,
+  },
+  {
+    id: 'sizes',
+    title: 'Sizes',
+    description: 'Available button sizes.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="xs" size="xs" />
+    <CopyButton text="sm" size="sm" />
+    <CopyButton text="md" size="md" />
+    <CopyButton text="lg" size="lg" />
+    <CopyButton text="xl" size="xl" />
+  </>
+)`,
+  },
+  {
+    id: 'shapes',
+    title: 'Shapes',
+    description: 'Square and circle button shapes.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="square" shape="square" />
+    <CopyButton text="circle" shape="circle" />
+  </>
+)`,
+  },
+  {
+    id: 'code-block',
+    title: 'Code Block',
+    description: 'Copy button positioned in the corner of a custom code block.',
+    code: `import { CopyButton } from 'asterui'
+
+const codeText = \`import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <CopyButton text="Hello!" showTooltip />
+)\`
+
+export const App = () => (
+  <div style={{ position: 'relative' }} className="bg-base-300 rounded-lg p-4 pr-12">
+    <pre className="font-mono text-sm whitespace-pre">{codeText}</pre>
+    <div style={{ position: 'absolute', top: 8, right: 8 }}>
+      <CopyButton text={codeText} size="sm" variant="ghost" showTooltip />
+    </div>
+  </div>
+)`,
+  },
+    {
+    id: 'input-copy',
+    title: 'Input with Copy',
+    description: 'Copy the value from an input field.',
+    code: `import { CopyButton, Input } from 'asterui'
+import { useState } from 'react'
+
+export const App = () => {
+  const [value, setValue] = useState('https://asterui.com')
+
+  return (
+    <div className="flex gap-2">
+      <Input value={value} onChange={(e) => setValue(e.target.value)} />
+      <CopyButton text={value} color="primary" showTooltip />
+    </div>
+  )
+}`,
+  },
+  {
+    id: 'callback',
+    title: 'Callbacks',
+    description: 'Handle copy success and error events.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <CopyButton
+    text="Callback example"
+    color="primary"
+    onCopy={() => console.log('Copied!')}
+    onError={(err) => console.error('Failed:', err)}
+  >
+    Copy with callback
+  </CopyButton>
+)`,
+  },
+  {
+    id: 'custom-timeout',
+    title: 'Custom Timeout',
+    description: 'Control how long the copied state is shown.',
+    code: `import { CopyButton } from 'asterui'
+
+export const App = () => (
+  <>
+    <CopyButton text="1 second" timeout={1000}>1s timeout</CopyButton>
+    <CopyButton text="5 seconds" timeout={5000}>5s timeout</CopyButton>
+  </>
+)`,
+  },
+];
+---
+
+<Layout title="CopyButton - AsterUI">
+  <div class="max-w-screen-xl mx-auto">
+    <!-- Header -->
+    <div class="mb-8">
+      <nav class="text-sm breadcrumbs mb-4">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/components">Components</a></li>
+          <li>CopyButton</li>
+        </ul>
+      </nav>
+      <h1 class="text-4xl font-bold mb-2">CopyButton</h1>
+      <p class="text-base-content/70 text-lg">
+        A button component for copying text to the clipboard with visual feedback.
+      </p>
+    </div>
+
+    <!-- Import -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">Import</h2>
+      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
+        <Code code="import { CopyButton } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+      </div>
+    </section>
+
+    <!-- Examples -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Examples</h2>
+
+      <div class="columns-1 lg:columns-2 gap-6">
+        {examples.map((example) => (
+          <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
+            <div class="p-4 bg-base-100 rounded-t-lg">
+              <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
+              <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
+              <div class="demo-container" data-example={example.id}></div>
+            </div>
+            <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
+              <div class="tooltip tooltip-top" data-tip="Show code">
+                <button class="toggle-code btn btn-ghost btn-sm font-mono">
+                  &lt;&#8201;&gt;
+                </button>
+              </div>
+            </div>
+            <div class="code-panel relative" aria-hidden="true">
+              <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                </svg>
+              </button>
+              <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
+                <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- API -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">API</h2>
+      <ApiTable title="CopyButton" data={copyButtonApi} />
+    </section>
+
+    <!-- Related -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Related</h2>
+      <ul class="list-disc list-inside text-base-content/80 space-y-1">
+        <li><a href="/components/button" class="link link-primary">Button</a> - Base button component</li>
+        <li><code class="text-sm bg-base-200 px-1 rounded">useClipboard</code> - Hook for clipboard operations</li>
+      </ul>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .code-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+  }
+  .example-card.open .code-panel {
+    max-height: 2000px;
+  }
+</style>
+
+<script>
+  import '../../scripts/copybuttonDemos';
+
+  document.querySelectorAll('.toggle-code').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.example-card');
+      if (card) {
+        card.classList.toggle('open');
+        const panel = card.querySelector('.code-panel');
+        const tooltip = btn.closest('.tooltip');
+        if (card.classList.contains('open')) {
+          panel?.setAttribute('aria-hidden', 'false');
+          tooltip?.setAttribute('data-tip', 'Hide code');
+        } else {
+          panel?.setAttribute('aria-hidden', 'true');
+          tooltip?.setAttribute('data-tip', 'Show code');
+        }
+      }
+    });
+  });
+</script>
