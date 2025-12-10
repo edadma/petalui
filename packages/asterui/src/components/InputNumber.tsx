@@ -135,7 +135,6 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
 
     const inputClasses = [
       'input',
-      'input-bordered',
       'w-full',
       size && sizeClasses[size],
       disabled && 'input-disabled',

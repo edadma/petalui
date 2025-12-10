@@ -267,7 +267,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   const getOptionId = (index: number) => `${baseId}-option-${index}`
 
   const inputClasses = [
-    'input input-bordered w-full',
+    'input w-full',
     sizeClasses[size],
     effectiveColorClass,
     showClear && 'pr-10',

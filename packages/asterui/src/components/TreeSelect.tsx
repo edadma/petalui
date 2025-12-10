@@ -1044,7 +1044,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : 0}
           className={[
-            'input input-bordered flex items-center gap-2 cursor-pointer flex-wrap',
+            'input flex items-center gap-2 cursor-pointer flex-wrap',
             sizeClasses[size],
             borderClass,
             disabled && 'input-disabled opacity-50 cursor-not-allowed',
@@ -1117,7 +1117,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
                 <input
                   ref={inputRef}
                   type="text"
-                  className="input input-bordered input-sm w-full"
+                  className="input input-sm w-full"
                   placeholder="Search..."
                   value={searchValue}
                   onChange={handleSearchChange}

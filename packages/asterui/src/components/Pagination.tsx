@@ -246,7 +246,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           <span className="text-sm">Go to</span>
           <input
             type="number"
-            className={`input input-bordered w-16 ${sizeClass}`}
+            className={`input w-16 ${sizeClass}`}
             min={1}
             max={totalPages}
             value={jumpPage}

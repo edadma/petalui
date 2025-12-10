@@ -440,7 +440,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
       const addonClasses = [
         'input',
-        'input-bordered',
         'flex',
         'items-center',
         'gap-2',
@@ -459,7 +458,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     // Build the final element
     const inputElement = buildInputWithInternalAddons(
-      floatingLabel ? 'input input-bordered w-full' : undefined
+      floatingLabel ? 'input w-full' : undefined
     )
 
     // Apply wrappers
@@ -469,7 +468,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={inputRef}
           type={mask ? 'text' : type}
-          className="input input-bordered w-full"
+          className="input w-full"
           value={maskedValue ?? (value !== undefined ? value : internalValue)}
           defaultValue={value === undefined && !mask ? defaultValue : undefined}
           onChange={mask ? handleMaskedChange : handleChange}

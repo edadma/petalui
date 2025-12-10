@@ -84,16 +84,16 @@ function CheckboxGroup({
           {options.map((option) => {
             if (typeof option === 'string' || typeof option === 'number') {
               return (
-                <label key={option} className="label cursor-pointer justify-start gap-2">
+                <label key={option} className="flex items-center cursor-pointer gap-2">
                   <CheckboxRoot value={option} />
-                  <span className="label-text">{option}</span>
+                  <span>{option}</span>
                 </label>
               )
             } else {
               return (
-                <label key={option.value} className="label cursor-pointer justify-start gap-2">
+                <label key={option.value} className="flex items-center cursor-pointer gap-2">
                   <CheckboxRoot value={option.value} disabled={option.disabled} />
-                  <span className="label-text">{option.label}</span>
+                  <span>{option.label}</span>
                 </label>
               )
             }
@@ -232,9 +232,9 @@ const CheckboxRoot = forwardRef<HTMLInputElement, CheckboxProps>(
     // If children provided, wrap in label
     if (children) {
       return (
-        <label className={`label cursor-pointer justify-start gap-2 ${className}`}>
+        <label className={`flex items-center cursor-pointer gap-2 ${className}`}>
           {checkboxInput}
-          <span className="label-text">{children}</span>
+          <span>{children}</span>
         </label>
       )
     }

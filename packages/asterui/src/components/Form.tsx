@@ -203,7 +203,7 @@ function FormItem({
 
   if (!name) {
     // Render without form control if no name provided
-    return <div className={`form-control ${inline ? 'w-auto' : 'w-full'} ${className}`} style={hidden ? { display: 'none' } : undefined}>{children}</div>
+    return <div className={`${inline ? 'w-auto' : 'w-full'} ${className}`} style={hidden ? { display: 'none' } : undefined}>{children}</div>
   }
 
   // Handle nested field names (for Form.List)
@@ -523,7 +523,6 @@ function FormItem({
 
           const addonClasses = [
             'input',
-            'input-bordered',
             'flex',
             'items-center',
             'gap-2',
@@ -540,7 +539,7 @@ function FormItem({
         }
 
         return (
-          <div className={`form-control ${inline ? 'w-auto' : 'w-full'} ${isHorizontal ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined}>
+          <div className={`${inline ? 'w-auto' : 'w-full'} ${isHorizontal ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined}>
             <div className={isHorizontal ? 'flex items-center gap-4' : ''}>
               {label && !floatingLabel && (
                 <label

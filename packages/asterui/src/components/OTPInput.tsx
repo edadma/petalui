@@ -210,7 +210,7 @@ export const OTPInput = forwardRef<OTPInputRef, OTPInputProps>(
             onPaste={handlePaste}
             onFocus={handleFocus}
             className={`
-              input input-bordered text-center font-mono
+              input text-center font-mono
               ${sizeClasses[size]}
               ${error ? 'input-error' : ''}
               ${disabled ? 'input-disabled opacity-50' : ''}

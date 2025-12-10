@@ -114,7 +114,7 @@ function TransferList({
         <div className="px-2 py-2 border-b border-base-300">
           <input
             type="text"
-            className="input input-bordered input-sm w-full"
+            className="input input-sm w-full"
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}

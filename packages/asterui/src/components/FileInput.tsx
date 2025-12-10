@@ -32,7 +32,8 @@ export const FileInput = forwardRef<HTMLInputElement, FileInputProps>(
     const fileInputClasses = [
       'file-input',
       'w-full',
-      bordered && 'file-input-bordered',
+      // In DaisyUI 5, borders are on by default. Use ghost to remove them.
+      !bordered && 'file-input-ghost',
       ghost && 'file-input-ghost',
       size && sizeClasses[size],
       color && colorClasses[color],

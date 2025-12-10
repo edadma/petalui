@@ -267,7 +267,7 @@ export function ColorPicker({
               type="text"
               value={hexInput}
               onChange={handleHexChange}
-              className={`input input-bordered ${config.input} w-full font-mono uppercase`}
+              className={`input ${config.input} w-full font-mono uppercase`}
               placeholder="#000000"
               maxLength={7}
               disabled={disabled}
