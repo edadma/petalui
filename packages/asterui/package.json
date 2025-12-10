@@ -30,6 +30,7 @@
     "prepublishOnly": "pnpm build"
   },
   "peerDependencies": {
+    "@tanstack/react-virtual": "^3.0.0",
     "apexcharts": "^5.3.6",
     "qrcode": "^1.5.4",
     "react": "^18.0.0 || ^19.0.0",
@@ -37,6 +38,9 @@
     "react-hook-form": "^7.0.0"
   },
   "peerDependenciesMeta": {
+    "@tanstack/react-virtual": {
+      "optional": true
+    },
     "apexcharts": {
       "optional": true
     },
@@ -46,6 +50,7 @@
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.17",
+    "@tanstack/react-virtual": "^3.13.13",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

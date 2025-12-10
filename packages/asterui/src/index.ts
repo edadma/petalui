@@ -302,6 +302,9 @@ export type {
 export { Upload } from './components/Upload'
 export type { UploadProps, UploadFile } from './components/Upload'
 
+export { VirtualList } from './components/VirtualList'
+export type { VirtualListProps } from './components/VirtualList'
+
 export { Watermark } from './components/Watermark'
 export type {
   WatermarkProps,
