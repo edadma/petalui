@@ -4,22 +4,44 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const cascaderApi = [
-  { property: 'options', description: 'Hierarchical options data', type: 'CascaderOption[]' },
-  { property: 'value', description: 'Selected value path', type: 'string[]' },
-  { property: 'defaultValue', description: 'Initial selected value', type: 'string[]' },
-  { property: 'onChange', description: 'Selection change handler', type: '(value: string[], selectedOptions: CascaderOption[]) => void' },
-  { property: 'placeholder', description: 'Input placeholder text', type: 'string', default: "'Select'" },
-  { property: 'displayRender', description: 'Custom display render function', type: '(labels: string[]) => React.ReactNode' },
-  { property: 'expandTrigger', description: 'How to expand sub-menus', type: "'click' | 'hover'", default: "'click'" },
+  { property: 'options', description: 'Hierarchical options data', type: 'CascaderOption[]', default: '[]' },
+  { property: 'value', description: 'Controlled selected value path', type: 'string[]' },
+  { property: 'defaultValue', description: 'Default selected value (uncontrolled)', type: 'string[]', default: '[]' },
+  { property: 'onChange', description: 'Callback when selection changes', type: '(value: string[], selectedOptions: CascaderOption[]) => void' },
+  { property: 'placeholder', description: 'Input placeholder text', type: 'string', default: "'Please select'" },
   { property: 'disabled', description: 'Disable the cascader', type: 'boolean', default: 'false' },
+  { property: 'allowClear', description: 'Show clear button', type: 'boolean', default: 'true' },
+  { property: 'expandTrigger', description: 'How to expand sub-menus', type: "'click' | 'hover'", default: "'click'" },
+  { property: 'changeOnSelect', description: 'Allow selection of any level, not just leaves', type: 'boolean', default: 'false' },
+  { property: 'displayRender', description: 'Custom display render function', type: '(labels: ReactNode[], selectedOptions: CascaderOption[]) => ReactNode' },
   { property: 'size', description: 'Input size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'" },
+  { property: 'color', description: 'Focus ring color', type: "'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'" },
+  { property: 'status', description: 'Validation status', type: "'error' | 'warning'" },
+  { property: 'showSearch', description: 'Enable search functionality', type: 'boolean | { filter?, render?, matchInputWidth? }', default: 'false' },
+  { property: 'notFoundContent', description: 'Content when no search results', type: 'ReactNode', default: "'No results found'" },
+  { property: 'loadData', description: 'Async data loading function', type: '(selectedOptions: CascaderOption[]) => Promise<void>' },
+  { property: 'fieldNames', description: 'Custom field names for data mapping', type: '{ label?: string; value?: string; children?: string }' },
+  { property: 'open', description: 'Controlled dropdown open state', type: 'boolean' },
+  { property: 'onDropdownVisibleChange', description: 'Callback when dropdown visibility changes', type: '(open: boolean) => void' },
+  { property: 'popupClassName', description: 'Class name for dropdown', type: 'string' },
+  { property: 'dropdownRender', description: 'Custom dropdown wrapper render', type: '(menu: ReactNode) => ReactNode' },
+  { property: 'multiple', description: 'Enable multiple selection mode', type: 'boolean', default: 'false' },
+  { property: 'maxTagCount', description: 'Max tags to show in multiple mode', type: "number | 'responsive'" },
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
+];
+
+const optionApi = [
+  { property: 'value', description: 'Unique identifier', type: 'string' },
+  { property: 'label', description: 'Display label', type: 'ReactNode' },
+  { property: 'children', description: 'Child options', type: 'CascaderOption[]' },
+  { property: 'disabled', description: 'Disable this option', type: 'boolean', default: 'false' },
+  { property: 'isLeaf', description: 'Force as leaf node (no expand, no async load)', type: 'boolean' },
 ];
 
 const examples = [
   {
     id: 'basic',
-    title: 'Basic Cascader',
+    title: 'Basic',
     description: 'Simple hierarchical selection.',
     code: `import React from 'react'
 import { Cascader } from 'asterui'
@@ -98,7 +120,7 @@ export default App`,
     title: 'Sizes',
     description: 'Different cascader sizes.',
     code: `import React from 'react'
-import { Cascader, Space } from 'asterui'
+import { Cascader } from 'asterui'
 
 const options = [
   { value: 'opt1', label: 'Option 1' },
@@ -106,12 +128,12 @@ const options = [
 ]
 
 const App: React.FC = () => (
-  <Space direction="vertical" size="sm">
+  <div className="flex flex-col gap-2">
     <Cascader size="xs" options={options} placeholder="Extra small" />
     <Cascader size="sm" options={options} placeholder="Small" />
     <Cascader size="md" options={options} placeholder="Medium" />
     <Cascader size="lg" options={options} placeholder="Large" />
-  </Space>
+  </div>
 )
 
 export default App`,
@@ -129,7 +151,167 @@ const options = [
 ]
 
 const App: React.FC = () => (
-  <Cascader options={options} disabled defaultValue={['opt1']} />
+  <Cascader options={options} disabled value={['opt1']} />
+)
+
+export default App`,
+  },
+  {
+    id: 'search',
+    title: 'Search',
+    description: 'Enable search/filter functionality.',
+    code: `import React from 'react'
+import { Cascader } from 'asterui'
+
+const options = [
+  {
+    value: 'usa',
+    label: 'United States',
+    children: [
+      {
+        value: 'ca',
+        label: 'California',
+        children: [
+          { value: 'sf', label: 'San Francisco' },
+          { value: 'la', label: 'Los Angeles' },
+        ],
+      },
+    ],
+  },
+]
+
+const App: React.FC = () => (
+  <Cascader options={options} showSearch placeholder="Search locations" />
+)
+
+export default App`,
+  },
+  {
+    id: 'change-on-select',
+    title: 'Change On Select',
+    description: 'Allow selection of any level, not just leaf nodes.',
+    code: `import React, { useState } from 'react'
+import { Cascader } from 'asterui'
+
+const options = [
+  {
+    value: 'usa',
+    label: 'United States',
+    children: [
+      { value: 'ca', label: 'California' },
+      { value: 'ny', label: 'New York' },
+    ],
+  },
+]
+
+const App: React.FC = () => {
+  const [value, setValue] = useState<string[]>([])
+
+  return (
+    <div>
+      <Cascader
+        options={options}
+        changeOnSelect
+        value={value}
+        onChange={setValue}
+        placeholder="Select any level"
+      />
+      <p className="mt-2 text-sm">Selected: {value.join(' / ') || 'None'}</p>
+    </div>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'async-load',
+    title: 'Async Loading',
+    description: 'Load options dynamically when expanding.',
+    code: `import React, { useState } from 'react'
+import { Cascader } from 'asterui'
+import type { CascaderOption } from 'asterui'
+
+const App: React.FC = () => {
+  const [options, setOptions] = useState<CascaderOption[]>([
+    { value: 'region1', label: 'Region 1' },
+    { value: 'region2', label: 'Region 2' },
+  ])
+
+  const loadData = async (selectedOptions: CascaderOption[]) => {
+    const targetOption = selectedOptions[selectedOptions.length - 1]
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    setOptions(prev => {
+      const update = (opts: CascaderOption[]): CascaderOption[] =>
+        opts.map(opt =>
+          opt.value === targetOption.value
+            ? {
+                ...opt,
+                children: [
+                  { value: \`\${opt.value}-1\`, label: 'Child 1', isLeaf: true },
+                  { value: \`\${opt.value}-2\`, label: 'Child 2', isLeaf: true },
+                ],
+              }
+            : { ...opt, children: opt.children ? update(opt.children) : undefined }
+        )
+      return update(prev)
+    })
+  }
+
+  return <Cascader options={options} loadData={loadData} placeholder="Load on expand" />
+}
+
+export default App`,
+  },
+  {
+    id: 'status',
+    title: 'Validation Status',
+    description: 'Show error or warning validation state.',
+    code: `import React from 'react'
+import { Cascader } from 'asterui'
+
+const options = [
+  { value: 'opt1', label: 'Option 1' },
+  { value: 'opt2', label: 'Option 2' },
+]
+
+const App: React.FC = () => (
+  <div className="flex flex-col gap-2">
+    <Cascader options={options} status="error" placeholder="Error state" />
+    <Cascader options={options} status="warning" placeholder="Warning state" />
+  </div>
+)
+
+export default App`,
+  },
+  {
+    id: 'multiple',
+    title: 'Multiple Selection',
+    description: 'Select multiple leaf values.',
+    code: `import React from 'react'
+import { Cascader } from 'asterui'
+
+const options = [
+  {
+    value: 'fruits',
+    label: 'Fruits',
+    children: [
+      { value: 'apple', label: 'Apple' },
+      { value: 'banana', label: 'Banana' },
+    ],
+  },
+  {
+    value: 'vegetables',
+    label: 'Vegetables',
+    children: [
+      { value: 'carrot', label: 'Carrot' },
+      { value: 'lettuce', label: 'Lettuce' },
+    ],
+  },
+]
+
+const App: React.FC = () => (
+  <Cascader options={options} multiple placeholder="Select multiple" />
 )
 
 export default App`,
@@ -150,7 +332,7 @@ export default App`,
       </nav>
       <h1 class="text-4xl font-bold mb-2">Cascader</h1>
       <p class="text-base-content/70 text-lg">
-        Hierarchical selection dropdown for nested data like locations or categories.
+        Cascade selection box for hierarchical data like locations or categories.
       </p>
     </div>
 
@@ -167,7 +349,7 @@ export default App`,
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
 
       <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example, i) => (
+      {examples.map((example) => (
         <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
           <div class="p-4 bg-base-100 rounded-t-lg">
             <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
@@ -203,15 +385,63 @@ export default App`,
     </section>
 
     <!-- Option Type -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">CascaderOption</h2>
+      <ApiTable title="CascaderOption" data={optionApi} />
+    </section>
+
+    <!-- Accessibility -->
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Accessibility</h2>
+      <div class="prose max-w-none">
+        <p>The Cascader component follows WAI-ARIA combobox pattern:</p>
+        <ul>
+          <li>Uses <code>role="combobox"</code> on trigger with <code>aria-expanded</code>, <code>aria-haspopup</code></li>
+          <li><code>aria-activedescendant</code> tracks focused option for screen readers</li>
+          <li><code>aria-selected</code> indicates selected state on options</li>
+          <li><code>aria-disabled</code> indicates disabled state</li>
+          <li>Clear button has <code>aria-label="Clear selection"</code></li>
+        </ul>
+      </div>
+
+      <h3 class="text-xl font-semibold mt-6 mb-4">Keyboard Navigation</h3>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Key</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><kbd class="kbd kbd-sm">↓</kbd></td><td>Open dropdown or move to next option</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">↑</kbd></td><td>Move to previous option</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">→</kbd></td><td>Move to next column (expand)</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">←</kbd></td><td>Move to previous column</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">Enter</kbd></td><td>Select focused option or open dropdown</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">Space</kbd></td><td>Toggle dropdown (when not searching)</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">Escape</kbd></td><td>Close dropdown</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">Home</kbd></td><td>Move to first option</td></tr>
+            <tr><td><kbd class="kbd kbd-sm">End</kbd></td><td>Move to last option</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Testing -->
     <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Option Type</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code={`interface CascaderOption {
-  value: string
-  label: string
-  children?: CascaderOption[]
-  disabled?: boolean
-}`} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+      <h2 class="text-2xl font-bold mb-4">Testing</h2>
+      <div class="prose max-w-none">
+        <p>The component includes data attributes for testing:</p>
+        <ul>
+          <li><code>data-testid="cascader"</code> on the root container</li>
+          <li><code>data-testid="cascader-dropdown"</code> on the dropdown</li>
+          <li><code>data-testid="cascader-option-{'{'}value{'}'}"</code> on each option</li>
+          <li><code>data-testid="cascader-clear"</code> on the clear button</li>
+          <li><code>data-state="open|closed"</code> on root indicates dropdown state</li>
+          <li><code>data-state="selected|hovered"</code> on options indicates state</li>
+          <li><code>data-value="{'{'}value{'}'}"</code> on options provides the value</li>
+        </ul>
       </div>
     </section>
   </div>

@@ -286,7 +286,14 @@ export { Tree } from './components/Tree'
 export type { TreeProps, TreeDataNode } from './components/Tree'
 
 export { TreeSelect } from './components/TreeSelect'
-export type { TreeSelectProps } from './components/TreeSelect'
+export type {
+  TreeSelectProps,
+  TreeSelectSize,
+  TreeSelectColor,
+  TreeSelectStatus,
+  TreeSelectFieldNames,
+  ShowCheckedStrategy,
+} from './components/TreeSelect'
 
 export { Typography } from './components/Typography'
 export type {

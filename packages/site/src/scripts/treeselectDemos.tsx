@@ -1,63 +1,51 @@
 import React, { useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { TreeSelect, Form, Button } from 'asterui'
+import { TreeSelect } from 'asterui'
+import type { TreeDataNode } from 'asterui'
+import { CheckIconSvg } from './icons'
 
-interface TreeNode {
-  key: string
-  title: string
-  value: string
-  children?: TreeNode[]
-  disabled?: boolean
-}
-
-const basicTreeData: TreeNode[] = [
+const basicTreeData: TreeDataNode[] = [
   {
-    key: '0',
+    key: 'parent',
     title: 'Parent Node',
-    value: 'parent',
     children: [
       {
-        key: '0-0',
+        key: 'child1',
         title: 'Child Node 1',
-        value: 'child1',
         children: [
-          { key: '0-0-0', title: 'Leaf 1', value: 'leaf1' },
-          { key: '0-0-1', title: 'Leaf 2', value: 'leaf2' },
+          { key: 'leaf1', title: 'Leaf 1' },
+          { key: 'leaf2', title: 'Leaf 2' },
         ],
       },
       {
-        key: '0-1',
+        key: 'child2',
         title: 'Child Node 2',
-        value: 'child2',
-        children: [{ key: '0-1-0', title: 'Leaf 3', value: 'leaf3' }],
+        children: [{ key: 'leaf3', title: 'Leaf 3' }],
       },
     ],
   },
 ]
 
-const categoriesData: TreeNode[] = [
+const categoriesData: TreeDataNode[] = [
   {
     key: 'electronics',
     title: 'Electronics',
-    value: 'electronics',
     children: [
       {
         key: 'phones',
         title: 'Phones',
-        value: 'phones',
         children: [
-          { key: 'iphone', title: 'iPhone', value: 'iphone' },
-          { key: 'samsung', title: 'Samsung', value: 'samsung' },
-          { key: 'pixel', title: 'Pixel', value: 'pixel' },
+          { key: 'iphone', title: 'iPhone' },
+          { key: 'samsung', title: 'Samsung' },
+          { key: 'pixel', title: 'Pixel' },
         ],
       },
       {
         key: 'laptops',
         title: 'Laptops',
-        value: 'laptops',
         children: [
-          { key: 'macbook', title: 'MacBook', value: 'macbook' },
-          { key: 'thinkpad', title: 'ThinkPad', value: 'thinkpad' },
+          { key: 'macbook', title: 'MacBook' },
+          { key: 'thinkpad', title: 'ThinkPad' },
         ],
       },
     ],
@@ -65,24 +53,30 @@ const categoriesData: TreeNode[] = [
   {
     key: 'clothing',
     title: 'Clothing',
-    value: 'clothing',
     children: [
-      { key: 'shirts', title: 'Shirts', value: 'shirts' },
-      { key: 'pants', title: 'Pants', value: 'pants' },
-      { key: 'shoes', title: 'Shoes', value: 'shoes' },
+      { key: 'shirts', title: 'Shirts' },
+      { key: 'pants', title: 'Pants' },
+      { key: 'shoes', title: 'Shoes' },
     ],
   },
 ]
 
-function BasicTreeSelect() {
-  const [value, setValue] = useState<string | undefined>(undefined)
+const simpleData: TreeDataNode[] = [
+  { key: 'opt1', title: 'Option 1' },
+  { key: 'opt2', title: 'Option 2' },
+  { key: 'opt3', title: 'Option 3' },
+]
+
+// Basic demo
+function BasicDemo() {
+  const [value, setValue] = useState<string | undefined>()
 
   return (
     <div className="w-64">
       <TreeSelect
         treeData={basicTreeData}
         value={value}
-        onChange={setValue}
+        onChange={(val) => setValue(val as string)}
         placeholder="Select an item"
         className="w-full"
       />
@@ -91,7 +85,8 @@ function BasicTreeSelect() {
   )
 }
 
-function MultipleTreeSelect() {
+// Multiple selection demo
+function MultipleDemo() {
   const [value, setValue] = useState<string[]>([])
 
   return (
@@ -99,7 +94,7 @@ function MultipleTreeSelect() {
       <TreeSelect
         treeData={categoriesData}
         value={value}
-        onChange={setValue}
+        onChange={(val) => setValue(val as string[])}
         placeholder="Select items"
         multiple
         className="w-full"
@@ -109,7 +104,8 @@ function MultipleTreeSelect() {
   )
 }
 
-function CheckableTreeSelect() {
+// Checkable demo
+function CheckableDemo() {
   const [value, setValue] = useState<string[]>([])
 
   return (
@@ -117,7 +113,7 @@ function CheckableTreeSelect() {
       <TreeSelect
         treeData={categoriesData}
         value={value}
-        onChange={setValue}
+        onChange={(val) => setValue(val as string[])}
         placeholder="Check items"
         treeCheckable
         className="w-full"
@@ -127,15 +123,16 @@ function CheckableTreeSelect() {
   )
 }
 
-function SearchableTreeSelect() {
-  const [value, setValue] = useState<string | undefined>(undefined)
+// Searchable demo
+function SearchableDemo() {
+  const [value, setValue] = useState<string | undefined>()
 
   return (
     <div className="w-64">
       <TreeSelect
         treeData={categoriesData}
         value={value}
-        onChange={setValue}
+        onChange={(val) => setValue(val as string)}
         placeholder="Search and select"
         showSearch
         className="w-full"
@@ -144,18 +141,114 @@ function SearchableTreeSelect() {
   )
 }
 
-function DisabledItemsTreeSelect() {
-  const [value, setValue] = useState<string | undefined>(undefined)
+// Sizes demo
+function SizesDemo() {
+  return (
+    <div className="flex flex-col gap-2 w-64">
+      <TreeSelect treeData={simpleData} size="xs" placeholder="Extra small" />
+      <TreeSelect treeData={simpleData} size="sm" placeholder="Small" />
+      <TreeSelect treeData={simpleData} size="md" placeholder="Medium" />
+      <TreeSelect treeData={simpleData} size="lg" placeholder="Large" />
+      <TreeSelect treeData={simpleData} size="xl" placeholder="Extra large" />
+    </div>
+  )
+}
 
-  const treeDataWithDisabled: TreeNode[] = [
+// Status demo
+function StatusDemo() {
+  return (
+    <div className="flex flex-col gap-2 w-64">
+      <TreeSelect treeData={simpleData} status="error" placeholder="Error state" />
+      <TreeSelect treeData={simpleData} status="warning" placeholder="Warning state" />
+    </div>
+  )
+}
+
+// Async loading demo
+function AsyncLoadDemo() {
+  const [treeData, setTreeData] = useState<TreeDataNode[]>([
+    { key: 'region1', title: 'Region 1' },
+    { key: 'region2', title: 'Region 2' },
+  ])
+
+  const loadData = async (node: TreeDataNode) => {
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+    setTreeData((prev) => {
+      const updateNode = (nodes: TreeDataNode[]): TreeDataNode[] =>
+        nodes.map((n) =>
+          n.key === node.key
+            ? {
+                ...n,
+                children: [
+                  { key: `${n.key}-1`, title: 'Child 1', isLeaf: true },
+                  { key: `${n.key}-2`, title: 'Child 2', isLeaf: true },
+                ],
+              }
+            : { ...n, children: n.children ? updateNode(n.children) : undefined }
+        )
+      return updateNode(prev)
+    })
+  }
+
+  return (
+    <div className="w-64">
+      <TreeSelect
+        treeData={treeData}
+        loadData={loadData}
+        placeholder="Expand to load"
+        className="w-full"
+      />
+    </div>
+  )
+}
+
+// Max tag count demo
+function MaxTagDemo() {
+  const [value, setValue] = useState<string[]>([])
+
+  return (
+    <div className="w-80">
+      <TreeSelect
+        treeData={categoriesData}
+        value={value}
+        onChange={(val) => setValue(val as string[])}
+        placeholder="Select items"
+        treeCheckable
+        maxTagCount={2}
+        maxTagPlaceholder={(omitted) => `+${omitted.length} more...`}
+        className="w-full"
+      />
+    </div>
+  )
+}
+
+// Tree line demo
+function TreeLineDemo() {
+  return (
+    <div className="w-64">
+      <TreeSelect
+        treeData={basicTreeData}
+        placeholder="With tree lines"
+        treeLine
+        treeDefaultExpandAll
+        className="w-full"
+      />
+    </div>
+  )
+}
+
+// Disabled items demo
+function DisabledItemsDemo() {
+  const [value, setValue] = useState<string | undefined>()
+
+  const treeDataWithDisabled: TreeDataNode[] = [
     {
-      key: '0',
+      key: 'parent',
       title: 'Available Parent',
-      value: 'parent',
       children: [
-        { key: '0-0', title: 'Available Child', value: 'child1' },
-        { key: '0-1', title: 'Disabled Child', value: 'child2', disabled: true },
-        { key: '0-2', title: 'Another Available', value: 'child3' },
+        { key: 'child1', title: 'Available Child' },
+        { key: 'child2', title: 'Disabled Child', disabled: true },
+        { key: 'child3', title: 'Another Available' },
       ],
     },
   ]
@@ -165,7 +258,7 @@ function DisabledItemsTreeSelect() {
       <TreeSelect
         treeData={treeDataWithDisabled}
         value={value}
-        onChange={setValue}
+        onChange={(val) => setValue(val as string)}
         placeholder="Select an item"
         className="w-full"
       />
@@ -173,49 +266,17 @@ function DisabledItemsTreeSelect() {
   )
 }
 
-function FormTreeSelect() {
-  const handleSubmit = (values: Record<string, unknown>) => {
-    alert(JSON.stringify(values, null, 2))
-  }
-
-  return (
-    <Form onFinish={handleSubmit} className="max-w-md">
-      <Form.Item
-        name="category"
-        label="Category"
-        required
-        rules={{
-          required: 'Please select a category',
-        }}
-      >
-        <TreeSelect treeData={categoriesData} placeholder="Select category" className="w-full" />
-      </Form.Item>
-
-      <Form.Item name="tags" label="Tags">
-        <TreeSelect
-          treeData={categoriesData}
-          placeholder="Select multiple tags"
-          multiple
-          className="w-full"
-        />
-      </Form.Item>
-
-      <Form.Item>
-        <Button htmlType="submit" color="primary">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
-  )
-}
-
 const statefulDemos: Record<string, React.FC> = {
-  basic: BasicTreeSelect,
-  multiple: MultipleTreeSelect,
-  checkable: CheckableTreeSelect,
-  searchable: SearchableTreeSelect,
-  'disabled-items': DisabledItemsTreeSelect,
-  form: FormTreeSelect,
+  basic: BasicDemo,
+  multiple: MultipleDemo,
+  checkable: CheckableDemo,
+  searchable: SearchableDemo,
+  sizes: SizesDemo,
+  status: StatusDemo,
+  'async-load': AsyncLoadDemo,
+  'max-tag': MaxTagDemo,
+  'tree-line': TreeLineDemo,
+  'disabled-items': DisabledItemsDemo,
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -225,6 +286,21 @@ document.addEventListener('DOMContentLoaded', () => {
       const root = createRoot(container)
       const Component = statefulDemos[example]
       root.render(<Component />)
+    }
+  })
+})
+
+// Copy button functionality
+document.querySelectorAll('.copy-btn').forEach((btn) => {
+  btn.addEventListener('click', async () => {
+    const code = btn.getAttribute('data-code')
+    if (code) {
+      await navigator.clipboard.writeText(code)
+      const originalHTML = btn.innerHTML
+      btn.innerHTML = CheckIconSvg
+      setTimeout(() => {
+        btn.innerHTML = originalHTML
+      }, 2000)
     }
   })
 })

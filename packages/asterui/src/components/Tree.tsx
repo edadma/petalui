@@ -126,6 +126,7 @@ interface TreeContextValue {
   setFocusedKey: (key: string | null) => void
   flattenedNodes: TreeDataNode[]
   registerNode: (key: string, node: TreeDataNode, level: number) => void
+  baseTestId: string
 }
 
 const TreeContext = createContext<TreeContextValue | null>(null)
@@ -252,6 +253,7 @@ function TreeNodeInternal({ node, level }: TreeNodeInternalProps) {
     focusedKey,
     setFocusedKey,
     flattenedNodes,
+    baseTestId,
   } = useTreeContext()
 
   const nodeRef = useRef<HTMLDivElement>(null)
@@ -367,9 +369,26 @@ function TreeNodeInternal({ node, level }: TreeNodeInternalProps) {
     }
   }
 
-  // Checkbox size class
-  const checkboxSizeClass = checkboxSize === 'md' ? '' : `checkbox-${checkboxSize}`
-  const checkboxColorClass = `checkbox-${checkboxColor}`
+  // Checkbox classes - must use static strings for Tailwind JIT
+  const checkboxSizeClasses: Record<TreeSize, string> = {
+    xs: 'checkbox-xs',
+    sm: 'checkbox-sm',
+    md: '',
+    lg: 'checkbox-lg',
+    xl: 'checkbox-xl',
+  }
+  const checkboxColorClasses: Record<TreeColor, string> = {
+    primary: 'checkbox-primary',
+    secondary: 'checkbox-secondary',
+    accent: 'checkbox-accent',
+    neutral: 'checkbox-neutral',
+    info: 'checkbox-info',
+    success: 'checkbox-success',
+    warning: 'checkbox-warning',
+    error: 'checkbox-error',
+  }
+  const checkboxSizeClass = checkboxSizeClasses[checkboxSize]
+  const checkboxColorClass = checkboxColorClasses[checkboxColor]
 
   // Render switcher icon
   const renderSwitcher = () => {
@@ -417,7 +436,7 @@ function TreeNodeInternal({ node, level }: TreeNodeInternalProps) {
       aria-checked={checkable ? (indeterminate ? 'mixed' : checked) : undefined}
       aria-disabled={isDisabled}
       aria-level={level + 1}
-      data-testid={`tree-node-${node.key}`}
+      data-testid={`${baseTestId}-node-${node.key}`}
       data-state={nodeState}
       data-key={node.key}
     >
@@ -578,10 +597,12 @@ export const Tree = Object.assign(
       onRightClick,
       fieldNames,
       className = '',
+      'data-testid': testId,
       ...rest
     },
     ref
   ) {
+    const baseTestId = testId ?? 'tree'
     // Handle compound pattern: collect nodes from children
     const registerNode = useCallback((_key: string, _node: TreeDataNode, _level: number) => {
       // Registration is handled by the buildTree function parsing children
@@ -846,6 +867,7 @@ export const Tree = Object.assign(
       setFocusedKey,
       flattenedNodes,
       registerNode,
+      baseTestId,
     }
 
     return (
@@ -855,7 +877,7 @@ export const Tree = Object.assign(
           className={`tree ${className}`}
           role="tree"
           aria-multiselectable={multiple}
-          data-testid="tree"
+          data-testid={baseTestId}
           onFocus={handleTreeFocus}
           {...rest}
         >

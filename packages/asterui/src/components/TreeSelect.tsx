@@ -1,14 +1,46 @@
-import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react'
+import React, {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+  useMemo,
+  forwardRef,
+  useId,
+} from 'react'
 import type { TreeDataNode } from './Tree'
 
-export interface TreeSelectProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
+export type TreeSelectSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+export type TreeSelectColor =
+  | 'primary'
+  | 'secondary'
+  | 'accent'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'error'
+export type TreeSelectStatus = 'error' | 'warning'
+export type ShowCheckedStrategy = 'SHOW_ALL' | 'SHOW_PARENT' | 'SHOW_CHILD'
+
+export interface TreeSelectFieldNames {
+  label?: string
+  value?: string
+  children?: string
+}
+
+export interface TreeSelectProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   treeData: TreeDataNode[]
   value?: string | string[]
   defaultValue?: string | string[]
   onChange?: (value: string | string[], labels: React.ReactNode[]) => void
   multiple?: boolean
   treeCheckable?: boolean
+  treeCheckStrictly?: boolean
+  showCheckedStrategy?: ShowCheckedStrategy
   showSearch?: boolean
+  searchValue?: string
+  onSearch?: (value: string) => void
+  filterTreeNode?: (searchValue: string, node: TreeDataNode) => boolean
   placeholder?: string
   allowClear?: boolean
   disabled?: boolean
@@ -16,21 +48,62 @@ export interface TreeSelectProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   treeDefaultExpandedKeys?: string[]
   treeExpandedKeys?: string[]
   onTreeExpand?: (expandedKeys: string[]) => void
-  size?: 'xs' | 'sm' | 'md' | 'lg'
+  size?: TreeSelectSize
+  color?: TreeSelectColor
+  status?: TreeSelectStatus
+  maxTagCount?: number | 'responsive'
+  maxTagPlaceholder?: React.ReactNode | ((omittedValues: string[]) => React.ReactNode)
+  labelInValue?: boolean
+  treeLine?: boolean
+  treeIcon?: boolean
+  loadData?: (node: TreeDataNode) => Promise<void>
+  fieldNames?: TreeSelectFieldNames
+  open?: boolean
+  onDropdownVisibleChange?: (open: boolean) => void
+  suffixIcon?: React.ReactNode
+  switcherIcon?: React.ReactNode | ((props: { expanded: boolean }) => React.ReactNode)
+  notFoundContent?: React.ReactNode
+  dropdownRender?: (menu: React.ReactNode) => React.ReactNode
+  popupClassName?: string
+  'data-testid'?: string
+}
+
+// Helper to get field value based on fieldNames
+function getFieldValue(
+  node: TreeDataNode,
+  field: 'title' | 'key' | 'children',
+  fieldNames?: TreeSelectFieldNames
+): unknown {
+  if (field === 'title') {
+    const labelField = fieldNames?.label || 'title'
+    return (node as Record<string, unknown>)[labelField]
+  }
+  if (field === 'key') {
+    const valueField = fieldNames?.value || 'key'
+    return (node as Record<string, unknown>)[valueField]
+  }
+  if (field === 'children') {
+    const childrenField = fieldNames?.children || 'children'
+    return (node as Record<string, unknown>)[childrenField]
+  }
+  return undefined
 }
 
 // Helper to flatten tree data for search
 function flattenTree(
   data: TreeDataNode[],
-  parentPath: React.ReactNode[] = []
+  parentPath: React.ReactNode[] = [],
+  fieldNames?: TreeSelectFieldNames
 ): Array<{ node: TreeDataNode; path: React.ReactNode[] }> {
   const result: Array<{ node: TreeDataNode; path: React.ReactNode[] }> = []
 
   data.forEach((node) => {
-    const currentPath = [...parentPath, node.title]
+    const title = getFieldValue(node, 'title', fieldNames) as React.ReactNode
+    const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
+    const currentPath = [...parentPath, title]
     result.push({ node, path: currentPath })
-    if (node.children) {
-      result.push(...flattenTree(node.children, currentPath))
+    if (children) {
+      result.push(...flattenTree(children, currentPath, fieldNames))
     }
   })
 
@@ -38,12 +111,14 @@ function flattenTree(
 }
 
 // Helper to get all keys
-function getAllKeys(data: TreeDataNode[]): string[] {
+function getAllKeys(data: TreeDataNode[], fieldNames?: TreeSelectFieldNames): string[] {
   const keys: string[] = []
   const traverse = (nodes: TreeDataNode[]) => {
     nodes.forEach((node) => {
-      keys.push(node.key)
-      if (node.children) traverse(node.children)
+      const key = getFieldValue(node, 'key', fieldNames) as string
+      const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
+      keys.push(key)
+      if (children) traverse(children)
     })
   }
   traverse(data)
@@ -51,11 +126,17 @@ function getAllKeys(data: TreeDataNode[]): string[] {
 }
 
 // Helper to find node by key
-function findNode(data: TreeDataNode[], key: string): TreeDataNode | null {
+function findNode(
+  data: TreeDataNode[],
+  key: string,
+  fieldNames?: TreeSelectFieldNames
+): TreeDataNode | null {
   for (const node of data) {
-    if (node.key === key) return node
-    if (node.children) {
-      const found = findNode(node.children, key)
+    const nodeKey = getFieldValue(node, 'key', fieldNames) as string
+    const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
+    if (nodeKey === key) return node
+    if (children) {
+      const found = findNode(children, key, fieldNames)
       if (found) return found
     }
   }
@@ -63,18 +144,39 @@ function findNode(data: TreeDataNode[], key: string): TreeDataNode | null {
 }
 
 // Helper to get all descendant keys
-function getDescendantKeys(node: TreeDataNode): string[] {
+function getDescendantKeys(node: TreeDataNode, fieldNames?: TreeSelectFieldNames): string[] {
   const keys: string[] = []
   const traverse = (n: TreeDataNode) => {
-    if (n.children) {
-      n.children.forEach((child) => {
-        keys.push(child.key)
+    const children = getFieldValue(n, 'children', fieldNames) as TreeDataNode[] | undefined
+    if (children) {
+      children.forEach((child) => {
+        const childKey = getFieldValue(child, 'key', fieldNames) as string
+        keys.push(childKey)
         traverse(child)
       })
     }
   }
   traverse(node)
   return keys
+}
+
+// Helper to get parent keys for a node
+function getParentKeys(
+  data: TreeDataNode[],
+  targetKey: string,
+  fieldNames?: TreeSelectFieldNames,
+  parentKeys: string[] = []
+): string[] | null {
+  for (const node of data) {
+    const nodeKey = getFieldValue(node, 'key', fieldNames) as string
+    const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
+    if (nodeKey === targetKey) return parentKeys
+    if (children) {
+      const found = getParentKeys(children, targetKey, fieldNames, [...parentKeys, nodeKey])
+      if (found) return found
+    }
+  }
+  return null
 }
 
 interface TreeSelectNodeProps {
@@ -85,6 +187,13 @@ interface TreeSelectNodeProps {
   checked: boolean
   indeterminate: boolean
   treeCheckable: boolean
+  treeLine: boolean
+  focused: boolean
+  loading: boolean
+  baseTestId: string
+  id: string
+  fieldNames?: TreeSelectFieldNames
+  switcherIcon?: React.ReactNode | ((props: { expanded: boolean }) => React.ReactNode)
   onToggle: (key: string) => void
   onSelect: (key: string, node: TreeDataNode) => void
   onCheck: (key: string, node: TreeDataNode) => void
@@ -99,27 +208,37 @@ function TreeSelectNode({
   checked,
   indeterminate,
   treeCheckable,
+  treeLine,
+  focused,
+  loading,
+  baseTestId,
+  id,
+  fieldNames,
+  switcherIcon,
   onToggle,
   onSelect,
   onCheck,
   renderChildren,
 }: TreeSelectNodeProps) {
-  const hasChildren = node.children && node.children.length > 0
+  const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
+  const title = getFieldValue(node, 'title', fieldNames) as React.ReactNode
+  const key = getFieldValue(node, 'key', fieldNames) as string
+  const hasChildren = children && children.length > 0
   const isLeaf = node.isLeaf ?? !hasChildren
 
   const handleToggle = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (!isLeaf) {
-      onToggle(node.key)
+      onToggle(key)
     }
   }
 
   const handleSelect = () => {
     if (!node.disabled) {
       if (treeCheckable) {
-        onCheck(node.key, node)
+        onCheck(key, node)
       } else {
-        onSelect(node.key, node)
+        onSelect(key, node)
       }
     }
   }
@@ -127,22 +246,69 @@ function TreeSelectNode({
   const handleCheck = (e: React.MouseEvent) => {
     e.stopPropagation()
     if (!node.disabled) {
-      onCheck(node.key, node)
+      onCheck(key, node)
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleSelect()
+    }
+  }
+
+  const renderSwitcherIcon = () => {
+    if (loading) {
+      return (
+        <span className="loading loading-spinner loading-xs" />
+      )
+    }
+
+    if (switcherIcon) {
+      if (typeof switcherIcon === 'function') {
+        return switcherIcon({ expanded })
+      }
+      return switcherIcon
+    }
+
+    return (
+      <svg
+        className={`w-3 h-3 transition-transform ${expanded ? 'rotate-90' : ''}`}
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        aria-hidden="true"
+      >
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+      </svg>
+    )
+  }
+
   return (
-    <div className="tree-select-node">
+    <div
+      className="tree-select-node"
+      role="treeitem"
+      id={id}
+      aria-selected={selected || checked}
+      aria-expanded={hasChildren ? expanded : undefined}
+      data-testid={`${baseTestId}-option-${key}`}
+      data-state={selected || checked ? 'selected' : 'unselected'}
+      data-disabled={node.disabled || undefined}
+    >
       <div
         className={[
-          'flex items-center py-1.5 px-2 cursor-pointer hover:bg-base-200 transition-colors',
+          'flex items-center py-1.5 px-2 cursor-pointer hover:bg-base-200 transition-colors outline-none',
           (selected || checked) && 'bg-primary/10 text-primary',
           node.disabled && 'opacity-50 cursor-not-allowed',
+          focused && 'ring-2 ring-primary ring-inset',
+          treeLine && level > 0 && 'border-l border-base-300 ml-2',
         ]
           .filter(Boolean)
           .join(' ')}
         style={{ paddingLeft: `${level * 16 + 8}px` }}
         onClick={handleSelect}
+        onKeyDown={handleKeyDown}
+        tabIndex={-1}
       >
         {/* Expand/Collapse icon */}
         <span
@@ -153,17 +319,9 @@ function TreeSelectNode({
             .filter(Boolean)
             .join(' ')}
           onClick={handleToggle}
+          aria-hidden="true"
         >
-          {!isLeaf && (
-            <svg
-              className={`w-3 h-3 transition-transform ${expanded ? 'rotate-90' : ''}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          )}
+          {!isLeaf && renderSwitcherIcon()}
         </span>
 
         {/* Checkbox for treeCheckable mode */}
@@ -177,364 +335,806 @@ function TreeSelectNode({
                 if (el) el.indeterminate = indeterminate
               }}
               disabled={node.disabled}
-              onChange={() => {}}
+              onChange={handleSelect}
+              aria-label={typeof title === 'string' ? title : undefined}
+              tabIndex={-1}
             />
           </span>
         )}
 
         {/* Title */}
-        <span className="flex-1 truncate select-none text-sm">{node.title}</span>
+        <span className="flex-1 truncate select-none text-sm">{title}</span>
       </div>
 
       {/* Children */}
-      {hasChildren && expanded && renderChildren(node.children!, level + 1)}
-    </div>
-  )
-}
-
-export function TreeSelect({
-  treeData,
-  value: controlledValue,
-  defaultValue = [],
-  onChange,
-  multiple = false,
-  treeCheckable = false,
-  showSearch = false,
-  placeholder = 'Please select',
-  allowClear = true,
-  disabled = false,
-  treeDefaultExpandAll = false,
-  treeDefaultExpandedKeys = [],
-  treeExpandedKeys: controlledExpandedKeys,
-  onTreeExpand,
-  size = 'md',
-  className = '',
-  ...rest
-}: TreeSelectProps) {
-  const [isOpen, setIsOpen] = useState(false)
-  const [searchValue, setSearchValue] = useState('')
-  const containerRef = useRef<HTMLDivElement>(null)
-  const inputRef = useRef<HTMLInputElement>(null)
-
-  // Normalize value to array
-  const normalizeValue = (val: string | string[] | undefined): string[] => {
-    if (val === undefined) return []
-    return Array.isArray(val) ? val : [val]
-  }
-
-  const initialValue = normalizeValue(defaultValue)
-  const [internalValue, setInternalValue] = useState<string[]>(initialValue)
-
-  const value = controlledValue !== undefined ? normalizeValue(controlledValue) : internalValue
-
-  // Expanded keys
-  const initialExpandedKeys = useMemo(() => {
-    if (treeDefaultExpandAll) return getAllKeys(treeData)
-    return treeDefaultExpandedKeys
-  }, [])
-
-  const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initialExpandedKeys)
-  const expandedKeys = controlledExpandedKeys ?? internalExpandedKeys
-
-  // Close on click outside
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
-        setIsOpen(false)
-        setSearchValue('')
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
-  // Filter tree data based on search
-  const filteredData = useMemo(() => {
-    if (!searchValue) return treeData
-
-    const flatNodes = flattenTree(treeData)
-    const matchingKeys = new Set<string>()
-
-    flatNodes.forEach(({ node }) => {
-      const titleStr =
-        typeof node.title === 'string' ? node.title : String(node.title)
-      if (titleStr.toLowerCase().includes(searchValue.toLowerCase())) {
-        matchingKeys.add(node.key)
-      }
-    })
-
-    // Include parent keys of matching nodes
-    const filterTree = (nodes: TreeDataNode[]): TreeDataNode[] => {
-      return nodes
-        .map((node) => {
-          const hasMatchingChildren =
-            node.children && filterTree(node.children).length > 0
-          const isMatch = matchingKeys.has(node.key)
-
-          if (isMatch || hasMatchingChildren) {
-            return {
-              ...node,
-              children: node.children ? filterTree(node.children) : undefined,
-            }
-          }
-          return null
-        })
-        .filter(Boolean) as TreeDataNode[]
-    }
-
-    return filterTree(treeData)
-  }, [treeData, searchValue])
-
-  const handleToggle = useCallback(
-    (key: string) => {
-      const newKeys = expandedKeys.includes(key)
-        ? expandedKeys.filter((k) => k !== key)
-        : [...expandedKeys, key]
-
-      if (controlledExpandedKeys === undefined) {
-        setInternalExpandedKeys(newKeys)
-      }
-      onTreeExpand?.(newKeys)
-    },
-    [expandedKeys, controlledExpandedKeys, onTreeExpand]
-  )
-
-  const handleSelect = useCallback(
-    (key: string, _node: TreeDataNode) => {
-      let newValue: string[]
-
-      if (multiple) {
-        if (value.includes(key)) {
-          newValue = value.filter((k) => k !== key)
-        } else {
-          newValue = [...value, key]
-        }
-      } else {
-        newValue = [key]
-        setIsOpen(false)
-        setSearchValue('')
-      }
-
-      if (controlledValue === undefined) {
-        setInternalValue(newValue)
-      }
-
-      const labels = newValue.map((k) => findNode(treeData, k)?.title || k)
-      onChange?.(multiple ? newValue : newValue[0] || '', labels)
-    },
-    [value, multiple, controlledValue, onChange, treeData]
-  )
-
-  const handleCheck = useCallback(
-    (key: string, node: TreeDataNode) => {
-      const isChecked = value.includes(key)
-      let newValue = [...value]
-      const descendantKeys = getDescendantKeys(node)
-
-      if (isChecked) {
-        newValue = newValue.filter((k) => k !== key && !descendantKeys.includes(k))
-      } else {
-        newValue.push(key)
-        descendantKeys.forEach((dk) => {
-          if (!newValue.includes(dk)) newValue.push(dk)
-        })
-      }
-
-      if (controlledValue === undefined) {
-        setInternalValue(newValue)
-      }
-
-      const labels = newValue.map((k) => findNode(treeData, k)?.title || k)
-      onChange?.(newValue, labels)
-    },
-    [value, controlledValue, onChange, treeData]
-  )
-
-  const handleClear = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    const newValue: string[] = []
-
-    if (controlledValue === undefined) {
-      setInternalValue(newValue)
-    }
-
-    onChange?.(multiple ? newValue : '', [])
-  }
-
-  const removeTag = (key: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-    const newValue = value.filter((k) => k !== key)
-
-    if (controlledValue === undefined) {
-      setInternalValue(newValue)
-    }
-
-    const labels = newValue.map((k) => findNode(treeData, k)?.title || k)
-    onChange?.(multiple ? newValue : newValue[0] || '', labels)
-  }
-
-  const getCheckedState = useCallback(
-    (node: TreeDataNode): { checked: boolean; indeterminate: boolean } => {
-      if (!node.children || node.children.length === 0) {
-        return { checked: value.includes(node.key), indeterminate: false }
-      }
-
-      const descendantKeys = getDescendantKeys(node)
-      const checkedDescendants = descendantKeys.filter((k) => value.includes(k))
-
-      if (checkedDescendants.length === 0) {
-        return { checked: value.includes(node.key), indeterminate: false }
-      }
-
-      if (checkedDescendants.length === descendantKeys.length) {
-        return { checked: true, indeterminate: false }
-      }
-
-      return { checked: false, indeterminate: true }
-    },
-    [value]
-  )
-
-  const renderNodes = useCallback(
-    (nodes: TreeDataNode[], level: number): React.ReactNode => {
-      return nodes.map((node) => {
-        const { checked, indeterminate } = getCheckedState(node)
-
-        return (
-          <TreeSelectNode
-            key={node.key}
-            node={node}
-            level={level}
-            expanded={expandedKeys.includes(node.key)}
-            selected={value.includes(node.key)}
-            checked={checked}
-            indeterminate={indeterminate}
-            treeCheckable={treeCheckable}
-            onToggle={handleToggle}
-            onSelect={handleSelect}
-            onCheck={handleCheck}
-            renderChildren={renderNodes}
-          />
-        )
-      })
-    },
-    [expandedKeys, value, treeCheckable, handleToggle, handleSelect, handleCheck, getCheckedState]
-  )
-
-  // Display value
-  const displayValue = useMemo(() => {
-    if (value.length === 0) return null
-
-    if (multiple || treeCheckable) {
-      return value.map((key) => {
-        const node = findNode(treeData, key)
-        return (
-          <span
-            key={key}
-            className="inline-flex items-center gap-1 px-2 py-0.5 bg-base-200 rounded text-sm mr-1 mb-1"
-          >
-            {node?.title || key}
-            <button
-              type="button"
-              className="hover:text-error"
-              onClick={(e) => removeTag(key, e)}
-            >
-              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </span>
-        )
-      })
-    }
-
-    const node = findNode(treeData, value[0])
-    return node?.title || value[0]
-  }, [value, treeData, multiple, treeCheckable])
-
-  const sizeClasses = {
-    xs: 'min-h-6 text-xs',
-    sm: 'min-h-8 text-sm',
-    md: 'min-h-10 text-base',
-    lg: 'min-h-12 text-lg',
-  }
-
-  return (
-    <div ref={containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
-      {/* Trigger */}
-      <div
-        className={[
-          'input input-bordered flex items-center gap-2 cursor-pointer flex-wrap',
-          sizeClasses[size],
-          disabled && 'input-disabled opacity-50 cursor-not-allowed',
-          isOpen && 'input-primary',
-        ]
-          .filter(Boolean)
-          .join(' ')}
-        onClick={() => !disabled && setIsOpen(!isOpen)}
-      >
-        <div className="flex-1 flex flex-wrap items-center gap-1 min-w-0">
-          {displayValue || (
-            <span className="text-base-content/50">{placeholder}</span>
-          )}
-        </div>
-
-        {/* Clear button */}
-        {allowClear && value.length > 0 && !disabled && (
-          <button
-            type="button"
-            className="hover:text-error flex-shrink-0"
-            onClick={handleClear}
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        )}
-
-        {/* Dropdown arrow */}
-        <svg
-          className={`w-4 h-4 flex-shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </div>
-
-      {/* Dropdown */}
-      {isOpen && (
-        <div className="absolute z-50 mt-1 w-full bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-64 overflow-auto">
-          {/* Search input */}
-          {showSearch && (
-            <div className="p-2 border-b border-base-300">
-              <input
-                ref={inputRef}
-                type="text"
-                className="input input-bordered input-sm w-full"
-                placeholder="Search..."
-                value={searchValue}
-                onChange={(e) => setSearchValue(e.target.value)}
-                onClick={(e) => e.stopPropagation()}
-                autoFocus
-              />
-            </div>
-          )}
-
-          {/* Tree */}
-          <div className="py-1">
-            {filteredData.length > 0 ? (
-              renderNodes(filteredData, 0)
-            ) : (
-              <div className="px-4 py-2 text-base-content/50 text-sm text-center">
-                No results found
-              </div>
-            )}
-          </div>
-        </div>
+      {hasChildren && expanded && (
+        <div role="group">{renderChildren(children!, level + 1)}</div>
       )}
     </div>
   )
 }
+
+const sizeClasses: Record<TreeSelectSize, string> = {
+  xs: 'min-h-6 text-xs',
+  sm: 'min-h-8 text-sm',
+  md: 'min-h-10 text-base',
+  lg: 'min-h-12 text-lg',
+  xl: 'min-h-14 text-xl',
+}
+
+const colorClasses: Record<TreeSelectColor, string> = {
+  primary: 'border-primary focus-within:border-primary',
+  secondary: 'border-secondary focus-within:border-secondary',
+  accent: 'border-accent focus-within:border-accent',
+  info: 'border-info focus-within:border-info',
+  success: 'border-success focus-within:border-success',
+  warning: 'border-warning focus-within:border-warning',
+  error: 'border-error focus-within:border-error',
+}
+
+const statusClasses: Record<TreeSelectStatus, string> = {
+  error: 'border-error focus-within:border-error',
+  warning: 'border-warning focus-within:border-warning',
+}
+
+export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
+  (
+    {
+      treeData,
+      value: controlledValue,
+      defaultValue = [],
+      onChange,
+      multiple = false,
+      treeCheckable = false,
+      treeCheckStrictly = false,
+      showCheckedStrategy = 'SHOW_ALL',
+      showSearch = false,
+      searchValue: controlledSearchValue,
+      onSearch,
+      filterTreeNode,
+      placeholder = 'Please select',
+      allowClear = true,
+      disabled = false,
+      treeDefaultExpandAll = false,
+      treeDefaultExpandedKeys = [],
+      treeExpandedKeys: controlledExpandedKeys,
+      onTreeExpand,
+      size = 'md',
+      color,
+      status,
+      maxTagCount,
+      maxTagPlaceholder,
+      labelInValue = false,
+      treeLine = false,
+      loadData,
+      fieldNames,
+      open: controlledOpen,
+      onDropdownVisibleChange,
+      suffixIcon,
+      switcherIcon,
+      notFoundContent = 'No results found',
+      dropdownRender,
+      popupClassName = '',
+      className = '',
+      'data-testid': testId,
+      ...rest
+    },
+    ref
+  ) => {
+    const baseTestId = testId ?? 'treeselect'
+    const instanceId = useId()
+    const listboxId = `${instanceId}-listbox`
+    const [isOpen, setIsOpen] = useState(false)
+    const [internalSearchValue, setInternalSearchValue] = useState('')
+    const [focusedKey, setFocusedKey] = useState<string | null>(null)
+    const [loadingKeys, setLoadingKeys] = useState<Set<string>>(new Set())
+    const containerRef = useRef<HTMLDivElement>(null)
+    const inputRef = useRef<HTMLInputElement>(null)
+    const triggerRef = useRef<HTMLDivElement>(null)
+
+    const searchValue = controlledSearchValue ?? internalSearchValue
+    const open = controlledOpen ?? isOpen
+
+    // Normalize value to array
+    const normalizeValue = (val: string | string[] | undefined): string[] => {
+      if (val === undefined) return []
+      return Array.isArray(val) ? val : [val]
+    }
+
+    const initialValue = normalizeValue(defaultValue)
+    const [internalValue, setInternalValue] = useState<string[]>(initialValue)
+
+    const value = controlledValue !== undefined ? normalizeValue(controlledValue) : internalValue
+
+    // Expanded keys
+    const initialExpandedKeys = useMemo(() => {
+      if (treeDefaultExpandAll) return getAllKeys(treeData, fieldNames)
+      return treeDefaultExpandedKeys
+    }, [treeData, treeDefaultExpandAll, treeDefaultExpandedKeys, fieldNames])
+
+    const [internalExpandedKeys, setInternalExpandedKeys] = useState<string[]>(initialExpandedKeys)
+    const expandedKeys = controlledExpandedKeys ?? internalExpandedKeys
+
+    // Get flattened visible nodes for keyboard navigation
+    const visibleNodes = useMemo(() => {
+      const nodes: { key: string; node: TreeDataNode }[] = []
+      const traverse = (data: TreeDataNode[]) => {
+        data.forEach((node) => {
+          const key = getFieldValue(node, 'key', fieldNames) as string
+          const children = getFieldValue(node, 'children', fieldNames) as
+            | TreeDataNode[]
+            | undefined
+          nodes.push({ key, node })
+          if (children && expandedKeys.includes(key)) {
+            traverse(children)
+          }
+        })
+      }
+      traverse(treeData)
+      return nodes
+    }, [treeData, expandedKeys, fieldNames])
+
+    const setOpen = useCallback(
+      (newOpen: boolean) => {
+        if (controlledOpen === undefined) {
+          setIsOpen(newOpen)
+        }
+        onDropdownVisibleChange?.(newOpen)
+      },
+      [controlledOpen, onDropdownVisibleChange]
+    )
+
+    // Close on click outside
+    useEffect(() => {
+      const handleClickOutside = (e: MouseEvent) => {
+        if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+          setOpen(false)
+          if (controlledSearchValue === undefined) {
+            setInternalSearchValue('')
+          }
+        }
+      }
+
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [setOpen, controlledSearchValue])
+
+    // Focus management
+    useEffect(() => {
+      if (open && showSearch && inputRef.current) {
+        inputRef.current.focus()
+      } else if (open && triggerRef.current) {
+        triggerRef.current.focus()
+      }
+    }, [open, showSearch])
+
+    // Initialize focused key when opening
+    useEffect(() => {
+      if (open && visibleNodes.length > 0) {
+        if (value.length > 0) {
+          setFocusedKey(value[0])
+        } else {
+          setFocusedKey(visibleNodes[0].key)
+        }
+      } else if (!open) {
+        setFocusedKey(null)
+      }
+    }, [open, visibleNodes, value])
+
+    // Filter tree data based on search
+    const filteredData = useMemo(() => {
+      if (!searchValue) return treeData
+
+      const flatNodes = flattenTree(treeData, [], fieldNames)
+      const matchingKeys = new Set<string>()
+
+      flatNodes.forEach(({ node }) => {
+        const title = getFieldValue(node, 'title', fieldNames)
+        const key = getFieldValue(node, 'key', fieldNames) as string
+
+        let isMatch = false
+        if (filterTreeNode) {
+          isMatch = filterTreeNode(searchValue, node)
+        } else {
+          const titleStr = typeof title === 'string' ? title : String(title)
+          isMatch = titleStr.toLowerCase().includes(searchValue.toLowerCase())
+        }
+
+        if (isMatch) {
+          matchingKeys.add(key)
+        }
+      })
+
+      // Include parent keys of matching nodes
+      const filterTree = (nodes: TreeDataNode[]): TreeDataNode[] => {
+        return nodes
+          .map((node) => {
+            const children = getFieldValue(node, 'children', fieldNames) as
+              | TreeDataNode[]
+              | undefined
+            const key = getFieldValue(node, 'key', fieldNames) as string
+            const hasMatchingChildren = children && filterTree(children).length > 0
+            const isMatch = matchingKeys.has(key)
+
+            if (isMatch || hasMatchingChildren) {
+              return {
+                ...node,
+                children: children ? filterTree(children) : undefined,
+              }
+            }
+            return null
+          })
+          .filter(Boolean) as TreeDataNode[]
+      }
+
+      return filterTree(treeData)
+    }, [treeData, searchValue, filterTreeNode, fieldNames])
+
+    const handleToggle = useCallback(
+      async (key: string) => {
+        const node = findNode(treeData, key, fieldNames)
+
+        // Handle async loading
+        if (loadData && node) {
+          const children = getFieldValue(node, 'children', fieldNames) as
+            | TreeDataNode[]
+            | undefined
+          if (!children || children.length === 0) {
+            setLoadingKeys((prev) => new Set(prev).add(key))
+            try {
+              await loadData(node)
+            } finally {
+              setLoadingKeys((prev) => {
+                const next = new Set(prev)
+                next.delete(key)
+                return next
+              })
+            }
+          }
+        }
+
+        const newKeys = expandedKeys.includes(key)
+          ? expandedKeys.filter((k) => k !== key)
+          : [...expandedKeys, key]
+
+        if (controlledExpandedKeys === undefined) {
+          setInternalExpandedKeys(newKeys)
+        }
+        onTreeExpand?.(newKeys)
+      },
+      [expandedKeys, controlledExpandedKeys, onTreeExpand, loadData, treeData, fieldNames]
+    )
+
+    const handleSelect = useCallback(
+      (key: string, _node: TreeDataNode) => {
+        let newValue: string[]
+
+        if (multiple) {
+          if (value.includes(key)) {
+            newValue = value.filter((k) => k !== key)
+          } else {
+            newValue = [...value, key]
+          }
+        } else {
+          newValue = [key]
+          setOpen(false)
+          if (controlledSearchValue === undefined) {
+            setInternalSearchValue('')
+          }
+        }
+
+        if (controlledValue === undefined) {
+          setInternalValue(newValue)
+        }
+
+        const labels = newValue.map((k) => {
+          const node = findNode(treeData, k, fieldNames)
+          return node ? getFieldValue(node, 'title', fieldNames) as React.ReactNode : k
+        })
+        onChange?.(multiple ? newValue : newValue[0] || '', labels)
+      },
+      [
+        value,
+        multiple,
+        controlledValue,
+        onChange,
+        treeData,
+        setOpen,
+        controlledSearchValue,
+        fieldNames,
+      ]
+    )
+
+    const handleCheck = useCallback(
+      (key: string, node: TreeDataNode) => {
+        const isChecked = value.includes(key)
+        let newValue = [...value]
+
+        if (treeCheckStrictly) {
+          // No parent-child association
+          if (isChecked) {
+            newValue = newValue.filter((k) => k !== key)
+          } else {
+            newValue.push(key)
+          }
+        } else {
+          const descendantKeys = getDescendantKeys(node, fieldNames)
+
+          if (isChecked) {
+            newValue = newValue.filter((k) => k !== key && !descendantKeys.includes(k))
+          } else {
+            newValue.push(key)
+            descendantKeys.forEach((dk) => {
+              if (!newValue.includes(dk)) newValue.push(dk)
+            })
+          }
+        }
+
+        if (controlledValue === undefined) {
+          setInternalValue(newValue)
+        }
+
+        const labels = newValue.map((k) => {
+          const n = findNode(treeData, k, fieldNames)
+          return n ? getFieldValue(n, 'title', fieldNames) as React.ReactNode : k
+        })
+        onChange?.(newValue, labels)
+      },
+      [value, controlledValue, onChange, treeData, treeCheckStrictly, fieldNames]
+    )
+
+    const handleClear = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      const newValue: string[] = []
+
+      if (controlledValue === undefined) {
+        setInternalValue(newValue)
+      }
+
+      onChange?.(multiple || treeCheckable ? newValue : '', [])
+    }
+
+    const removeTag = (key: string, e: React.MouseEvent) => {
+      e.stopPropagation()
+      const newValue = value.filter((k) => k !== key)
+
+      if (controlledValue === undefined) {
+        setInternalValue(newValue)
+      }
+
+      const labels = newValue.map((k) => {
+        const n = findNode(treeData, k, fieldNames)
+        return n ? getFieldValue(n, 'title', fieldNames) as React.ReactNode : k
+      })
+      onChange?.(multiple || treeCheckable ? newValue : newValue[0] || '', labels)
+    }
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const newValue = e.target.value
+      if (controlledSearchValue === undefined) {
+        setInternalSearchValue(newValue)
+      }
+      onSearch?.(newValue)
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+      if (disabled) return
+
+      switch (e.key) {
+        case 'Enter':
+        case ' ':
+          if (!open) {
+            e.preventDefault()
+            setOpen(true)
+          } else if (focusedKey) {
+            e.preventDefault()
+            const node = findNode(treeData, focusedKey, fieldNames)
+            if (node && !node.disabled) {
+              if (treeCheckable) {
+                handleCheck(focusedKey, node)
+              } else {
+                handleSelect(focusedKey, node)
+              }
+            }
+          }
+          break
+
+        case 'Escape':
+          e.preventDefault()
+          setOpen(false)
+          if (controlledSearchValue === undefined) {
+            setInternalSearchValue('')
+          }
+          triggerRef.current?.focus()
+          break
+
+        case 'ArrowDown':
+          e.preventDefault()
+          if (!open) {
+            setOpen(true)
+          } else {
+            const currentIndex = visibleNodes.findIndex((n) => n.key === focusedKey)
+            const nextIndex = currentIndex < visibleNodes.length - 1 ? currentIndex + 1 : 0
+            setFocusedKey(visibleNodes[nextIndex]?.key || null)
+          }
+          break
+
+        case 'ArrowUp':
+          e.preventDefault()
+          if (open) {
+            const currentIndex = visibleNodes.findIndex((n) => n.key === focusedKey)
+            const prevIndex = currentIndex > 0 ? currentIndex - 1 : visibleNodes.length - 1
+            setFocusedKey(visibleNodes[prevIndex]?.key || null)
+          }
+          break
+
+        case 'ArrowRight':
+          if (open && focusedKey) {
+            e.preventDefault()
+            const node = findNode(treeData, focusedKey, fieldNames)
+            const children = node
+              ? (getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined)
+              : undefined
+            if (children && children.length > 0 && !expandedKeys.includes(focusedKey)) {
+              handleToggle(focusedKey)
+            }
+          }
+          break
+
+        case 'ArrowLeft':
+          if (open && focusedKey) {
+            e.preventDefault()
+            if (expandedKeys.includes(focusedKey)) {
+              handleToggle(focusedKey)
+            } else {
+              // Move to parent
+              const parentKeys = getParentKeys(treeData, focusedKey, fieldNames)
+              if (parentKeys && parentKeys.length > 0) {
+                setFocusedKey(parentKeys[parentKeys.length - 1])
+              }
+            }
+          }
+          break
+
+        case 'Home':
+          if (open) {
+            e.preventDefault()
+            setFocusedKey(visibleNodes[0]?.key || null)
+          }
+          break
+
+        case 'End':
+          if (open) {
+            e.preventDefault()
+            setFocusedKey(visibleNodes[visibleNodes.length - 1]?.key || null)
+          }
+          break
+      }
+    }
+
+    const getCheckedState = useCallback(
+      (node: TreeDataNode): { checked: boolean; indeterminate: boolean } => {
+        const key = getFieldValue(node, 'key', fieldNames) as string
+        const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
+
+        if (treeCheckStrictly) {
+          return { checked: value.includes(key), indeterminate: false }
+        }
+
+        if (!children || children.length === 0) {
+          return { checked: value.includes(key), indeterminate: false }
+        }
+
+        const descendantKeys = getDescendantKeys(node, fieldNames)
+        const checkedDescendants = descendantKeys.filter((k) => value.includes(k))
+
+        if (checkedDescendants.length === 0) {
+          return { checked: value.includes(key), indeterminate: false }
+        }
+
+        if (checkedDescendants.length === descendantKeys.length) {
+          return { checked: true, indeterminate: false }
+        }
+
+        return { checked: false, indeterminate: true }
+      },
+      [value, treeCheckStrictly, fieldNames]
+    )
+
+    const renderNodes = useCallback(
+      (nodes: TreeDataNode[], level: number): React.ReactNode => {
+        return nodes.map((node) => {
+          const key = getFieldValue(node, 'key', fieldNames) as string
+          const { checked, indeterminate } = getCheckedState(node)
+
+          return (
+            <TreeSelectNode
+              key={key}
+              node={node}
+              level={level}
+              expanded={expandedKeys.includes(key)}
+              selected={value.includes(key)}
+              checked={checked}
+              indeterminate={indeterminate}
+              treeCheckable={treeCheckable}
+              treeLine={treeLine}
+              focused={focusedKey === key}
+              loading={loadingKeys.has(key)}
+              baseTestId={baseTestId}
+              id={`${instanceId}-option-${key}`}
+              fieldNames={fieldNames}
+              switcherIcon={switcherIcon}
+              onToggle={handleToggle}
+              onSelect={handleSelect}
+              onCheck={handleCheck}
+              renderChildren={renderNodes}
+            />
+          )
+        })
+      },
+      [
+        expandedKeys,
+        value,
+        treeCheckable,
+        treeLine,
+        focusedKey,
+        loadingKeys,
+        baseTestId,
+        instanceId,
+        fieldNames,
+        switcherIcon,
+        handleToggle,
+        handleSelect,
+        handleCheck,
+        getCheckedState,
+      ]
+    )
+
+    // Display value with showCheckedStrategy
+    const displayValue = useMemo(() => {
+      if (value.length === 0) return null
+
+      let displayKeys = value
+
+      if ((treeCheckable || multiple) && showCheckedStrategy !== 'SHOW_ALL') {
+        if (showCheckedStrategy === 'SHOW_PARENT') {
+          // Only show parent nodes when all children are selected
+          displayKeys = value.filter((key) => {
+            const parentKeys = getParentKeys(treeData, key, fieldNames)
+            if (!parentKeys) return true
+            // Check if any parent is fully selected
+            return !parentKeys.some((pk) => value.includes(pk))
+          })
+        } else if (showCheckedStrategy === 'SHOW_CHILD') {
+          // Only show leaf nodes
+          displayKeys = value.filter((key) => {
+            const node = findNode(treeData, key, fieldNames)
+            if (!node) return true
+            const children = getFieldValue(node, 'children', fieldNames) as
+              | TreeDataNode[]
+              | undefined
+            return !children || children.length === 0
+          })
+        }
+      }
+
+      if (multiple || treeCheckable) {
+        let keysToShow = displayKeys
+        let hiddenCount = 0
+
+        if (maxTagCount !== undefined && maxTagCount !== 'responsive') {
+          if (displayKeys.length > maxTagCount) {
+            keysToShow = displayKeys.slice(0, maxTagCount)
+            hiddenCount = displayKeys.length - maxTagCount
+          }
+        }
+
+        const tags = keysToShow.map((key) => {
+          const node = findNode(treeData, key, fieldNames)
+          const title = node ? getFieldValue(node, 'title', fieldNames) : key
+          return (
+            <span
+              key={key}
+              className="inline-flex items-center gap-1 px-2 py-0.5 bg-base-200 rounded text-sm mr-1 mb-1"
+              data-testid={`${baseTestId}-tag-${key}`}
+            >
+              {title as React.ReactNode}
+              <button
+                type="button"
+                className="hover:text-error"
+                onClick={(e) => removeTag(key, e)}
+                aria-label={`Remove ${typeof title === 'string' ? title : key}`}
+              >
+                <svg
+                  className="w-3 h-3"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </span>
+          )
+        })
+
+        if (hiddenCount > 0) {
+          const hiddenKeys = displayKeys.slice(maxTagCount as number)
+          const placeholder =
+            typeof maxTagPlaceholder === 'function'
+              ? maxTagPlaceholder(hiddenKeys)
+              : maxTagPlaceholder || `+${hiddenCount} more`
+
+          tags.push(
+            <span
+              key="__more__"
+              className="inline-flex items-center px-2 py-0.5 bg-base-200 rounded text-sm mr-1 mb-1"
+            >
+              {placeholder}
+            </span>
+          )
+        }
+
+        return tags
+      }
+
+      const node = findNode(treeData, value[0], fieldNames)
+      const title = node ? getFieldValue(node, 'title', fieldNames) : value[0]
+      return title as React.ReactNode
+    }, [
+      value,
+      treeData,
+      multiple,
+      treeCheckable,
+      showCheckedStrategy,
+      maxTagCount,
+      maxTagPlaceholder,
+      baseTestId,
+      fieldNames,
+    ])
+
+    const borderClass = status ? statusClasses[status] : color ? colorClasses[color] : ''
+
+    const dropdownContent = (
+      <div className="py-1" role="tree" aria-label="Tree options">
+        {filteredData.length > 0 ? (
+          renderNodes(filteredData, 0)
+        ) : (
+          <div
+            className="px-4 py-2 text-base-content/50 text-sm text-center"
+            data-testid={`${baseTestId}-empty`}
+          >
+            {notFoundContent}
+          </div>
+        )}
+      </div>
+    )
+
+    return (
+      <div
+        ref={(node) => {
+          containerRef.current = node
+          if (typeof ref === 'function') {
+            ref(node)
+          } else if (ref) {
+            ref.current = node
+          }
+        }}
+        className={`relative ${className}`}
+        data-testid={baseTestId}
+        data-state={open ? 'open' : 'closed'}
+        data-disabled={disabled || undefined}
+        onKeyDown={handleKeyDown}
+        {...rest}
+      >
+        {/* Trigger */}
+        <div
+          ref={triggerRef}
+          role="combobox"
+          aria-expanded={open}
+          aria-haspopup="tree"
+          aria-owns={open ? listboxId : undefined}
+          aria-activedescendant={open && focusedKey ? `${instanceId}-option-${focusedKey}` : undefined}
+          aria-disabled={disabled}
+          tabIndex={disabled ? -1 : 0}
+          className={[
+            'input input-bordered flex items-center gap-2 cursor-pointer flex-wrap',
+            sizeClasses[size],
+            borderClass,
+            disabled && 'input-disabled opacity-50 cursor-not-allowed',
+            open && !borderClass && 'input-primary',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+          onClick={() => !disabled && setOpen(!open)}
+          data-testid={`${baseTestId}-trigger`}
+        >
+          <div className="flex-1 flex flex-wrap items-center gap-1 min-w-0">
+            {displayValue || <span className="text-base-content/50">{placeholder}</span>}
+          </div>
+
+          {/* Clear button */}
+          {allowClear && value.length > 0 && !disabled && (
+            <button
+              type="button"
+              className="hover:text-error flex-shrink-0"
+              onClick={handleClear}
+              aria-label="Clear selection"
+              data-testid={`${baseTestId}-clear`}
+            >
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          )}
+
+          {/* Suffix icon / Dropdown arrow */}
+          {suffixIcon || (
+            <svg
+              className={`w-4 h-4 flex-shrink-0 transition-transform ${open ? 'rotate-180' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          )}
+        </div>
+
+        {/* Dropdown */}
+        {open && (
+          <div
+            id={listboxId}
+            className={`absolute z-50 mt-1 w-full bg-base-100 border border-base-300 rounded-lg shadow-lg max-h-64 overflow-auto ${popupClassName}`}
+            data-testid={`${baseTestId}-dropdown`}
+          >
+            {/* Search input */}
+            {showSearch && (
+              <div className="p-2 border-b border-base-300">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  className="input input-bordered input-sm w-full"
+                  placeholder="Search..."
+                  value={searchValue}
+                  onChange={handleSearchChange}
+                  onClick={(e) => e.stopPropagation()}
+                  aria-label="Search tree options"
+                  data-testid={`${baseTestId}-search`}
+                />
+              </div>
+            )}
+
+            {/* Tree */}
+            {dropdownRender ? dropdownRender(dropdownContent) : dropdownContent}
+          </div>
+        )}
+      </div>
+    )
+  }
+)
+
+TreeSelect.displayName = 'TreeSelect'
