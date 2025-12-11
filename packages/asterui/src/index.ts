@@ -258,8 +258,8 @@ export type { TextareaProps } from './components/Textarea'
 export { TextRotate } from './components/TextRotate'
 export type { TextRotateProps, TextRotateDuration } from './components/TextRotate'
 
-export { Tag, CheckableTag } from './components/Tag'
-export type { TagProps, CheckableTagProps, TagSize, TagColor } from './components/Tag'
+export { Tag, CheckableTag, TagLiveRegion } from './components/Tag'
+export type { TagProps, CheckableTagProps, TagSize, TagColor, TagVariant } from './components/Tag'
 
 export { ThemeController } from './components/ThemeController'
 export type { ThemeControllerSwapProps, ThemeControllerDropdownProps, ThemeControllerToggleProps } from './components/ThemeController'

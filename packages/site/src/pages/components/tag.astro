@@ -9,17 +9,28 @@ const tagApi = [
   { property: 'onClose', description: 'Callback when tag is closed', type: '() => void', default: '-' },
   { property: 'color', description: 'Tag color (preset or custom hex)', type: "'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost' | string", default: '-' },
   { property: 'icon', description: 'Icon element to display before text', type: 'ReactNode', default: '-' },
-  { property: 'size', description: 'Tag size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'" },
+  { property: 'size', description: 'Tag size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'" },
+  { property: 'variant', description: 'Tag style variant', type: "'filled' | 'outlined' | 'soft' | 'dash'", default: "'filled'" },
+  { property: 'visible', description: 'Controlled visibility state', type: 'boolean', default: '-' },
+  { property: 'disabled', description: 'Disable interactions', type: 'boolean', default: 'false' },
+  { property: 'href', description: 'Render tag as a link', type: 'string', default: '-' },
+  { property: 'target', description: 'Link target (when href is set)', type: 'string', default: '-' },
   { property: 'children', description: 'Tag content', type: 'ReactNode', default: '-' },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
+  { property: 'data-testid', description: 'Test ID for the component', type: 'string', default: "'tag'" },
+  { property: 'aria-label', description: 'Accessible label (used in close button announcement)', type: 'string', default: '-' },
 ];
 
 const checkableTagApi = [
   { property: 'checked', description: 'Whether tag is checked', type: 'boolean', default: 'false' },
   { property: 'onChange', description: 'Callback when checked state changes', type: '(checked: boolean) => void', default: '-' },
   { property: 'icon', description: 'Icon element to display before text', type: 'ReactNode', default: '-' },
+  { property: 'size', description: 'Tag size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'" },
+  { property: 'color', description: 'Tag color when checked', type: "'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error' | 'ghost'", default: "'primary'" },
+  { property: 'disabled', description: 'Disable interactions', type: 'boolean', default: 'false' },
   { property: 'children', description: 'Tag content', type: 'ReactNode', default: '-' },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
+  { property: 'data-testid', description: 'Test ID for the component', type: 'string', default: "'checkable-tag'" },
 ];
 
 const examples = [
@@ -46,11 +57,29 @@ const App: React.FC = () => (
 export default App`,
   },
   {
+    id: 'variants',
+    title: 'Variants',
+    description: 'Different style variants for tags.',
+    code: `import React from 'react'
+import { Tag, Space } from 'asterui'
+
+const App: React.FC = () => (
+  <Space size="sm" wrap>
+    <Tag color="primary" variant="filled">Filled</Tag>
+    <Tag color="primary" variant="outlined">Outlined</Tag>
+    <Tag color="primary" variant="soft">Soft</Tag>
+    <Tag color="primary" variant="dash">Dash</Tag>
+  </Space>
+)
+
+export default App`,
+  },
+  {
     id: 'closable',
     title: 'Closable Tags',
     description: 'Tags that can be closed by the user.',
     code: `import React, { useState } from 'react'
-import { Tag, Space } from 'asterui'
+import { Tag, Space, TagLiveRegion } from 'asterui'
 
 const App: React.FC = () => {
   const [tags, setTags] = useState(['Tag 1', 'Tag 2', 'Tag 3'])
@@ -60,18 +89,21 @@ const App: React.FC = () => {
   }
 
   return (
-    <Space size="sm" wrap>
-      {tags.map((tag) => (
-        <Tag
-          key={tag}
-          closable
-          color="primary"
-          onClose={() => handleClose(tag)}
-        >
-          {tag}
-        </Tag>
-      ))}
-    </Space>
+    <>
+      <TagLiveRegion />
+      <Space size="sm" wrap>
+        {tags.map((tag) => (
+          <Tag
+            key={tag}
+            closable
+            color="primary"
+            onClose={() => handleClose(tag)}
+          >
+            {tag}
+          </Tag>
+        ))}
+      </Space>
+    </>
   )
 }
 
@@ -101,7 +133,7 @@ export default App`,
   {
     id: 'sizes',
     title: 'Tag Sizes',
-    description: 'Four sizes available for tags.',
+    description: 'Five sizes available for tags.',
     code: `import React from 'react'
 import { Tag, Space } from 'asterui'
 
@@ -111,6 +143,7 @@ const App: React.FC = () => (
     <Tag color="primary" size="sm">Small</Tag>
     <Tag color="primary" size="md">Medium</Tag>
     <Tag color="primary" size="lg">Large</Tag>
+    <Tag color="primary" size="xl">Extra Large</Tag>
   </Space>
 )
 
@@ -130,6 +163,43 @@ const App: React.FC = () => (
     <Tag color="#87d068">Green</Tag>
     <Tag color="#108ee9">Cyan</Tag>
     <Tag color="#f5222d">Crimson</Tag>
+  </Space>
+)
+
+export default App`,
+  },
+  {
+    id: 'link-tags',
+    title: 'Link Tags',
+    description: 'Tags that navigate to URLs.',
+    code: `import React from 'react'
+import { Tag, Space } from 'asterui'
+
+const App: React.FC = () => (
+  <Space size="sm" wrap>
+    <Tag color="primary" href="https://github.com" target="_blank">
+      GitHub
+    </Tag>
+    <Tag color="info" href="/docs">
+      Documentation
+    </Tag>
+  </Space>
+)
+
+export default App`,
+  },
+  {
+    id: 'disabled',
+    title: 'Disabled Tags',
+    description: 'Tags with disabled state.',
+    code: `import React from 'react'
+import { Tag, CheckableTag, Space } from 'asterui'
+
+const App: React.FC = () => (
+  <Space size="sm" wrap>
+    <Tag color="primary" disabled>Disabled Tag</Tag>
+    <Tag color="primary" closable disabled>Disabled Closable</Tag>
+    <CheckableTag disabled>Disabled Checkable</CheckableTag>
   </Space>
 )
 
@@ -165,6 +235,48 @@ const App: React.FC = () => {
           {tag}
         </CheckableTag>
       ))}
+    </Space>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'checkable-colors',
+    title: 'Checkable Tag Colors',
+    description: 'Checkable tags with different colors and sizes.',
+    code: `import React, { useState } from 'react'
+import { CheckableTag, Space } from 'asterui'
+
+const App: React.FC = () => {
+  const [checked, setChecked] = useState([true, false, false])
+
+  return (
+    <Space size="sm" wrap>
+      <CheckableTag
+        checked={checked[0]}
+        onChange={(c) => setChecked([c, checked[1], checked[2]])}
+        color="success"
+        size="sm"
+      >
+        Success
+      </CheckableTag>
+      <CheckableTag
+        checked={checked[1]}
+        onChange={(c) => setChecked([checked[0], c, checked[2]])}
+        color="warning"
+        size="md"
+      >
+        Warning
+      </CheckableTag>
+      <CheckableTag
+        checked={checked[2]}
+        onChange={(c) => setChecked([checked[0], checked[1], c])}
+        color="error"
+        size="lg"
+      >
+        Error
+      </CheckableTag>
     </Space>
   )
 }
@@ -266,7 +378,7 @@ export default App`,
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Import</h2>
       <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { Tag, CheckableTag } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+        <Code code="import { Tag, CheckableTag, TagLiveRegion } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
       </div>
     </section>
 
@@ -317,9 +429,12 @@ export default App`,
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
       <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Close button includes <code class="bg-base-content/20 px-1 rounded">aria-label</code> for screen readers</li>
+        <li>Close button includes descriptive <code class="bg-base-content/20 px-1 rounded">aria-label</code> (e.g., "Remove Tag 1")</li>
         <li>CheckableTag uses <code class="bg-base-content/20 px-1 rounded">role="checkbox"</code> with proper <code class="bg-base-content/20 px-1 rounded">aria-checked</code> state</li>
         <li>Keyboard accessible - close and toggle actions work with Enter/Space</li>
+        <li>Visible focus indicators on all interactive elements</li>
+        <li><code class="bg-base-content/20 px-1 rounded">TagLiveRegion</code> announces tag removals to screen readers</li>
+        <li><code class="bg-base-content/20 px-1 rounded">aria-disabled</code> attribute set when disabled</li>
         <li>Color contrast meets WCAG guidelines for preset colors</li>
       </ul>
     </section>

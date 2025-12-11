@@ -1,6 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { Tag, CheckableTag, Space } from 'asterui';
+import { Tag, CheckableTag, Space, TagLiveRegion } from 'asterui';
 import {
   ClipboardDocumentIcon,
   CheckIcon,
@@ -8,6 +8,9 @@ import {
   AcademicCapIcon,
   CurrencyDollarIcon,
   FireIcon,
+  HeartIcon,
+  StarIcon,
+  BookmarkIcon,
 } from '@heroicons/react/20/solid';
 
 const demos: Record<string, React.ReactNode> = {
@@ -23,18 +26,29 @@ const demos: Record<string, React.ReactNode> = {
       <Tag color="error">Error</Tag>
     </Space>
   ),
-  closable: (
+  variants: (
     <Space size="sm" wrap>
-      <Tag closable color="primary">
-        Closable
-      </Tag>
-      <Tag closable color="success">
-        Close Me
-      </Tag>
-      <Tag closable color="warning">
-        Removable
-      </Tag>
+      <Tag color="primary" variant="filled">Filled</Tag>
+      <Tag color="primary" variant="outlined">Outlined</Tag>
+      <Tag color="primary" variant="soft">Soft</Tag>
+      <Tag color="primary" variant="dash">Dash</Tag>
     </Space>
+  ),
+  closable: (
+    <>
+      <TagLiveRegion />
+      <Space size="sm" wrap>
+        <Tag closable color="primary">
+          Closable
+        </Tag>
+        <Tag closable color="success">
+          Close Me
+        </Tag>
+        <Tag closable color="warning">
+          Removable
+        </Tag>
+      </Space>
+    </>
   ),
   icons: (
     <Space size="sm" wrap>
@@ -63,6 +77,9 @@ const demos: Record<string, React.ReactNode> = {
       <Tag color="primary" size="lg">
         Large
       </Tag>
+      <Tag color="primary" size="xl">
+        Extra Large
+      </Tag>
     </Space>
   ),
   'custom-colors': (
@@ -74,6 +91,23 @@ const demos: Record<string, React.ReactNode> = {
       <Tag color="#f5222d">Crimson</Tag>
     </Space>
   ),
+  'link-tags': (
+    <Space size="sm" wrap>
+      <Tag color="primary" href="https://github.com" target="_blank">
+        GitHub
+      </Tag>
+      <Tag color="info" href="/docs">
+        Documentation
+      </Tag>
+    </Space>
+  ),
+  disabled: (
+    <Space size="sm" wrap>
+      <Tag color="primary" disabled>Disabled Tag</Tag>
+      <Tag color="primary" closable disabled>Disabled Closable</Tag>
+      <CheckableTag disabled>Disabled Checkable</CheckableTag>
+    </Space>
+  ),
   checkable: (
     <Space size="sm" wrap>
       <CheckableTag checked>React</CheckableTag>
@@ -82,13 +116,26 @@ const demos: Record<string, React.ReactNode> = {
       <CheckableTag>Svelte</CheckableTag>
     </Space>
   ),
+  'checkable-colors': (
+    <Space size="sm" wrap>
+      <CheckableTag checked color="success" size="sm">
+        Success
+      </CheckableTag>
+      <CheckableTag color="warning" size="md">
+        Warning
+      </CheckableTag>
+      <CheckableTag color="error" size="lg">
+        Error
+      </CheckableTag>
+    </Space>
+  ),
   'checkable-icons': (
     <Space size="sm" wrap>
-      <CheckableTag icon={<AcademicCapIcon className="w-3 h-3" />}>Education</CheckableTag>
-      <CheckableTag checked icon={<CurrencyDollarIcon className="w-3 h-3" />}>
-        Finance
+      <CheckableTag icon={<HeartIcon className="w-3 h-3" />}>Like</CheckableTag>
+      <CheckableTag checked icon={<StarIcon className="w-3 h-3" />}>
+        Star
       </CheckableTag>
-      <CheckableTag icon={<FireIcon className="w-3 h-3" />}>Trending</CheckableTag>
+      <CheckableTag icon={<BookmarkIcon className="w-3 h-3" />}>Save</CheckableTag>
     </Space>
   ),
   'use-cases': (

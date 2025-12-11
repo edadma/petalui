@@ -94,6 +94,8 @@ export interface TreeProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   onRightClick?: (info: { event: React.MouseEvent; node: TreeDataNode }) => void
   /** Custom field names for data mapping */
   fieldNames?: { key?: string; title?: string; children?: string }
+  /** Test ID for the component */
+  'data-testid'?: string
 }
 
 // ============================================================================

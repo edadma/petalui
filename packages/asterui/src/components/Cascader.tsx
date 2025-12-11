@@ -68,6 +68,8 @@ export interface CascaderProps extends Omit<React.HTMLAttributes<HTMLDivElement>
   maxTagCount?: number | 'responsive'
   /** Accessible label */
   'aria-label'?: string
+  /** Test ID for the component */
+  'data-testid'?: string
 }
 
 // Helper to get nested value using field names

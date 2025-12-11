@@ -1,6 +1,6 @@
 import React, { useState, forwardRef } from 'react'
 
-export type TagSize = 'xs' | 'sm' | 'md' | 'lg'
+export type TagSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type TagColor =
   | 'primary'
   | 'secondary'
@@ -12,21 +12,32 @@ export type TagColor =
   | 'error'
   | 'ghost'
 
-export interface TagProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'color'> {
+export type TagVariant = 'filled' | 'outlined' | 'soft' | 'dash'
+
+export interface TagProps extends Omit<React.HTMLAttributes<HTMLElement>, 'color'> {
   closable?: boolean
   closeIcon?: React.ReactNode
   onClose?: () => void
   color?: TagColor | string
   icon?: React.ReactNode
   size?: TagSize
+  variant?: TagVariant
+  visible?: boolean
+  disabled?: boolean
+  href?: string
+  target?: string
   children?: React.ReactNode
   'data-testid'?: string
+  'aria-label'?: string
 }
 
-export interface CheckableTagProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'onChange'> {
+export interface CheckableTagProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'onChange' | 'color'> {
   checked?: boolean
   onChange?: (checked: boolean) => void
   icon?: React.ReactNode
+  size?: TagSize
+  color?: TagColor
+  disabled?: boolean
   children?: React.ReactNode
   'data-testid'?: string
 }
@@ -48,9 +59,38 @@ const sizeClasses: Record<TagSize, string> = {
   sm: 'badge-sm text-sm',
   md: 'badge-md',
   lg: 'badge-lg text-lg',
+  xl: 'badge-xl text-xl',
 }
 
-export const Tag = forwardRef<HTMLSpanElement, TagProps>(
+const variantClasses: Record<TagVariant, string> = {
+  filled: '',
+  outlined: 'badge-outline',
+  soft: 'badge-soft',
+  dash: 'badge-dash',
+}
+
+const TagLiveRegion: React.FC = () => (
+  <div
+    id="tag-live-region"
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    className="sr-only"
+    style={{ position: 'absolute', width: 1, height: 1, padding: 0, margin: -1, overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}
+  />
+)
+
+const announceTagRemoval = (label: string) => {
+  const region = document.getElementById('tag-live-region')
+  if (region) {
+    region.textContent = `${label} removed`
+    setTimeout(() => {
+      region.textContent = ''
+    }, 1000)
+  }
+}
+
+export const Tag = forwardRef<HTMLElement, TagProps>(
   (
     {
       closable = false,
@@ -59,20 +99,41 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
       color,
       icon,
       size = 'md',
+      variant = 'filled',
+      visible: controlledVisible,
+      disabled = false,
+      href,
+      target,
       children,
       className = '',
       'data-testid': testId,
+      'aria-label': ariaLabel,
       ...rest
     },
     ref
   ) => {
-    const [visible, setVisible] = useState(true)
+    const [internalVisible, setInternalVisible] = useState(true)
+    const isControlled = controlledVisible !== undefined
+    const visible = isControlled ? controlledVisible : internalVisible
     const baseTestId = testId ?? 'tag'
+    const tagLabel = ariaLabel ?? (typeof children === 'string' ? children : 'tag')
 
     const handleClose = (e: React.MouseEvent) => {
       e.stopPropagation()
-      setVisible(false)
+      e.preventDefault()
+      if (disabled) return
+      if (!isControlled) {
+        setInternalVisible(false)
+      }
+      announceTagRemoval(tagLabel)
       onClose?.()
+    }
+
+    const handleCloseKeyDown = (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault()
+        handleClose(e as unknown as React.MouseEvent)
+      }
     }
 
     if (!visible) return null
@@ -85,27 +146,26 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
       'badge gap-1 inline-flex items-center',
       colorClass,
       sizeClasses[size],
+      variantClasses[variant],
+      disabled && 'opacity-50 cursor-not-allowed',
+      href && !disabled && 'cursor-pointer hover:opacity-80',
       className,
     ]
       .filter(Boolean)
       .join(' ')
 
-    return (
-      <span
-        ref={ref}
-        className={tagClasses}
-        style={customColorStyle}
-        data-testid={baseTestId}
-        {...rest}
-      >
+    const content = (
+      <>
         {icon && <span className="inline-flex">{icon}</span>}
         {children}
         {closable && (
           <button
             type="button"
             onClick={handleClose}
-            className="btn btn-ghost btn-xs p-0 min-h-0 h-auto hover:bg-transparent"
-            aria-label="Close"
+            onKeyDown={handleCloseKeyDown}
+            disabled={disabled}
+            className="btn btn-ghost btn-xs p-0 min-h-0 h-auto hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-1 rounded"
+            aria-label={`Remove ${tagLabel}`}
             data-testid={`${baseTestId}-close`}
           >
             {closeIcon || (
@@ -126,6 +186,37 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
             )}
           </button>
         )}
+      </>
+    )
+
+    if (href && !disabled) {
+      return (
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={href}
+          target={target}
+          className={tagClasses}
+          style={customColorStyle}
+          data-testid={baseTestId}
+          data-disabled={disabled || undefined}
+          {...rest}
+        >
+          {content}
+        </a>
+      )
+    }
+
+    return (
+      <span
+        ref={ref as React.Ref<HTMLSpanElement>}
+        className={tagClasses}
+        style={customColorStyle}
+        data-testid={baseTestId}
+        data-disabled={disabled || undefined}
+        aria-disabled={disabled || undefined}
+        {...rest}
+      >
+        {content}
       </span>
     )
   }
@@ -133,12 +224,39 @@ export const Tag = forwardRef<HTMLSpanElement, TagProps>(
 
 Tag.displayName = 'Tag'
 
+const checkedColorClasses: Record<TagColor, string> = {
+  primary: 'badge-primary',
+  secondary: 'badge-secondary',
+  accent: 'badge-accent',
+  neutral: 'badge-neutral',
+  info: 'badge-info',
+  success: 'badge-success',
+  warning: 'badge-warning',
+  error: 'badge-error',
+  ghost: 'badge-ghost',
+}
+
+const uncheckedColorClasses: Record<TagColor, string> = {
+  primary: 'badge-outline hover:badge-primary hover:badge-outline',
+  secondary: 'badge-outline hover:badge-secondary hover:badge-outline',
+  accent: 'badge-outline hover:badge-accent hover:badge-outline',
+  neutral: 'badge-outline hover:badge-neutral hover:badge-outline',
+  info: 'badge-outline hover:badge-info hover:badge-outline',
+  success: 'badge-outline hover:badge-success hover:badge-outline',
+  warning: 'badge-outline hover:badge-warning hover:badge-outline',
+  error: 'badge-outline hover:badge-error hover:badge-outline',
+  ghost: 'badge-outline hover:badge-ghost hover:badge-outline',
+}
+
 export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
   (
     {
       checked = false,
       onChange,
       icon,
+      size = 'md',
+      color = 'primary',
+      disabled = false,
       children,
       className = '',
       'data-testid': testId,
@@ -149,12 +267,16 @@ export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
     const baseTestId = testId ?? 'checkable-tag'
 
     const handleClick = () => {
+      if (disabled) return
       onChange?.(!checked)
     }
 
     const tagClasses = [
-      'badge badge-md gap-1 cursor-pointer transition-colors',
-      checked ? 'badge-primary' : 'badge-outline hover:badge-primary hover:badge-outline',
+      'badge gap-1 cursor-pointer transition-colors',
+      'focus:outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2',
+      sizeClasses[size],
+      checked ? checkedColorClasses[color] : uncheckedColorClasses[color],
+      disabled && 'opacity-50 cursor-not-allowed',
       className,
     ]
       .filter(Boolean)
@@ -167,8 +289,10 @@ export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
         onClick={handleClick}
         role="checkbox"
         aria-checked={checked}
-        tabIndex={0}
+        aria-disabled={disabled || undefined}
+        tabIndex={disabled ? -1 : 0}
         onKeyDown={(e) => {
+          if (disabled) return
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault()
             handleClick()
@@ -176,6 +300,7 @@ export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
         }}
         data-testid={baseTestId}
         data-state={checked ? 'checked' : 'unchecked'}
+        data-disabled={disabled || undefined}
         {...rest}
       >
         {icon && <span className="inline-flex">{icon}</span>}
@@ -186,3 +311,5 @@ export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
 )
 
 CheckableTag.displayName = 'CheckableTag'
+
+export { TagLiveRegion }
