@@ -14,12 +14,19 @@ export type TreeSelectColor =
   | 'primary'
   | 'secondary'
   | 'accent'
+  | 'neutral'
   | 'info'
   | 'success'
   | 'warning'
   | 'error'
 export type TreeSelectStatus = 'error' | 'warning'
+export type TreeSelectVariant = 'outlined' | 'filled' | 'borderless'
 export type ShowCheckedStrategy = 'SHOW_ALL' | 'SHOW_PARENT' | 'SHOW_CHILD'
+
+// Static strategy constants
+const SHOW_ALL: ShowCheckedStrategy = 'SHOW_ALL'
+const SHOW_PARENT: ShowCheckedStrategy = 'SHOW_PARENT'
+const SHOW_CHILD: ShowCheckedStrategy = 'SHOW_CHILD'
 
 export interface TreeSelectFieldNames {
   label?: string
@@ -27,12 +34,22 @@ export interface TreeSelectFieldNames {
   children?: string
 }
 
+/** Value type when labelInValue is true */
+export interface LabeledValue {
+  value: string
+  label: React.ReactNode
+}
+
 export interface TreeSelectProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   treeData: TreeDataNode[]
-  value?: string | string[]
-  defaultValue?: string | string[]
-  onChange?: (value: string | string[], labels: React.ReactNode[]) => void
+  value?: string | string[] | LabeledValue | LabeledValue[]
+  defaultValue?: string | string[] | LabeledValue | LabeledValue[]
+  onChange?: (
+    value: string | string[] | LabeledValue | LabeledValue[],
+    labels: React.ReactNode[],
+    extra?: { triggerValue: string; triggerNode: TreeDataNode }
+  ) => void
   multiple?: boolean
   treeCheckable?: boolean
   treeCheckStrictly?: boolean
@@ -51,10 +68,26 @@ export interface TreeSelectProps
   size?: TreeSelectSize
   color?: TreeSelectColor
   status?: TreeSelectStatus
+  /** Visual variant style */
+  variant?: TreeSelectVariant
+  /** Ghost style with no background */
+  ghost?: boolean
+  /** Maximum number of tags to show (multiple/treeCheckable mode) */
   maxTagCount?: number | 'responsive'
   maxTagPlaceholder?: React.ReactNode | ((omittedValues: string[]) => React.ReactNode)
+  /** Maximum number of selections allowed */
+  maxCount?: number
+  /** Return object with value and label instead of just value */
   labelInValue?: boolean
+  /** Custom tag render function */
+  tagRender?: (props: {
+    label: React.ReactNode
+    value: string
+    closable: boolean
+    onClose: () => void
+  }) => React.ReactNode
   treeLine?: boolean
+  /** Show tree node icon */
   treeIcon?: boolean
   loadData?: (node: TreeDataNode) => Promise<void>
   fieldNames?: TreeSelectFieldNames
@@ -76,15 +109,15 @@ function getFieldValue(
 ): unknown {
   if (field === 'title') {
     const labelField = fieldNames?.label || 'title'
-    return (node as Record<string, unknown>)[labelField]
+    return (node as unknown as Record<string, unknown>)[labelField]
   }
   if (field === 'key') {
     const valueField = fieldNames?.value || 'key'
-    return (node as Record<string, unknown>)[valueField]
+    return (node as unknown as Record<string, unknown>)[valueField]
   }
   if (field === 'children') {
     const childrenField = fieldNames?.children || 'children'
-    return (node as Record<string, unknown>)[childrenField]
+    return (node as unknown as Record<string, unknown>)[childrenField]
   }
   return undefined
 }
@@ -188,6 +221,7 @@ interface TreeSelectNodeProps {
   indeterminate: boolean
   treeCheckable: boolean
   treeLine: boolean
+  treeIcon: boolean
   focused: boolean
   loading: boolean
   baseTestId: string
@@ -209,6 +243,7 @@ function TreeSelectNode({
   indeterminate,
   treeCheckable,
   treeLine,
+  treeIcon: showTreeIcon,
   focused,
   loading,
   baseTestId,
@@ -223,6 +258,7 @@ function TreeSelectNode({
   const children = getFieldValue(node, 'children', fieldNames) as TreeDataNode[] | undefined
   const title = getFieldValue(node, 'title', fieldNames) as React.ReactNode
   const key = getFieldValue(node, 'key', fieldNames) as string
+  const nodeIcon = node.icon
   const hasChildren = children && children.length > 0
   const isLeaf = node.isLeaf ?? !hasChildren
 
@@ -342,6 +378,11 @@ function TreeSelectNode({
           </span>
         )}
 
+        {/* Node icon */}
+        {showTreeIcon && nodeIcon && (
+          <span className="mr-1.5 flex-shrink-0 flex items-center">{nodeIcon}</span>
+        )}
+
         {/* Title */}
         <span className="flex-1 truncate select-none text-sm">{title}</span>
       </div>
@@ -366,6 +407,7 @@ const colorClasses: Record<TreeSelectColor, string> = {
   primary: 'border-primary focus-within:border-primary',
   secondary: 'border-secondary focus-within:border-secondary',
   accent: 'border-accent focus-within:border-accent',
+  neutral: 'border-neutral focus-within:border-neutral',
   info: 'border-info focus-within:border-info',
   success: 'border-success focus-within:border-success',
   warning: 'border-warning focus-within:border-warning',
@@ -375,6 +417,12 @@ const colorClasses: Record<TreeSelectColor, string> = {
 const statusClasses: Record<TreeSelectStatus, string> = {
   error: 'border-error focus-within:border-error',
   warning: 'border-warning focus-within:border-warning',
+}
+
+const variantClasses: Record<TreeSelectVariant, string> = {
+  outlined: 'border border-base-300',
+  filled: 'bg-base-200 border-transparent',
+  borderless: 'border-transparent',
 }
 
 export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
@@ -402,10 +450,15 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
       size = 'md',
       color,
       status,
+      variant = 'outlined',
+      ghost = false,
       maxTagCount,
       maxTagPlaceholder,
+      maxCount,
       labelInValue = false,
+      tagRender,
       treeLine = false,
+      treeIcon = false,
       loadData,
       fieldNames,
       open: controlledOpen,
@@ -435,10 +488,16 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
     const searchValue = controlledSearchValue ?? internalSearchValue
     const open = controlledOpen ?? isOpen
 
-    // Normalize value to array
-    const normalizeValue = (val: string | string[] | undefined): string[] => {
+    // Normalize value to array - handle labelInValue format
+    const normalizeValue = (val: string | string[] | LabeledValue | LabeledValue[] | undefined): string[] => {
       if (val === undefined) return []
-      return Array.isArray(val) ? val : [val]
+      if (Array.isArray(val)) {
+        return val.map((v) => (typeof v === 'object' && v !== null ? v.value : v))
+      }
+      if (typeof val === 'object' && val !== null) {
+        return [(val as LabeledValue).value]
+      }
+      return [val as string]
     }
 
     const initialValue = normalizeValue(defaultValue)
@@ -606,13 +665,17 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
     )
 
     const handleSelect = useCallback(
-      (key: string, _node: TreeDataNode) => {
+      (key: string, triggerNode: TreeDataNode) => {
         let newValue: string[]
 
         if (multiple) {
           if (value.includes(key)) {
             newValue = value.filter((k) => k !== key)
           } else {
+            // Check maxCount limit
+            if (maxCount !== undefined && value.length >= maxCount) {
+              return // Don't add more if at limit
+            }
             newValue = [...value, key]
           }
         } else {
@@ -631,22 +694,41 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           const node = findNode(treeData, k, fieldNames)
           return node ? getFieldValue(node, 'title', fieldNames) as React.ReactNode : k
         })
-        onChange?.(multiple ? newValue : newValue[0] || '', labels)
+
+        // Build return value based on labelInValue setting
+        if (labelInValue) {
+          const labeledValues: LabeledValue[] = newValue.map((k) => {
+            const node = findNode(treeData, k, fieldNames)
+            return {
+              value: k,
+              label: node ? getFieldValue(node, 'title', fieldNames) as React.ReactNode : k,
+            }
+          })
+          onChange?.(
+            multiple ? labeledValues : labeledValues[0] || { value: '', label: '' },
+            labels,
+            { triggerValue: key, triggerNode }
+          )
+        } else {
+          onChange?.(multiple ? newValue : newValue[0] || '', labels, { triggerValue: key, triggerNode })
+        }
       },
       [
         value,
         multiple,
+        maxCount,
         controlledValue,
         onChange,
         treeData,
         setOpen,
         controlledSearchValue,
         fieldNames,
+        labelInValue,
       ]
     )
 
     const handleCheck = useCallback(
-      (key: string, node: TreeDataNode) => {
+      (key: string, triggerNode: TreeDataNode) => {
         const isChecked = value.includes(key)
         let newValue = [...value]
 
@@ -655,18 +737,31 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           if (isChecked) {
             newValue = newValue.filter((k) => k !== key)
           } else {
+            // Check maxCount limit
+            if (maxCount !== undefined && value.length >= maxCount) {
+              return // Don't add more if at limit
+            }
             newValue.push(key)
           }
         } else {
-          const descendantKeys = getDescendantKeys(node, fieldNames)
+          const descendantKeys = getDescendantKeys(triggerNode, fieldNames)
 
           if (isChecked) {
             newValue = newValue.filter((k) => k !== key && !descendantKeys.includes(k))
           } else {
-            newValue.push(key)
-            descendantKeys.forEach((dk) => {
-              if (!newValue.includes(dk)) newValue.push(dk)
-            })
+            // Check maxCount limit for adding multiple
+            const keysToAdd = [key, ...descendantKeys.filter((dk) => !newValue.includes(dk))]
+            if (maxCount !== undefined && newValue.length + keysToAdd.length > maxCount) {
+              // Add only up to maxCount
+              const remainingSlots = maxCount - newValue.length
+              if (remainingSlots <= 0) return
+              keysToAdd.slice(0, remainingSlots).forEach((k) => newValue.push(k))
+            } else {
+              newValue.push(key)
+              descendantKeys.forEach((dk) => {
+                if (!newValue.includes(dk)) newValue.push(dk)
+              })
+            }
           }
         }
 
@@ -678,9 +773,22 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           const n = findNode(treeData, k, fieldNames)
           return n ? getFieldValue(n, 'title', fieldNames) as React.ReactNode : k
         })
-        onChange?.(newValue, labels)
+
+        // Build return value based on labelInValue setting
+        if (labelInValue) {
+          const labeledValues: LabeledValue[] = newValue.map((k) => {
+            const node = findNode(treeData, k, fieldNames)
+            return {
+              value: k,
+              label: node ? getFieldValue(node, 'title', fieldNames) as React.ReactNode : k,
+            }
+          })
+          onChange?.(labeledValues, labels, { triggerValue: key, triggerNode })
+        } else {
+          onChange?.(newValue, labels, { triggerValue: key, triggerNode })
+        }
       },
-      [value, controlledValue, onChange, treeData, treeCheckStrictly, fieldNames]
+      [value, controlledValue, onChange, treeData, treeCheckStrictly, fieldNames, maxCount, labelInValue]
     )
 
     const handleClear = (e: React.MouseEvent) => {
@@ -691,7 +799,11 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
         setInternalValue(newValue)
       }
 
-      onChange?.(multiple || treeCheckable ? newValue : '', [])
+      if (labelInValue) {
+        onChange?.(multiple || treeCheckable ? [] : { value: '', label: '' }, [])
+      } else {
+        onChange?.(multiple || treeCheckable ? newValue : '', [])
+      }
     }
 
     const removeTag = (key: string, e: React.MouseEvent) => {
@@ -706,7 +818,22 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
         const n = findNode(treeData, k, fieldNames)
         return n ? getFieldValue(n, 'title', fieldNames) as React.ReactNode : k
       })
-      onChange?.(multiple || treeCheckable ? newValue : newValue[0] || '', labels)
+
+      if (labelInValue) {
+        const labeledValues: LabeledValue[] = newValue.map((k) => {
+          const node = findNode(treeData, k, fieldNames)
+          return {
+            value: k,
+            label: node ? getFieldValue(node, 'title', fieldNames) as React.ReactNode : k,
+          }
+        })
+        onChange?.(
+          multiple || treeCheckable ? labeledValues : labeledValues[0] || { value: '', label: '' },
+          labels
+        )
+      } else {
+        onChange?.(multiple || treeCheckable ? newValue : newValue[0] || '', labels)
+      }
     }
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -858,6 +985,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
               indeterminate={indeterminate}
               treeCheckable={treeCheckable}
               treeLine={treeLine}
+              treeIcon={treeIcon}
               focused={focusedKey === key}
               loading={loadingKeys.has(key)}
               baseTestId={baseTestId}
@@ -877,6 +1005,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
         value,
         treeCheckable,
         treeLine,
+        treeIcon,
         focusedKey,
         loadingKeys,
         baseTestId,
@@ -932,34 +1061,52 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
         const tags = keysToShow.map((key) => {
           const node = findNode(treeData, key, fieldNames)
           const title = node ? getFieldValue(node, 'title', fieldNames) : key
+          const label = title as React.ReactNode
+          const closable = !disabled
+          const onClose = () => {
+            const fakeEvent = { stopPropagation: () => {} } as React.MouseEvent
+            removeTag(key, fakeEvent)
+          }
+
+          // Use custom tagRender if provided
+          if (tagRender) {
+            return (
+              <React.Fragment key={key}>
+                {tagRender({ label, value: key, closable, onClose })}
+              </React.Fragment>
+            )
+          }
+
           return (
             <span
               key={key}
               className="inline-flex items-center gap-1 px-2 py-0.5 bg-base-200 rounded text-sm mr-1 mb-1"
               data-testid={`${baseTestId}-tag-${key}`}
             >
-              {title as React.ReactNode}
-              <button
-                type="button"
-                className="hover:text-error"
-                onClick={(e) => removeTag(key, e)}
-                aria-label={`Remove ${typeof title === 'string' ? title : key}`}
-              >
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
+              {label}
+              {closable && (
+                <button
+                  type="button"
+                  className="hover:text-error"
+                  onClick={(e) => removeTag(key, e)}
+                  aria-label={`Remove ${typeof title === 'string' ? title : key}`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
+                  <svg
+                    className="w-3 h-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              )}
             </span>
           )
         })
@@ -997,9 +1144,12 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
       maxTagPlaceholder,
       baseTestId,
       fieldNames,
+      disabled,
+      tagRender,
     ])
 
     const borderClass = status ? statusClasses[status] : color ? colorClasses[color] : ''
+    const variantClass = ghost ? 'bg-transparent border-transparent' : variantClasses[variant]
 
     const dropdownContent = (
       <div className="py-1" role="tree" aria-label="Tree options">
@@ -1046,9 +1196,10 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           className={[
             'input flex items-center gap-2 cursor-pointer flex-wrap',
             sizeClasses[size],
+            variantClass,
             borderClass,
             disabled && 'input-disabled opacity-50 cursor-not-allowed',
-            open && !borderClass && 'input-primary',
+            open && !borderClass && 'border-primary',
           ]
             .filter(Boolean)
             .join(' ')}
@@ -1138,3 +1289,12 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
 )
 
 TreeSelect.displayName = 'TreeSelect'
+
+// Attach static strategy constants to TreeSelect
+export const TreeSelectComponent = Object.assign(TreeSelect, {
+  SHOW_ALL,
+  SHOW_PARENT,
+  SHOW_CHILD,
+})
+
+export { TreeSelectComponent as default }

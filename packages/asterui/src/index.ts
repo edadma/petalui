@@ -285,14 +285,16 @@ export type { TransferProps, TransferItem } from './components/Transfer'
 export { Tree } from './components/Tree'
 export type { TreeProps, TreeDataNode } from './components/Tree'
 
-export { TreeSelect } from './components/TreeSelect'
+export { TreeSelect, TreeSelectComponent } from './components/TreeSelect'
 export type {
   TreeSelectProps,
   TreeSelectSize,
   TreeSelectColor,
   TreeSelectStatus,
+  TreeSelectVariant,
   TreeSelectFieldNames,
   ShowCheckedStrategy,
+  LabeledValue,
 } from './components/TreeSelect'
 
 export { Typography } from './components/Typography'
