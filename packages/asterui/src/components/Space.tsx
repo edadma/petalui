@@ -49,7 +49,8 @@ export const Space: React.FC<SpaceProps> = ({
 }) => {
   const isNumericSize = typeof size === 'number'
   const gapClass = isNumericSize ? '' : gapClasses[size]
-  const alignClass = align ? alignClasses[align] : ''
+  const effectiveAlign = align ?? (direction === 'vertical' ? 'start' : undefined)
+  const alignClass = effectiveAlign ? alignClasses[effectiveAlign] : ''
   const justifyClass = justify ? justifyClasses[justify] : ''
   const wrapClass = wrap ? 'flex-wrap' : ''
   const directionClass = direction === 'horizontal' ? 'flex-row' : 'flex-col'

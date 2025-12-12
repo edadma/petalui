@@ -1,7 +1,9 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState } from 'react';
-import { ColorPicker, Space } from 'asterui';
-import { CheckIconSvg } from './icons'
+import { ColorPicker, Space, Typography } from 'asterui';
+import { CheckIconSvg } from './icons';
+
+const { Text } = Typography;
 
 const presets = [
   '#f43f5e', '#ec4899', '#d946ef', '#a855f7',
@@ -11,26 +13,33 @@ const presets = [
 
 // Demo components for each example
 const demos: Record<string, React.ReactNode> = {
-  'basic': (
-    <ColorPicker defaultValue="#6366f1" />
+  basic: <ColorPicker defaultValue="#6366f1" />,
+  'show-text': <ColorPicker defaultValue="#10b981" showText />,
+  presets: <ColorPicker defaultValue="#6366f1" presets={presets} />,
+  sizes: (
+    <Space direction="vertical" size="md">
+      <ColorPicker size="xs" defaultValue="#f43f5e" mode="picker" />
+      <ColorPicker size="sm" defaultValue="#6366f1" mode="picker" />
+      <ColorPicker size="md" defaultValue="#10b981" mode="picker" />
+      <ColorPicker size="lg" defaultValue="#a855f7" mode="picker" />
+    </Space>
   ),
-  'show-text': (
-    <ColorPicker defaultValue="#10b981" showText />
-  ),
-  'presets': (
-    <ColorPicker defaultValue="#6366f1" presets={presets} />
-  ),
-  'sizes': (
-    <Space direction="horizontal" size="md" align="center">
-      <ColorPicker size="sm" defaultValue="#f43f5e" />
-      <ColorPicker size="md" defaultValue="#6366f1" />
-      <ColorPicker size="lg" defaultValue="#10b981" />
+  modes: (
+    <Space direction="vertical" size="lg">
+      <Space direction="vertical" size="xs">
+        <Text size="sm" muted>Picker only</Text>
+        <ColorPicker mode="picker" defaultValue="#6366f1" />
+      </Space>
+      <Space direction="vertical" size="xs">
+        <Text size="sm" muted>Swatches only</Text>
+        <ColorPicker mode="swatches" defaultValue="#6366f1" />
+      </Space>
     </Space>
   ),
 };
 
 // Stateful demo components
-const ControlledDemo: React.FC = () => {
+function ControlledDemo() {
   const [color, setColor] = useState('#6366f1');
 
   return (
@@ -42,10 +51,10 @@ const ControlledDemo: React.FC = () => {
       />
     </Space>
   );
-};
+}
 
 const statefulDemos: Record<string, React.FC> = {
-  'controlled': ControlledDemo,
+  controlled: ControlledDemo,
 };
 
 // Mount React demos

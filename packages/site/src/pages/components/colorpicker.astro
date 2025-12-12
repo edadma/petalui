@@ -4,50 +4,45 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const colorPickerApi = [
-  { property: 'value', description: 'Controlled color value', type: 'string' },
-  { property: 'defaultValue', description: 'Initial color value', type: 'string', default: "'#1677ff'" },
-  { property: 'onChange', description: 'Change handler', type: '(color: string) => void' },
-  { property: 'format', description: 'Color format', type: "'hex' | 'rgb' | 'hsl'", default: "'hex'" },
-  { property: 'presets', description: 'Preset color options', type: 'string[]' },
-  { property: 'showText', description: 'Show color value text', type: 'boolean', default: 'false' },
+  { property: 'value', description: 'Controlled color value (hex)', type: 'string', default: '-' },
+  { property: 'defaultValue', description: 'Initial color value (uncontrolled)', type: 'string', default: "'#000000'" },
+  { property: 'onChange', description: 'Callback when color changes', type: '(color: string) => void', default: '-' },
+  { property: 'mode', description: 'Display mode', type: "'swatches' | 'picker' | 'both'", default: "'both'" },
+  { property: 'presets', description: 'Preset color swatches', type: 'string[]', default: 'Default palette' },
+  { property: 'showText', description: 'Show hex value below picker', type: 'boolean', default: 'false' },
+  { property: 'allowClear', description: 'Show clear button to reset color', type: 'boolean', default: 'false' },
   { property: 'disabled', description: 'Disable the picker', type: 'boolean', default: 'false' },
-  { property: 'size', description: 'Picker size', type: "'sm' | 'md' | 'lg'", default: "'md'" },
-  { property: 'className', description: 'Additional CSS classes', type: 'string' },
+  { property: 'size', description: 'Picker size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'" },
+  { property: 'data-testid', description: 'Test ID prefix for child elements', type: 'string', default: "'colorpicker'" },
+  { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
 ];
 
 const examples = [
   {
     id: 'basic',
     title: 'Basic ColorPicker',
-    description: 'Simple color picker.',
-    code: `import React from 'react'
-import { ColorPicker } from 'asterui'
+    description: 'Simple color picker with saturation/lightness panel and hue slider.',
+    code: `import { ColorPicker } from 'asterui'
 
-const App: React.FC = () => (
-  <ColorPicker defaultValue="#6366f1" />
-)
-
-export default App`,
+export default function App() {
+  return <ColorPicker defaultValue="#6366f1" />
+}`,
   },
   {
     id: 'show-text',
     title: 'With Text Display',
-    description: 'Color picker showing the color value.',
-    code: `import React from 'react'
-import { ColorPicker } from 'asterui'
+    description: 'Color picker showing the hex value below the picker.',
+    code: `import { ColorPicker } from 'asterui'
 
-const App: React.FC = () => (
-  <ColorPicker defaultValue="#10b981" showText />
-)
-
-export default App`,
+export default function App() {
+  return <ColorPicker defaultValue="#10b981" showText />
+}`,
   },
   {
     id: 'presets',
-    title: 'With Presets',
-    description: 'Color picker with preset color options.',
-    code: `import React from 'react'
-import { ColorPicker } from 'asterui'
+    title: 'Custom Presets',
+    description: 'Color picker with custom preset color swatches.',
+    code: `import { ColorPicker } from 'asterui'
 
 const presets = [
   '#f43f5e', '#ec4899', '#d946ef', '#a855f7',
@@ -55,37 +50,35 @@ const presets = [
   '#06b6d4', '#14b8a6', '#10b981', '#22c55e',
 ]
 
-const App: React.FC = () => (
-  <ColorPicker defaultValue="#6366f1" presets={presets} />
-)
-
-export default App`,
+export default function App() {
+  return <ColorPicker defaultValue="#6366f1" presets={presets} />
+}`,
   },
   {
     id: 'sizes',
     title: 'Sizes',
-    description: 'Different color picker sizes.',
-    code: `import React from 'react'
-import { ColorPicker, Space } from 'asterui'
+    description: 'Color pickers in different sizes.',
+    code: `import { ColorPicker, Space } from 'asterui'
 
-const App: React.FC = () => (
-  <Space direction="horizontal" size="md" align="center">
-    <ColorPicker size="sm" defaultValue="#f43f5e" />
-    <ColorPicker size="md" defaultValue="#6366f1" />
-    <ColorPicker size="lg" defaultValue="#10b981" />
-  </Space>
-)
-
-export default App`,
+export default function App() {
+  return (
+    <Space direction="vertical" size="md">
+      <ColorPicker size="xs" defaultValue="#f43f5e" mode="picker" />
+      <ColorPicker size="sm" defaultValue="#6366f1" mode="picker" />
+      <ColorPicker size="md" defaultValue="#10b981" mode="picker" />
+      <ColorPicker size="lg" defaultValue="#a855f7" mode="picker" />
+    </Space>
+  )
+}`,
   },
   {
     id: 'controlled',
     title: 'Controlled',
-    description: 'Controlled color picker with state.',
-    code: `import React, { useState } from 'react'
+    description: 'Controlled color picker with state management.',
+    code: `import { useState } from 'react'
 import { ColorPicker, Space } from 'asterui'
 
-const App: React.FC = () => {
+export default function App() {
   const [color, setColor] = useState('#6366f1')
 
   return (
@@ -97,9 +90,30 @@ const App: React.FC = () => {
       />
     </Space>
   )
-}
+}`,
+  },
+  {
+    id: 'modes',
+    title: 'Display Modes',
+    description: 'Picker only, swatches only, or both.',
+    code: `import { ColorPicker, Space, Typography } from 'asterui'
 
-export default App`,
+const { Text } = Typography
+
+export default function App() {
+  return (
+    <Space direction="vertical" size="lg">
+      <Space direction="vertical" size="xs">
+        <Text size="sm" muted>Picker only</Text>
+        <ColorPicker mode="picker" defaultValue="#6366f1" />
+      </Space>
+      <Space direction="vertical" size="xs">
+        <Text size="sm" muted>Swatches only</Text>
+        <ColorPicker mode="swatches" defaultValue="#6366f1" />
+      </Space>
+    </Space>
+  )
+}`,
   },
 ];
 ---
@@ -167,6 +181,19 @@ export default App`,
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-6">API</h2>
       <ApiTable title="ColorPicker" data={colorPickerApi} />
+    </section>
+
+    <!-- Accessibility -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+      <ul class="list-disc list-inside space-y-2 text-base-content/80">
+        <li>Saturation/lightness panel has <code>role="slider"</code> with <code>aria-valuetext</code></li>
+        <li>Hue slider has <code>role="slider"</code> with <code>aria-valuemin</code>, <code>aria-valuemax</code>, and <code>aria-valuenow</code></li>
+        <li>Color presets use <code>role="listbox"</code> and <code>role="option"</code> with <code>aria-selected</code></li>
+        <li>Full keyboard navigation: Arrow keys adjust color values, Shift+Arrow for larger steps</li>
+        <li>Visible focus indicators on interactive elements</li>
+        <li>All interactive elements have descriptive <code>aria-label</code> attributes</li>
+      </ul>
     </section>
   </div>
 </Layout>

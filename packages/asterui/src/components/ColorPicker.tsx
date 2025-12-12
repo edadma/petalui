@@ -1,12 +1,18 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useRef, useEffect, useCallback, forwardRef } from 'react'
 
-export interface ColorPickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
+export interface ColorPickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: string
+  defaultValue?: string
   onChange?: (color: string) => void
   mode?: 'swatches' | 'picker' | 'both'
   presets?: string[]
   size?: 'xs' | 'sm' | 'md' | 'lg'
   disabled?: boolean
+  showText?: boolean
+  allowClear?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  'data-testid'?: string
 }
 
 const DEFAULT_PRESETS = [
@@ -81,18 +87,29 @@ function normalizeHex(hex: string): string {
   return normalized.toLowerCase()
 }
 
-export function ColorPicker({
-  value = '#000000',
+export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(({
+  value,
+  defaultValue = '#000000',
   onChange,
   mode = 'both',
   presets = DEFAULT_PRESETS,
   size = 'md',
   disabled = false,
-  className = '',
+  showText = false,
+  allowClear = false,
+  open: controlledOpen,
+  onOpenChange,
+  className,
+  'data-testid': testId,
   ...rest
-}: ColorPickerProps) {
-  const [hsl, setHsl] = useState(() => hexToHsl(value))
-  const [hexInput, setHexInput] = useState(value)
+}, ref) => {
+  const initialValue = value !== undefined ? value : defaultValue
+  const [internalValue, setInternalValue] = useState(initialValue)
+  const currentValue = value !== undefined ? value : internalValue
+
+  const [hsl, setHsl] = useState(() => hexToHsl(currentValue))
+  const [hexInput, setHexInput] = useState(currentValue)
+  const baseTestId = testId || 'colorpicker'
   const [isDraggingSL, setIsDraggingSL] = useState(false)
   const [isDraggingHue, setIsDraggingHue] = useState(false)
   const slPanelRef = useRef<HTMLDivElement>(null)
@@ -100,18 +117,71 @@ export function ColorPicker({
 
   // Sync internal state when value prop changes
   useEffect(() => {
-    if (isValidHex(value)) {
+    if (value !== undefined && isValidHex(value)) {
       setHsl(hexToHsl(value))
       setHexInput(value)
     }
   }, [value])
 
+  // Keyboard navigation state
+  const [focusedPanel, setFocusedPanel] = useState<'sl' | 'hue' | null>(null)
+
   const updateColor = useCallback((newHsl: { h: number; s: number; l: number }) => {
     setHsl(newHsl)
     const hex = hslToHex(newHsl.h, newHsl.s, newHsl.l)
     setHexInput(hex)
+    if (value === undefined) {
+      setInternalValue(hex)
+    }
     onChange?.(hex)
-  }, [onChange])
+  }, [onChange, value])
+
+  // Keyboard navigation for panels
+  const handleKeyDown = useCallback((e: React.KeyboardEvent, panel: 'sl' | 'hue') => {
+    if (disabled) return
+    const step = e.shiftKey ? 10 : 1
+
+    if (panel === 'sl') {
+      let newS = hsl.s
+      let newL = hsl.l
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault()
+          newS = Math.max(0, hsl.s - step)
+          break
+        case 'ArrowRight':
+          e.preventDefault()
+          newS = Math.min(100, hsl.s + step)
+          break
+        case 'ArrowUp':
+          e.preventDefault()
+          newL = Math.min(100, hsl.l + step)
+          break
+        case 'ArrowDown':
+          e.preventDefault()
+          newL = Math.max(0, hsl.l - step)
+          break
+        default:
+          return
+      }
+      updateColor({ ...hsl, s: newS, l: newL })
+    } else if (panel === 'hue') {
+      let newH = hsl.h
+      switch (e.key) {
+        case 'ArrowLeft':
+          e.preventDefault()
+          newH = (hsl.h - step + 360) % 360
+          break
+        case 'ArrowRight':
+          e.preventDefault()
+          newH = (hsl.h + step) % 360
+          break
+        default:
+          return
+      }
+      updateColor({ ...hsl, h: newH })
+    }
+  }, [disabled, hsl, updateColor])
 
   // Saturation/Lightness panel handlers
   const handleSLChange = useCallback((clientX: number, clientY: number) => {
@@ -180,6 +250,9 @@ export function ColorPicker({
     const normalized = normalizeHex(newValue)
     if (isValidHex(normalized)) {
       setHsl(hexToHsl(normalized))
+      if (value === undefined) {
+        setInternalValue(normalized)
+      }
       onChange?.(normalized)
     }
   }
@@ -190,8 +263,23 @@ export function ColorPicker({
     const normalized = normalizeHex(color)
     setHsl(hexToHsl(normalized))
     setHexInput(normalized)
+    if (value === undefined) {
+      setInternalValue(normalized)
+    }
     onChange?.(normalized)
   }
+
+  // Clear handler
+  const handleClear = useCallback(() => {
+    if (disabled) return
+    const cleared = defaultValue
+    setHsl(hexToHsl(cleared))
+    setHexInput(cleared)
+    if (value === undefined) {
+      setInternalValue(cleared)
+    }
+    onChange?.(cleared)
+  }, [disabled, defaultValue, value, onChange])
 
   // Size configurations
   const sizeConfig = {
@@ -211,13 +299,18 @@ export function ColorPicker({
   const hueX = hsl.h / 360
 
   return (
-    <div className={`inline-flex flex-col gap-3 ${disabled ? 'opacity-50 pointer-events-none' : ''} ${className}`} {...rest}>
+    <div
+      ref={ref}
+      className={['inline-flex flex-col gap-3', disabled ? 'opacity-50 pointer-events-none' : '', className].filter(Boolean).join(' ')}
+      data-testid={baseTestId}
+      {...rest}
+    >
       {showPicker && (
         <>
           {/* Saturation/Lightness Panel */}
           <div
             ref={slPanelRef}
-            className={`${config.panel} relative rounded cursor-crosshair select-none`}
+            className={[config.panel, 'relative rounded cursor-crosshair select-none', focusedPanel === 'sl' ? 'ring-2 ring-primary' : ''].filter(Boolean).join(' ')}
             style={{
               background: `
                 linear-gradient(to top, #000, transparent),
@@ -225,6 +318,14 @@ export function ColorPicker({
               `,
             }}
             onMouseDown={handleSLMouseDown}
+            onKeyDown={(e) => handleKeyDown(e, 'sl')}
+            onFocus={() => setFocusedPanel('sl')}
+            onBlur={() => setFocusedPanel(null)}
+            tabIndex={disabled ? -1 : 0}
+            role="slider"
+            aria-label="Color saturation and lightness"
+            aria-valuetext={`Saturation ${hsl.s}%, Lightness ${hsl.l}%`}
+            data-testid={`${baseTestId}-sl-panel`}
           >
             {/* Picker indicator */}
             <div
@@ -240,11 +341,22 @@ export function ColorPicker({
           {/* Hue Slider */}
           <div
             ref={hueSliderRef}
-            className={`${config.hue} w-full relative rounded cursor-pointer select-none`}
+            className={[config.hue, 'w-full relative rounded cursor-pointer select-none', focusedPanel === 'hue' ? 'ring-2 ring-primary' : ''].filter(Boolean).join(' ')}
             style={{
               background: 'linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00)',
             }}
             onMouseDown={handleHueMouseDown}
+            onKeyDown={(e) => handleKeyDown(e, 'hue')}
+            onFocus={() => setFocusedPanel('hue')}
+            onBlur={() => setFocusedPanel(null)}
+            tabIndex={disabled ? -1 : 0}
+            role="slider"
+            aria-label="Color hue"
+            aria-valuemin={0}
+            aria-valuemax={360}
+            aria-valuenow={hsl.h}
+            aria-valuetext={`Hue ${hsl.h} degrees`}
+            data-testid={`${baseTestId}-hue-slider`}
           >
             {/* Hue indicator */}
             <div
@@ -261,38 +373,69 @@ export function ColorPicker({
           <div className="flex items-center gap-2">
             <div
               className="w-8 h-8 rounded border border-base-300 flex-shrink-0"
-              style={{ backgroundColor: isValidHex(normalizeHex(hexInput)) ? normalizeHex(hexInput) : value }}
+              style={{ backgroundColor: isValidHex(normalizeHex(hexInput)) ? normalizeHex(hexInput) : currentValue }}
+              data-testid={`${baseTestId}-preview`}
+              aria-label={`Color preview: ${hexInput}`}
             />
             <input
               type="text"
               value={hexInput}
               onChange={handleHexChange}
-              className={`input ${config.input} w-full font-mono uppercase`}
+              className={['input', config.input, 'w-full font-mono uppercase'].join(' ')}
               placeholder="#000000"
               maxLength={7}
               disabled={disabled}
+              aria-label="Hex color value"
+              data-testid={`${baseTestId}-input`}
             />
+            {allowClear && !disabled && (
+              <button
+                type="button"
+                onClick={handleClear}
+                className="btn btn-ghost btn-xs btn-circle"
+                aria-label="Clear color"
+                data-testid={`${baseTestId}-clear`}
+              >
+                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
           </div>
+
+          {/* Show text display */}
+          {showText && (
+            <div className="text-sm font-mono text-base-content/70" data-testid={`${baseTestId}-text`}>
+              {hexInput.toUpperCase()}
+            </div>
+          )}
         </>
       )}
 
       {showSwatches && (
-        <div className="grid grid-cols-10 gap-1">
+        <div className="grid grid-cols-10 gap-1" role="listbox" aria-label="Color presets" data-testid={`${baseTestId}-swatches`}>
           {presets.map((color, index) => (
             <button
               key={`${color}-${index}`}
               type="button"
-              className={`${config.swatch} rounded border border-base-300 cursor-pointer hover:scale-110 transition-transform ${
-                value.toLowerCase() === color.toLowerCase() ? 'ring-2 ring-primary ring-offset-1' : ''
-              }`}
+              role="option"
+              aria-selected={currentValue.toLowerCase() === color.toLowerCase()}
+              className={[
+                config.swatch,
+                'rounded border border-base-300 cursor-pointer hover:scale-110 transition-transform',
+                currentValue.toLowerCase() === color.toLowerCase() ? 'ring-2 ring-primary ring-offset-1' : ''
+              ].filter(Boolean).join(' ')}
               style={{ backgroundColor: color }}
               onClick={() => handlePresetClick(color)}
               disabled={disabled}
               aria-label={`Select color ${color}`}
+              data-testid={`${baseTestId}-swatch-${index}`}
             />
           ))}
         </div>
       )}
     </div>
   )
-}
+})
+
+ColorPicker.displayName = 'ColorPicker'

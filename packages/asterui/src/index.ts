@@ -47,7 +47,7 @@ export { Carousel } from './components/Carousel'
 export type { CarouselProps, CarouselItemProps } from './components/Carousel'
 
 export { Collapse } from './components/Collapse'
-export type { CollapseProps, CollapseTitleProps, CollapseContentProps } from './components/Collapse'
+export type { CollapseProps, CollapseItemType, CollapseSize, CollapseIconPosition, CollapseCollapsible } from './components/Collapse'
 
 export { Container } from './components/Container'
 export type { ContainerProps } from './components/Container'
