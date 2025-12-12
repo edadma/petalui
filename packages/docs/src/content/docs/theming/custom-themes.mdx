@@ -1,0 +1,163 @@
+---
+title: Custom Themes
+description: Create your own custom themes for AsterUI
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+DaisyUI allows you to create custom themes by defining color variables. Here's how to build your own theme.
+
+## Theme Structure
+
+A DaisyUI theme defines these color variables:
+
+```css
+[data-theme="mytheme"] {
+  --color-primary: oklch(65% 0.19 260);
+  --color-primary-content: oklch(98% 0 0);
+
+  --color-secondary: oklch(70% 0.15 180);
+  --color-secondary-content: oklch(98% 0 0);
+
+  --color-accent: oklch(75% 0.2 60);
+  --color-accent-content: oklch(15% 0 0);
+
+  --color-neutral: oklch(25% 0.02 260);
+  --color-neutral-content: oklch(95% 0 0);
+
+  --color-base-100: oklch(100% 0 0);
+  --color-base-200: oklch(97% 0.01 260);
+  --color-base-300: oklch(93% 0.02 260);
+  --color-base-content: oklch(20% 0 0);
+
+  --color-info: oklch(70% 0.15 220);
+  --color-info-content: oklch(98% 0 0);
+
+  --color-success: oklch(70% 0.17 150);
+  --color-success-content: oklch(98% 0 0);
+
+  --color-warning: oklch(80% 0.15 85);
+  --color-warning-content: oklch(20% 0 0);
+
+  --color-error: oklch(65% 0.2 25);
+  --color-error-content: oklch(98% 0 0);
+}
+```
+
+## Creating a Theme in CSS
+
+Add your theme to your CSS file:
+
+```css title="src/styles.css"
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Custom brand theme */
+[data-theme="brand"] {
+  --color-primary: oklch(55% 0.25 260);
+  --color-primary-content: oklch(98% 0 0);
+
+  --color-secondary: oklch(60% 0.2 200);
+  --color-secondary-content: oklch(98% 0 0);
+
+  --color-accent: oklch(70% 0.25 330);
+  --color-accent-content: oklch(98% 0 0);
+
+  --color-neutral: oklch(30% 0.02 260);
+  --color-neutral-content: oklch(95% 0 0);
+
+  --color-base-100: oklch(99% 0.01 260);
+  --color-base-200: oklch(96% 0.01 260);
+  --color-base-300: oklch(92% 0.02 260);
+  --color-base-content: oklch(20% 0.02 260);
+
+  --color-info: oklch(65% 0.18 230);
+  --color-info-content: oklch(98% 0 0);
+
+  --color-success: oklch(65% 0.2 145);
+  --color-success-content: oklch(98% 0 0);
+
+  --color-warning: oklch(75% 0.18 80);
+  --color-warning-content: oklch(20% 0 0);
+
+  --color-error: oklch(60% 0.22 25);
+  --color-error-content: oklch(98% 0 0);
+}
+```
+
+Then use it:
+
+```html
+<html data-theme="brand">
+```
+
+## OKLCH Color Format
+
+DaisyUI uses the OKLCH color space for better perceptual uniformity:
+
+```
+oklch(L C H)
+```
+
+- **L** (Lightness): 0% to 100%
+- **C** (Chroma): 0 to ~0.4 (color saturation)
+- **H** (Hue): 0 to 360 degrees
+
+<Aside type="tip">
+  Use the [OKLCH Color Picker](https://oklch.com/) to find colors visually.
+</Aside>
+
+## Dark Theme Variant
+
+Create a dark version of your theme:
+
+```css
+[data-theme="brand-dark"] {
+  --color-primary: oklch(65% 0.25 260);
+  --color-primary-content: oklch(15% 0 0);
+
+  --color-secondary: oklch(70% 0.2 200);
+  --color-secondary-content: oklch(15% 0 0);
+
+  --color-base-100: oklch(20% 0.02 260);
+  --color-base-200: oklch(17% 0.02 260);
+  --color-base-300: oklch(14% 0.02 260);
+  --color-base-content: oklch(90% 0 0);
+
+  /* ... other colors ... */
+}
+```
+
+## Extending Existing Themes
+
+You can extend a built-in theme by only overriding specific colors:
+
+```css
+/* Based on "nord" but with custom primary */
+[data-theme="my-nord"] {
+  /* Copy nord's base colors */
+  --color-base-100: oklch(96.27% 0.01 240);
+  --color-base-200: oklch(92.08% 0.02 240);
+  --color-base-300: oklch(87.58% 0.03 240);
+  --color-base-content: oklch(30.65% 0.03 240);
+
+  /* Custom primary */
+  --color-primary: oklch(60% 0.2 280);
+  --color-primary-content: oklch(98% 0 0);
+}
+```
+
+## Theme Generator
+
+For a visual theme builder, check out:
+
+- [DaisyUI Theme Generator](https://daisyui.com/theme-generator/)
+- [Tailwind CSS Color Generator](https://uicolors.app/)
+
+## Best Practices
+
+1. **Maintain contrast** - Ensure text is readable on all backgrounds
+2. **Test all states** - Check hover, focus, and disabled states
+3. **Consider dark mode** - Create both light and dark variants
+4. **Use semantic names** - Don't name themes after colors (e.g., "blue-theme")
+5. **Test with real content** - Preview with actual UI components

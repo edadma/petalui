@@ -1,0 +1,98 @@
+---
+title: Installation
+description: How to install AsterUI in your project
+---
+
+import { Tabs, TabItem, Steps } from '@astrojs/starlight/components';
+
+AsterUI requires [Tailwind CSS v4](https://tailwindcss.com) and [DaisyUI v5](https://daisyui.com) to be configured in your project.
+
+<Steps>
+
+1. **Install prerequisites**
+
+   <Tabs>
+     <TabItem label="npm">
+       ```bash
+       npm install -D tailwindcss @tailwindcss/vite daisyui
+       ```
+     </TabItem>
+     <TabItem label="pnpm">
+       ```bash
+       pnpm add -D tailwindcss @tailwindcss/vite daisyui
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```bash
+       yarn add -D tailwindcss @tailwindcss/vite daisyui
+       ```
+     </TabItem>
+   </Tabs>
+
+2. **Configure Vite**
+
+   Add the Tailwind plugin to your `vite.config.ts`:
+
+   ```ts title="vite.config.ts"
+   import { defineConfig } from 'vite'
+   import react from '@vitejs/plugin-react'
+   import tailwindcss from '@tailwindcss/vite'
+
+   export default defineConfig({
+     plugins: [react(), tailwindcss()],
+   })
+   ```
+
+3. **Configure CSS**
+
+   Add these directives to your CSS file (e.g., `src/index.css`):
+
+   ```css title="src/index.css"
+   @import "tailwindcss";
+   @plugin "daisyui";
+   @source "../node_modules/asterui";
+   ```
+
+   The `@source` directive tells Tailwind to scan AsterUI for classes.
+
+4. **Install AsterUI**
+
+   <Tabs>
+     <TabItem label="npm">
+       ```bash
+       npm install asterui
+       ```
+     </TabItem>
+     <TabItem label="pnpm">
+       ```bash
+       pnpm add asterui
+       ```
+     </TabItem>
+     <TabItem label="yarn">
+       ```bash
+       yarn add asterui
+       ```
+     </TabItem>
+   </Tabs>
+
+</Steps>
+
+## Verify Installation
+
+Create a simple component to verify everything works:
+
+```tsx
+import { Button, Space } from 'asterui'
+
+function App() {
+  return (
+    <Space>
+      <Button>Default</Button>
+      <Button color="primary">Primary</Button>
+      <Button color="secondary">Secondary</Button>
+    </Space>
+  )
+}
+```
+
+If you see styled buttons, you're all set! Head to [Quick Start](/getting-started/quick-start/) to learn the basics.

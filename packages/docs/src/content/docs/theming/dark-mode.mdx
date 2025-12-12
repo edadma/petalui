@@ -1,0 +1,176 @@
+---
+title: Dark Mode
+description: Implement dark mode and theme switching in your app
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+AsterUI supports dark mode through DaisyUI's theming system. Here's how to implement theme switching.
+
+## Basic Theme Toggle
+
+The simplest approach is to toggle between `light` and `dark` themes:
+
+```tsx
+import { Button } from 'asterui'
+import { useState, useEffect } from 'react'
+
+function ThemeToggle() {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
+  return (
+    <Button
+      onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+    >
+      {theme === 'light' ? '🌙' : '☀️'}
+    </Button>
+  )
+}
+```
+
+## System Preference Detection
+
+Detect and follow the user's system preference:
+
+```tsx
+import { useEffect, useState } from 'react'
+
+function useSystemTheme() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light')
+
+  useEffect(() => {
+    // Check initial preference
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    setTheme(mediaQuery.matches ? 'dark' : 'light')
+
+    // Listen for changes
+    const handler = (e: MediaQueryListEvent) => {
+      setTheme(e.matches ? 'dark' : 'light')
+    }
+
+    mediaQuery.addEventListener('change', handler)
+    return () => mediaQuery.removeEventListener('change', handler)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+  }, [theme])
+
+  return theme
+}
+```
+
+## Persisting Theme Choice
+
+Save the user's preference to localStorage:
+
+```tsx
+import { useEffect, useState } from 'react'
+
+function useTheme() {
+  const [theme, setTheme] = useState<string>(() => {
+    // Check localStorage first
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'light'
+    }
+    return 'light'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  return [theme, setTheme] as const
+}
+
+function ThemeToggle() {
+  const [theme, setTheme] = useTheme()
+
+  return (
+    <Button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Toggle Theme
+    </Button>
+  )
+}
+```
+
+## Theme Switcher Component
+
+A complete theme switcher with multiple options:
+
+```tsx
+import { Select } from 'asterui'
+import { useState, useEffect } from 'react'
+
+const themes = [
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+  { value: 'cupcake', label: 'Cupcake' },
+  { value: 'dracula', label: 'Dracula' },
+  { value: 'nord', label: 'Nord' },
+]
+
+function ThemeSwitcher() {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  return (
+    <Select
+      value={theme}
+      onChange={setTheme}
+      options={themes}
+    />
+  )
+}
+```
+
+## Preventing Flash
+
+To prevent a flash of the wrong theme on page load, add this script to your `<head>`:
+
+```html
+<script>
+  (function() {
+    const theme = localStorage.getItem('theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+    document.documentElement.setAttribute('data-theme', theme)
+  })()
+</script>
+```
+
+<Aside type="tip">
+  Place this script before any stylesheets to ensure it runs immediately.
+</Aside>
+
+## Next.js App Router
+
+For Next.js, use a client component:
+
+```tsx title="app/providers.tsx"
+'use client'
+
+import { useEffect, useState } from 'react'
+
+export function ThemeProvider({ children }: { children: React.ReactNode }) {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme')
+    if (saved) {
+      setTheme(saved)
+      document.documentElement.setAttribute('data-theme', saved)
+    }
+  }, [])
+
+  return <>{children}</>
+}
+```

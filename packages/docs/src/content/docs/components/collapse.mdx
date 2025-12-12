@@ -1,0 +1,147 @@
+---
+title: Collapse
+description: Expandable content panels for FAQs, accordions, and nested information
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { BasicCollapseDemo, AccordionDemo, PlusIconDemo, NestedContentDemo } from '../../../components/CollapseDemo';
+
+Collapse panels show and hide content. Use them for FAQs, accordions, and organizing large amounts of information into expandable sections.
+
+## Import
+
+```tsx
+import { Collapse } from 'asterui'
+```
+
+## Basic Usage
+
+Pass an array of items to create collapsible panels:
+
+<div class="component-preview">
+  <BasicCollapseDemo client:load />
+</div>
+
+```tsx
+<Collapse
+  items={[
+    {
+      key: '1',
+      label: 'What is AsterUI?',
+      children: 'AsterUI is a React component library built on DaisyUI and Tailwind CSS.',
+    },
+    {
+      key: '2',
+      label: 'How do I install it?',
+      children: 'Run npm install asterui to get started.',
+    },
+    {
+      key: '3',
+      label: 'Is it free?',
+      children: 'Yes, AsterUI is open source and free to use.',
+    },
+  ]}
+  defaultActiveKey={['1']}
+/>
+```
+
+## Accordion
+
+Set `accordion` to allow only one panel open at a time:
+
+<div class="component-preview">
+  <AccordionDemo client:load />
+</div>
+
+```tsx
+<Collapse
+  items={[
+    { key: '1', label: 'Section 1', children: '...' },
+    { key: '2', label: 'Section 2', children: '...' },
+    { key: '3', label: 'Section 3', children: '...' },
+  ]}
+  accordion
+  defaultActiveKey="1"
+/>
+```
+
+## Plus/Minus Icon
+
+Use `icon="plus"` for plus/minus expand indicators:
+
+<div class="component-preview">
+  <PlusIconDemo client:load />
+</div>
+
+```tsx
+<Collapse
+  items={[
+    { key: '1', label: 'Plus/Minus Icon', children: '...' },
+    { key: '2', label: 'Another Panel', children: '...' },
+  ]}
+  icon="plus"
+/>
+```
+
+## Nested Content
+
+Panel content can include any React components:
+
+<div class="component-preview">
+  <NestedContentDemo client:load />
+</div>
+
+```tsx
+<Collapse
+  items={[
+    {
+      key: '1',
+      label: 'Getting Started',
+      children: (
+        <Space direction="vertical" size="sm">
+          <p>Follow these steps:</p>
+          <ol className="list-decimal list-inside">
+            <li>Install the package</li>
+            <li>Import components</li>
+          </ol>
+          <Button color="primary" size="sm">Read Docs</Button>
+        </Space>
+      ),
+    },
+  ]}
+/>
+```
+
+## API
+
+### Collapse Props
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Panel items | `CollapseItemType[]` | - |
+| `activeKey` | Controlled active keys | `string \| number \| (string \| number)[]` | - |
+| `defaultActiveKey` | Initial active keys | `string \| number \| (string \| number)[]` | - |
+| `accordion` | Only one panel open | `boolean` | `false` |
+| `bordered` | Show borders | `boolean` | `true` |
+| `ghost` | Transparent background | `boolean` | `false` |
+| `size` | Panel size | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `icon` | Expand icon type | `'arrow' \| 'plus' \| 'none'` | `'arrow'` |
+| `onChange` | Change callback | `(keys: (string \| number)[]) => void` | - |
+
+### CollapseItemType
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string \| number` | - |
+| `label` | Panel header | `React.ReactNode` | - |
+| `children` | Panel content | `React.ReactNode` | - |
+| `extra` | Extra header content | `React.ReactNode` | - |
+| `showArrow` | Show expand icon | `boolean` | `true` |
+| `collapsible` | Collapsible mode | `'header' \| 'icon' \| 'disabled'` | - |
+
+## Accessibility
+
+- Panels are keyboard accessible (Enter/Space to toggle)
+- Uses `aria-expanded` to indicate state
+- Uses `aria-disabled` for disabled panels
+- Exposes `data-state="open|closed"` for styling

@@ -1,0 +1,93 @@
+---
+title: Introduction
+description: A React component library built on DaisyUI and Tailwind CSS
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+AsterUI is a React component library that combines the beautiful styling of DaisyUI with a clean, intuitive API. Build accessible, themeable UIs with familiar patterns.
+
+## Features
+
+<CardGrid>
+  <Card title="Developer-Friendly" icon="puzzle">
+    Intuitive API patterns you already know. Form.Item, Table columns, Modal, and more.
+  </Card>
+  <Card title="DaisyUI v5 Styling" icon="star">
+    Beautiful, themeable components with 30+ DaisyUI themes out of the box.
+  </Card>
+  <Card title="Test-Friendly" icon="approve-check">
+    Built-in data-testid, data-state attributes, and ARIA roles for reliable testing.
+  </Card>
+  <Card title="TypeScript First" icon="seti:typescript">
+    Full type safety with comprehensive prop types and IntelliSense support.
+  </Card>
+  <Card title="90+ Components" icon="open-book">
+    Forms, tables, modals, navigation, charts, and everything you need.
+  </Card>
+  <Card title="Lightweight" icon="rocket">
+    Fully tree-shakable. Import only what you use.
+  </Card>
+</CardGrid>
+
+## Example
+
+A complete login form with validation, layout, and feedback:
+
+```tsx
+import { Form, Input, Checkbox, Button, Modal, Card, Space, Flex, Divider, Typography } from 'asterui'
+
+const { Link, Paragraph } = Typography
+
+export default function App() {
+  const handleSubmit = (values: { email: string; password: string; remember: boolean }) => {
+    Modal.success({
+      title: 'Login Successful',
+      content: <pre className="text-left">{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+
+  return (
+    <Flex justify="center" align="center" minHeight="screen" className="bg-base-200 p-4">
+      <Card title="Sign In" className="w-full max-w-md">
+        <Form onFinish={handleSubmit} initialValues={{ remember: false }}>
+          <Form.Item name="email" label="Email" rules={[{ required: true }, { type: 'email' }]}>
+            <Input placeholder="you@example.com" />
+          </Form.Item>
+          <Form.Item
+            name="password"
+            label="Password"
+            rules={[
+              { required: true },
+              { min: 8, message: 'Password must be at least 8 characters' },
+              { pattern: /[A-Z]/, message: 'Must contain an uppercase letter' },
+              { pattern: /[a-z]/, message: 'Must contain a lowercase letter' },
+              { pattern: /[0-9]/, message: 'Must contain a number' },
+              { pattern: /[!@#$%^&*.?]/, message: 'Must contain a special character' },
+            ]}
+          >
+            <Input type="password" placeholder="Enter your password" />
+          </Form.Item>
+          <Space justify="between" align="center" className="mb-4">
+            <Form.Item name="remember" valuePropName="checked" inline>
+              <Checkbox>Remember me</Checkbox>
+            </Form.Item>
+            <Link size="sm">Forgot password?</Link>
+          </Space>
+          <Button color="primary" htmlType="submit" shape="block">
+            Sign In
+          </Button>
+          <Divider>or</Divider>
+          <Paragraph align="center" size="sm">
+            Don't have an account? <Link>Sign up</Link>
+          </Paragraph>
+        </Form>
+      </Card>
+    </Flex>
+  )
+}
+```
+
+## Next
+
+Ready to get started? Head to [Installation](/getting-started/installation/) to set up AsterUI in your project.

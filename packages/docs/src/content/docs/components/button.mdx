@@ -1,0 +1,127 @@
+---
+title: Button
+description: Clickable buttons with variants, colors, sizes, and states
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { BasicButtonDemo, ButtonVariantsDemo, ButtonSizesDemo, ButtonStatesDemo, ButtonShapesDemo } from '../../../components/ButtonDemo';
+
+Buttons trigger actions or navigate to other pages. AsterUI buttons support multiple colors, variants, sizes, and states.
+
+## Import
+
+```tsx
+import { Button } from 'asterui'
+```
+
+## Colors
+
+Buttons support all DaisyUI semantic colors:
+
+<div class="component-preview">
+  <BasicButtonDemo client:load />
+</div>
+
+```tsx
+<Space wrap>
+  <Button>Default</Button>
+  <Button color="primary">Primary</Button>
+  <Button color="secondary">Secondary</Button>
+  <Button color="accent">Accent</Button>
+  <Button color="info">Info</Button>
+  <Button color="success">Success</Button>
+  <Button color="warning">Warning</Button>
+  <Button color="error">Error</Button>
+</Space>
+```
+
+## Variants
+
+Different visual styles for various contexts:
+
+<div class="component-preview">
+  <ButtonVariantsDemo client:load />
+</div>
+
+```tsx
+<Space wrap>
+  <Button color="primary">Solid</Button>
+  <Button color="primary" variant="outline">Outline</Button>
+  <Button color="primary" variant="soft">Soft</Button>
+  <Button color="primary" variant="ghost">Ghost</Button>
+  <Button color="primary" variant="link">Link</Button>
+</Space>
+```
+
+## Sizes
+
+Four size options to fit different contexts:
+
+<div class="component-preview">
+  <ButtonSizesDemo client:load />
+</div>
+
+```tsx
+<Space wrap align="center">
+  <Button color="primary" size="xs">Extra Small</Button>
+  <Button color="primary" size="sm">Small</Button>
+  <Button color="primary" size="md">Medium</Button>
+  <Button color="primary" size="lg">Large</Button>
+</Space>
+```
+
+## States
+
+Loading, disabled, and block states:
+
+<div class="component-preview">
+  <ButtonStatesDemo client:load />
+</div>
+
+```tsx
+<Space wrap>
+  <Button color="primary" loading>Loading</Button>
+  <Button color="primary" disabled>Disabled</Button>
+  <Button color="primary" block>Block Button</Button>
+</Space>
+```
+
+## Shapes
+
+Square and circle shapes for icon buttons:
+
+<div class="component-preview">
+  <ButtonShapesDemo client:load />
+</div>
+
+```tsx
+<Space wrap>
+  <Button color="primary">Default</Button>
+  <Button color="primary" shape="square">S</Button>
+  <Button color="primary" shape="circle">C</Button>
+</Space>
+```
+
+## API
+
+### Button Props
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `color` | Button color | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error' \| 'neutral' \| 'ghost'` | - |
+| `variant` | Button style variant | `'solid' \| 'outline' \| 'soft' \| 'ghost' \| 'link'` | `'solid'` |
+| `size` | Button size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `shape` | Button shape | `'default' \| 'square' \| 'circle'` | `'default'` |
+| `loading` | Show loading spinner | `boolean` | `false` |
+| `disabled` | Disable the button | `boolean` | `false` |
+| `block` | Full width button | `boolean` | `false` |
+| `htmlType` | HTML button type | `'button' \| 'submit' \| 'reset'` | `'button'` |
+| `onClick` | Click handler | `(e: MouseEvent) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Buttons use native `<button>` elements for proper semantics
+- Loading state adds `aria-busy="true"`
+- Disabled buttons have `aria-disabled="true"`
+- Focus states are visible for keyboard navigation

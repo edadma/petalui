@@ -1,0 +1,203 @@
+---
+title: Quick Start
+description: Learn the basics of AsterUI in 5 minutes
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+This guide will walk you through the core concepts of AsterUI and help you build your first component.
+
+## Import Components
+
+Import components directly from `asterui`:
+
+```tsx
+import { Button, Card, Space, Input, Alert } from 'asterui'
+```
+
+## Basic Usage
+
+### Buttons
+
+Buttons support various colors and variants:
+
+```tsx
+import { Button, Space } from 'asterui'
+
+function ButtonDemo() {
+  return (
+    <Space>
+      <Button color="primary">Primary</Button>
+      <Button color="secondary">Secondary</Button>
+      <Button color="accent">Accent</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+    </Space>
+  )
+}
+```
+
+### Cards
+
+Cards are great for grouping content:
+
+```tsx
+import { Card, Button } from 'asterui'
+
+function CardDemo() {
+  return (
+    <Card
+      title="Card Title"
+      extra={<a href="#">More</a>}
+    >
+      <p>Card content goes here.</p>
+      <Button color="primary">Action</Button>
+    </Card>
+  )
+}
+```
+
+### Forms
+
+Build forms with Input, Checkbox, Select, and more:
+
+```tsx
+import { Input, Button, Space } from 'asterui'
+
+function FormDemo() {
+  return (
+    <Space direction="vertical" size="md">
+      <Input placeholder="Enter your name" />
+      <Input placeholder="Enter your email" type="email" />
+      <Button color="primary" block>Submit</Button>
+    </Space>
+  )
+}
+```
+
+## Layout with Space
+
+The `Space` component handles spacing between elements:
+
+```tsx
+import { Space, Button } from 'asterui'
+
+// Horizontal spacing (default)
+<Space size="md">
+  <Button>One</Button>
+  <Button>Two</Button>
+  <Button>Three</Button>
+</Space>
+
+// Vertical spacing
+<Space direction="vertical" size="lg">
+  <Input placeholder="Field 1" />
+  <Input placeholder="Field 2" />
+</Space>
+
+// Wrap items
+<Space wrap>
+  {items.map(item => <Tag key={item}>{item}</Tag>)}
+</Space>
+```
+
+## Feedback Components
+
+### Alerts
+
+```tsx
+import { Alert, Space } from 'asterui'
+
+<Space direction="vertical">
+  <Alert type="info" message="This is an info message" />
+  <Alert type="success" message="Operation completed!" />
+  <Alert type="warning" message="Please check your input" />
+  <Alert type="error" message="Something went wrong" />
+</Space>
+```
+
+### Modal
+
+```tsx
+import { Modal, Button } from 'asterui'
+import { useState } from 'react'
+
+function ModalDemo() {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Modal</Button>
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Modal Title"
+      >
+        <p>Modal content goes here.</p>
+      </Modal>
+    </>
+  )
+}
+```
+
+## Theming
+
+AsterUI uses DaisyUI themes. Set a theme on your HTML element:
+
+```html
+<html data-theme="light">
+<!-- or -->
+<html data-theme="dark">
+<!-- or any DaisyUI theme -->
+<html data-theme="cupcake">
+```
+
+<Aside type="tip">
+  DaisyUI includes 30+ built-in themes. See the [Theming](/theming/overview) guide for more details.
+</Aside>
+
+## Next Steps
+
+Now that you know the basics, explore:
+
+- [Component Overview](/components/overview) - Browse all available components
+- [Theming](/theming/overview) - Customize colors and styles
+- [Hooks](/hooks) - Utility hooks for common patterns
+
+## Example: Login Form
+
+Here's a complete example combining multiple components:
+
+```tsx
+import { Card, Input, Button, Checkbox, Space, Divider } from 'asterui'
+
+function LoginForm() {
+  return (
+    <Card title="Sign In" className="w-96">
+      <Space direction="vertical" size="md" block>
+        <Input
+          placeholder="Email"
+          type="email"
+          size="lg"
+        />
+        <Input
+          placeholder="Password"
+          type="password"
+          size="lg"
+        />
+        <div className="flex justify-between items-center">
+          <Checkbox>Remember me</Checkbox>
+          <a href="#" className="text-primary">Forgot password?</a>
+        </div>
+        <Button color="primary" size="lg" block>
+          Sign In
+        </Button>
+        <Divider>or</Divider>
+        <Button variant="outline" block>
+          Continue with Google
+        </Button>
+      </Space>
+    </Card>
+  )
+}
+```

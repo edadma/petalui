@@ -1,0 +1,107 @@
+---
+title: Theming Overview
+description: Customize AsterUI with DaisyUI themes
+---
+
+import { Tabs, TabItem, Aside } from '@astrojs/starlight/components';
+
+AsterUI uses DaisyUI's theming system, giving you access to 30+ built-in themes and the ability to create custom themes.
+
+## Setting a Theme
+
+Set the `data-theme` attribute on your `<html>` element:
+
+```html
+<html data-theme="light">
+```
+
+Or dynamically with JavaScript:
+
+```tsx
+document.documentElement.setAttribute('data-theme', 'dark')
+```
+
+## Built-in Themes
+
+DaisyUI includes these themes out of the box:
+
+### Light Themes
+- `light` (default)
+- `cupcake`
+- `bumblebee`
+- `emerald`
+- `corporate`
+- `retro`
+- `cyberpunk`
+- `valentine`
+- `garden`
+- `lofi`
+- `pastel`
+- `fantasy`
+- `wireframe`
+- `cmyk`
+- `autumn`
+- `acid`
+- `lemonade`
+- `winter`
+- `nord`
+
+### Dark Themes
+- `dark`
+- `synthwave`
+- `halloween`
+- `forest`
+- `aqua`
+- `luxury`
+- `dracula`
+- `night`
+- `coffee`
+- `dim`
+- `sunset`
+
+## Theme Colors
+
+Each theme provides these semantic colors:
+
+| Color | Description |
+|-------|-------------|
+| `primary` | Main brand color |
+| `secondary` | Secondary brand color |
+| `accent` | Accent/highlight color |
+| `neutral` | Neutral gray tones |
+| `base-100/200/300` | Background colors |
+| `info` | Information (blue) |
+| `success` | Success (green) |
+| `warning` | Warning (yellow) |
+| `error` | Error (red) |
+
+## Using Theme Colors
+
+In components, use the `color` prop:
+
+```tsx
+<Button color="primary">Primary</Button>
+<Button color="secondary">Secondary</Button>
+<Button color="accent">Accent</Button>
+```
+
+In CSS, use the color variables:
+
+```css
+.my-element {
+  background-color: oklch(var(--p)); /* primary */
+  color: oklch(var(--pc)); /* primary-content */
+}
+```
+
+Or with Tailwind classes:
+
+```tsx
+<div className="bg-primary text-primary-content">
+  Themed content
+</div>
+```
+
+<Aside type="tip">
+  See [Dark Mode](/theming/dark-mode) for implementing theme switching and [Custom Themes](/theming/custom-themes) for creating your own.
+</Aside>
