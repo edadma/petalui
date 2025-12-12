@@ -1,6 +1,6 @@
 {
   "name": "create-asterui",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create a new AsterUI project",
   "type": "module",
   "bin": {

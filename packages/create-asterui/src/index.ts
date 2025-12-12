@@ -17,7 +17,67 @@ const DAISYUI_THEMES = [
   'night', 'coffee', 'winter', 'dim', 'nord', 'sunset'
 ]
 
+const THEME_PRESETS = ['light-dark', 'business', 'all']
+
 type PackageManager = 'npm' | 'pnpm' | 'yarn'
+
+interface CliArgs {
+  projectName?: string
+  language?: 'ts' | 'js'
+  themes?: string
+  pm?: PackageManager
+  help?: boolean
+}
+
+function parseArgs(): CliArgs {
+  const args = process.argv.slice(2)
+  const result: CliArgs = {}
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i]
+    if (arg === '--help' || arg === '-h') {
+      result.help = true
+    } else if (arg === '--js') {
+      result.language = 'js'
+    } else if (arg === '--ts') {
+      result.language = 'ts'
+    } else if (arg === '--themes' && args[i + 1]) {
+      result.themes = args[++i]
+    } else if (arg === '--pm' && args[i + 1]) {
+      const pm = args[++i]
+      if (pm === 'npm' || pm === 'pnpm' || pm === 'yarn') {
+        result.pm = pm
+      }
+    } else if (!arg.startsWith('-') && !result.projectName) {
+      result.projectName = arg
+    }
+  }
+
+  return result
+}
+
+function showHelp() {
+  console.log(`
+${pc.bold('create-asterui')} - Scaffold a new AsterUI project
+
+${pc.bold('Usage:')}
+  npm create asterui [project-name] [options]
+
+${pc.bold('Options:')}
+  --js              Use JavaScript instead of TypeScript
+  --ts              Use TypeScript (default)
+  --themes <preset> Theme preset: light-dark, business, all
+  --pm <manager>    Package manager: npm, pnpm, yarn
+  -h, --help        Show this help message
+
+${pc.bold('Examples:')}
+  npm create asterui
+  npm create asterui my-app
+  npm create asterui my-app --js
+  npm create asterui my-app --themes business
+  npm create asterui my-app --js --themes all --pm pnpm
+`)
+}
 
 function detectPackageManager(): PackageManager {
   const userAgent = process.env.npm_config_user_agent || ''
@@ -26,15 +86,18 @@ function detectPackageManager(): PackageManager {
   return 'npm'
 }
 
-function getInstallCommand(pm: PackageManager): string {
-  return pm === 'yarn' ? 'yarn' : `${pm} install`
-}
-
 function getRunCommand(pm: PackageManager): string {
   return pm === 'npm' ? 'npm run' : pm
 }
 
 async function main() {
+  const cliArgs = parseArgs()
+
+  if (cliArgs.help) {
+    showHelp()
+    process.exit(0)
+  }
+
   console.log()
   p.intro(pc.bgCyan(pc.black(' create-asterui ')))
 
@@ -43,36 +106,42 @@ async function main() {
   const options = await p.group(
     {
       projectName: () =>
-        p.text({
-          message: 'Project name',
-          placeholder: 'my-asterui-app',
-          defaultValue: 'my-asterui-app',
-          validate: (value) => {
-            if (!value) return 'Project name is required'
-            if (!/^[a-z0-9-]+$/.test(value)) return 'Project name must be lowercase with hyphens only'
-            if (fs.existsSync(value)) return `Directory "${value}" already exists`
-          },
-        }),
+        cliArgs.projectName
+          ? Promise.resolve(cliArgs.projectName)
+          : p.text({
+              message: 'Project name',
+              placeholder: 'my-asterui-app',
+              defaultValue: 'my-asterui-app',
+              validate: (value) => {
+                if (!value) return 'Project name is required'
+                if (!/^[a-z0-9-]+$/.test(value)) return 'Project name must be lowercase with hyphens only'
+                if (fs.existsSync(value)) return `Directory "${value}" already exists`
+              },
+            }),
 
       language: () =>
-        p.select({
-          message: 'Language',
-          options: [
-            { value: 'ts', label: 'TypeScript', hint: 'recommended' },
-            { value: 'js', label: 'JavaScript' },
-          ],
-        }),
+        cliArgs.language
+          ? Promise.resolve(cliArgs.language)
+          : p.select({
+              message: 'Language',
+              options: [
+                { value: 'ts', label: 'TypeScript', hint: 'recommended' },
+                { value: 'js', label: 'JavaScript' },
+              ],
+            }),
 
       themePreset: () =>
-        p.select({
-          message: 'Themes',
-          options: [
-            { value: 'light-dark', label: 'Light/Dark', hint: 'recommended' },
-            { value: 'business', label: 'Business/Corporate' },
-            { value: 'all', label: 'All themes' },
-            { value: 'custom', label: 'Choose specific...' },
-          ],
-        }),
+        cliArgs.themes && THEME_PRESETS.includes(cliArgs.themes)
+          ? Promise.resolve(cliArgs.themes)
+          : p.select({
+              message: 'Themes',
+              options: [
+                { value: 'light-dark', label: 'Light/Dark', hint: 'recommended' },
+                { value: 'business', label: 'Business/Corporate' },
+                { value: 'all', label: 'All themes' },
+                { value: 'custom', label: 'Choose specific...' },
+              ],
+            }),
 
       customThemes: ({ results }) =>
         results.themePreset === 'custom'
@@ -85,15 +154,17 @@ async function main() {
           : Promise.resolve([]),
 
       packageManager: () =>
-        p.select({
-          message: 'Package manager',
-          options: [
-            { value: detectedPm, label: detectedPm, hint: 'detected' },
-            ...(['npm', 'pnpm', 'yarn'] as const)
-              .filter((pm) => pm !== detectedPm)
-              .map((pm) => ({ value: pm, label: pm })),
-          ],
-        }),
+        cliArgs.pm
+          ? Promise.resolve(cliArgs.pm)
+          : p.select({
+              message: 'Package manager',
+              options: [
+                { value: detectedPm, label: detectedPm, hint: 'detected' },
+                ...(['npm', 'pnpm', 'yarn'] as const)
+                  .filter((pm) => pm !== detectedPm)
+                  .map((pm) => ({ value: pm, label: pm })),
+              ],
+            }),
     },
     {
       onCancel: () => {

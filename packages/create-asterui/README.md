@@ -12,6 +12,25 @@ pnpm create asterui
 yarn create asterui
 ```
 
+### With arguments
+
+```bash
+npm create asterui my-app
+npm create asterui my-app --js
+npm create asterui my-app --themes business
+npm create asterui my-app --js --themes all --pm pnpm
+```
+
+### Options
+
+```
+--js              Use JavaScript instead of TypeScript
+--ts              Use TypeScript (default)
+--themes <preset> Theme preset: light-dark, business, all
+--pm <manager>    Package manager: npm, pnpm, yarn
+-h, --help        Show help message
+```
+
 ## What it does
 
 - Creates a new Vite + React project
@@ -19,15 +38,6 @@ yarn create asterui
 - Installs AsterUI and react-hook-form
 - Sets up theme configuration (light/dark, business/corporate, or custom)
 - Supports TypeScript or JavaScript
-
-## Options
-
-The CLI will prompt you for:
-
-- **Project name** - Directory name for your project
-- **Language** - TypeScript (recommended) or JavaScript
-- **Themes** - Light/Dark, Business/Corporate, All themes, or custom selection
-- **Package manager** - npm, pnpm, or yarn (auto-detected)
 
 ## After scaffolding
 
