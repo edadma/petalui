@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { TimePicker, Form, Button, Modal, Space, Typography } from 'asterui';
+import { TimePicker, Form, Button, Modal, Space, Typography, Row, Col } from 'asterui';
 
 const { Text } = Typography;
 
@@ -86,18 +86,21 @@ function FormDemo() {
 }
 
 function TimeRangeDemo() {
-  const [startTime, setStartTime] = useState<Date | null>(null);
-  const [endTime, setEndTime] = useState<Date | null>(null);
-
   return (
-    <Space>
-      <Form.Item label="Start Time" inline>
-        <TimePicker value={startTime} onChange={setStartTime} placeholder="Start" />
-      </Form.Item>
-      <Form.Item label="End Time" inline>
-        <TimePicker value={endTime} onChange={setEndTime} placeholder="End" />
-      </Form.Item>
-    </Space>
+    <Form>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item label="Start Time" name="startTime">
+            <TimePicker placeholder="Start" />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="End Time" name="endTime">
+            <TimePicker placeholder="End" />
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 
