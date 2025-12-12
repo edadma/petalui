@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { TimePicker, Form, Button, Modal, Space, Typography, Row, Col } from 'asterui';
+import { TimePicker, Form, Button, Space, Typography, Row, Col, notification } from 'asterui';
 
 const { Text } = Typography;
 
@@ -37,69 +37,34 @@ function SizesDemo() {
 }
 
 function FormDemo() {
-  const [submittedData, setSubmittedData] = useState<Record<string, unknown> | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleSubmit = (values: Record<string, unknown>) => {
-    setSubmittedData(values);
-    setIsModalOpen(true);
+    const startTime = values.startTime as Date | null;
+    const endTime = values.endTime as Date | null;
+    notification.success({
+      message: 'Form Submitted',
+      description: `Start: ${startTime?.toLocaleTimeString() || 'Not set'}, End: ${endTime?.toLocaleTimeString() || 'Not set'}`,
+    });
   };
 
   return (
-    <>
-      <Form onFinish={handleSubmit}>
-        <Form.Item
-          name="startTime"
-          label="Start Time"
-          required
-          rules={{ required: 'Please select start time' }}
-        >
-          <TimePicker placeholder="HH:MM" />
-        </Form.Item>
-
-        <Form.Item name="endTime" label="End Time">
-          <TimePicker format="12" />
-        </Form.Item>
-
-        <Form.Item>
-          <Button htmlType="submit" color="primary">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-
-      <Modal
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        title="Form Submitted"
-        footer={null}
-      >
-        <div className="py-4">
-          <p className="mb-4">Form data:</p>
-          <pre className="bg-base-200 p-4 rounded-lg overflow-auto max-h-96">
-            {JSON.stringify(submittedData, null, 2)}
-          </pre>
-        </div>
-      </Modal>
-    </>
-  );
-}
-
-function TimeRangeDemo() {
-  return (
-    <Form>
+    <Form onFinish={handleSubmit}>
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label="Start Time" name="startTime">
+          <Form.Item name="startTime" label="Start Time" rules={{ required: 'Please select start time' }}>
             <TimePicker placeholder="Start" />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item label="End Time" name="endTime">
+          <Form.Item name="endTime" label="End Time">
             <TimePicker placeholder="End" />
           </Form.Item>
         </Col>
       </Row>
+      <Form.Item>
+        <Button htmlType="submit" color="primary">
+          Submit
+        </Button>
+      </Form.Item>
     </Form>
   );
 }
@@ -108,7 +73,6 @@ const statefulDemos: Record<string, React.FC> = {
   controlled: ControlledDemo,
   sizes: SizesDemo,
   form: FormDemo,
-  'time-range': TimeRangeDemo,
 };
 
 document.querySelectorAll('.demo-container').forEach((container) => {

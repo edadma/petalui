@@ -116,57 +116,34 @@ export default function App() {
   {
     id: 'form',
     title: 'In Form',
-    description: 'TimePicker integrated with Form component.',
-    code: `import { TimePicker, Form, Button } from 'asterui'
+    description: 'TimePicker integrated with Form component using Row/Col layout.',
+    code: `import { TimePicker, Form, Button, Row, Col, notification } from 'asterui'
 
 export default function App() {
   const handleSubmit = (values) => {
-    console.log(values)
+    notification.success({
+      message: 'Form Submitted',
+      description: \`Start: \${values.startTime?.toLocaleTimeString() || 'Not set'}, End: \${values.endTime?.toLocaleTimeString() || 'Not set'}\`,
+    })
   }
 
   return (
     <Form onFinish={handleSubmit}>
-      <Form.Item
-        name="startTime"
-        label="Start Time"
-        required
-        rules={{ required: 'Please select start time' }}
-      >
-        <TimePicker placeholder="HH:MM" />
-      </Form.Item>
-
-      <Form.Item name="endTime" label="End Time">
-        <TimePicker format="12" />
-      </Form.Item>
-
-      <Form.Item>
-        <Button htmlType="submit" color="primary">Submit</Button>
-      </Form.Item>
-    </Form>
-  )
-}`,
-  },
-  {
-    id: 'time-range',
-    title: 'Time Range Selection',
-    description: 'Two time pickers for selecting a time range.',
-    code: `import { TimePicker, Form, Row, Col } from 'asterui'
-
-export default function App() {
-  return (
-    <Form>
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item label="Start Time" name="startTime">
+          <Form.Item name="startTime" label="Start Time" rules={{ required: 'Please select start time' }}>
             <TimePicker placeholder="Start" />
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item label="End Time" name="endTime">
+          <Form.Item name="endTime" label="End Time">
             <TimePicker placeholder="End" />
           </Form.Item>
         </Col>
       </Row>
+      <Form.Item>
+        <Button htmlType="submit" color="primary">Submit</Button>
+      </Form.Item>
     </Form>
   )
 }`,
