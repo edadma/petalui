@@ -4,14 +4,22 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const timePickerApi = [
-  { property: 'value', description: 'Controlled selected time', type: 'Date', default: '-' },
-  { property: 'defaultValue', description: 'Default selected time (uncontrolled)', type: 'Date', default: '-' },
+  { property: 'value', description: 'Controlled selected time', type: 'Date | null', default: '-' },
+  { property: 'defaultValue', description: 'Default selected time (uncontrolled)', type: 'Date | null', default: '-' },
   { property: 'onChange', description: 'Callback when time is selected', type: '(date: Date | null) => void', default: '-' },
-  { property: 'format', description: 'Time display format', type: "'12' | '24'", default: "'24'" },
+  { property: 'format', description: 'Time display format (12-hour or 24-hour)', type: "'12' | '24'", default: "'24'" },
   { property: 'placeholder', description: 'Input placeholder text', type: 'string', default: '"Select time"' },
   { property: 'disabled', description: 'Disable the time picker', type: 'boolean', default: 'false' },
   { property: 'size', description: 'Input size', type: "'xs' | 'sm' | 'md' | 'lg'", default: "'md'" },
-  { property: 'showSeconds', description: 'Show seconds in the time picker', type: 'boolean', default: 'false' },
+  { property: 'showSeconds', description: 'Show seconds column in the time picker', type: 'boolean', default: 'false' },
+  { property: 'allowClear', description: 'Show clear button when time is selected', type: 'boolean', default: 'true' },
+  { property: 'open', description: 'Controlled open state of the dropdown', type: 'boolean', default: '-' },
+  { property: 'onOpenChange', description: 'Callback when dropdown open state changes', type: '(open: boolean) => void', default: '-' },
+  { property: 'hourStep', description: 'Interval between hours in the picker', type: 'number', default: '1' },
+  { property: 'minuteStep', description: 'Interval between minutes in the picker', type: 'number', default: '1' },
+  { property: 'secondStep', description: 'Interval between seconds in the picker', type: 'number', default: '1' },
+  { property: 'status', description: 'Validation status', type: "'error' | 'warning'", default: '-' },
+  { property: 'data-testid', description: 'Test ID prefix for child elements', type: 'string', default: '"timepicker"' },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
 ];
 
@@ -20,102 +28,98 @@ const examples = [
     id: 'basic',
     title: 'Basic TimePicker',
     description: 'Simple time picker with default 24-hour format.',
-    code: `import React from 'react'
-import { TimePicker } from 'asterui'
+    code: `import { TimePicker } from 'asterui'
 
-const App: React.FC = () => (
-  <TimePicker placeholder="Select time" />
-)
-
-export default App`,
+export default function App() {
+  return <TimePicker placeholder="Select time" />
+}`,
   },
   {
     id: '12-hour',
     title: '12-Hour Format',
     description: 'Time picker with 12-hour format and AM/PM selection.',
-    code: `import React from 'react'
-import { TimePicker } from 'asterui'
+    code: `import { TimePicker } from 'asterui'
 
-const App: React.FC = () => (
-  <TimePicker format="12" placeholder="Select time" />
-)
-
-export default App`,
+export default function App() {
+  return <TimePicker format="12" placeholder="Select time" />
+}`,
   },
   {
     id: 'seconds',
     title: 'With Seconds',
     description: 'Time picker that includes seconds selection.',
-    code: `import React from 'react'
-import { TimePicker } from 'asterui'
+    code: `import { TimePicker } from 'asterui'
 
-const App: React.FC = () => (
-  <TimePicker showSeconds placeholder="Select time" />
-)
-
-export default App`,
+export default function App() {
+  return <TimePicker showSeconds placeholder="Select time" />
+}`,
   },
   {
     id: 'controlled',
     title: 'Controlled',
     description: 'Controlled time picker with state management.',
-    code: `import React, { useState } from 'react'
-import { TimePicker } from 'asterui'
+    code: `import { useState } from 'react'
+import { TimePicker, Typography } from 'asterui'
 
-const App: React.FC = () => {
+const { Text } = Typography
+
+export default function App() {
   const [time, setTime] = useState<Date | null>(null)
 
   return (
-    <div>
+    <Space direction="vertical">
       <TimePicker value={time} onChange={setTime} />
-      <p className="mt-2 text-sm">
+      <Text size="sm" muted>
         Selected: {time ? time.toLocaleTimeString() : 'None'}
-      </p>
-    </div>
+      </Text>
+    </Space>
   )
-}
-
-export default App`,
+}`,
   },
   {
     id: 'sizes',
     title: 'Different Sizes',
     description: 'Time picker in various sizes.',
-    code: `import React from 'react'
-import { TimePicker, Space } from 'asterui'
+    code: `import { TimePicker, Space } from 'asterui'
 
-const App: React.FC = () => (
-  <Space>
-    <TimePicker size="xs" placeholder="Extra small" />
-    <TimePicker size="sm" placeholder="Small" />
-    <TimePicker size="md" placeholder="Medium" />
-    <TimePicker size="lg" placeholder="Large" />
-  </Space>
-)
-
-export default App`,
+export default function App() {
+  return (
+    <Space direction="vertical">
+      <TimePicker size="xs" placeholder="Extra small" />
+      <TimePicker size="sm" placeholder="Small" />
+      <TimePicker size="md" placeholder="Medium" />
+      <TimePicker size="lg" placeholder="Large" />
+    </Space>
+  )
+}`,
   },
   {
     id: 'disabled',
     title: 'Disabled',
-    description: 'Disabled time picker.',
-    code: `import React from 'react'
-import { TimePicker } from 'asterui'
+    description: 'Disabled time picker with a default value.',
+    code: `import { TimePicker } from 'asterui'
 
-const App: React.FC = () => (
-  <TimePicker disabled placeholder="Disabled" />
-)
+export default function App() {
+  return <TimePicker disabled defaultValue={new Date()} />
+}`,
+  },
+  {
+    id: 'steps',
+    title: 'Time Steps',
+    description: 'Time picker with custom intervals (15-minute steps).',
+    code: `import { TimePicker } from 'asterui'
 
-export default App`,
+export default function App() {
+  return <TimePicker minuteStep={15} placeholder="Select time (15 min intervals)" />
+}`,
   },
   {
     id: 'form',
     title: 'In Form',
     description: 'TimePicker integrated with Form component.',
-    code: `import React from 'react'
-import { TimePicker, Form, Button } from 'asterui'
+    code: `import { TimePicker, Form, Button } from 'asterui'
 
-const App: React.FC = () => {
+export default function App() {
   const handleSubmit = (values) => {
     console.log(values)
   }
@@ -126,69 +130,44 @@ const App: React.FC = () => {
         name="startTime"
         label="Start Time"
         required
-        rules={{
-          required: 'Please select start time',
-        }}
+        rules={{ required: 'Please select start time' }}
       >
         <TimePicker placeholder="HH:MM" />
       </Form.Item>
 
-      <Form.Item
-        name="endTime"
-        label="End Time"
-      >
+      <Form.Item name="endTime" label="End Time">
         <TimePicker format="12" />
       </Form.Item>
 
       <Form.Item>
-        <Button htmlType="submit" color="primary">
-          Submit
-        </Button>
+        <Button htmlType="submit" color="primary">Submit</Button>
       </Form.Item>
     </Form>
   )
-}
-
-export default App`,
+}`,
   },
   {
     id: 'time-range',
     title: 'Time Range Selection',
     description: 'Two time pickers for selecting a time range.',
-    code: `import React, { useState } from 'react'
-import { TimePicker } from 'asterui'
+    code: `import { useState } from 'react'
+import { TimePicker, Form, Space } from 'asterui'
 
-const App: React.FC = () => {
+export default function App() {
   const [startTime, setStartTime] = useState<Date | null>(null)
   const [endTime, setEndTime] = useState<Date | null>(null)
 
   return (
-    <div className="flex gap-4">
-      <div>
-        <label className="label">
-          <span className="label-text">Start Time</span>
-        </label>
-        <TimePicker
-          value={startTime}
-          onChange={setStartTime}
-          placeholder="Start time"
-        />
-      </div>
-      <div>
-        <label className="label">
-          <span className="label-text">End Time</span>
-        </label>
-        <TimePicker
-          value={endTime}
-          onChange={setEndTime}
-          placeholder="End time"
-        />
-      </div>
-    </div>
+    <Space>
+      <Form.Item label="Start Time" inline>
+        <TimePicker value={startTime} onChange={setStartTime} placeholder="Start" />
+      </Form.Item>
+      <Form.Item label="End Time" inline>
+        <TimePicker value={endTime} onChange={setEndTime} placeholder="End" />
+      </Form.Item>
+    </Space>
   )
-}
-
-export default App`,
+}`,
   },
 ];
 ---
@@ -250,10 +229,13 @@ export default App`,
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
       <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Input field is keyboard navigable</li>
-        <li>Time picker dropdown supports keyboard navigation</li>
-        <li>ARIA labels for hour, minute, and second selectors</li>
-        <li>Disabled state properly communicated to screen readers</li>
+        <li>Input field has <code>aria-haspopup</code> and <code>aria-expanded</code> attributes</li>
+        <li>Dropdown uses <code>role="dialog"</code> with proper labeling</li>
+        <li>Time columns use <code>role="listbox"</code> with <code>aria-label</code></li>
+        <li>Time options use <code>role="option"</code> with <code>aria-selected</code></li>
+        <li>Full keyboard navigation: Arrow keys to navigate, Escape to close, Enter to confirm</li>
+        <li>Clear button has <code>aria-label</code> for screen readers</li>
+        <li>Disabled state properly communicated to assistive technology</li>
       </ul>
     </section>
   </div>

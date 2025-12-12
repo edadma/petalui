@@ -1,33 +1,38 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { TimePicker, Form, Button, Modal, Space } from 'asterui';
+import { TimePicker, Form, Button, Modal, Space, Typography } from 'asterui';
+
+const { Text } = Typography;
 
 const demos: Record<string, React.ReactNode> = {
   basic: <TimePicker placeholder="Select time" />,
   '12-hour': <TimePicker format="12" placeholder="Select time" />,
   seconds: <TimePicker showSeconds placeholder="Select time" />,
-  '12-hour-seconds': <TimePicker format="12" showSeconds placeholder="Select time" />,
-  sizes: (
-    <Space>
-      <TimePicker size="xs" placeholder="Extra small" />
-      <TimePicker size="sm" placeholder="Small" />
-      <TimePicker size="md" placeholder="Medium" />
-      <TimePicker size="lg" placeholder="Large" />
-    </Space>
-  ),
   disabled: <TimePicker disabled defaultValue={new Date()} />,
+  steps: <TimePicker minuteStep={15} placeholder="Select time (15 min intervals)" />,
 };
 
 function ControlledDemo() {
   const [time, setTime] = useState<Date | null>(null);
 
   return (
-    <div>
+    <Space direction="vertical">
       <TimePicker value={time} onChange={setTime} />
-      <p className="mt-2 text-sm text-base-content/70">
+      <Text size="sm" muted>
         Selected: {time ? time.toLocaleTimeString() : 'None'}
-      </p>
-    </div>
+      </Text>
+    </Space>
+  );
+}
+
+function SizesDemo() {
+  return (
+    <Space direction="vertical">
+      <TimePicker size="xs" placeholder="Extra small" />
+      <TimePicker size="sm" placeholder="Small" />
+      <TimePicker size="md" placeholder="Medium" />
+      <TimePicker size="lg" placeholder="Large" />
+    </Space>
   );
 }
 
@@ -47,9 +52,7 @@ function FormDemo() {
           name="startTime"
           label="Start Time"
           required
-          rules={{
-            required: 'Please select start time',
-          }}
+          rules={{ required: 'Please select start time' }}
         >
           <TimePicker placeholder="HH:MM" />
         </Form.Item>
@@ -87,25 +90,20 @@ function TimeRangeDemo() {
   const [endTime, setEndTime] = useState<Date | null>(null);
 
   return (
-    <div className="flex gap-4">
-      <div>
-        <label className="label">
-          <span className="label-text">Start Time</span>
-        </label>
-        <TimePicker value={startTime} onChange={setStartTime} placeholder="Start time" />
-      </div>
-      <div>
-        <label className="label">
-          <span className="label-text">End Time</span>
-        </label>
-        <TimePicker value={endTime} onChange={setEndTime} placeholder="End time" />
-      </div>
-    </div>
+    <Space>
+      <Form.Item label="Start Time" inline>
+        <TimePicker value={startTime} onChange={setStartTime} placeholder="Start" />
+      </Form.Item>
+      <Form.Item label="End Time" inline>
+        <TimePicker value={endTime} onChange={setEndTime} placeholder="End" />
+      </Form.Item>
+    </Space>
   );
 }
 
 const statefulDemos: Record<string, React.FC> = {
   controlled: ControlledDemo,
+  sizes: SizesDemo,
   form: FormDemo,
   'time-range': TimeRangeDemo,
 };
