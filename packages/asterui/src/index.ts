@@ -62,7 +62,7 @@ export { DatePicker } from './components/DatePicker'
 export type { DatePickerProps } from './components/DatePicker'
 
 export { Descriptions } from './components/Descriptions'
-export type { DescriptionsProps, DescriptionsItemProps, DescriptionsSize, DescriptionsLayout } from './components/Descriptions'
+export type { DescriptionsProps, DescriptionsItemProps, DescriptionsItemConfig, DescriptionsSize, DescriptionsLayout } from './components/Descriptions'
 
 export { Diff } from './components/Diff'
 export type { DiffProps } from './components/Diff'

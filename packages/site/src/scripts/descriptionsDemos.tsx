@@ -1,6 +1,7 @@
 import { createRoot } from 'react-dom/client';
+import React from 'react';
 import { Descriptions } from 'asterui';
-import { CheckIconSvg } from './icons'
+import { CheckIconSvg } from './icons';
 
 // Demo components for each example
 const demos: Record<string, React.ReactNode> = {

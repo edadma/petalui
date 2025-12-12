@@ -4,13 +4,26 @@ import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
 const descriptionsApi = [
-  { property: 'items', description: 'Description items', type: 'DescriptionItem[]' },
+  { property: 'items', description: 'Description items (alternative to children)', type: 'DescriptionsItemConfig[]' },
   { property: 'title', description: 'Title of the descriptions block', type: 'React.ReactNode' },
-  { property: 'column', description: 'Number of columns', type: 'number', default: '3' },
-  { property: 'bordered', description: 'Show borders', type: 'boolean', default: 'false' },
+  { property: 'extra', description: 'Extra content in the top-right corner', type: 'React.ReactNode' },
+  { property: 'column', description: 'Number of columns (or responsive config)', type: 'number | ResponsiveConfig', default: '3' },
+  { property: 'bordered', description: 'Show borders around cells', type: 'boolean', default: 'false' },
   { property: 'layout', description: 'Layout direction', type: "'horizontal' | 'vertical'", default: "'horizontal'" },
-  { property: 'size', description: 'Size of the descriptions', type: "'sm' | 'md' | 'lg'", default: "'md'" },
+  { property: 'size', description: 'Size variant', type: "'sm' | 'md' | 'lg'", default: "'md'" },
+  { property: 'colon', description: 'Show colon after labels', type: 'boolean', default: 'true' },
+  { property: 'labelStyle', description: 'Default label styles', type: 'React.CSSProperties' },
+  { property: 'contentStyle', description: 'Default content styles', type: 'React.CSSProperties' },
   { property: 'className', description: 'Additional CSS classes', type: 'string' },
+  { property: 'data-testid', description: 'Test ID for the component', type: 'string', default: "'descriptions'" },
+];
+
+const itemApi = [
+  { property: 'label', description: 'Label for the item', type: 'React.ReactNode' },
+  { property: 'children', description: 'Content of the item', type: 'React.ReactNode' },
+  { property: 'span', description: 'Number of columns to span', type: 'number', default: '1' },
+  { property: 'labelStyle', description: 'Custom label styles', type: 'React.CSSProperties' },
+  { property: 'contentStyle', description: 'Custom content styles', type: 'React.CSSProperties' },
 ];
 
 const examples = [
@@ -182,18 +195,19 @@ export default App`,
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-6">API</h2>
       <ApiTable title="Descriptions" data={descriptionsApi} />
+      <div class="mt-8">
+        <ApiTable title="DescriptionsItemConfig" data={itemApi} />
+      </div>
     </section>
 
-    <!-- Item Type -->
+    <!-- Accessibility -->
     <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Item Type</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code={`interface DescriptionItem {
-  label: React.ReactNode
-  children: React.ReactNode
-  span?: number
-}`} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
+      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+      <ul class="list-disc list-inside space-y-2 text-base-content/80">
+        <li>Uses semantic <code class="bg-base-content/20 px-1 rounded">&lt;table&gt;</code> markup for proper structure</li>
+        <li>Header cells use <code class="bg-base-content/20 px-1 rounded">scope</code> attribute for screen readers</li>
+        <li>Table has <code class="bg-base-content/20 px-1 rounded">aria-label</code> when title is provided</li>
+      </ul>
     </section>
   </div>
 </Layout>
