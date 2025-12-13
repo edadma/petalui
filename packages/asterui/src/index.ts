@@ -14,7 +14,7 @@ export { Avatar, AvatarGroup } from './components/Avatar'
 export type { AvatarProps, AvatarGroupProps, AvatarSize, AvatarShape, AvatarStatus } from './components/Avatar'
 
 export { Badge } from './components/Badge'
-export type { BadgeProps, BadgePosition, BadgeStatus } from './components/Badge'
+export type { BadgeProps, BadgeRibbonProps, BadgePosition, BadgeStatus, BadgeType, BadgeVariant, BadgeSize } from './components/Badge'
 
 export { Breadcrumb } from './components/Breadcrumb'
 export type { BreadcrumbProps, BreadcrumbItemProps } from './components/Breadcrumb'
@@ -41,7 +41,7 @@ export { Cascader } from './components/Cascader'
 export type { CascaderProps, CascaderOption } from './components/Cascader'
 
 export { Carousel } from './components/Carousel'
-export type { CarouselProps, CarouselItemProps } from './components/Carousel'
+export type { CarouselProps, CarouselItemProps, CarouselRef, CarouselEffect, CarouselDotPlacement } from './components/Carousel'
 
 export { Collapse } from './components/Collapse'
 export type { CollapseProps, CollapseItemType, CollapseSize, CollapseIconPosition, CollapseCollapsible } from './components/Collapse'
