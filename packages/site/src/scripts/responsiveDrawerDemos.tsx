@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState } from 'react';
-import { SidebarDrawer, Button, Menu, Avatar } from 'asterui';
+import { ResponsiveDrawer, Button, Menu, Avatar } from 'asterui';
 import { CheckIconSvg } from './icons'
 
 // Basic demo
@@ -8,7 +8,7 @@ const BasicDemo: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SidebarDrawer
+    <ResponsiveDrawer
       open={open}
       onOpenChange={setOpen}
       sidebar={
@@ -25,7 +25,64 @@ const BasicDemo: React.FC = () => {
         </Button>
         <p className="mt-4">Main content area</p>
       </div>
-    </SidebarDrawer>
+    </ResponsiveDrawer>
+  );
+};
+
+// Responsive demo - always open on lg screens
+const ResponsiveDemo: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <ResponsiveDrawer
+      open={open}
+      onOpenChange={setOpen}
+      responsive="lg"
+      sidebar={
+        <Menu>
+          <Menu.Title>Navigation</Menu.Title>
+          <Menu.Item>Dashboard</Menu.Item>
+          <Menu.Item>Analytics</Menu.Item>
+          <Menu.Item>Settings</Menu.Item>
+        </Menu>
+      }
+    >
+      <div className="p-4">
+        <Button className="lg:hidden" onClick={() => setOpen(true)}>
+          Menu
+        </Button>
+        <p className="mt-4">
+          Resize the window to see the responsive behavior.
+          On large screens, the sidebar is always visible.
+        </p>
+      </div>
+    </ResponsiveDrawer>
+  );
+};
+
+// Custom width demo
+const CustomWidthDemo: React.FC = () => {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <ResponsiveDrawer
+      open={open}
+      onOpenChange={setOpen}
+      width={400}
+      sidebar={
+        <Menu>
+          <Menu.Title>Wide Sidebar</Menu.Title>
+          <Menu.Item>Item with more space</Menu.Item>
+          <Menu.Item>Another item</Menu.Item>
+        </Menu>
+      }
+    >
+      <div className="p-4">
+        <Button onClick={() => setOpen(true)}>
+          Open Wide Sidebar
+        </Button>
+      </div>
+    </ResponsiveDrawer>
   );
 };
 
@@ -34,7 +91,7 @@ const EndDemo: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SidebarDrawer
+    <ResponsiveDrawer
       open={open}
       onOpenChange={setOpen}
       end
@@ -52,7 +109,7 @@ const EndDemo: React.FC = () => {
         </Button>
         <p className="mt-4">Main content area</p>
       </div>
-    </SidebarDrawer>
+    </ResponsiveDrawer>
   );
 };
 
@@ -61,7 +118,7 @@ const CustomSidebarDemo: React.FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <SidebarDrawer
+    <ResponsiveDrawer
       open={open}
       onOpenChange={setOpen}
       sidebarClassName="bg-base-300"
@@ -89,12 +146,14 @@ const CustomSidebarDemo: React.FC = () => {
         </Button>
         <p className="mt-4">Application content</p>
       </div>
-    </SidebarDrawer>
+    </ResponsiveDrawer>
   );
 };
 
 const statefulDemos: Record<string, React.FC> = {
   'basic': BasicDemo,
+  'responsive': ResponsiveDemo,
+  'custom-width': CustomWidthDemo,
   'end': EndDemo,
   'custom-sidebar': CustomSidebarDemo,
 };

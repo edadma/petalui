@@ -6,10 +6,11 @@ import { Code } from 'astro:components';
 const drawerApi = [
   { property: 'children', description: 'Drawer content', type: 'React.ReactNode' },
   { property: 'open', description: 'Controlled open state', type: 'boolean', default: 'false' },
-  { property: 'onClose', description: 'Close handler', type: '() => void' },
+  { property: 'onClose', description: 'Close handler', type: '(e?: React.MouseEvent | React.KeyboardEvent) => void' },
+  { property: 'afterOpenChange', description: 'Callback after open/close animation completes', type: '(open: boolean) => void' },
   { property: 'title', description: 'Drawer title', type: 'React.ReactNode' },
   { property: 'placement', description: 'Drawer position', type: "'left' | 'right' | 'top' | 'bottom'", default: "'right'" },
-  { property: 'size', description: 'Preset size', type: "'default' | 'large' | number", default: "'default'" },
+  { property: 'size', description: 'Preset size (378px or 736px) or custom number', type: "'default' | 'large' | number", default: "'default'" },
   { property: 'width', description: 'Custom width (overrides size for left/right)', type: 'string | number' },
   { property: 'height', description: 'Custom height (overrides size for top/bottom)', type: 'string | number' },
   { property: 'closable', description: 'Show close button', type: 'boolean', default: 'true' },
@@ -18,12 +19,22 @@ const drawerApi = [
   { property: 'keyboard', description: 'Close on ESC key', type: 'boolean', default: 'true' },
   { property: 'footer', description: 'Footer content', type: 'React.ReactNode' },
   { property: 'extra', description: 'Extra content in header (right side)', type: 'React.ReactNode' },
+  { property: 'loading', description: 'Show loading skeleton', type: 'boolean', default: 'false' },
   { property: 'destroyOnClose', description: 'Destroy content when closed', type: 'boolean', default: 'false' },
+  { property: 'forceRender', description: 'Pre-render content (keep in DOM when closed)', type: 'boolean', default: 'false' },
   { property: 'initialFocus', description: 'Initial focus placement', type: "'close' | 'content'", default: "'close'" },
+  { property: 'push', description: 'Nested drawer push behavior', type: 'boolean | { distance: number }', default: '{ distance: 180 }' },
+  { property: 'getContainer', description: 'Custom portal container (false to disable portal)', type: 'HTMLElement | (() => HTMLElement) | false' },
   { property: 'zIndex', description: 'z-index of drawer', type: 'number', default: '1000' },
   { property: 'className', description: 'CSS class for drawer panel', type: 'string' },
   { property: 'rootClassName', description: 'CSS class for drawer wrapper', type: 'string' },
   { property: 'style', description: 'Style for drawer panel', type: 'React.CSSProperties' },
+  { property: 'headerStyle', description: 'Style for drawer header', type: 'React.CSSProperties' },
+  { property: 'bodyStyle', description: 'Style for drawer body/content', type: 'React.CSSProperties' },
+  { property: 'footerStyle', description: 'Style for drawer footer', type: 'React.CSSProperties' },
+  { property: 'rootStyle', description: 'Style for drawer wrapper (includes mask)', type: 'React.CSSProperties' },
+  { property: 'maskStyle', description: 'Style for mask/backdrop', type: 'React.CSSProperties' },
+  { property: 'data-testid', description: 'Test ID (child elements use prefix pattern)', type: 'string' },
 ];
 
 const examples = [
@@ -130,9 +141,163 @@ const App: React.FC = () => {
 export default App`,
   },
   {
-    id: 'custom-width',
-    title: 'Custom Size',
-    description: 'Drawer with custom width.',
+    id: 'extra',
+    title: 'Extra Header Content',
+    description: 'Drawer with extra actions in the header.',
+    code: `import React, { useState } from 'react'
+import { Drawer, Button, Space } from 'asterui'
+
+const App: React.FC = () => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <>
+      <Button color="primary" onClick={() => setOpen(true)}>
+        Open Drawer
+      </Button>
+      <Drawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="User Details"
+        extra={
+          <Space size="xs">
+            <Button size="sm" color="ghost">Edit</Button>
+            <Button size="sm" color="ghost">Delete</Button>
+          </Space>
+        }
+      >
+        <p>User information displayed here.</p>
+      </Drawer>
+    </>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'sizes',
+    title: 'Preset Sizes',
+    description: 'Default (378px) and large (736px) preset sizes.',
+    code: `import React, { useState } from 'react'
+import { Drawer, Button, Space } from 'asterui'
+
+const App: React.FC = () => {
+  const [size, setSize] = useState<'default' | 'large'>('default')
+  const [open, setOpen] = useState(false)
+
+  const showDrawer = (s: typeof size) => {
+    setSize(s)
+    setOpen(true)
+  }
+
+  return (
+    <>
+      <Space direction="horizontal" size="sm">
+        <Button onClick={() => showDrawer('default')}>Default (378px)</Button>
+        <Button onClick={() => showDrawer('large')}>Large (736px)</Button>
+      </Space>
+      <Drawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title={\`\${size.charAt(0).toUpperCase() + size.slice(1)} Drawer\`}
+        size={size}
+      >
+        <p>This drawer uses the {size} preset size.</p>
+      </Drawer>
+    </>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'loading',
+    title: 'Loading State',
+    description: 'Drawer with skeleton loading state.',
+    code: `import React, { useState, useEffect } from 'react'
+import { Drawer, Button } from 'asterui'
+
+const App: React.FC = () => {
+  const [open, setOpen] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    if (open) {
+      setLoading(true)
+      const timer = setTimeout(() => setLoading(false), 1500)
+      return () => clearTimeout(timer)
+    }
+  }, [open])
+
+  return (
+    <>
+      <Button color="primary" onClick={() => setOpen(true)}>
+        Load Data
+      </Button>
+      <Drawer
+        open={open}
+        onClose={() => setOpen(false)}
+        title="User Profile"
+        loading={loading}
+      >
+        <div className="space-y-4">
+          <p><strong>Name:</strong> John Doe</p>
+          <p><strong>Email:</strong> john@example.com</p>
+          <p><strong>Role:</strong> Administrator</p>
+        </div>
+      </Drawer>
+    </>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'nested',
+    title: 'Nested Drawers',
+    description: 'Multiple drawers with push behavior.',
+    code: `import React, { useState } from 'react'
+import { Drawer, Button } from 'asterui'
+
+const App: React.FC = () => {
+  const [open1, setOpen1] = useState(false)
+  const [open2, setOpen2] = useState(false)
+
+  return (
+    <>
+      <Button color="primary" onClick={() => setOpen1(true)}>
+        Open First Drawer
+      </Button>
+      <Drawer
+        open={open1}
+        onClose={() => setOpen1(false)}
+        title="First Drawer"
+        push={{ distance: 180 }}
+      >
+        <p>This is the first drawer.</p>
+        <Button color="secondary" onClick={() => setOpen2(true)}>
+          Open Second Drawer
+        </Button>
+        <Drawer
+          open={open2}
+          onClose={() => setOpen2(false)}
+          title="Second Drawer"
+          width={400}
+        >
+          <p>This is a nested drawer.</p>
+          <p>Notice how the first drawer pushed back.</p>
+        </Drawer>
+      </Drawer>
+    </>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'no-mask',
+    title: 'No Mask',
+    description: 'Drawer without backdrop overlay.',
     code: `import React, { useState } from 'react'
 import { Drawer, Button } from 'asterui'
 
@@ -142,15 +307,16 @@ const App: React.FC = () => {
   return (
     <>
       <Button color="primary" onClick={() => setOpen(true)}>
-        Large Drawer
+        Open Drawer
       </Button>
       <Drawer
         open={open}
         onClose={() => setOpen(false)}
-        title="Large Drawer"
-        width={500}
+        title="No Mask Drawer"
+        mask={false}
       >
-        <p>This drawer is 500px wide.</p>
+        <p>This drawer has no backdrop overlay.</p>
+        <p>You can still interact with the page behind it.</p>
       </Drawer>
     </>
   )
@@ -178,7 +344,7 @@ export default App`,
       </p>
       <div class="mt-4 p-4 bg-info/10 border border-info/20 rounded-lg">
         <p class="text-sm">
-          <strong>Note:</strong> For responsive sidebar navigation that toggles on mobile, use <a href="/components/sidebardrawer" class="link link-primary">SidebarDrawer</a> instead.
+          <strong>Note:</strong> For responsive sidebar navigation that toggles on mobile, use <a href="/components/responsivedrawer" class="link link-primary">ResponsiveDrawer</a> instead.
         </p>
       </div>
     </div>
@@ -229,6 +395,51 @@ export default App`,
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-6">API</h2>
       <ApiTable title="Drawer" data={drawerApi} />
+    </section>
+
+    <!-- Test IDs -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">Test IDs</h2>
+      <p class="text-base-content/70 mb-4">
+        When you provide a <code class="bg-base-content/20 px-1 rounded">data-testid</code>, child elements receive prefixed IDs:
+      </p>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Element</th>
+              <th>Test ID Pattern</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Root wrapper</td><td><code>{`{testId}`}</code></td></tr>
+            <tr><td>Mask/backdrop</td><td><code>{`{testId}-mask`}</code></td></tr>
+            <tr><td>Drawer panel</td><td><code>{`{testId}-panel`}</code></td></tr>
+            <tr><td>Header</td><td><code>{`{testId}-header`}</code></td></tr>
+            <tr><td>Close button</td><td><code>{`{testId}-close`}</code></td></tr>
+            <tr><td>Body/content</td><td><code>{`{testId}-body`}</code></td></tr>
+            <tr><td>Footer</td><td><code>{`{testId}-footer`}</code></td></tr>
+            <tr><td>Loading skeleton</td><td><code>{`{testId}-skeleton`}</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Ref -->
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">Ref</h2>
+      <p class="text-base-content/70 mb-4">
+        The Drawer component exposes a ref with the following structure:
+      </p>
+      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
+        <Code code={`interface DrawerRef {
+  nativeElement: HTMLDivElement | null  // The drawer panel element
+}
+
+// Usage
+const drawerRef = useRef<DrawerRef>(null)
+<Drawer ref={drawerRef} ... />`} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+      </div>
     </section>
   </div>
 </Layout>

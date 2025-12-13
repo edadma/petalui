@@ -3,29 +3,35 @@ import Layout from '../../layouts/Layout.astro';
 import ApiTable from '../../components/ApiTable.astro';
 import { Code } from 'astro:components';
 
-const sidebarDrawerApi = [
+const responsiveDrawerApi = [
   { property: 'children', description: 'Main content area', type: 'React.ReactNode' },
   { property: 'sidebar', description: 'Sidebar content', type: 'React.ReactNode' },
   { property: 'open', description: 'Controlled open state', type: 'boolean', default: 'false' },
   { property: 'onOpenChange', description: 'Callback when open state changes', type: '(open: boolean) => void' },
   { property: 'end', description: 'Position sidebar on the right side', type: 'boolean', default: 'false' },
+  { property: 'width', description: 'Width of the sidebar', type: 'number | string', default: '320' },
+  { property: 'responsive', description: 'Breakpoint at which sidebar becomes always visible', type: "'sm' | 'md' | 'lg' | 'xl' | '2xl'" },
   { property: 'sidebarClassName', description: 'Additional classes for sidebar container', type: 'string' },
+  { property: 'contentClassName', description: 'Additional classes for content area', type: 'string' },
+  { property: 'overlayClassName', description: 'Additional classes for the overlay', type: 'string' },
+  { property: 'id', description: 'Unique ID for the drawer (auto-generated if not provided)', type: 'string' },
   { property: 'className', description: 'Additional CSS classes for drawer wrapper', type: 'string' },
+  { property: 'data-testid', description: 'Test ID for testing', type: 'string' },
 ];
 
 const examples = [
   {
     id: 'basic',
-    title: 'Basic SidebarDrawer',
+    title: 'Basic ResponsiveDrawer',
     description: 'Responsive sidebar that toggles on mobile.',
     code: `import React, { useState } from 'react'
-import { SidebarDrawer, Button, Menu } from 'asterui'
+import { ResponsiveDrawer, Button, Menu } from 'asterui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
 
   return (
-    <SidebarDrawer
+    <ResponsiveDrawer
       open={open}
       onOpenChange={setOpen}
       sidebar={
@@ -42,7 +48,80 @@ const App: React.FC = () => {
         </Button>
         <p className="mt-4">Main content area</p>
       </div>
-    </SidebarDrawer>
+    </ResponsiveDrawer>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'responsive',
+    title: 'Always Open on Desktop',
+    description: 'Sidebar toggles on mobile but is always visible on lg screens and up.',
+    code: `import React, { useState } from 'react'
+import { ResponsiveDrawer, Button, Menu } from 'asterui'
+
+const App: React.FC = () => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <ResponsiveDrawer
+      open={open}
+      onOpenChange={setOpen}
+      responsive="lg"
+      sidebar={
+        <Menu>
+          <Menu.Title>Navigation</Menu.Title>
+          <Menu.Item>Dashboard</Menu.Item>
+          <Menu.Item>Analytics</Menu.Item>
+          <Menu.Item>Settings</Menu.Item>
+        </Menu>
+      }
+    >
+      <div className="p-4">
+        <Button className="lg:hidden" onClick={() => setOpen(true)}>
+          Menu
+        </Button>
+        <p className="mt-4">
+          Resize the window to see the responsive behavior.
+          On large screens, the sidebar is always visible.
+        </p>
+      </div>
+    </ResponsiveDrawer>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'custom-width',
+    title: 'Custom Width',
+    description: 'Sidebar with custom width.',
+    code: `import React, { useState } from 'react'
+import { ResponsiveDrawer, Button, Menu } from 'asterui'
+
+const App: React.FC = () => {
+  const [open, setOpen] = useState(false)
+
+  return (
+    <ResponsiveDrawer
+      open={open}
+      onOpenChange={setOpen}
+      width={400}
+      sidebar={
+        <Menu>
+          <Menu.Title>Wide Sidebar</Menu.Title>
+          <Menu.Item>Item with more space</Menu.Item>
+          <Menu.Item>Another item</Menu.Item>
+        </Menu>
+      }
+    >
+      <div className="p-4">
+        <Button onClick={() => setOpen(true)}>
+          Open Wide Sidebar
+        </Button>
+      </div>
+    </ResponsiveDrawer>
   )
 }
 
@@ -53,13 +132,13 @@ export default App`,
     title: 'Right-Side Sidebar',
     description: 'Sidebar positioned on the right side.',
     code: `import React, { useState } from 'react'
-import { SidebarDrawer, Button, Menu } from 'asterui'
+import { ResponsiveDrawer, Button, Menu } from 'asterui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
 
   return (
-    <SidebarDrawer
+    <ResponsiveDrawer
       open={open}
       onOpenChange={setOpen}
       end
@@ -77,7 +156,7 @@ const App: React.FC = () => {
         </Button>
         <p className="mt-4">Main content area</p>
       </div>
-    </SidebarDrawer>
+    </ResponsiveDrawer>
   )
 }
 
@@ -88,13 +167,13 @@ export default App`,
     title: 'Custom Sidebar Content',
     description: 'Sidebar with custom styled content.',
     code: `import React, { useState } from 'react'
-import { SidebarDrawer, Button, Avatar } from 'asterui'
+import { ResponsiveDrawer, Button, Avatar } from 'asterui'
 
 const App: React.FC = () => {
   const [open, setOpen] = useState(false)
 
   return (
-    <SidebarDrawer
+    <ResponsiveDrawer
       open={open}
       onOpenChange={setOpen}
       sidebarClassName="bg-base-300"
@@ -122,7 +201,7 @@ const App: React.FC = () => {
         </Button>
         <p className="mt-4">Application content</p>
       </div>
-    </SidebarDrawer>
+    </ResponsiveDrawer>
   )
 }
 
@@ -131,7 +210,7 @@ export default App`,
 ];
 ---
 
-<Layout title="SidebarDrawer - AsterUI">
+<Layout title="ResponsiveDrawer - AsterUI">
   <div class="max-w-screen-xl mx-auto">
     <!-- Header -->
     <div class="mb-8">
@@ -139,12 +218,12 @@ export default App`,
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/components">Components</a></li>
-          <li>SidebarDrawer</li>
+          <li>ResponsiveDrawer</li>
         </ul>
       </nav>
-      <h1 class="text-4xl font-bold mb-2">SidebarDrawer</h1>
+      <h1 class="text-4xl font-bold mb-2">ResponsiveDrawer</h1>
       <p class="text-base-content/70 text-lg">
-        A responsive sidebar layout component using DaisyUI's drawer. Use for navigation sidebars that toggle on mobile.
+        A responsive sidebar layout using DaisyUI's drawer. Use for navigation sidebars that toggle on mobile but can be always visible on larger screens.
       </p>
       <div class="mt-4 p-4 bg-info/10 border border-info/20 rounded-lg">
         <p class="text-sm">
@@ -157,7 +236,7 @@ export default App`,
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Import</h2>
       <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { SidebarDrawer } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+        <Code code="import { ResponsiveDrawer } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
       </div>
     </section>
 
@@ -198,16 +277,17 @@ export default App`,
     <!-- API -->
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="SidebarDrawer" data={sidebarDrawerApi} />
+      <ApiTable title="ResponsiveDrawer" data={responsiveDrawerApi} />
     </section>
 
     <!-- Usage Notes -->
     <section class="mb-8">
       <h2 class="text-2xl font-bold mb-4">Usage Notes</h2>
       <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>SidebarDrawer wraps DaisyUI's <code class="bg-base-content/20 px-1 rounded">drawer</code> component</li>
+        <li>ResponsiveDrawer wraps DaisyUI's <code class="bg-base-content/20 px-1 rounded">drawer</code> component</li>
         <li>Use <code class="bg-base-content/20 px-1 rounded">open</code> and <code class="bg-base-content/20 px-1 rounded">onOpenChange</code> for controlled state</li>
-        <li>The sidebar appears as an overlay on mobile and can be styled with <code class="bg-base-content/20 px-1 rounded">sidebarClassName</code></li>
+        <li>Use <code class="bg-base-content/20 px-1 rounded">responsive</code> prop to make sidebar always visible above a breakpoint</li>
+        <li>Use <code class="bg-base-content/20 px-1 rounded">width</code> to customize sidebar width (default: 320px)</li>
         <li>Use <code class="bg-base-content/20 px-1 rounded">end</code> prop to position the sidebar on the right side</li>
         <li>For panel drawers that slide over content (like forms or detail views), use the <a href="/components/drawer" class="link link-primary">Drawer</a> component instead</li>
       </ul>
@@ -215,14 +295,15 @@ export default App`,
 
     <!-- Comparison -->
     <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">SidebarDrawer vs Drawer</h2>
+      <h2 class="text-2xl font-bold mb-4">ResponsiveDrawer vs Drawer vs Layout.Sider</h2>
       <div class="overflow-x-auto">
         <table class="table table-zebra">
           <thead>
             <tr>
               <th>Feature</th>
-              <th>SidebarDrawer</th>
+              <th>ResponsiveDrawer</th>
               <th>Drawer</th>
+              <th>Layout.Sider</th>
             </tr>
           </thead>
           <tbody>
@@ -230,26 +311,37 @@ export default App`,
               <td>Use Case</td>
               <td>Responsive navigation sidebars</td>
               <td>Overlay panels for forms, details</td>
+              <td>Permanent collapsible sidebars</td>
             </tr>
             <tr>
               <td>Rendering</td>
               <td>Part of page layout</td>
               <td>Portal to document.body</td>
+              <td>Part of Layout structure</td>
+            </tr>
+            <tr>
+              <td>Overlay</td>
+              <td>Yes (mobile)</td>
+              <td>Yes (always)</td>
+              <td>No</td>
+            </tr>
+            <tr>
+              <td>Responsive</td>
+              <td>Yes (auto-open at breakpoint)</td>
+              <td>No</td>
+              <td>Yes (auto-collapse)</td>
             </tr>
             <tr>
               <td>Placement</td>
-              <td>Left or right (end)</td>
-              <td>Top, right, bottom, left</td>
+              <td>Left or right</td>
+              <td>All 4 sides</td>
+              <td>Left or right</td>
             </tr>
             <tr>
               <td>Header/Footer</td>
               <td>No built-in</td>
               <td>Yes (title, footer props)</td>
-            </tr>
-            <tr>
-              <td>Focus Management</td>
-              <td>None</td>
-              <td>Full focus trap</td>
+              <td>No built-in</td>
             </tr>
           </tbody>
         </table>
@@ -270,7 +362,7 @@ export default App`,
 </style>
 
 <script>
-  import '../../scripts/sidebarDrawerDemos';
+  import '../../scripts/responsiveDrawerDemos';
 
   // Toggle code visibility
   document.querySelectorAll('.toggle-code').forEach(btn => {

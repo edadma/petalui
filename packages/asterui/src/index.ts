@@ -71,10 +71,10 @@ export { Divider } from './components/Divider'
 export type { DividerProps } from './components/Divider'
 
 export { Drawer } from './components/Drawer'
-export type { DrawerProps, DrawerPlacement, DrawerSize } from './components/Drawer'
+export type { DrawerProps, DrawerRef, DrawerPlacement, DrawerSize, DrawerPushConfig } from './components/Drawer'
 
-export { SidebarDrawer } from './components/SidebarDrawer'
-export type { SidebarDrawerProps } from './components/SidebarDrawer'
+export { ResponsiveDrawer } from './components/ResponsiveDrawer'
+export type { ResponsiveDrawerProps, ResponsiveDrawerBreakpoint } from './components/ResponsiveDrawer'
 
 export { Fieldset } from './components/Fieldset'
 export type { FieldsetProps, FieldsetLegendProps } from './components/Fieldset'
