@@ -165,6 +165,17 @@ async function main() {
                   .map((pm) => ({ value: pm, label: pm })),
               ],
             }),
+
+      optionalDeps: () =>
+        p.multiselect({
+          message: 'Optional components (require extra dependencies)',
+          options: [
+            { value: 'chart', label: 'Chart', hint: 'apexcharts' },
+            { value: 'qrcode', label: 'QRCode', hint: 'qrcode' },
+            { value: 'virtuallist', label: 'VirtualList', hint: '@tanstack/react-virtual' },
+          ],
+          required: false,
+        }),
     },
     {
       onCancel: () => {
@@ -190,7 +201,8 @@ async function main() {
   // Generate package.json
   const packageJson = generatePackageJson(
     options.projectName,
-    options.language as string
+    options.language as string,
+    options.optionalDeps as string[]
   )
   fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify(packageJson, null, 2))
 
@@ -243,7 +255,7 @@ function copyDir(src: string, dest: string) {
   }
 }
 
-function generatePackageJson(name: string, language: string) {
+function generatePackageJson(name: string, language: string, optionalDeps: string[] = []) {
   const isTs = language === 'ts'
 
   const pkg: Record<string, unknown> = {
@@ -271,10 +283,26 @@ function generatePackageJson(name: string, language: string) {
     } as Record<string, string>,
   }
 
+  // Add optional dependencies
+  const deps = pkg.dependencies as Record<string, string>
+  if (optionalDeps.includes('chart')) {
+    deps['apexcharts'] = '^5.0.0'
+  }
+  if (optionalDeps.includes('qrcode')) {
+    deps['qrcode'] = '^1.5.0'
+  }
+  if (optionalDeps.includes('virtuallist')) {
+    deps['@tanstack/react-virtual'] = '^3.0.0'
+  }
+
   if (isTs) {
-    (pkg.devDependencies as Record<string, string>)['typescript'] = '^5.6.0';
-    (pkg.devDependencies as Record<string, string>)['@types/react'] = '^19.0.0';
-    (pkg.devDependencies as Record<string, string>)['@types/react-dom'] = '^19.0.0'
+    const devDeps = pkg.devDependencies as Record<string, string>
+    devDeps['typescript'] = '^5.6.0'
+    devDeps['@types/react'] = '^19.0.0'
+    devDeps['@types/react-dom'] = '^19.0.0'
+    if (optionalDeps.includes('qrcode')) {
+      devDeps['@types/qrcode'] = '^1.5.0'
+    }
   }
 
   return pkg

@@ -10,15 +10,51 @@ A comprehensive React component library built with [DaisyUI](https://daisyui.com
 
 View the documentation at: [https://asterui.com](https://asterui.com)
 
-## Prerequisites
+## Quick Start
 
-AsterUI requires Tailwind CSS v4 and DaisyUI v5 to be configured in your project.
-
-Install Tailwind and DaisyUI:
+The fastest way to get started is with `create-asterui`, which sets up a new project with Vite, Tailwind CSS v4, DaisyUI v5, and AsterUI pre-configured:
 
 ```bash
+npm create asterui@latest
+# or
+pnpm create asterui@latest
+# or
+yarn create asterui
+```
+
+The CLI will guide you through interactive prompts to configure:
+- **Language** - TypeScript (recommended) or JavaScript
+- **Themes** - Light/Dark, Business/Corporate, all themes, or custom selection
+- **Package manager** - npm, pnpm, or yarn (auto-detected)
+- **Optional components** - Chart, QRCode, VirtualList (adds required peer dependencies)
+
+You can also pass arguments directly:
+
+```bash
+npm create asterui@latest my-app
+npm create asterui@latest my-app --js          # Use JavaScript instead of TypeScript
+npm create asterui@latest my-app --themes all  # Include all DaisyUI themes
+```
+
+Then start the dev server:
+
+```bash
+cd my-app
+npm run dev
+```
+
+## Manual Installation
+
+To add AsterUI to an existing project, you'll need Tailwind CSS v4 and DaisyUI v5.
+
+### 1. Install dependencies
+
+```bash
+npm install asterui
 npm install -D tailwindcss @tailwindcss/vite daisyui
 ```
+
+### 2. Configure Vite
 
 Add the Tailwind plugin to your `vite.config.ts`:
 
@@ -32,7 +68,9 @@ export default defineConfig({
 })
 ```
 
-Configure your CSS file (e.g., `src/index.css`):
+### 3. Configure CSS
+
+Update your CSS file (e.g., `src/index.css`):
 
 ```css
 @import "tailwindcss";
@@ -41,16 +79,6 @@ Configure your CSS file (e.g., `src/index.css`):
 ```
 
 The `@source` directive tells Tailwind to scan the AsterUI package for classes to include in your build.
-
-## Installation
-
-```bash
-npm install asterui
-# or
-pnpm add asterui
-# or
-yarn add asterui
-```
 
 ## Usage
 
@@ -112,11 +140,30 @@ export default function App() {
 
 90+ components including forms, data display, navigation, feedback, and layout. See the full list at [asterui.com/components](https://asterui.com/components).
 
+## Optional Components
+
+Some components require additional peer dependencies and use separate imports:
+
+```bash
+# For Chart component
+npm install apexcharts
+import { Chart } from 'asterui/chart'
+
+# For QRCode component
+npm install qrcode
+import { QRCode } from 'asterui/qrcode'
+
+# For VirtualList component
+npm install @tanstack/react-virtual
+import { VirtualList } from 'asterui/virtuallist'
+```
+
 ## Development
 
 This is a pnpm monorepo with the following packages:
 
 - `packages/asterui` - The component library
+- `packages/create-asterui` - Project scaffolding CLI
 - `packages/site` - Documentation website (asterui.com)
 - `packages/examples` - Example apps for testing components
 
