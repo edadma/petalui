@@ -29,11 +29,7 @@ export function Demo({ children }: DemoProps) {
         :host {
           display: block;
         }
-        div {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          gap: 0.5rem;
+        :host > div {
           padding: 0.75rem;
           background-image: repeating-linear-gradient(
             -45deg,
@@ -43,7 +39,7 @@ export function Demo({ children }: DemoProps) {
             transparent 6px
           );
         }
-        div[data-theme="dark"] {
+        :host > div[data-theme="dark"] {
           background-image: repeating-linear-gradient(
             -45deg,
             rgba(255, 255, 255, 0.05),
@@ -54,6 +50,20 @@ export function Demo({ children }: DemoProps) {
         }
         /* Tailwind utilities for AsterUI components */
         .rounded-full { border-radius: 9999px; }
+        .flex { display: flex; }
+        .flex-row { flex-direction: row; }
+        .flex-col { flex-direction: column; }
+        .flex-wrap { flex-wrap: wrap; }
+        .items-start { align-items: flex-start; }
+        .items-center { align-items: center; }
+        .items-end { align-items: flex-end; }
+        .items-baseline { align-items: baseline; }
+        .items-stretch { align-items: stretch; }
+        .gap-1 { gap: 0.25rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .gap-6 { gap: 1.5rem; }
+        .gap-8 { gap: 2rem; }
       `
       shadow.appendChild(style)
 

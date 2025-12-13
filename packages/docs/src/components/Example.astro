@@ -71,8 +71,21 @@ if (source && fn) {
       const statefulMatch = source.match(statefulRegex)
       if (statefulMatch) {
         let body = statefulMatch[1]
-        // Replace <Demo> with fragment
-        body = body.replace(/<Demo>/g, '<>').replace(/<\/Demo>/g, '</>')
+        // Check if content inside Demo has a single root element
+        const demoContentMatch = body.match(/<Demo>([\s\S]*?)<\/Demo>/)
+        const demoContent = demoContentMatch ? demoContentMatch[1].trim() : ''
+        const demoFirstLine = demoContent.split('\n')[0].trim()
+        const demoLastLine = demoContent.split('\n').filter(l => l.trim()).pop()?.trim() || ''
+        const demoFirstTag = demoFirstLine.match(/^<(\w+)/)
+        const demoLastTag = demoLastLine.match(/^<\/(\w+)>$/)
+        const hasSingleRoot = demoFirstTag && demoLastTag && demoFirstTag[1] === demoLastTag[1]
+
+        // Replace <Demo> with fragment only if needed, otherwise just remove Demo tags
+        if (!hasSingleRoot) {
+          body = body.replace(/<Demo>/g, '<>').replace(/<\/Demo>/g, '</>')
+        } else {
+          body = body.replace(/<Demo>\s*\n?/g, '').replace(/\s*<\/Demo>/g, '')
+        }
         // Clean indentation
         const bodyLines = body.split('\n')
         const bodyMinIndent = bodyLines
@@ -88,7 +101,29 @@ function App() {
 export default App`
       }
     } else {
-      extractedCode = `${imports}
+      // Check if JSX has a single root element (first tag matches last closing tag at root level)
+      const firstLine = jsx.split('\n')[0].trim()
+      const lastLine = jsx.split('\n').filter(l => l.trim()).pop()?.trim() || ''
+      const firstTagMatch = firstLine.match(/^<(\w+)/)
+      const lastTagMatch = lastLine.match(/^<\/(\w+)>$/)
+      const hasSingleRoot = firstTagMatch && lastTagMatch && firstTagMatch[1] === lastTagMatch[1]
+      const needsFragment = !hasSingleRoot
+
+      if (needsFragment) {
+        // Add extra indentation for fragment wrapper
+        const fragmentIndentedJsx = jsx.split('\n').map(l => l ? '      ' + l : l).join('\n')
+        extractedCode = `${imports}
+function App() {
+  return (
+    <>
+${fragmentIndentedJsx}
+    </>
+  )
+}
+
+export default App`
+      } else {
+        extractedCode = `${imports}
 function App() {
   return (
 ${indentedJsx}
@@ -96,6 +131,7 @@ ${indentedJsx}
 }
 
 export default App`
+      }
     }
   }
 }

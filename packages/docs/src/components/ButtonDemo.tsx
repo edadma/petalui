@@ -6,10 +6,12 @@ import { X, Upload, Check, Trash2 } from 'lucide-react'
 export function BrandColorsDemo() {
   return (
     <Demo>
-      <Button color="primary">Primary</Button>
-      <Button color="secondary">Secondary</Button>
-      <Button color="accent">Accent</Button>
-      <Button color="neutral">Neutral</Button>
+      <Space wrap>
+        <Button color="primary">Primary</Button>
+        <Button color="secondary">Secondary</Button>
+        <Button color="accent">Accent</Button>
+        <Button color="neutral">Neutral</Button>
+      </Space>
     </Demo>
   )
 }
@@ -17,10 +19,12 @@ export function BrandColorsDemo() {
 export function StateColorsDemo() {
   return (
     <Demo>
-      <Button color="info">Info</Button>
-      <Button color="success">Success</Button>
-      <Button color="warning">Warning</Button>
-      <Button color="error">Error</Button>
+      <Space wrap>
+        <Button color="info">Info</Button>
+        <Button color="success">Success</Button>
+        <Button color="warning">Warning</Button>
+        <Button color="error">Error</Button>
+      </Space>
     </Demo>
   )
 }
@@ -28,12 +32,14 @@ export function StateColorsDemo() {
 export function VariantsDemo() {
   return (
     <Demo>
-      <Button color="primary">Solid</Button>
-      <Button color="primary" variant="outline">Outline</Button>
-      <Button color="primary" variant="dash">Dash</Button>
-      <Button color="primary" variant="soft">Soft</Button>
-      <Button variant="ghost">Ghost</Button>
-      <Button variant="link">Link</Button>
+      <Space wrap>
+        <Button color="primary">Solid</Button>
+        <Button color="primary" variant="outline">Outline</Button>
+        <Button color="primary" variant="dash">Dash</Button>
+        <Button color="primary" variant="soft">Soft</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="link">Link</Button>
+      </Space>
     </Demo>
   )
 }
@@ -41,11 +47,13 @@ export function VariantsDemo() {
 export function SizesDemo() {
   return (
     <Demo>
-      <Button size="xs">XS</Button>
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-      <Button size="xl">XL</Button>
+      <Space wrap align="center">
+        <Button size="xs">XS</Button>
+        <Button size="sm">Small</Button>
+        <Button size="md">Medium</Button>
+        <Button size="lg">Large</Button>
+        <Button size="xl">XL</Button>
+      </Space>
     </Demo>
   )
 }
@@ -53,11 +61,13 @@ export function SizesDemo() {
 export function OutlineDemo() {
   return (
     <Demo>
-      <Button color="primary" variant="outline">Primary</Button>
-      <Button color="secondary" variant="outline">Secondary</Button>
-      <Button color="accent" variant="outline">Accent</Button>
-      <Button color="success" variant="outline">Success</Button>
-      <Button color="error" variant="outline">Error</Button>
+      <Space wrap>
+        <Button color="primary" variant="outline">Primary</Button>
+        <Button color="secondary" variant="outline">Secondary</Button>
+        <Button color="accent" variant="outline">Accent</Button>
+        <Button color="success" variant="outline">Success</Button>
+        <Button color="error" variant="outline">Error</Button>
+      </Space>
     </Demo>
   )
 }
@@ -65,9 +75,11 @@ export function OutlineDemo() {
 export function DashDemo() {
   return (
     <Demo>
-      <Button color="primary" variant="dash">Primary</Button>
-      <Button color="secondary" variant="dash">Secondary</Button>
-      <Button color="accent" variant="dash">Accent</Button>
+      <Space wrap>
+        <Button color="primary" variant="dash">Primary</Button>
+        <Button color="secondary" variant="dash">Secondary</Button>
+        <Button color="accent" variant="dash">Accent</Button>
+      </Space>
     </Demo>
   )
 }
@@ -75,11 +87,13 @@ export function DashDemo() {
 export function SoftDemo() {
   return (
     <Demo>
-      <Button color="primary" variant="soft">Primary</Button>
-      <Button color="secondary" variant="soft">Secondary</Button>
-      <Button color="accent" variant="soft">Accent</Button>
-      <Button color="success" variant="soft">Success</Button>
-      <Button color="warning" variant="soft">Warning</Button>
+      <Space wrap>
+        <Button color="primary" variant="soft">Primary</Button>
+        <Button color="secondary" variant="soft">Secondary</Button>
+        <Button color="accent" variant="soft">Accent</Button>
+        <Button color="success" variant="soft">Success</Button>
+        <Button color="warning" variant="soft">Warning</Button>
+      </Space>
     </Demo>
   )
 }
@@ -87,10 +101,12 @@ export function SoftDemo() {
 export function StatesDemo() {
   return (
     <Demo>
-      <Button color="primary">Normal</Button>
-      <Button color="primary" active>Active</Button>
-      <Button color="primary" loading>Loading</Button>
-      <Button color="primary" disabled>Disabled</Button>
+      <Space wrap>
+        <Button color="primary">Normal</Button>
+        <Button color="primary" active>Active</Button>
+        <Button color="primary" loading>Loading</Button>
+        <Button color="primary" disabled>Disabled</Button>
+      </Space>
     </Demo>
   )
 }
@@ -98,12 +114,14 @@ export function StatesDemo() {
 export function ShapesDemo() {
   return (
     <Demo>
-      <Button color="primary" shape="square">
-        <X />
-      </Button>
-      <Button color="primary" shape="circle">
-        <X />
-      </Button>
+      <Space wrap>
+        <Button color="primary" shape="square">
+          <X />
+        </Button>
+        <Button color="primary" shape="circle">
+          <X />
+        </Button>
+      </Space>
     </Demo>
   )
 }
@@ -111,8 +129,10 @@ export function ShapesDemo() {
 export function WideDemo() {
   return (
     <Demo>
-      <Button color="primary" shape="wide">Wide Button</Button>
-      <Button color="secondary" shape="wide">Another Wide</Button>
+      <Space direction="vertical">
+        <Button color="primary" shape="wide">Wide Button</Button>
+        <Button color="secondary" shape="wide">Another Wide</Button>
+      </Space>
     </Demo>
   )
 }
@@ -120,8 +140,10 @@ export function WideDemo() {
 export function BlockDemo() {
   return (
     <Demo>
-      <Button color="primary" shape="block">Block Button</Button>
-      <Button color="secondary" shape="block">Another Block</Button>
+      <Space direction="vertical" block>
+        <Button color="primary" shape="block">Block Button</Button>
+        <Button color="secondary" shape="block">Another Block</Button>
+      </Space>
     </Demo>
   )
 }
@@ -129,9 +151,11 @@ export function BlockDemo() {
 export function LoadingDemo() {
   return (
     <Demo>
-      <Button color="primary" loading>Loading</Button>
-      <Button color="success" loading>Processing</Button>
-      <Button color="error" loading>Deleting</Button>
+      <Space wrap>
+        <Button color="primary" loading>Loading</Button>
+        <Button color="success" loading>Processing</Button>
+        <Button color="error" loading>Deleting</Button>
+      </Space>
     </Demo>
   )
 }
@@ -139,9 +163,11 @@ export function LoadingDemo() {
 export function LinkButtonsDemo() {
   return (
     <Demo>
-      <Button color="primary" href="https://github.com" target="_blank">GitHub</Button>
-      <Button variant="ghost" href="https://npmjs.com" target="_blank">npm</Button>
-      <Button href="/components" variant="link">Internal Link</Button>
+      <Space wrap>
+        <Button color="primary" href="https://github.com" target="_blank">GitHub</Button>
+        <Button variant="ghost" href="https://npmjs.com" target="_blank">npm</Button>
+        <Button href="/components" variant="link">Internal Link</Button>
+      </Space>
     </Demo>
   )
 }
@@ -149,9 +175,11 @@ export function LinkButtonsDemo() {
 export function WithIconsDemo() {
   return (
     <Demo>
-      <Button color="primary" icon={<Upload />}>Upload</Button>
-      <Button color="success" icon={<Check />}>Save</Button>
-      <Button color="error" icon={<Trash2 />} iconPosition="end">Delete</Button>
+      <Space wrap>
+        <Button color="primary" icon={<Upload />}>Upload</Button>
+        <Button color="success" icon={<Check />}>Save</Button>
+        <Button color="error" icon={<Trash2 />} iconPosition="end">Delete</Button>
+      </Space>
     </Demo>
   )
 }
@@ -159,9 +187,11 @@ export function WithIconsDemo() {
 export function DangerDemo() {
   return (
     <Demo>
-      <Button danger>Delete</Button>
-      <Button danger icon={<Trash2 />}>Remove Item</Button>
-      <Button danger variant="outline">Cancel Account</Button>
+      <Space wrap>
+        <Button danger>Delete</Button>
+        <Button danger icon={<Trash2 />}>Remove Item</Button>
+        <Button danger variant="outline">Cancel Account</Button>
+      </Space>
     </Demo>
   )
 }
@@ -169,9 +199,11 @@ export function DangerDemo() {
 export function RoundDemo() {
   return (
     <Demo>
-      <Button color="primary" shape="round">Get Started</Button>
-      <Button color="secondary" shape="round">Learn More</Button>
-      <Button color="accent" shape="round">Subscribe</Button>
+      <Space wrap>
+        <Button color="primary" shape="round">Get Started</Button>
+        <Button color="secondary" shape="round">Learn More</Button>
+        <Button color="accent" shape="round">Subscribe</Button>
+      </Space>
     </Demo>
   )
 }
@@ -180,23 +212,25 @@ export function ToggleDemo() {
   const [pressed, setPressed] = useState(false)
   return (
     <Demo>
-      <Button
-        color="primary"
-        pressed={pressed}
-        active={pressed}
-        onClick={() => setPressed(!pressed)}
-      >
-        {pressed ? 'On' : 'Off'}
-      </Button>
-      <Button
-        color="secondary"
-        variant="outline"
-        pressed={pressed}
-        active={pressed}
-        onClick={() => setPressed(!pressed)}
-      >
-        Toggle: {pressed ? 'Active' : 'Inactive'}
-      </Button>
+      <Space wrap>
+        <Button
+          color="primary"
+          pressed={pressed}
+          active={pressed}
+          onClick={() => setPressed(!pressed)}
+        >
+          {pressed ? 'On' : 'Off'}
+        </Button>
+        <Button
+          color="secondary"
+          variant="outline"
+          pressed={pressed}
+          active={pressed}
+          onClick={() => setPressed(!pressed)}
+        >
+          Toggle: {pressed ? 'Active' : 'Inactive'}
+        </Button>
+      </Space>
     </Demo>
   )
 }
@@ -204,8 +238,10 @@ export function ToggleDemo() {
 export function NoAnimationDemo() {
   return (
     <Demo>
-      <Button color="primary">With Animation</Button>
-      <Button color="primary" noAnimation>No Animation</Button>
+      <Space wrap>
+        <Button color="primary">With Animation</Button>
+        <Button color="primary" noAnimation>No Animation</Button>
+      </Space>
     </Demo>
   )
 }
@@ -222,7 +258,7 @@ export function FormSubmitDemo() {
           <Input type="email" placeholder="you@example.com" />
         </Form.Item>
         <Form.Item>
-          <Space direction="horizontal" size="sm">
+          <Space>
             <Button color="primary" htmlType="submit">Submit</Button>
             <Button htmlType="reset">Reset</Button>
           </Space>
@@ -244,12 +280,14 @@ export function EventHandlingDemo() {
 
   return (
     <Demo>
-      <Button color="primary" onClick={() => setCount(c => c + 1)}>
-        Clicked {count} times
-      </Button>
-      <Button color="secondary" onClick={handleAsync} loading={loading}>
-        {loading ? 'Processing...' : 'Async Action'}
-      </Button>
+      <Space wrap>
+        <Button color="primary" onClick={() => setCount(c => c + 1)}>
+          Clicked {count} times
+        </Button>
+        <Button color="secondary" onClick={handleAsync} loading={loading}>
+          {loading ? 'Processing...' : 'Async Action'}
+        </Button>
+      </Space>
     </Demo>
   )
 }

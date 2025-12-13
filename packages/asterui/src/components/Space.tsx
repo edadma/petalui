@@ -37,7 +37,7 @@ const justifyClasses = {
 
 export const Space: React.FC<SpaceProps> = ({
   direction = 'horizontal',
-  size = 'md',
+  size = 'sm',
   align,
   justify,
   wrap = false,
