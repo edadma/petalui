@@ -23,9 +23,7 @@ export default defineConfig({
       title: 'AsterUI',
       description: 'A React component library built on DaisyUI and Tailwind CSS',
       logo: {
-        light: './src/assets/logo-light.svg',
-        dark: './src/assets/logo-dark.svg',
-        replacesTitle: true,
+        src: './src/assets/logo.png',
       },
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/edadma/asterui' },
@@ -33,6 +31,13 @@ export default defineConfig({
       ],
       customCss: ['./src/styles/custom.css'],
       head: [
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'icon',
+            href: '/favicon.ico',
+          },
+        },
         {
           tag: 'script',
           content: `document.addEventListener('DOMContentLoaded',()=>{if(location.pathname.startsWith('/components/'))document.body.classList.add('component-page')})`,
