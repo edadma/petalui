@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { MissingDependency } from './MissingDependency'
+import React, { useRef } from 'react'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
 export interface VirtualListProps<T> {
   /** Array of items to render */
@@ -40,71 +40,6 @@ export function VirtualList<T>({
   onScroll,
 }: VirtualListProps<T>) {
   const parentRef = useRef<HTMLDivElement>(null)
-  const [missingDep, setMissingDep] = useState(false)
-  const [useVirtualizer, setUseVirtualizer] = useState<any>(null)
-
-  useEffect(() => {
-    import('@tanstack/react-virtual')
-      .then((mod) => {
-        if (mod.useVirtualizer) {
-          setUseVirtualizer(() => mod.useVirtualizer)
-        } else {
-          setMissingDep(true)
-        }
-      })
-      .catch(() => {
-        setMissingDep(true)
-      })
-  }, [])
-
-  if (missingDep) {
-    return <MissingDependency packageName="@tanstack/react-virtual" className={className} />
-  }
-
-  if (!useVirtualizer) {
-    return (
-      <div className={`overflow-auto ${className}`} style={{ height, width }}>
-        <div className="flex items-center justify-center h-full">
-          <span className="loading loading-spinner"></span>
-        </div>
-      </div>
-    )
-  }
-
-  return (
-    <VirtualListInner
-      items={items}
-      height={height}
-      itemHeight={itemHeight}
-      renderItem={renderItem}
-      overscan={overscan}
-      className={className}
-      innerClassName={innerClassName}
-      itemClassName={itemClassName}
-      width={width}
-      gap={gap}
-      onScroll={onScroll}
-      parentRef={parentRef}
-      useVirtualizer={useVirtualizer}
-    />
-  )
-}
-
-function VirtualListInner<T>({
-  items,
-  height,
-  itemHeight,
-  renderItem,
-  overscan,
-  className,
-  innerClassName,
-  itemClassName,
-  width,
-  gap,
-  onScroll,
-  parentRef,
-  useVirtualizer,
-}: VirtualListProps<T> & { parentRef: React.RefObject<HTMLDivElement | null>; useVirtualizer: any }) {
   const itemHeightRef = useRef(itemHeight)
   const itemsRef = useRef(items)
   itemHeightRef.current = itemHeight
@@ -113,11 +48,11 @@ function VirtualListInner<T>({
   const virtualizer = useVirtualizer({
     count: items.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: (index: number) => {
+    estimateSize: (index) => {
       const h = typeof itemHeightRef.current === 'function'
         ? itemHeightRef.current(itemsRef.current[index], index)
         : itemHeightRef.current
-      return h + (gap || 0)
+      return h + gap
     },
     overscan,
   })
@@ -143,7 +78,7 @@ function VirtualListInner<T>({
           position: 'relative',
         }}
       >
-        {virtualItems.map((virtualItem: any) => (
+        {virtualItems.map((virtualItem) => (
           <div
             key={virtualItem.key}
             className={itemClassName}
@@ -153,7 +88,7 @@ function VirtualListInner<T>({
               top: 0,
               left: 0,
               width: '100%',
-              height: virtualItem.size - (gap || 0),
+              height: virtualItem.size - gap,
               transform: `translateY(${virtualItem.start}px)`,
             }}
           >

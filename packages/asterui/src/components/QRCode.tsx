@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { MissingDependency } from './MissingDependency'
 
 export type QRCodeErrorLevel = 'L' | 'M' | 'Q' | 'H'
 export type QRCodeType = 'canvas' | 'svg'
@@ -50,10 +49,9 @@ export const QRCode: React.FC<QRCodeProps> = ({
         setLoading(true)
 
         // Dynamic import to gracefully handle missing dependency
-        let QRCodeLib: any
+        let QRCodeLib
         try {
-          const mod = await import('qrcode')
-          QRCodeLib = mod.default || mod
+          QRCodeLib = await import('qrcode')
         } catch {
           setMissingDep(true)
           setLoading(false)
@@ -112,7 +110,17 @@ export const QRCode: React.FC<QRCodeProps> = ({
     .join(' ')
 
   if (missingDep) {
-    return <MissingDependency packageName="qrcode" bordered={bordered} className={className} {...rest} />
+    return (
+      <div className={containerClasses} style={{ width: size + (bordered ? 24 : 0), height: size + (bordered ? 24 : 0) }} data-state="error" {...rest}>
+        <div className="flex flex-col items-center justify-center gap-1 text-center">
+          <svg className="w-6 h-6 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <span className="text-xs text-base-content/70 whitespace-nowrap">Missing dependency</span>
+          <code className="text-xs bg-base-200 px-1 py-0.5 rounded whitespace-nowrap">npm install qrcode</code>
+        </div>
+      </div>
+    )
   }
 
   if (status === 'loading' || loading) {
