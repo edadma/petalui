@@ -6,11 +6,6 @@
   --sl-nav-gap: 0.5rem;
 }
 
-.site-title img {
-  height: 2rem;
-  width: auto;
-}
-
 /* Wider content for component pages */
 body.component-page .sl-markdown-content {
   max-width: none;

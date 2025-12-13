@@ -21,10 +21,10 @@ export default defineConfig({
     }),
     starlight({
       title: 'AsterUI',
-      description: 'A React component library built on DaisyUI and Tailwind CSS',
-      logo: {
-        src: './src/assets/logo.png',
+      components: {
+        SiteTitle: './src/components/SiteTitle.astro',
       },
+      description: 'A React component library built on DaisyUI and Tailwind CSS',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/edadma/asterui' },
         { icon: 'x.com', label: 'X', href: 'https://x.com/AsterUI' },
