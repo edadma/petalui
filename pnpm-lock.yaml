@@ -77,15 +77,43 @@ importers:
 
   packages/docs:
     dependencies:
+      '@astrojs/react':
+        specifier: ^4.2.1
+        version: 4.4.2(@types/node@24.10.1)(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(yaml@2.8.2)
       '@astrojs/starlight':
         specifier: ^0.37.1
         version: 0.37.1(astro@5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(typescript@5.9.3)(yaml@2.8.2))
+      asterui:
+        specifier: workspace:*
+        version: link:../asterui
       astro:
         specifier: ^5.6.1
         version: 5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(typescript@5.9.3)(yaml@2.8.2)
+      react:
+        specifier: ^19.0.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.0.0
+        version: 19.2.0(react@19.2.0)
       sharp:
         specifier: ^0.34.2
         version: 0.34.5
+    devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.0.0
+        version: 4.1.17(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(yaml@2.8.2))
+      '@types/react':
+        specifier: ^19.0.0
+        version: 19.2.5
+      '@types/react-dom':
+        specifier: ^19.0.0
+        version: 19.2.3(@types/react@19.2.5)
+      daisyui:
+        specifier: ^5.0.0
+        version: 5.5.11
+      tailwindcss:
+        specifier: ^4.0.0
+        version: 4.1.17
 
   packages/docs-old:
     dependencies:

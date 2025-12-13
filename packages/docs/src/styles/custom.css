@@ -1,8 +1,25 @@
-/* Starlight overrides for accent colors */
+/* Starlight overrides */
 :root {
   --sl-color-accent-low: #1e1b4b;
   --sl-color-accent: #6366f1;
   --sl-color-accent-high: #c7d2fe;
+}
+
+/* Wider content for component pages */
+body.component-page .sl-markdown-content {
+  max-width: none;
+}
+
+body.component-page .content-panel {
+  --sl-content-width: 100%;
+  max-width: none;
+}
+
+/* Masonry examples layout */
+.examples {
+  columns: 2;
+  column-gap: 1.5rem;
+  margin: 2rem 0;
 }
 
 /* Component preview styling */

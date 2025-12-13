@@ -1,0 +1,79 @@
+---
+title: Button
+description: Clickable buttons with variants, colors, sizes, and states
+tableOfContents: false
+---
+
+import { ColorsDemo, SizesDemo, VariantsDemo, StatesDemo } from '../../../components/ButtonDemo'
+import Example from '../../../components/Example.astro'
+
+Buttons trigger actions or navigate to other pages.
+
+```tsx
+import { Button } from 'asterui'
+```
+
+<div class="examples">
+
+<Example title="Colors">
+  <ColorsDemo client:load slot="demo" />
+  <Fragment slot="code">
+```tsx
+<Button>Default</Button>
+<Button color="primary">Primary</Button>
+<Button color="secondary">Secondary</Button>
+<Button color="accent">Accent</Button>
+<Button color="info">Info</Button>
+<Button color="success">Success</Button>
+<Button color="warning">Warning</Button>
+<Button color="error">Error</Button>
+```
+  </Fragment>
+</Example>
+
+<Example title="Sizes">
+  <SizesDemo client:load slot="demo" />
+  <Fragment slot="code">
+```tsx
+<Button size="xs">Tiny</Button>
+<Button size="sm">Small</Button>
+<Button size="md">Medium</Button>
+<Button size="lg">Large</Button>
+```
+  </Fragment>
+</Example>
+
+<Example title="Variants">
+  <VariantsDemo client:load slot="demo" />
+  <Fragment slot="code">
+```tsx
+<Button color="primary">Solid</Button>
+<Button color="primary" variant="outline">Outline</Button>
+<Button color="primary" variant="soft">Soft</Button>
+<Button color="primary" variant="ghost">Ghost</Button>
+<Button color="primary" variant="link">Link</Button>
+```
+  </Fragment>
+</Example>
+
+<Example title="States">
+  <StatesDemo client:load slot="demo" />
+  <Fragment slot="code">
+```tsx
+<Button color="primary" loading>Loading</Button>
+<Button color="primary" disabled>Disabled</Button>
+```
+  </Fragment>
+</Example>
+
+</div>
+
+## API
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `color` | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - | Button color |
+| `variant` | `'solid' \| 'outline' \| 'soft' \| 'ghost' \| 'link'` | `'solid'` | Visual style |
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` | Button size |
+| `loading` | `boolean` | `false` | Show spinner |
+| `disabled` | `boolean` | `false` | Disable button |
