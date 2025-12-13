@@ -5,6 +5,15 @@ import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'material-theme-lighter',
+        dark: 'material-theme-darker',
+      },
+      defaultColor: false,
+    },
+  },
   integrations: [
     react({
       include: ['**/components/**/*.tsx'],

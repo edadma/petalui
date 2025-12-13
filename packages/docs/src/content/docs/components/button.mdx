@@ -5,6 +5,7 @@ tableOfContents: false
 ---
 
 import { ColorsDemo, SizesDemo, VariantsDemo, StatesDemo } from '../../../components/ButtonDemo'
+import ButtonDemoSource from '../../../components/ButtonDemo.tsx?raw'
 import Example from '../../../components/Example.astro'
 
 Buttons trigger actions or navigate to other pages.
@@ -15,55 +16,20 @@ import { Button } from 'asterui'
 
 <div class="examples">
 
-<Example title="Colors">
+<Example title="Colors" source={ButtonDemoSource} fn="ColorsDemo">
   <ColorsDemo client:load slot="demo" />
-  <Fragment slot="code">
-```tsx
-<Button>Default</Button>
-<Button color="primary">Primary</Button>
-<Button color="secondary">Secondary</Button>
-<Button color="accent">Accent</Button>
-<Button color="info">Info</Button>
-<Button color="success">Success</Button>
-<Button color="warning">Warning</Button>
-<Button color="error">Error</Button>
-```
-  </Fragment>
 </Example>
 
-<Example title="Sizes">
+<Example title="Sizes" source={ButtonDemoSource} fn="SizesDemo">
   <SizesDemo client:load slot="demo" />
-  <Fragment slot="code">
-```tsx
-<Button size="xs">Tiny</Button>
-<Button size="sm">Small</Button>
-<Button size="md">Medium</Button>
-<Button size="lg">Large</Button>
-```
-  </Fragment>
 </Example>
 
-<Example title="Variants">
+<Example title="Variants" source={ButtonDemoSource} fn="VariantsDemo">
   <VariantsDemo client:load slot="demo" />
-  <Fragment slot="code">
-```tsx
-<Button color="primary">Solid</Button>
-<Button color="primary" variant="outline">Outline</Button>
-<Button color="primary" variant="soft">Soft</Button>
-<Button color="primary" variant="ghost">Ghost</Button>
-<Button color="primary" variant="link">Link</Button>
-```
-  </Fragment>
 </Example>
 
-<Example title="States">
+<Example title="States" source={ButtonDemoSource} fn="StatesDemo">
   <StatesDemo client:load slot="demo" />
-  <Fragment slot="code">
-```tsx
-<Button color="primary" loading>Loading</Button>
-<Button color="primary" disabled>Disabled</Button>
-```
-  </Fragment>
 </Example>
 
 </div>

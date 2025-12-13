@@ -1,9 +1,37 @@
 ---
+import { Code } from 'astro:components'
+
 interface Props {
   title: string
+  source?: string
+  fn?: string
 }
 
-const { title } = Astro.props
+const { title, source, fn } = Astro.props
+
+// Extract code from source if provided
+let extractedCode = ''
+if (source && fn) {
+  // Find the function and extract content between <Demo> tags
+  const fnRegex = new RegExp(`export function ${fn}\\s*\\([^)]*\\)\\s*\\{[\\s\\S]*?return\\s*\\(\\s*<Demo>([\\s\\S]*?)<\\/Demo>`, 'm')
+  const match = source.match(fnRegex)
+  if (match) {
+    // Clean up the extracted code - remove leading whitespace consistently
+    const lines = match[1].split('\n')
+    // Find minimum indentation (ignoring empty lines)
+    const minIndent = lines
+      .filter(l => l.trim())
+      .reduce((min, l) => {
+        const indent = l.match(/^\s*/)?.[0].length ?? 0
+        return Math.min(min, indent)
+      }, Infinity)
+    // Remove that indentation from all lines
+    extractedCode = lines
+      .map(l => l.slice(minIndent))
+      .join('\n')
+      .trim()
+  }
+}
 ---
 
 <div class="example-card">
@@ -15,7 +43,14 @@ const { title } = Astro.props
   </div>
   <slot name="demo" />
   <div class="example-code">
-    <slot name="code" />
+    {extractedCode ? (
+      <>
+        <div class="code-light"><Code code={extractedCode} lang="tsx" theme="material-theme-lighter" /></div>
+        <div class="code-dark"><Code code={extractedCode} lang="tsx" theme="material-theme-darker" /></div>
+      </>
+    ) : (
+      <slot name="code" />
+    )}
   </div>
 </div>
 
@@ -77,14 +112,28 @@ const { title } = Astro.props
     max-height: 1000px;
   }
 
-  .example-code .expressive-code {
-    margin: 0;
+  .example-code .expressive-code,
+  .example-code .astro-code,
+  .example-code pre.astro-code {
+    margin: 0 !important;
     border-radius: 0;
   }
 
   .example-code pre {
     border-radius: 0;
   }
+
+  /* Theme-aware code blocks */
+  .code-light,
+  .code-dark {
+    margin: 0;
+    padding: 0;
+  }
+  .code-light { display: block; }
+  .code-dark { display: none; }
+
+  :root[data-theme="dark"] .code-light { display: none; }
+  :root[data-theme="dark"] .code-dark { display: block; }
 </style>
 
 <script>
