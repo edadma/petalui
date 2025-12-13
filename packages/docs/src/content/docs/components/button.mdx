@@ -23,6 +23,7 @@ import {
   RoundDemo,
   ToggleDemo,
   NoAnimationDemo,
+  FormSubmitDemo,
   EventHandlingDemo,
 } from '../../../components/ButtonDemo'
 import ButtonDemoSource from '../../../components/ButtonDemo.tsx?raw'
@@ -110,6 +111,10 @@ import { Button } from 'asterui'
 
 <Example title="No Animation" description="Disable the click animation effect." source={ButtonDemoSource} fn="NoAnimationDemo">
   <NoAnimationDemo client:load slot="demo" />
+</Example>
+
+<Example title="Form Submit" description="Button with htmlType='submit' inside AsterUI Form component." source={ButtonDemoSource} fn="FormSubmitDemo">
+  <FormSubmitDemo client:load slot="demo" />
 </Example>
 
 <Example title="Event Handling" description="Buttons with onClick handlers and state management." source={ButtonDemoSource} fn="EventHandlingDemo">

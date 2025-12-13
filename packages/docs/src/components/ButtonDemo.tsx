@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Space } from 'asterui'
+import { Button, Space, Form, Input, notification } from 'asterui'
 import { Demo } from './Demo'
 import { XMarkIcon, ArrowUpTrayIcon, CheckIcon, TrashIcon } from '@heroicons/react/24/outline'
 
@@ -206,6 +206,28 @@ export function NoAnimationDemo() {
     <Demo>
       <Button color="primary">With Animation</Button>
       <Button color="primary" noAnimation>No Animation</Button>
+    </Demo>
+  )
+}
+
+export function FormSubmitDemo() {
+  const handleFinish = (values: { email: string }) => {
+    notification.success({ message: 'Submitted!', description: `Email: ${values.email}` })
+  }
+
+  return (
+    <Demo>
+      <Form onFinish={handleFinish}>
+        <Form.Item name="email" label="Email" required>
+          <Input type="email" placeholder="you@example.com" />
+        </Form.Item>
+        <Form.Item>
+          <Space direction="horizontal" size="sm">
+            <Button color="primary" htmlType="submit">Submit</Button>
+            <Button htmlType="reset">Reset</Button>
+          </Space>
+        </Form.Item>
+      </Form>
     </Demo>
   )
 }
