@@ -6,7 +6,7 @@ import { X, Upload, Check, Trash2 } from 'lucide-react'
 export function BrandColorsDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary">Primary</Button>
         <Button color="secondary">Secondary</Button>
         <Button color="accent">Accent</Button>
@@ -19,7 +19,7 @@ export function BrandColorsDemo() {
 export function StateColorsDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="info">Info</Button>
         <Button color="success">Success</Button>
         <Button color="warning">Warning</Button>
@@ -75,7 +75,7 @@ export function OutlineDemo() {
 export function DashDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" variant="dash">Primary</Button>
         <Button color="secondary" variant="dash">Secondary</Button>
         <Button color="accent" variant="dash">Accent</Button>
@@ -101,7 +101,7 @@ export function SoftDemo() {
 export function StatesDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary">Normal</Button>
         <Button color="primary" active>Active</Button>
         <Button color="primary" loading>Loading</Button>
@@ -114,7 +114,7 @@ export function StatesDemo() {
 export function ShapesDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" shape="square">
           <X />
         </Button>
@@ -151,7 +151,7 @@ export function BlockDemo() {
 export function LoadingDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" loading>Loading</Button>
         <Button color="success" loading>Processing</Button>
         <Button color="error" loading>Deleting</Button>
@@ -163,7 +163,7 @@ export function LoadingDemo() {
 export function LinkButtonsDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" href="https://github.com" target="_blank">GitHub</Button>
         <Button variant="ghost" href="https://npmjs.com" target="_blank">npm</Button>
         <Button href="/components" variant="link">Internal Link</Button>
@@ -175,7 +175,7 @@ export function LinkButtonsDemo() {
 export function WithIconsDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" icon={<Upload />}>Upload</Button>
         <Button color="success" icon={<Check />}>Save</Button>
         <Button color="error" icon={<Trash2 />} iconPosition="end">Delete</Button>
@@ -187,7 +187,7 @@ export function WithIconsDemo() {
 export function DangerDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button danger>Delete</Button>
         <Button danger icon={<Trash2 />}>Remove Item</Button>
         <Button danger variant="outline">Cancel Account</Button>
@@ -199,7 +199,7 @@ export function DangerDemo() {
 export function RoundDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" shape="round">Get Started</Button>
         <Button color="secondary" shape="round">Learn More</Button>
         <Button color="accent" shape="round">Subscribe</Button>
@@ -212,7 +212,7 @@ export function ToggleDemo() {
   const [pressed, setPressed] = useState(false)
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button
           color="primary"
           pressed={pressed}
@@ -238,7 +238,7 @@ export function ToggleDemo() {
 export function NoAnimationDemo() {
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary">With Animation</Button>
         <Button color="primary" noAnimation>No Animation</Button>
       </Space>
@@ -280,7 +280,7 @@ export function EventHandlingDemo() {
 
   return (
     <Demo>
-      <Space wrap>
+      <Space>
         <Button color="primary" onClick={() => setCount(c => c + 1)}>
           Clicked {count} times
         </Button>
