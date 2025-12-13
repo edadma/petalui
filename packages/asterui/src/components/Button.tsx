@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { createContext } from 'react'
+
+export const IconSizeContext = createContext<'xs' | 'sm' | 'md' | 'lg' | 'xl' | undefined>(undefined)
 
 type BaseButtonProps = {
   /** Button color */
@@ -109,14 +111,23 @@ export const Button: React.FC<ButtonProps> = ({
     .filter(Boolean)
     .join(' ')
 
-  // Determine icon spacing based on whether there's text content
+  // Determine icon spacing based on whether there's text content and button size
   const hasChildren = children !== undefined && children !== null && children !== ''
-  const iconSpacing = hasChildren ? (iconPosition === 'start' ? 'mr-2' : 'ml-2') : ''
+  const spacingBySize = {
+    xs: iconPosition === 'start' ? 'mr-1' : 'ml-1',
+    sm: iconPosition === 'start' ? 'mr-1' : 'ml-1',
+    md: iconPosition === 'start' ? 'mr-1.5' : 'ml-1.5',
+    lg: iconPosition === 'start' ? 'mr-2' : 'ml-2',
+    xl: iconPosition === 'start' ? 'mr-2' : 'ml-2',
+  }
+  const iconSpacing = hasChildren ? spacingBySize[size] : ''
 
   const iconElement = icon && (
-    <span className={`inline-flex items-center ${iconSpacing}`} aria-hidden="true">
-      {icon}
-    </span>
+    <IconSizeContext.Provider value={size}>
+      <span className={`inline-flex items-center ${iconSpacing}`} aria-hidden="true">
+        {icon}
+      </span>
+    </IconSizeContext.Provider>
   )
 
   const content = (

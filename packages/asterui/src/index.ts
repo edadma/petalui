@@ -19,7 +19,7 @@ export type { BadgeProps, BadgeRibbonProps, BadgePosition, BadgeStatus, BadgeTyp
 export { Breadcrumb } from './components/Breadcrumb'
 export type { BreadcrumbProps, BreadcrumbItemProps } from './components/Breadcrumb'
 
-export { Button } from './components/Button'
+export { Button, IconSizeContext } from './components/Button'
 export type { ButtonProps } from './components/Button'
 
 export { CopyButton } from './components/CopyButton'

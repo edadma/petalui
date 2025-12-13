@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client';
 import React, { useState } from 'react';
 import { Button, Space, Input, Form, notification } from 'asterui';
-import { XMarkIcon, ArrowUpTrayIcon, CheckIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, ArrowUpTrayIcon, CheckIcon, TrashIcon } from '@aster-ui/icons';
 import { CheckIconSvg } from './icons'
 
 // Demo components for each example
@@ -77,10 +77,10 @@ const demos: Record<string, React.ReactNode> = {
   'shapes': (
     <Space direction="horizontal" wrap size="sm" align="center">
       <Button color="primary" shape="square">
-        <XMarkIcon className="h-6 w-6" />
+        <XMarkIcon />
       </Button>
       <Button color="primary" shape="circle">
-        <XMarkIcon className="h-6 w-6" />
+        <XMarkIcon />
       </Button>
     </Space>
   ),
@@ -112,21 +112,30 @@ const demos: Record<string, React.ReactNode> = {
   ),
   'with-icons': (
     <Space direction="horizontal" wrap size="sm">
-      <Button color="primary" icon={<ArrowUpTrayIcon className="w-4 h-4" />}>
+      <Button color="primary" icon={<ArrowUpTrayIcon />}>
         Upload
       </Button>
-      <Button color="success" icon={<CheckIcon className="w-4 h-4" />}>
+      <Button color="success" icon={<CheckIcon />}>
         Save
       </Button>
-      <Button color="error" icon={<TrashIcon className="w-4 h-4" />} iconPosition="end">
+      <Button color="error" icon={<TrashIcon />} iconPosition="end">
         Delete
       </Button>
+    </Space>
+  ),
+  'icon-sizes': (
+    <Space direction="horizontal" wrap size="sm" align="center">
+      <Button size="xs" color="primary" icon={<ArrowUpTrayIcon />}>XS</Button>
+      <Button size="sm" color="primary" icon={<ArrowUpTrayIcon />}>Small</Button>
+      <Button size="md" color="primary" icon={<ArrowUpTrayIcon />}>Medium</Button>
+      <Button size="lg" color="primary" icon={<ArrowUpTrayIcon />}>Large</Button>
+      <Button size="xl" color="primary" icon={<ArrowUpTrayIcon />}>XL</Button>
     </Space>
   ),
   'danger': (
     <Space direction="horizontal" wrap size="sm">
       <Button danger>Delete</Button>
-      <Button danger icon={<TrashIcon className="w-4 h-4" />}>
+      <Button danger icon={<TrashIcon />}>
         Remove Item
       </Button>
       <Button danger variant="outline">Cancel Account</Button>

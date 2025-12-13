@@ -11,6 +11,7 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@aster-ui/icons": "workspace:*",
     "@astrojs/react": "^4.4.2",
     "@astrojs/sitemap": "^3.2.0",
     "@heroicons/react": "^2.2.0",

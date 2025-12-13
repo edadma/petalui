@@ -12,7 +12,6 @@ async function getIconNames(): Promise<string[]> {
   const outlineModule = await import('@heroicons/react/24/outline')
   return Object.keys(outlineModule)
     .filter((name) => name.endsWith('Icon'))
-    .map((name) => name.replace(/Icon$/, ''))
     .sort()
 }
 
@@ -21,9 +20,9 @@ const iconNames = await getIconNames()
 function generateVariantFile(variant: 'outline' | 'solid'): string {
   const importPath = variant === 'outline' ? '@heroicons/react/24/outline' : '@heroicons/react/24/solid'
 
-  const imports = iconNames.map((name) => `import { ${name}Icon as Hero${name}Icon } from '${importPath}'`).join('\n')
+  const imports = iconNames.map((name) => `import { ${name} as Hero${name} } from '${importPath}'`).join('\n')
 
-  const exports = iconNames.map((name) => `export const ${name} = createIcon(Hero${name}Icon, '${name}')`).join('\n')
+  const exports = iconNames.map((name) => `export const ${name} = createIcon(Hero${name}, '${name}')`).join('\n')
 
   return `// Auto-generated - do not edit
 import { createIcon } from '../createIcon'
@@ -39,6 +38,7 @@ function generateMainIndex(): string {
 export * from './outline'
 export type { IconProps, IconSize } from './types'
 export { sizeMap } from './types'
+export { IconSizeContext, useIconSize } from './context'
 `
 }
 
