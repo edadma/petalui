@@ -37,11 +37,18 @@ export type { ColorPickerProps } from './components/ColorPicker'
 export { Card } from './components/Card'
 export type { CardProps, CardGridProps, CardMetaProps, CardSize, CardVariant, CardTabItem } from './components/Card'
 
+export { Carousel } from './components/Carousel'
+export type { CarouselProps, CarouselItemProps, CarouselRef, CarouselEffect, CarouselDotPlacement } from './components/Carousel'
+
 export { Cascader } from './components/Cascader'
 export type { CascaderProps, CascaderOption } from './components/Cascader'
 
-export { Carousel } from './components/Carousel'
-export type { CarouselProps, CarouselItemProps, CarouselRef, CarouselEffect, CarouselDotPlacement } from './components/Carousel'
+export { ConfigProvider, useConfig, useLocale, useComponentLocale, ConfigContext } from './components/ConfigProvider'
+export type { ConfigProviderProps, ConfigContextValue, ComponentSize, Direction } from './components/ConfigProvider'
+
+// Locales
+export type { Locale } from './locale'
+export { enUS, enGB, enCA, zhCN, esES, jaJP, ptBR, deDE, frFR, koKR } from './locale'
 
 export { Collapse } from './components/Collapse'
 export type { CollapseProps, CollapseItemType, CollapseSize, CollapseIconPosition, CollapseCollapsible } from './components/Collapse'
