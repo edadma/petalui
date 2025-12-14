@@ -19,6 +19,15 @@ const DAISYUI_THEMES = [
 
 const THEME_PRESETS = ['light-dark', 'business', 'all']
 
+const ICON_LIBRARIES = [
+  { value: '@aster-ui/icons', label: '@aster-ui/icons', hint: 'Heroicons with size tokens', version: '^0.1.0' },
+  { value: '@heroicons/react', label: 'Heroicons', hint: '300+ icons, outline/solid', version: '^2.2.0' },
+  { value: 'lucide-react', label: 'Lucide', hint: 'popular, 1400+ icons', version: '^0.500.0' },
+  { value: 'react-icons', label: 'React Icons', hint: 'multiple icon sets', version: '^5.4.0' },
+  { value: '@phosphor-icons/react', label: 'Phosphor', hint: '9000+ icons, 6 weights', version: '^2.1.0' },
+  { value: 'none', label: 'None', hint: 'skip icon library' },
+]
+
 type PackageManager = 'npm' | 'pnpm' | 'yarn'
 
 interface CliArgs {
@@ -176,6 +185,13 @@ async function main() {
           ],
           required: false,
         }),
+
+      iconLibrary: () =>
+        p.select({
+          message: 'Icon library',
+          initialValue: '@aster-ui/icons',
+          options: ICON_LIBRARIES,
+        }),
     },
     {
       onCancel: () => {
@@ -202,7 +218,8 @@ async function main() {
   const packageJson = generatePackageJson(
     options.projectName,
     options.language as string,
-    options.optionalDeps as string[]
+    options.optionalDeps as string[],
+    options.iconLibrary as string
   )
   fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify(packageJson, null, 2))
 
@@ -255,7 +272,7 @@ function copyDir(src: string, dest: string) {
   }
 }
 
-function generatePackageJson(name: string, language: string, optionalDeps: string[] = []) {
+function generatePackageJson(name: string, language: string, optionalDeps: string[] = [], iconLibrary: string = 'none') {
   const isTs = language === 'ts'
 
   const pkg: Record<string, unknown> = {
@@ -283,8 +300,16 @@ function generatePackageJson(name: string, language: string, optionalDeps: strin
     } as Record<string, string>,
   }
 
-  // Add optional dependencies
+  // Add icon library
   const deps = pkg.dependencies as Record<string, string>
+  if (iconLibrary !== 'none') {
+    const iconLib = ICON_LIBRARIES.find(lib => lib.value === iconLibrary)
+    if (iconLib && iconLib.version) {
+      deps[iconLibrary] = iconLib.version
+    }
+  }
+
+  // Add optional dependencies
   if (optionalDeps.includes('chart')) {
     deps['apexcharts'] = '^5.0.0'
   }
