@@ -226,81 +226,134 @@ function hasActiveChild(items: { href: string }[]): boolean {
       </div>
     </header>
 
-    <!-- Drawer for mobile + Desktop layout -->
-    <div class="drawer lg:drawer-open">
-      <input id="sidebar-drawer" type="checkbox" class="drawer-toggle" />
+    <!-- Mobile drawer -->
+    <input type="checkbox" id="sidebar-drawer" class="drawer-toggle hidden" />
+    <div class="drawer-overlay fixed inset-0 bg-black/50 z-40 hidden" id="drawer-overlay"></div>
+    <aside id="mobile-sidebar" class="fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-base-200 border-r border-base-300 overflow-y-auto z-50 -translate-x-full transition-transform lg:hidden">
+      <nav class="px-4 py-4 space-y-6">
+        {navigation.map((section) => (
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-base-content/60 mb-2 px-2">
+              {section.title}
+            </h2>
 
-      <div class="drawer-content">
-        <!-- Main content -->
-        <main class="min-h-[calc(100vh-4rem)] px-4 py-4 lg:px-6">
-          <slot />
-        </main>
-      </div>
-
-      <!-- Sidebar -->
-      <div class="drawer-side z-40 lg:z-0">
-        <label for="sidebar-drawer" class="drawer-overlay"></label>
-        <aside class="w-64 min-h-full bg-base-200 border-r border-base-300 pt-4 pb-8">
-          <nav class="px-4 space-y-6">
-            {navigation.map((section) => (
-              <div>
-                <h2 class="text-xs font-semibold uppercase tracking-wider text-base-content/60 mb-2 px-2">
-                  {section.title}
-                </h2>
-
-                {section.items && (
-                  <ul class="space-y-1">
-                    {section.items.map((item) => (
-                      <li>
-                        <a
-                          href={item.href}
-                          class:list={[
-                            'block px-2 py-1.5 rounded-md text-sm transition-colors',
-                            isActive(item.href)
-                              ? 'bg-primary/10 text-primary font-medium'
-                              : 'hover:bg-base-300 text-base-content/80 hover:text-base-content'
-                          ]}
-                        >
-                          {item.label}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-
-                {section.groups && section.groups.map((group) => (
-                  <details class="group mb-2" open={hasActiveChild(group.items)}>
-                    <summary class="flex items-center justify-between px-2 py-1.5 rounded-md text-sm cursor-pointer hover:bg-base-300 text-base-content/80 hover:text-base-content list-none">
-                      <span>{group.title}</span>
-                      <svg class="h-4 w-4 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                      </svg>
-                    </summary>
-                    <ul class="mt-1 ml-2 pl-2 border-l border-base-300 space-y-1">
-                      {group.items.map((item) => (
-                        <li>
-                          <a
-                            href={item.href}
-                            class:list={[
-                              'block px-2 py-1 rounded-md text-sm transition-colors',
-                              isActive(item.href)
-                                ? 'bg-primary/10 text-primary font-medium'
-                                : 'hover:bg-base-300 text-base-content/70 hover:text-base-content'
-                            ]}
-                          >
-                            {item.label}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </details>
+            {section.items && (
+              <ul class="space-y-1">
+                {section.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class:list={[
+                        'block px-2 py-1.5 rounded-md text-sm transition-colors',
+                        isActive(item.href)
+                          ? 'bg-primary/10 text-primary font-medium'
+                          : 'hover:bg-base-300 text-base-content/80 hover:text-base-content'
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
                 ))}
-              </div>
+              </ul>
+            )}
+
+            {section.groups && section.groups.map((group) => (
+              <details class="group mb-2" open={hasActiveChild(group.items)}>
+                <summary class="flex items-center justify-between px-2 py-1.5 rounded-md text-sm cursor-pointer hover:bg-base-300 text-base-content/80 hover:text-base-content list-none">
+                  <span>{group.title}</span>
+                  <svg class="h-4 w-4 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <ul class="mt-1 ml-2 pl-2 border-l border-base-300 space-y-1">
+                  {group.items.map((item) => (
+                    <li>
+                      <a
+                        href={item.href}
+                        class:list={[
+                          'block px-2 py-1 rounded-md text-sm transition-colors',
+                          isActive(item.href)
+                            ? 'bg-primary/10 text-primary font-medium'
+                            : 'hover:bg-base-300 text-base-content/70 hover:text-base-content'
+                        ]}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             ))}
-          </nav>
-        </aside>
-      </div>
-    </div>
+          </div>
+        ))}
+      </nav>
+    </aside>
+
+    <!-- Desktop sidebar - fixed -->
+    <aside class="hidden lg:block fixed top-16 left-0 w-64 h-[calc(100vh-4rem)] bg-base-200 border-r border-base-300 overflow-y-auto">
+      <nav class="px-4 py-4 space-y-6">
+        {navigation.map((section) => (
+          <div>
+            <h2 class="text-xs font-semibold uppercase tracking-wider text-base-content/60 mb-2 px-2">
+              {section.title}
+            </h2>
+
+            {section.items && (
+              <ul class="space-y-1">
+                {section.items.map((item) => (
+                  <li>
+                    <a
+                      href={item.href}
+                      class:list={[
+                        'block px-2 py-1.5 rounded-md text-sm transition-colors',
+                        isActive(item.href)
+                          ? 'bg-primary/10 text-primary font-medium'
+                          : 'hover:bg-base-300 text-base-content/80 hover:text-base-content'
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {section.groups && section.groups.map((group) => (
+              <details class="group mb-2" open={hasActiveChild(group.items)}>
+                <summary class="flex items-center justify-between px-2 py-1.5 rounded-md text-sm cursor-pointer hover:bg-base-300 text-base-content/80 hover:text-base-content list-none">
+                  <span>{group.title}</span>
+                  <svg class="h-4 w-4 transition-transform group-open:rotate-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </summary>
+                <ul class="mt-1 ml-2 pl-2 border-l border-base-300 space-y-1">
+                  {group.items.map((item) => (
+                    <li>
+                      <a
+                        href={item.href}
+                        class:list={[
+                          'block px-2 py-1 rounded-md text-sm transition-colors',
+                          isActive(item.href)
+                            ? 'bg-primary/10 text-primary font-medium'
+                            : 'hover:bg-base-300 text-base-content/70 hover:text-base-content'
+                        ]}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+          </div>
+        ))}
+      </nav>
+    </aside>
+
+    <!-- Main content -->
+    <main class="lg:ml-64 min-h-[calc(100vh-4rem)] p-4 lg:p-6 max-w-none">
+      <slot />
+    </main>
 
     <script>
       // Theme toggle
@@ -319,12 +372,37 @@ function hasActiveChild(items: { href: string }[]): boolean {
         localStorage.setItem('theme', newTheme);
       });
 
+      // Mobile drawer toggle
+      const drawerToggle = document.getElementById('sidebar-drawer') as HTMLInputElement;
+      const mobileSidebar = document.getElementById('mobile-sidebar');
+      const drawerOverlay = document.getElementById('drawer-overlay');
+
+      function openMobileDrawer() {
+        mobileSidebar?.classList.remove('-translate-x-full');
+        drawerOverlay?.classList.remove('hidden');
+      }
+
+      function closeMobileDrawer() {
+        mobileSidebar?.classList.add('-translate-x-full');
+        drawerOverlay?.classList.add('hidden');
+      }
+
+      // Toggle button in header
+      document.querySelector('label[for="sidebar-drawer"]')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (mobileSidebar?.classList.contains('-translate-x-full')) {
+          openMobileDrawer();
+        } else {
+          closeMobileDrawer();
+        }
+      });
+
+      // Close on overlay click
+      drawerOverlay?.addEventListener('click', closeMobileDrawer);
+
       // Close mobile drawer when clicking a link
-      document.querySelectorAll('.drawer-side a').forEach(link => {
-        link.addEventListener('click', () => {
-          const drawer = document.getElementById('sidebar-drawer') as HTMLInputElement;
-          if (drawer) drawer.checked = false;
-        });
+      mobileSidebar?.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMobileDrawer);
       });
     </script>
   </body>
