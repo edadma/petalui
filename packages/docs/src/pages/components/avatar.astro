@@ -1,347 +1,83 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  SizesDemo,
+  ShapesDemo,
+  StatusDemo,
+  TextDemo,
+  IconDemo,
+  GroupDemo,
+  GroupMaxDemo,
+} from '../../components/AvatarDemo';
+import AvatarDemoSource from '../../components/AvatarDemo.tsx?raw';
 
-const avatarApi = [
-  {
-    property: 'src',
-    description: 'Image source URL',
-    type: 'string',
-  },
-  {
-    property: 'alt',
-    description: 'Image alt text',
-    type: 'string',
-    default: "'avatar'",
-  },
-  {
-    property: 'icon',
-    description: 'Icon element to display',
-    type: 'React.ReactNode',
-  },
-  {
-    property: 'children',
-    description: 'Text content (e.g., initials) or custom content',
-    type: 'React.ReactNode',
-  },
-  {
-    property: 'size',
-    description: 'Avatar size',
-    type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-    default: "'md'",
-  },
-  {
-    property: 'shape',
-    description: 'Avatar shape',
-    type: "'circle' | 'square'",
-    default: "'circle'",
-  },
-  {
-    property: 'status',
-    description: 'Presence status indicator',
-    type: "'online' | 'offline'",
-  },
-  {
-    property: 'className',
-    description: 'Additional CSS classes',
-    type: 'string',
-  },
-  {
-    property: 'style',
-    description: 'Inline styles',
-    type: 'React.CSSProperties',
-  },
-];
-
-const avatarGroupApi = [
-  {
-    property: 'children',
-    description: 'Multiple Avatar components',
-    type: 'React.ReactNode',
-  },
-  {
-    property: 'max',
-    description: 'Maximum avatars to show before +N overflow',
-    type: 'number',
-  },
-  {
-    property: 'size',
-    description: 'Size for all avatars in the group',
-    type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'",
-  },
-  {
-    property: 'className',
-    description: 'Additional CSS classes',
-    type: 'string',
-  },
-  {
-    property: 'style',
-    description: 'Inline styles',
-    type: 'React.CSSProperties',
-  },
-];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic Avatar',
-    description: 'Simple avatar with image using the src prop.',
-    code: `import React from 'react'
-import { Avatar } from 'asterui'
-
-const App: React.FC = () => (
-  <Avatar
-    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-    alt="User avatar"
-  />
-)
-
-export default App`,
-  },
-  {
-    id: 'sizes',
-    title: 'Sizes',
-    description: 'Control avatar size with the size prop.',
-    code: `import React from 'react'
-import { Avatar, Space } from 'asterui'
-
-const App: React.FC = () => (
-  <Space direction="horizontal" size="sm" align="center">
-    <Avatar size="xs" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar size="sm" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar size="md" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar size="lg" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar size="xl" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-  </Space>
-)
-
-export default App`,
-  },
-  {
-    id: 'shapes',
-    title: 'Shapes',
-    description: 'Circle or square avatars.',
-    code: `import React from 'react'
-import { Avatar, Space } from 'asterui'
-
-const App: React.FC = () => (
-  <Space direction="horizontal" size="sm">
-    <Avatar shape="circle" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar shape="square" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-  </Space>
-)
-
-export default App`,
-  },
-  {
-    id: 'status',
-    title: 'Status Indicators',
-    description: 'Show online or offline presence.',
-    code: `import React from 'react'
-import { Avatar, Space } from 'asterui'
-
-const App: React.FC = () => (
-  <Space direction="horizontal" size="sm">
-    <Avatar status="online" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar status="offline" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-  </Space>
-)
-
-export default App`,
-  },
-  {
-    id: 'text',
-    title: 'Text Avatars',
-    description: 'Display initials or text.',
-    code: `import React from 'react'
-import { Avatar, Space } from 'asterui'
-
-const App: React.FC = () => (
-  <Space direction="horizontal" size="sm" align="center">
-    <Avatar size="xl">
-      <span className="text-3xl">AI</span>
-    </Avatar>
-    <Avatar size="lg">
-      <span className="text-xl">JD</span>
-    </Avatar>
-    <Avatar size="md">
-      <span>MX</span>
-    </Avatar>
-  </Space>
-)
-
-export default App`,
-  },
-  {
-    id: 'icon',
-    title: 'Icon Avatars',
-    description: 'Display icons instead of images.',
-    code: `import React from 'react'
-import { Avatar, Space } from 'asterui'
-import { UserIcon, UserCircleIcon } from '@aster-ui/icons'
-
-const App: React.FC = () => (
-  <Space direction="horizontal" size="sm">
-    <Avatar icon={<UserIcon size={32} />} />
-    <Avatar size="lg" icon={<UserCircleIcon size={40} />} />
-  </Space>
-)
-
-export default App`,
-  },
-  {
-    id: 'group',
-    title: 'Avatar Group',
-    description: 'Group multiple avatars with overlap.',
-    code: `import React from 'react'
-import { Avatar } from 'asterui'
-
-const App: React.FC = () => (
-  <Avatar.Group>
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-  </Avatar.Group>
-)
-
-export default App`,
-  },
-  {
-    id: 'group-max',
-    title: 'Avatar Group with Max Count',
-    description: 'Show overflow count when exceeding max.',
-    code: `import React from 'react'
-import { Avatar } from 'asterui'
-
-const App: React.FC = () => (
-  <Avatar.Group max={3}>
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-    <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-  </Avatar.Group>
-)
-
-export default App`,
-  },
+const api = [
+  { title: 'Avatar', data: [
+    { property: 'src', description: 'Image source URL', type: 'string' },
+    { property: 'alt', description: 'Image alt text', type: 'string', default: "'avatar'" },
+    { property: 'icon', description: 'Icon element to display', type: 'React.ReactNode' },
+    { property: 'children', description: 'Text content (e.g., initials) or custom content', type: 'React.ReactNode' },
+    { property: 'size', description: 'Avatar size', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'", default: "'md'" },
+    { property: 'shape', description: 'Avatar shape', type: "'circle' | 'square'", default: "'circle'" },
+    { property: 'status', description: 'Presence status indicator', type: "'online' | 'offline'" },
+    { property: 'className', description: 'Additional CSS classes', type: 'string' },
+    { property: 'style', description: 'Inline styles', type: 'React.CSSProperties' },
+  ]},
+  { title: 'Avatar.Group', data: [
+    { property: 'children', description: 'Multiple Avatar components', type: 'React.ReactNode' },
+    { property: 'max', description: 'Maximum avatars to show before +N overflow', type: 'number' },
+    { property: 'size', description: 'Size for all avatars in the group', type: "'xs' | 'sm' | 'md' | 'lg' | 'xl'" },
+    { property: 'className', description: 'Additional CSS classes', type: 'string' },
+    { property: 'style', description: 'Inline styles', type: 'React.CSSProperties' },
+  ]},
 ];
 ---
 
-<Layout title="Avatar - AsterUI">
-  <div>
-    <!-- Header -->
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>Avatar</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">Avatar</h1>
-      <p class="text-base-content/70 text-lg">
-        Display user profile images, initials, icons, or placeholder graphics with status indicators.
-      </p>
-    </div>
+<ComponentLayout
+  name="Avatar"
+  description="Display user profile images, initials, icons, or placeholder graphics with status indicators."
+  api={api}
+>
+  <Example title="Basic Avatar" description="Simple avatar with image using the src prop." source={AvatarDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
 
-    <!-- Import -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { Avatar } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
+  <Example title="Sizes" description="Control avatar size with the size prop." source={AvatarDemoSource} fn="SizesDemo">
+    <SizesDemo client:load slot="demo" />
+  </Example>
 
-    <!-- Examples -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
+  <Example title="Shapes" description="Circle or square avatars." source={AvatarDemoSource} fn="ShapesDemo">
+    <ShapesDemo client:load slot="demo" />
+  </Example>
 
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example, i) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">
-                &lt;&#8201;&gt;
-              </button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-              <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
-              <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-                <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-              </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
+  <Example title="Status Indicators" description="Show online or offline presence." source={AvatarDemoSource} fn="StatusDemo">
+    <StatusDemo client:load slot="demo" />
+  </Example>
 
-    <!-- API -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="Avatar" data={avatarApi} />
+  <Example title="Text Avatars" description="Display initials or text." source={AvatarDemoSource} fn="TextDemo">
+    <TextDemo client:load slot="demo" />
+  </Example>
 
-      <div class="mt-8">
-        <ApiTable title="Avatar.Group" data={avatarGroupApi} />
-      </div>
-    </section>
+  <Example title="Icon Avatars" description="Display icons instead of images." source={AvatarDemoSource} fn="IconDemo">
+    <IconDemo client:load slot="demo" />
+  </Example>
 
-    <!-- Accessibility -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Images have <code class="bg-base-content/20 px-1 rounded">alt</code> text for screen readers</li>
-        <li>Status indicators use color and position for visibility</li>
-        <li>Text avatars are readable by screen readers</li>
-      </ul>
-    </section>
-  </div>
-</Layout>
+  <Example title="Avatar Group" description="Group multiple avatars with overlap." source={AvatarDemoSource} fn="GroupDemo">
+    <GroupDemo client:load slot="demo" />
+  </Example>
 
-<style>
-  .code-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-  .example-card.open .code-panel {
-    max-height: 2000px;
-  }
-</style>
+  <Example title="Avatar Group with Max Count" description="Show overflow count when exceeding max." source={AvatarDemoSource} fn="GroupMaxDemo">
+    <GroupMaxDemo client:load slot="demo" />
+  </Example>
 
-<script>
-  import '../../scripts/avatarDemos';
-
-  // Toggle code visibility
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-</script>
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Images have <code class="bg-base-content/20 px-1 rounded">alt</code> text for screen readers</li>
+      <li>Status indicators use color and position for visibility</li>
+      <li>Text avatars are readable by screen readers</li>
+    </ul>
+  </section>
+</ComponentLayout>
