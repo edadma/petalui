@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button, Space, Form, Input, notification } from 'asterui'
 import { Demo } from './Demo'
-import { X, Upload, Check, Trash2 } from 'lucide-react'
+import { XMarkIcon, ArrowUpTrayIcon, CheckIcon, TrashIcon } from '@aster-ui/icons'
 
 export function BrandColorsDemo() {
   return (
@@ -116,10 +116,10 @@ export function ShapesDemo() {
     <Demo>
       <Space>
         <Button color="primary" shape="square">
-          <X />
+          <XMarkIcon />
         </Button>
         <Button color="primary" shape="circle">
-          <X />
+          <XMarkIcon />
         </Button>
       </Space>
     </Demo>
@@ -176,9 +176,23 @@ export function WithIconsDemo() {
   return (
     <Demo>
       <Space>
-        <Button color="primary" icon={<Upload />}>Upload</Button>
-        <Button color="success" icon={<Check />}>Save</Button>
-        <Button color="error" icon={<Trash2 />} iconPosition="end">Delete</Button>
+        <Button color="primary" icon={<ArrowUpTrayIcon />}>Upload</Button>
+        <Button color="success" icon={<CheckIcon />}>Save</Button>
+        <Button color="error" icon={<TrashIcon />} iconPosition="end">Delete</Button>
+      </Space>
+    </Demo>
+  )
+}
+
+export function IconSizesDemo() {
+  return (
+    <Demo>
+      <Space wrap align="center">
+        <Button size="xs" color="primary" icon={<CheckIcon />}>XS</Button>
+        <Button size="sm" color="primary" icon={<CheckIcon />}>Small</Button>
+        <Button size="md" color="primary" icon={<CheckIcon />}>Medium</Button>
+        <Button size="lg" color="primary" icon={<CheckIcon />}>Large</Button>
+        <Button size="xl" color="primary" icon={<CheckIcon />}>XL</Button>
       </Space>
     </Demo>
   )
@@ -189,7 +203,7 @@ export function DangerDemo() {
     <Demo>
       <Space>
         <Button danger>Delete</Button>
-        <Button danger icon={<Trash2 />}>Remove Item</Button>
+        <Button danger icon={<TrashIcon />}>Remove Item</Button>
         <Button danger variant="outline">Cancel Account</Button>
       </Space>
     </Demo>

@@ -27,7 +27,7 @@ export default defineConfig({
       description: 'A React component library built on DaisyUI and Tailwind CSS',
       social: [
         { icon: 'github', label: 'GitHub', href: 'https://github.com/edadma/asterui' },
-        { icon: 'x.com', label: 'X', href: 'https://x.com/AsterUI' },
+        { icon: 'seti:npm', label: 'npm', href: 'https://www.npmjs.com/package/asterui' },
       ],
       customCss: ['./src/styles/custom.css'],
       head: [

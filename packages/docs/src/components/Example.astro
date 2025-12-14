@@ -37,9 +37,9 @@ if (source && fn) {
     const asteruiComponents = ['Button', 'Space', 'Input', 'Form', 'notification']
     const usedComponents = asteruiComponents.filter(c => jsx.includes(`<${c}`) || jsx.includes(`${c}.`))
 
-    // Detect which lucide icons are used
-    const lucideIcons = ['X', 'Upload', 'Check', 'Trash2']
-    const usedIcons = lucideIcons.filter(icon => jsx.includes(`<${icon}`) || jsx.includes(`{<${icon}`))
+    // Detect which @aster-ui/icons are used
+    const asterIcons = ['XMarkIcon', 'ArrowUpTrayIcon', 'CheckIcon', 'TrashIcon']
+    const usedIcons = asterIcons.filter(icon => jsx.includes(`<${icon}`) || jsx.includes(`{<${icon}`))
 
     // Extract the full function body to check for hooks
     const fullFnRegex = new RegExp(`export function ${fn}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\n\\}`, 'm')
@@ -59,7 +59,7 @@ if (source && fn) {
       imports += `import { ${usedComponents.join(', ')} } from 'asterui'\n`
     }
     if (usedIcons.length > 0) {
-      imports += `import { ${usedIcons.join(', ')} } from 'lucide-react'\n`
+      imports += `import { ${usedIcons.join(', ')} } from '@aster-ui/icons'\n`
     }
 
     // Indent JSX for the component body
