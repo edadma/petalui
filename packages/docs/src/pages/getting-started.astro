@@ -1,0 +1,129 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+import Steps from '../components/Steps.astro';
+import Step from '../components/Step.astro';
+import Tabs from '../components/Tabs.astro';
+import TabPanel from '../components/TabPanel.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const createCommand = {
+  npm: 'npm create asterui@latest',
+  pnpm: 'pnpm create asterui@latest',
+  yarn: 'yarn create asterui@latest',
+};
+
+const devCommand = {
+  npm: 'cd my-asterui-app\nnpm run dev',
+  pnpm: 'cd my-asterui-app\npnpm dev',
+  yarn: 'cd my-asterui-app\nyarn dev',
+};
+
+const usageExample = `import { Button, Space } from 'asterui'
+
+function App() {
+  return (
+    <Space>
+      <Button>Default</Button>
+      <Button color="primary">Primary</Button>
+      <Button color="secondary">Secondary</Button>
+    </Space>
+  )
+}`;
+
+const toc = [
+  { label: 'Overview', href: '#overview' },
+  { label: 'Quick Start', href: '#quick-start' },
+  { label: 'Next Steps', href: '#next-steps' },
+  { label: 'Troubleshooting', href: '#troubleshooting' },
+];
+---
+
+<DocsLayout
+  title="Getting Started"
+  description="Get started building with AsterUI, a React component library built on DaisyUI and Tailwind CSS."
+  toc={toc}
+>
+    <h2 id="overview" class="text-xl font-semibold mb-4">Overview</h2>
+    <p class="mb-8">
+      AsterUI is a React component library built on <a href="https://daisyui.com" class="link">DaisyUI</a> and
+      <a href="https://tailwindcss.com" class="link">Tailwind CSS v4</a>. It provides beautifully styled,
+      accessible components with built-in theming support.
+    </p>
+
+    <h2 id="quick-start" class="text-xl font-semibold mb-4">Quick Start</h2>
+
+    <Steps>
+      <Step title="Create a new project">
+        <p>Create a new AsterUI project by running the following command in your terminal:</p>
+
+        <Tabs id="create-tabs" tabs={["npm", "pnpm", "yarn"]}>
+          <TabPanel>
+            <CodeBlock code={createCommand.npm} lang="bash" />
+          </TabPanel>
+          <TabPanel>
+            <CodeBlock code={createCommand.pnpm} lang="bash" />
+          </TabPanel>
+          <TabPanel>
+            <CodeBlock code={createCommand.yarn} lang="bash" />
+          </TabPanel>
+        </Tabs>
+
+        <p>Follow the prompts to name your project and select a template.</p>
+      </Step>
+
+      <Step title="Start the development server">
+        <p>Navigate to your project directory and start the dev server:</p>
+
+        <Tabs id="dev-tabs" tabs={["npm", "pnpm", "yarn"]}>
+          <TabPanel>
+            <CodeBlock code={devCommand.npm} lang="bash" />
+          </TabPanel>
+          <TabPanel>
+            <CodeBlock code={devCommand.pnpm} lang="bash" />
+          </TabPanel>
+          <TabPanel>
+            <CodeBlock code={devCommand.yarn} lang="bash" />
+          </TabPanel>
+        </Tabs>
+
+        <p>You'll see a confirmation message in your terminal with a link to your local preview.</p>
+      </Step>
+
+      <Step title="Start building">
+        <p>Open the project in your editor and start using AsterUI components:</p>
+
+        <CodeBlock code={usageExample} lang="tsx" filename="src/App.tsx" />
+      </Step>
+    </Steps>
+
+    <!-- Tip -->
+    <div class="alert alert-info my-8">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+      <div>
+        <strong>Tip:</strong> AsterUI is built on DaisyUI which provides 30+ themes out of the box.
+        Try changing themes by adding <code class="bg-base-content/20 px-1 rounded">data-theme="dark"</code> or
+        <code class="bg-base-content/20 px-1 rounded">data-theme="cupcake"</code> to your HTML element.
+      </div>
+    </div>
+
+    <h2 id="next-steps" class="text-xl font-semibold mt-10 mb-4">Next Steps</h2>
+
+    <ul class="list-disc list-inside space-y-2 text-base-content/80 mb-8">
+      <li><strong>Add to an existing project:</strong> Follow the <a href="/manual-setup" class="link">Manual Setup</a> guide to add AsterUI to an existing React project.</li>
+      <li><strong>Explore components:</strong> Browse the <a href="/components/button" class="link">component documentation</a> to see what's available.</li>
+    </ul>
+
+    <h2 id="troubleshooting" class="text-xl font-semibold mt-10 mb-4">Troubleshooting</h2>
+
+    <p class="mb-4">If you run into issues, check the following:</p>
+
+    <ul class="list-disc list-inside space-y-2 text-base-content/80 mb-8">
+      <li>Ensure you have Node.js 18 or higher installed</li>
+      <li>Make sure Tailwind CSS v4 and DaisyUI v5 are properly configured</li>
+      <li>Check that your CSS file includes the required directives</li>
+    </ul>
+
+    <p>
+      For more help, visit the <a href="https://github.com/edadma/asterui" class="link">GitHub repository</a>.
+    </p>
+</DocsLayout>

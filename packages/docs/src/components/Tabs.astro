@@ -1,0 +1,112 @@
+---
+/**
+ * Tabs component - Tab navigation like Starlight
+ * Uses scoped styles to avoid DaisyUI conflicts
+ */
+interface Props {
+  id: string;
+  tabs: string[];
+  class?: string;
+}
+
+const { id, tabs, class: className } = Astro.props;
+---
+
+<div class:list={["tabs-wrapper", className]} data-tabs-id={id}>
+  <div class="tabs-nav" role="tablist">
+    {tabs.map((tab, index) => (
+      <button
+        role="tab"
+        class:list={["tab-btn", { active: index === 0 }]}
+        data-tab-index={index}
+        aria-selected={index === 0 ? "true" : "false"}
+      >
+        {tab}
+      </button>
+    ))}
+  </div>
+  <div class="tabs-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .tabs-wrapper {
+    margin-bottom: 0.5rem;
+  }
+
+  .tabs-nav {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid oklch(var(--bc) / 0.1);
+    margin-bottom: 0;
+  }
+
+  .tab-btn {
+    padding: 0.625rem 1rem;
+    border: none;
+    background: transparent;
+    color: oklch(var(--bc) / 0.5);
+    font-size: 0.875rem;
+    font-weight: 400;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.15s;
+  }
+
+  .tab-btn:hover {
+    color: oklch(var(--bc) / 0.8);
+  }
+
+  .tab-btn.active {
+    color: oklch(var(--bc));
+    font-weight: 500;
+  }
+
+  .tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: oklch(var(--p));
+  }
+
+  .tabs-content :global(.tab-panel) {
+    display: none;
+  }
+
+  .tabs-content :global(.tab-panel.active) {
+    display: block;
+  }
+</style>
+
+<script>
+  document.querySelectorAll('.tabs-wrapper').forEach(wrapper => {
+    const buttons = wrapper.querySelectorAll('.tab-btn');
+    const panels = wrapper.querySelectorAll('.tab-panel');
+
+    buttons.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        // Update buttons
+        buttons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+
+        // Update panels
+        panels.forEach((panel, i) => {
+          panel.classList.toggle('active', i === index);
+        });
+      });
+    });
+
+    // Initialize first panel as active
+    if (panels.length > 0) {
+      panels[0].classList.add('active');
+    }
+  });
+</script>

@@ -1,0 +1,14 @@
+---
+/**
+ * TabPanel component - Content panel for Tabs
+ */
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["tab-panel", className]} role="tabpanel">
+  <slot />
+</div>

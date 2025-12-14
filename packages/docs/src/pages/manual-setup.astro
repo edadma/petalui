@@ -1,0 +1,126 @@
+---
+import DocsLayout from '../layouts/DocsLayout.astro';
+import Steps from '../components/Steps.astro';
+import Step from '../components/Step.astro';
+import Tabs from '../components/Tabs.astro';
+import TabPanel from '../components/TabPanel.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+
+const prereqCommand = {
+  npm: 'npm install -D tailwindcss @tailwindcss/vite daisyui',
+  pnpm: 'pnpm add -D tailwindcss @tailwindcss/vite daisyui',
+  yarn: 'yarn add -D tailwindcss @tailwindcss/vite daisyui',
+};
+
+const installCommand = {
+  npm: 'npm install asterui',
+  pnpm: 'pnpm add asterui',
+  yarn: 'yarn add asterui',
+};
+
+const viteConfigCode = `import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+})`;
+
+const cssConfigCode = `@import "tailwindcss";
+@plugin "daisyui";
+@source "../node_modules/asterui";`;
+
+const verifyCode = `import { Button, Space } from 'asterui'
+
+function App() {
+  return (
+    <Space>
+      <Button>Default</Button>
+      <Button color="primary">Primary</Button>
+      <Button color="secondary">Secondary</Button>
+    </Space>
+  )
+}`;
+
+const toc = [
+  { label: 'Prerequisites', href: '#prerequisites' },
+  { label: 'Installation', href: '#installation' },
+  { label: 'Verify Installation', href: '#verify-installation' },
+];
+---
+
+<DocsLayout
+  title="Manual Setup"
+  description="How to manually install AsterUI in an existing React project."
+  toc={toc}
+>
+  <p>
+    This guide walks you through adding AsterUI to an existing React project.
+    AsterUI requires <a href="https://tailwindcss.com" class="link">Tailwind CSS v4</a> and
+    <a href="https://daisyui.com" class="link">DaisyUI v5</a>.
+  </p>
+
+  <h2 id="prerequisites" class="text-2xl font-bold mt-8 mb-4">Prerequisites</h2>
+
+  <p>Before you begin, make sure you have:</p>
+
+  <ul class="list-disc list-inside space-y-2 text-base-content/80 mb-8">
+    <li>A React project (Vite recommended)</li>
+    <li>Node.js 18 or higher</li>
+  </ul>
+
+  <h2 id="installation" class="text-2xl font-bold mt-8 mb-4">Installation</h2>
+
+  <Steps>
+    <Step title="Install prerequisites">
+      <p>Install Tailwind CSS v4, the Vite plugin, and DaisyUI:</p>
+
+      <Tabs id="prereq-tabs" tabs={["npm", "pnpm", "yarn"]}>
+        <TabPanel>
+          <CodeBlock code={prereqCommand.npm} lang="bash" />
+        </TabPanel>
+        <TabPanel>
+          <CodeBlock code={prereqCommand.pnpm} lang="bash" />
+        </TabPanel>
+        <TabPanel>
+          <CodeBlock code={prereqCommand.yarn} lang="bash" />
+        </TabPanel>
+      </Tabs>
+    </Step>
+
+    <Step title="Configure Vite">
+      <p>Add the Tailwind plugin to your <code>vite.config.ts</code>:</p>
+      <CodeBlock code={viteConfigCode} lang="ts" filename="vite.config.ts" />
+    </Step>
+
+    <Step title="Configure CSS">
+      <p>Add these directives to your CSS file (e.g., <code>src/index.css</code>):</p>
+      <CodeBlock code={cssConfigCode} lang="css" filename="src/index.css" />
+      <p class="text-sm text-base-content/60 mt-2">
+        The <code>@source</code> directive tells Tailwind to scan AsterUI for classes.
+      </p>
+    </Step>
+
+    <Step title="Install AsterUI">
+      <Tabs id="install-tabs" tabs={["npm", "pnpm", "yarn"]}>
+        <TabPanel>
+          <CodeBlock code={installCommand.npm} lang="bash" />
+        </TabPanel>
+        <TabPanel>
+          <CodeBlock code={installCommand.pnpm} lang="bash" />
+        </TabPanel>
+        <TabPanel>
+          <CodeBlock code={installCommand.yarn} lang="bash" />
+        </TabPanel>
+      </Tabs>
+    </Step>
+  </Steps>
+
+  <h2 id="verify-installation" class="text-2xl font-bold mt-8 mb-4">Verify Installation</h2>
+
+  <p class="mb-4">Create a simple component to verify everything works:</p>
+
+  <CodeBlock code={verifyCode} lang="tsx" />
+
+  <p class="mt-4">If you see styled buttons, you're all set!</p>
+</DocsLayout>

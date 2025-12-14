@@ -1,0 +1,39 @@
+---
+/**
+ * Step component - Individual step in a Steps timeline
+ */
+interface Props {
+  title: string;
+  class?: string;
+}
+
+const { title, class: className } = Astro.props;
+---
+
+<div class:list={["step", className]}>
+  <h3 class="step-title">{title}</h3>
+  <div class="step-content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .step-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: oklch(var(--bc));
+  }
+
+  .step-content {
+    color: oklch(var(--bc) / 0.8);
+  }
+
+  .step-content :global(p) {
+    margin-bottom: 1rem;
+  }
+
+  .step-content :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>
