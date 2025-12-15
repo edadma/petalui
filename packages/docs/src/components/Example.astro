@@ -209,7 +209,6 @@ export default App`
     break-inside: avoid;
     margin-bottom: 1.5rem;
     border-radius: 0.5rem;
-    overflow: hidden;
     border: 1px solid #4b5563;
   }
 
@@ -220,6 +219,11 @@ export default App`
   .demo-wrapper {
     padding: 0;
     min-height: 2rem;
+    border-radius: 0 0 0.5rem 0.5rem;
+  }
+
+  .example-card.open .demo-wrapper {
+    border-radius: 0;
   }
 
   .demo-wrapper > :global(astro-island) {
@@ -233,6 +237,7 @@ export default App`
     padding: 0.5rem 0.75rem;
     border-bottom: 1px solid #4b5563;
     background: #374151;
+    border-radius: 0.5rem 0.5rem 0 0;
   }
 
   :global([data-theme="light"]) .example-header {
@@ -298,6 +303,8 @@ export default App`
   .example-card.open .example-code {
     max-height: 1000px;
     border-top: 1px solid #4b5563;
+    border-radius: 0 0 0.5rem 0.5rem;
+    overflow: hidden;
   }
 
   :global([data-theme="light"]) .example-card.open .example-code {
