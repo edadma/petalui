@@ -84,7 +84,7 @@ function CheckboxGroup({
 
   // If options are provided, render checkboxes automatically
   if (options) {
-    const directionClasses = direction === 'horizontal' ? 'flex flex-row flex-wrap gap-4' : 'flex flex-col'
+    const directionClasses = direction === 'horizontal' ? 'flex flex-row flex-wrap gap-4' : 'flex flex-col gap-2'
     return (
       <CheckboxGroupContext.Provider value={contextValue}>
         <div className={`${directionClasses} ${className}`.trim()} data-testid={testId}>
