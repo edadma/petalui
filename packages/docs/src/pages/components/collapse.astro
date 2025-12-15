@@ -1,318 +1,79 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  AccordionDemo,
+  BorderlessDemo,
+  NestedDemo,
+  GhostDemo,
+  PlusIconDemo,
+} from '../../components/CollapseDemo';
+import CollapseDemoSource from '../../components/CollapseDemo.tsx?raw';
 
-const collapseApi = [
-  { property: 'items', description: 'Collapse panel items', type: 'CollapseItemType[]' },
-  { property: 'activeKey', description: 'Controlled active panel keys', type: 'string | number | (string | number)[]' },
-  { property: 'defaultActiveKey', description: 'Initial active panel keys', type: 'string | number | (string | number)[]' },
-  { property: 'accordion', description: 'Only one panel open at a time', type: 'boolean', default: 'false' },
-  { property: 'bordered', description: 'Show border around panels', type: 'boolean', default: 'true' },
-  { property: 'ghost', description: 'Transparent background style', type: 'boolean', default: 'false' },
-  { property: 'size', description: 'Size variant', type: "'sm' | 'md' | 'lg'", default: "'md'" },
-  { property: 'icon', description: 'Icon type for expand indicator', type: "'arrow' | 'plus' | 'none'", default: "'arrow'" },
-  { property: 'expandIconPlacement', description: 'Icon placement', type: "'start' | 'end'", default: "'start'" },
-  { property: 'onChange', description: 'Change handler', type: '(activeKey: (string | number)[]) => void' },
-  { property: 'data-testid', description: 'Test ID for the component', type: 'string', default: "'collapse'" },
-  { property: 'className', description: 'Additional CSS classes', type: 'string' },
-];
-
-const itemApi = [
-  { property: 'key', description: 'Unique identifier for the panel', type: 'string | number', default: '-' },
-  { property: 'label', description: 'Panel header content', type: 'React.ReactNode', default: '-' },
-  { property: 'children', description: 'Panel body content', type: 'React.ReactNode', default: '-' },
-  { property: 'extra', description: 'Extra element in the header corner', type: 'React.ReactNode' },
-  { property: 'showArrow', description: 'Whether to show the expand icon', type: 'boolean', default: 'true' },
-  { property: 'collapsible', description: 'Collapsible mode', type: "'header' | 'icon' | 'disabled'" },
-  { property: 'className', description: 'Custom class name for this panel', type: 'string' },
-];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic Collapse',
-    description: 'Simple collapsible panels.',
-    code: `import React from 'react'
-import { Collapse } from 'asterui'
-
-const items = [
-  {
-    key: '1',
-    label: 'What is AsterUI?',
-    children: 'AsterUI is a React component library built on DaisyUI and Tailwind CSS.',
-  },
-  {
-    key: '2',
-    label: 'How do I install it?',
-    children: 'Run npm install asterui to get started.',
-  },
-  {
-    key: '3',
-    label: 'Is it free?',
-    children: 'Yes, AsterUI is open source and free to use.',
-  },
-]
-
-const App: React.FC = () => (
-  <Collapse items={items} defaultActiveKey={['1']} />
-)
-
-export default App`,
-  },
-  {
-    id: 'accordion',
-    title: 'Accordion',
-    description: 'Only one panel can be open at a time.',
-    code: `import React from 'react'
-import { Collapse } from 'asterui'
-
-const items = [
-  {
-    key: '1',
-    label: 'Section 1',
-    children: 'Content for section 1. Click another section to close this one.',
-  },
-  {
-    key: '2',
-    label: 'Section 2',
-    children: 'Content for section 2. Only one section can be open.',
-  },
-  {
-    key: '3',
-    label: 'Section 3',
-    children: 'Content for section 3. This is accordion behavior.',
-  },
-]
-
-const App: React.FC = () => (
-  <Collapse items={items} accordion defaultActiveKey="1" />
-)
-
-export default App`,
-  },
-  {
-    id: 'borderless',
-    title: 'Borderless',
-    description: 'Collapse without borders.',
-    code: `import React from 'react'
-import { Collapse } from 'asterui'
-
-const items = [
-  {
-    key: '1',
-    label: 'Panel 1',
-    children: 'Content without borders for a cleaner look.',
-  },
-  {
-    key: '2',
-    label: 'Panel 2',
-    children: 'Great for FAQ sections or sidebars.',
-  },
-]
-
-const App: React.FC = () => (
-  <Collapse items={items} bordered={false} />
-)
-
-export default App`,
-  },
-  {
-    id: 'nested',
-    title: 'Nested Content',
-    description: 'Collapse with rich nested content.',
-    code: `import React from 'react'
-import { Collapse, Button, Space } from 'asterui'
-
-const items = [
-  {
-    key: '1',
-    label: 'Getting Started',
-    children: (
-      <Space direction="vertical" size="sm">
-        <p>Follow these steps to get started:</p>
-        <ol className="list-decimal list-inside">
-          <li>Install the package</li>
-          <li>Import components</li>
-          <li>Start building</li>
-        </ol>
-        <Button color="primary" size="sm">Read Docs</Button>
-      </Space>
-    ),
-  },
-  {
-    key: '2',
-    label: 'Advanced Usage',
-    children: 'Learn about advanced patterns and customization options.',
-  },
-]
-
-const App: React.FC = () => (
-  <Collapse items={items} />
-)
-
-export default App`,
-  },
-  {
-    id: 'ghost',
-    title: 'Ghost Mode',
-    description: 'Transparent background for minimal appearance.',
-    code: `import React from 'react'
-import { Collapse } from 'asterui'
-
-const items = [
-  {
-    key: '1',
-    label: 'Transparent Background',
-    children: 'Ghost mode removes the background color.',
-  },
-  {
-    key: '2',
-    label: 'Clean Look',
-    children: 'Great for minimalist designs.',
-  },
-]
-
-const App: React.FC = () => (
-  <Collapse items={items} ghost bordered={false} />
-)
-
-export default App`,
-  },
-  {
-    id: 'plus-icon',
-    title: 'Plus/Minus Icon',
-    description: 'Use plus/minus icons instead of arrows.',
-    code: `import React from 'react'
-import { Collapse } from 'asterui'
-
-const items = [
-  {
-    key: '1',
-    label: 'Plus/Minus Icon',
-    children: 'This panel uses plus/minus icons instead of arrows.',
-  },
-  {
-    key: '2',
-    label: 'Another Panel',
-    children: 'Click the plus icon to expand.',
-  },
-]
-
-const App: React.FC = () => (
-  <Collapse items={items} icon="plus" />
-)
-
-export default App`,
-  },
+const api = [
+  { title: 'Collapse', data: [
+    { property: 'items', description: 'Collapse panel items', type: 'CollapseItemType[]' },
+    { property: 'activeKey', description: 'Controlled active panel keys', type: 'string | number | (string | number)[]' },
+    { property: 'defaultActiveKey', description: 'Initial active panel keys', type: 'string | number | (string | number)[]' },
+    { property: 'accordion', description: 'Only one panel open at a time', type: 'boolean', default: 'false' },
+    { property: 'bordered', description: 'Show border around panels', type: 'boolean', default: 'true' },
+    { property: 'ghost', description: 'Transparent background style', type: 'boolean', default: 'false' },
+    { property: 'size', description: 'Size variant', type: "'sm' | 'md' | 'lg'", default: "'md'" },
+    { property: 'icon', description: 'Icon type for expand indicator', type: "'arrow' | 'plus' | 'none'", default: "'arrow'" },
+    { property: 'expandIconPlacement', description: 'Icon placement', type: "'start' | 'end'", default: "'start'" },
+    { property: 'onChange', description: 'Change handler', type: '(activeKey: (string | number)[]) => void' },
+    { property: 'data-testid', description: 'Test ID for the component', type: 'string', default: "'collapse'" },
+    { property: 'className', description: 'Additional CSS classes', type: 'string' },
+  ]},
+  { title: 'CollapseItemType', data: [
+    { property: 'key', description: 'Unique identifier for the panel', type: 'string | number', default: '-' },
+    { property: 'label', description: 'Panel header content', type: 'React.ReactNode', default: '-' },
+    { property: 'children', description: 'Panel body content', type: 'React.ReactNode', default: '-' },
+    { property: 'extra', description: 'Extra element in the header corner', type: 'React.ReactNode' },
+    { property: 'showArrow', description: 'Whether to show the expand icon', type: 'boolean', default: 'true' },
+    { property: 'collapsible', description: 'Collapsible mode', type: "'header' | 'icon' | 'disabled'" },
+    { property: 'className', description: 'Custom class name for this panel', type: 'string' },
+  ]},
 ];
 ---
 
-<Layout title="Collapse - AsterUI">
-  <div>
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>Collapse</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">Collapse</h1>
-      <p class="text-base-content/70 text-lg">
-        Collapsible content panels for FAQs, accordions, and expandable sections.
-      </p>
-    </div>
+<ComponentLayout
+  name="Collapse"
+  description="Collapsible content panels for FAQs, accordions, and expandable sections."
+  api={api}
+>
+  <Example title="Basic Collapse" description="Simple collapsible panels." source={CollapseDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { Collapse } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
+  <Example title="Accordion" description="Only one panel can be open at a time." source={CollapseDemoSource} fn="AccordionDemo">
+    <AccordionDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
+  <Example title="Borderless" description="Collapse without borders." source={CollapseDemoSource} fn="BorderlessDemo">
+    <BorderlessDemo client:load slot="demo" />
+  </Example>
 
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg overflow-hidden break-inside-avoid">
-          <div class="p-4 bg-base-100">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">
-                &lt;&#8201;&gt;
-              </button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-              <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
-              <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-                <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-              </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
+  <Example title="Nested Content" description="Collapse with rich nested content." source={CollapseDemoSource} fn="NestedDemo">
+    <NestedDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="Collapse" data={collapseApi} />
-      <div class="mt-8">
-        <ApiTable title="CollapseItemType" data={itemApi} />
-      </div>
-    </section>
+  <Example title="Ghost Mode" description="Transparent background for minimal appearance." source={CollapseDemoSource} fn="GhostDemo">
+    <GhostDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Panel headers are keyboard accessible with Enter and Space</li>
-        <li>Uses <code class="bg-base-content/20 px-1 rounded">aria-expanded</code> to indicate panel state</li>
-        <li>Uses <code class="bg-base-content/20 px-1 rounded">aria-disabled</code> for disabled panels</li>
-        <li>Panels expose <code class="bg-base-content/20 px-1 rounded">data-state</code> for testing and styling</li>
-      </ul>
-    </section>
-  </div>
-</Layout>
+  <Example title="Plus/Minus Icon" description="Use plus/minus icons instead of arrows." source={CollapseDemoSource} fn="PlusIconDemo">
+    <PlusIconDemo client:load slot="demo" />
+  </Example>
 
-<style>
-  .code-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-  .example-card.open .code-panel {
-    max-height: 2000px;
-  }
-</style>
-
-<script>
-  import '../../scripts/collapseDemos';
-
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-</script>
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Panel headers are keyboard accessible with Enter and Space</li>
+      <li>Uses <code class="bg-base-content/20 px-1 rounded">aria-expanded</code> to indicate panel state</li>
+      <li>Uses <code class="bg-base-content/20 px-1 rounded">aria-disabled</code> for disabled panels</li>
+      <li>Panels expose <code class="bg-base-content/20 px-1 rounded">data-state</code> for testing and styling</li>
+    </ul>
+  </section>
+</ComponentLayout>

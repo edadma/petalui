@@ -1,9 +1,16 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  AvatarsDemo,
+  HeadersDemo,
+  ColorsDemo,
+  FooterDemo,
+} from '../../components/ChatDemo';
+import ChatDemoSource from '../../components/ChatDemo.tsx?raw';
 
-const chatApi = [
+const api = [
   { property: 'message', description: 'Message content', type: 'React.ReactNode', default: '-' },
   { property: 'position', description: 'Bubble position', type: "'start' | 'end'", default: "'start'" },
   { property: 'avatar', description: 'Avatar image URL', type: 'string', default: '-' },
@@ -13,220 +20,39 @@ const chatApi = [
   { property: 'color', description: 'Bubble color variant', type: "'primary' | 'secondary' | 'accent' | 'neutral' | 'info' | 'success' | 'warning' | 'error'", default: '-' },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
 ];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic Chat',
-    description: 'Simple chat bubbles with different positions.',
-    code: `import React from 'react'
-import { Chat } from 'asterui'
-
-const App: React.FC = () => (
-  <div>
-    <Chat position="start" message="Hey! How are you?" />
-    <Chat position="end" message="I'm doing great, thanks for asking!" />
-  </div>
-)
-
-export default App`,
-  },
-  {
-    id: 'avatars',
-    title: 'With Avatars',
-    description: 'Chat bubbles with user avatars.',
-    code: `import React from 'react'
-import { Chat } from 'asterui'
-
-const App: React.FC = () => (
-  <div>
-    <Chat
-      position="start"
-      avatar="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-      avatarAlt="User"
-      message="Hey! Did you see the new updates?"
-    />
-    <Chat
-      position="end"
-      avatar="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-      avatarAlt="Me"
-      message="Yes! They look amazing!"
-    />
-  </div>
-)
-
-export default App`,
-  },
-  {
-    id: 'headers',
-    title: 'With Headers',
-    description: 'Chat bubbles with name and timestamp headers.',
-    code: `import React from 'react'
-import { Chat } from 'asterui'
-
-const App: React.FC = () => (
-  <div>
-    <Chat
-      position="start"
-      avatar="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-      header={<span>Alice <time className="text-xs opacity-50">12:45</time></span>}
-      message="Good morning! Ready for the meeting?"
-    />
-    <Chat
-      position="end"
-      avatar="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-      header={<span>Bob <time className="text-xs opacity-50">12:46</time></span>}
-      message="Yes, joining now!"
-    />
-  </div>
-)
-
-export default App`,
-  },
-  {
-    id: 'colors',
-    title: 'Colored Bubbles',
-    description: 'Chat bubbles with different color variants.',
-    code: `import React from 'react'
-import { Chat } from 'asterui'
-
-const App: React.FC = () => (
-  <div>
-    <Chat position="start" color="primary" message="Primary color message" />
-    <Chat position="end" color="secondary" message="Secondary color message" />
-    <Chat position="start" color="success" message="Success color message" />
-    <Chat position="end" color="error" message="Error color message" />
-  </div>
-)
-
-export default App`,
-  },
-  {
-    id: 'footer',
-    title: 'With Footer',
-    description: 'Chat bubbles with delivery status footer.',
-    code: `import React from 'react'
-import { Chat } from 'asterui'
-
-const App: React.FC = () => (
-  <div>
-    <Chat
-      position="end"
-      avatar="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-      footer={<span className="text-xs opacity-50">Delivered</span>}
-      message="Did you get my message?"
-    />
-    <Chat
-      position="end"
-      avatar="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-      footer={<span className="text-xs opacity-50">Seen at 12:46</span>}
-      message="Hello?"
-    />
-  </div>
-)
-
-export default App`,
-  },
-];
 ---
 
-<Layout title="Chat - AsterUI">
-  <div>
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>Chat</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">Chat</h1>
-      <p class="text-base-content/70 text-lg">Chat message bubbles for displaying conversations with avatars and metadata.</p>
-    </div>
+<ComponentLayout
+  name="Chat"
+  description="Chat message bubbles for displaying conversations with avatars and metadata."
+  api={api}
+>
+  <Example title="Basic Chat" description="Simple chat bubbles with different positions." source={ChatDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { Chat } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
+  <Example title="With Avatars" description="Chat bubbles with user avatars." source={ChatDemoSource} fn="AvatarsDemo">
+    <AvatarsDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">&lt;&#8201;&gt;</button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-            <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-            </button>
-            <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-              <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-            </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
+  <Example title="With Headers" description="Chat bubbles with name and timestamp headers." source={ChatDemoSource} fn="HeadersDemo">
+    <HeadersDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="Chat" data={chatApi} />
-    </section>
+  <Example title="Colored Bubbles" description="Chat bubbles with different color variants." source={ChatDemoSource} fn="ColorsDemo">
+    <ColorsDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Use meaningful alt text for avatar images</li>
-        <li>Message content is readable by screen readers</li>
-        <li>Position classes help convey conversation flow</li>
-      </ul>
-    </section>
-  </div>
-</Layout>
+  <Example title="With Footer" description="Chat bubbles with delivery status footer." source={ChatDemoSource} fn="FooterDemo">
+    <FooterDemo client:load slot="demo" />
+  </Example>
 
-<style>
-  .code-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-  .example-card.open .code-panel { max-height: 2000px; }
-</style>
-
-<script>
-  import '../../scripts/chatDemos.tsx';
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-  document.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const code = btn.getAttribute('data-code');
-      if (code) {
-        await navigator.clipboard.writeText(code);
-        btn.classList.add('btn-success');
-        setTimeout(() => btn.classList.remove('btn-success'), 1000);
-      }
-    });
-  });
-</script>
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Use meaningful alt text for avatar images</li>
+      <li>Message content is readable by screen readers</li>
+      <li>Position classes help convey conversation flow</li>
+    </ul>
+  </section>
+</ComponentLayout>

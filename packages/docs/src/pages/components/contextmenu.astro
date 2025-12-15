@@ -1,314 +1,86 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  DataDrivenDemo,
+  IconsDemo,
+  DividersDemo,
+  SubmenuDemo,
+  DisabledDemo,
+} from '../../components/ContextMenuDemo';
+import ContextMenuDemoSource from '../../components/ContextMenuDemo.tsx?raw';
 
-const contextMenuApi = [
-  { property: 'children', description: 'Element that triggers the context menu on right-click', type: 'React.ReactNode', default: '-' },
-  { property: 'items', description: 'Menu items', type: 'ContextMenuItem[]', default: '-' },
-  { property: 'onSelect', description: 'Callback when an item is selected', type: '(key: string) => void', default: '-' },
-  { property: 'disabled', description: 'Whether the context menu is disabled', type: 'boolean', default: 'false' },
-  { property: 'className', description: 'Additional CSS classes for the menu', type: 'string', default: '-' },
-];
-
-const contextMenuItemApi = [
-  { property: 'key', description: 'Unique identifier for the item', type: 'string', default: '-' },
-  { property: 'label', description: 'Display label', type: 'React.ReactNode', default: '-' },
-  { property: 'icon', description: 'Icon element', type: 'React.ReactNode', default: '-' },
-  { property: 'disabled', description: 'Disabled state', type: 'boolean', default: 'false' },
-  { property: 'danger', description: 'Show as danger/destructive action', type: 'boolean', default: 'false' },
-  { property: 'divider', description: 'Render as a divider', type: 'boolean', default: 'false' },
-  { property: 'children', description: 'Submenu items', type: 'ContextMenuItem[]', default: '-' },
-];
-
-const contextMenuItemCompoundApi = [
-  { property: 'key', description: 'Unique key for the item (React key prop)', type: 'string', default: '-' },
-  { property: 'children', description: 'Item content', type: 'React.ReactNode', default: '-' },
-  { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
-  { property: 'disabled', description: 'Whether the item is disabled', type: 'boolean', default: 'false' },
-  { property: 'danger', description: 'Show as danger/destructive action', type: 'boolean', default: 'false' },
-];
-
-const contextMenuSubMenuApi = [
-  { property: 'key', description: 'Unique key for the submenu (React key prop)', type: 'string', default: '-' },
-  { property: 'label', description: 'Submenu label', type: 'React.ReactNode', default: '-' },
-  { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
-  { property: 'disabled', description: 'Whether the submenu is disabled', type: 'boolean', default: 'false' },
-  { property: 'children', description: 'Submenu items', type: 'React.ReactNode', default: '-' },
-];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic Context Menu',
-    description: 'Right-click on the element to show the menu.',
-    code: `import React from 'react'
-import { ContextMenu, notification } from 'asterui'
-
-const App: React.FC = () => (
-  <ContextMenu onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
-    <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
-      Right-click here
-    </div>
-    <ContextMenu.Item key="copy">Copy</ContextMenu.Item>
-    <ContextMenu.Item key="paste">Paste</ContextMenu.Item>
-    <ContextMenu.Item key="cut">Cut</ContextMenu.Item>
-  </ContextMenu>
-)
-
-export default App`,
-  },
-  {
-    id: 'datadriven',
-    title: 'Data-Driven Pattern',
-    description: 'Use items prop for data-driven menus.',
-    code: `import React from 'react'
-import { ContextMenu, notification } from 'asterui'
-
-const App: React.FC = () => {
-  const items = [
-    { key: 'copy', label: 'Copy' },
-    { key: 'paste', label: 'Paste' },
-    { key: 'cut', label: 'Cut' },
-  ]
-
-  return (
-    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
-      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
-        Right-click here
-      </div>
-    </ContextMenu>
-  )
-}
-
-export default App`,
-  },
-  {
-    id: 'icons',
-    title: 'With Icons',
-    description: 'Menu items with icons.',
-    code: `import React from 'react'
-import { ContextMenu, notification } from 'asterui'
-
-const App: React.FC = () => {
-  const items = [
-    { key: 'edit', label: 'Edit', icon: <span>✏️</span> },
-    { key: 'duplicate', label: 'Duplicate', icon: <span>📋</span> },
-    { key: 'delete', label: 'Delete', icon: <span>🗑️</span>, danger: true },
-  ]
-
-  return (
-    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
-      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
-        Right-click for options
-      </div>
-    </ContextMenu>
-  )
-}
-
-export default App`,
-  },
-  {
-    id: 'dividers',
-    title: 'With Dividers',
-    description: 'Separate menu sections with dividers.',
-    code: `import React from 'react'
-import { ContextMenu, notification } from 'asterui'
-
-const App: React.FC = () => {
-  const items = [
-    { key: 'undo', label: 'Undo' },
-    { key: 'redo', label: 'Redo' },
-    { key: 'divider1', divider: true },
-    { key: 'cut', label: 'Cut' },
-    { key: 'copy', label: 'Copy' },
-    { key: 'paste', label: 'Paste' },
-    { key: 'divider2', divider: true },
-    { key: 'select-all', label: 'Select All' },
-  ]
-
-  return (
-    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
-      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
-        Right-click for menu with sections
-      </div>
-    </ContextMenu>
-  )
-}
-
-export default App`,
-  },
-  {
-    id: 'submenu',
-    title: 'Nested Submenu',
-    description: 'Menu items with nested submenus.',
-    code: `import React from 'react'
-import { ContextMenu, notification } from 'asterui'
-
-const App: React.FC = () => {
-  const items = [
-    { key: 'new', label: 'New', children: [
-      { key: 'new-file', label: 'File' },
-      { key: 'new-folder', label: 'Folder' },
-      { key: 'new-project', label: 'Project' },
-    ]},
-    { key: 'open', label: 'Open' },
-    { key: 'save', label: 'Save' },
-    { key: 'divider', divider: true },
-    { key: 'export', label: 'Export', children: [
-      { key: 'export-pdf', label: 'PDF' },
-      { key: 'export-png', label: 'PNG' },
-      { key: 'export-svg', label: 'SVG' },
-    ]},
-  ]
-
-  return (
-    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
-      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
-        Right-click for nested menu
-      </div>
-    </ContextMenu>
-  )
-}
-
-export default App`,
-  },
-  {
-    id: 'disabled',
-    title: 'Disabled Items',
-    description: 'Some menu items can be disabled.',
-    code: `import React from 'react'
-import { ContextMenu, notification } from 'asterui'
-
-const App: React.FC = () => {
-  const items = [
-    { key: 'copy', label: 'Copy' },
-    { key: 'paste', label: 'Paste', disabled: true },
-    { key: 'cut', label: 'Cut' },
-    { key: 'delete', label: 'Delete', danger: true, disabled: true },
-  ]
-
-  return (
-    <ContextMenu items={items} onSelect={(key) => notification.info({ message: \`Selected: \${key}\` })}>
-      <div className="p-8 bg-base-200 rounded-lg text-center cursor-context-menu">
-        Right-click (some items disabled)
-      </div>
-    </ContextMenu>
-  )
-}
-
-export default App`,
-  },
+const api = [
+  { title: 'ContextMenu', data: [
+    { property: 'children', description: 'Element that triggers the context menu on right-click', type: 'React.ReactNode', default: '-' },
+    { property: 'items', description: 'Menu items', type: 'ContextMenuItem[]', default: '-' },
+    { property: 'onSelect', description: 'Callback when an item is selected', type: '(key: string) => void', default: '-' },
+    { property: 'disabled', description: 'Whether the context menu is disabled', type: 'boolean', default: 'false' },
+    { property: 'className', description: 'Additional CSS classes for the menu', type: 'string', default: '-' },
+  ]},
+  { title: 'ContextMenuItem (for items prop)', data: [
+    { property: 'key', description: 'Unique identifier for the item', type: 'string', default: '-' },
+    { property: 'label', description: 'Display label', type: 'React.ReactNode', default: '-' },
+    { property: 'icon', description: 'Icon element', type: 'React.ReactNode', default: '-' },
+    { property: 'disabled', description: 'Disabled state', type: 'boolean', default: 'false' },
+    { property: 'danger', description: 'Show as danger/destructive action', type: 'boolean', default: 'false' },
+    { property: 'divider', description: 'Render as a divider', type: 'boolean', default: 'false' },
+    { property: 'children', description: 'Submenu items', type: 'ContextMenuItem[]', default: '-' },
+  ]},
+  { title: 'ContextMenu.Item (compound pattern)', data: [
+    { property: 'key', description: 'Unique key for the item (React key prop)', type: 'string', default: '-' },
+    { property: 'children', description: 'Item content', type: 'React.ReactNode', default: '-' },
+    { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
+    { property: 'disabled', description: 'Whether the item is disabled', type: 'boolean', default: 'false' },
+    { property: 'danger', description: 'Show as danger/destructive action', type: 'boolean', default: 'false' },
+  ]},
+  { title: 'ContextMenu.SubMenu (compound pattern)', data: [
+    { property: 'key', description: 'Unique key for the submenu (React key prop)', type: 'string', default: '-' },
+    { property: 'label', description: 'Submenu label', type: 'React.ReactNode', default: '-' },
+    { property: 'icon', description: 'Icon to display before label', type: 'React.ReactNode', default: '-' },
+    { property: 'disabled', description: 'Whether the submenu is disabled', type: 'boolean', default: 'false' },
+    { property: 'children', description: 'Submenu items', type: 'React.ReactNode', default: '-' },
+  ]},
 ];
 ---
 
-<Layout title="ContextMenu - AsterUI">
-  <div>
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>ContextMenu</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">ContextMenu</h1>
-      <p class="text-base-content/70 text-lg">Right-click context menu with nested submenus and icons.</p>
-    </div>
+<ComponentLayout
+  name="ContextMenu"
+  description="Right-click context menu with nested submenus and icons."
+  api={api}
+>
+  <Example title="Basic Context Menu" description="Right-click on the element to show the menu." source={ContextMenuDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { ContextMenu } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
+  <Example title="Data-Driven Pattern" description="Use items prop for data-driven menus." source={ContextMenuDemoSource} fn="DataDrivenDemo">
+    <DataDrivenDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">&lt;&#8201;&gt;</button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-            <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-            </button>
-            <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-              <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-            </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
+  <Example title="With Icons" description="Menu items with icons." source={ContextMenuDemoSource} fn="IconsDemo">
+    <IconsDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="ContextMenu" data={contextMenuApi} />
-      <div class="mt-8">
-        <ApiTable title="ContextMenuItem (for items prop)" data={contextMenuItemApi} />
-      </div>
-      <div class="mt-8">
-        <ApiTable title="ContextMenu.Item (compound pattern)" data={contextMenuItemCompoundApi} />
-      </div>
-      <div class="mt-8">
-        <ApiTable title="ContextMenu.SubMenu (compound pattern)" data={contextMenuSubMenuApi} />
-      </div>
-    </section>
+  <Example title="With Dividers" description="Separate menu sections with dividers." source={ContextMenuDemoSource} fn="DividersDemo">
+    <DividersDemo client:load slot="demo" />
+  </Example>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Menu closes on Escape key press</li>
-        <li>Menu closes when clicking outside</li>
-        <li>Menu items are keyboard navigable</li>
-        <li>Disabled items are properly announced</li>
-      </ul>
-    </section>
-  </div>
-</Layout>
+  <Example title="Nested Submenu" description="Menu items with nested submenus." source={ContextMenuDemoSource} fn="SubmenuDemo">
+    <SubmenuDemo client:load slot="demo" />
+  </Example>
 
-<style>
-  .code-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-  .example-card.open .code-panel { max-height: 2000px; }
-</style>
+  <Example title="Disabled Items" description="Some menu items can be disabled." source={ContextMenuDemoSource} fn="DisabledDemo">
+    <DisabledDemo client:load slot="demo" />
+  </Example>
 
-<script>
-  import '../../scripts/contextmenuDemos.tsx';
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-  document.querySelectorAll('.copy-btn').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const code = btn.getAttribute('data-code');
-      if (code) {
-        await navigator.clipboard.writeText(code);
-        btn.classList.add('btn-success');
-        setTimeout(() => btn.classList.remove('btn-success'), 1000);
-      }
-    });
-  });
-</script>
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Menu closes on Escape key press</li>
+      <li>Menu closes when clicking outside</li>
+      <li>Menu items are keyboard navigable</li>
+      <li>Disabled items are properly announced</li>
+    </ul>
+  </section>
+</ComponentLayout>

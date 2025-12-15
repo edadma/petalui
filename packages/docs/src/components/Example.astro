@@ -33,7 +33,32 @@ if (source && fn) {
       .trim()
 
     // Detect which AsterUI components are used
-    const asteruiComponents = ['Avatar', 'Badge', 'Button', 'Card', 'Checkbox', 'Form', 'Input', 'Space', 'notification']
+    const asteruiComponents = [
+      'Affix', 'Alert', 'Anchor', 'Autocomplete', 'Avatar',
+      'Badge', 'Breadcrumb', 'Browser', 'Button',
+      'Card', 'Carousel', 'Cascader', 'Chat', 'Checkbox', 'Code', 'Collapse', 'ColorPicker', 'Container', 'ContextMenu', 'CopyButton', 'Countdown',
+      'DatePicker', 'Descriptions', 'Diff', 'Divider', 'Dock', 'Drawer', 'Dropdown',
+      'Empty',
+      'FileInput', 'Filter', 'Flex', 'FloatButton', 'Footer', 'Form',
+      'Grid',
+      'Hero', 'HoverGallery',
+      'Image', 'Input', 'InputNumber',
+      'Join',
+      'Kbd',
+      'Layout', 'List', 'Loading',
+      'Mask', 'Mention', 'Menu', 'Message', 'Modal',
+      'Navbar', 'Notification',
+      'OTPInput',
+      'Pagination', 'Phone', 'Popconfirm', 'Progress',
+      'QRCode',
+      'RadialProgress', 'Radio', 'Range', 'Rating', 'Responsive', 'ResponsiveDrawer', 'Result',
+      'Select', 'Skeleton', 'Space', 'Splitter', 'Stat', 'Status', 'Steps', 'Swap',
+      'Table', 'Tabs', 'Tag', 'Textarea', 'TextRotate', 'Timeline', 'TimePicker', 'Toast', 'Toggle', 'Tooltip', 'Tour', 'Transfer', 'Tree', 'TreeSelect', 'Typography',
+      'Upload',
+      'VirtualList',
+      'Watermark', 'Window',
+      'notification'
+    ]
     const usedComponents = asteruiComponents.filter(c => jsx.includes(`<${c}`) || jsx.includes(`${c}.`))
 
     // Detect which @aster-ui/icons are used
@@ -49,6 +74,9 @@ if (source && fn) {
     const reactHooks = ['useState', 'useEffect', 'useRef', 'useCallback', 'useMemo']
     const usedHooks = reactHooks.filter(hook => fullBody.includes(hook))
 
+    // Detect Chart component (special import path)
+    const usesChart = jsx.includes('<Chart')
+
     // Build the full example
     let imports = ''
     if (usedHooks.length > 0) {
@@ -56,6 +84,9 @@ if (source && fn) {
     }
     if (usedComponents.length > 0) {
       imports += `import { ${usedComponents.join(', ')} } from 'asterui'\n`
+    }
+    if (usesChart) {
+      imports += `import { Chart } from 'asterui/chart'\n`
     }
     if (usedIcons.length > 0) {
       imports += `import { ${usedIcons.join(', ')} } from '@aster-ui/icons'\n`
@@ -186,6 +217,11 @@ export default App`
     border-color: #d1d5db;
   }
 
+  .demo-wrapper {
+    padding: 0;
+    min-height: 2rem;
+  }
+
   .demo-wrapper > :global(astro-island) {
     display: block;
   }
@@ -261,6 +297,11 @@ export default App`
 
   .example-card.open .example-code {
     max-height: 1000px;
+    border-top: 1px solid #4b5563;
+  }
+
+  :global([data-theme="light"]) .example-card.open .example-code {
+    border-top-color: #d1d5db;
   }
 
   .example-code :global(pre) {
