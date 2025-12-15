@@ -1,17 +1,9 @@
 ---
-import ComponentLayout from '../../layouts/ComponentLayout.astro';
-import Example from '../../components/Example.astro';
-import {
-  BasicDemo,
-  WithDaysDemo,
-  SizesDemo,
-  WithLabelsDemo,
-  BoxedDemo,
-  CallbackDemo,
-} from '../../components/CountdownDemo';
-import CountdownDemoSource from '../../components/CountdownDemo.tsx?raw';
+import Layout from '../../layouts/Layout.astro';
+import ApiTable from '../../components/ApiTable.astro';
+import { Code } from 'astro:components';
 
-const api = [
+const countdownApi = [
   { property: 'value', description: 'Target timestamp in milliseconds or Date object', type: 'number | Date', default: '-' },
   { property: 'format', description: "Format string: 'D' days, 'H' hours, 'M' minutes, 'S' seconds", type: 'string', default: "'HH:MM:SS'" },
   { property: 'onFinish', description: 'Callback when countdown reaches zero', type: '() => void', default: '-' },
@@ -22,43 +14,195 @@ const api = [
   { property: 'boxed', description: 'Show box style around each unit', type: 'boolean', default: 'false' },
   { property: 'className', description: 'Additional CSS classes', type: 'string', default: '-' },
 ];
+
+const examples = [
+  {
+    id: 'basic',
+    title: 'Basic Countdown',
+    description: 'Simple countdown timer.',
+    code: `import { Countdown } from 'asterui'
+
+function App() {
+  const target = Date.now() + 60 * 60 * 1000
+  return <Countdown value={target} />
+}
+
+export default App`,
+  },
+  {
+    id: 'with-days',
+    title: 'With Days',
+    description: 'Include days in the countdown.',
+    code: `import { Countdown } from 'asterui'
+
+function App() {
+  const target = Date.now() + 3 * 24 * 60 * 60 * 1000
+  return <Countdown value={target} format="DD:HH:MM:SS" />
+}
+
+export default App`,
+  },
+  {
+    id: 'sizes',
+    title: 'Sizes',
+    description: 'Different size variants.',
+    code: `import { Countdown, Space } from 'asterui'
+
+function App() {
+  const target = Date.now() + 60 * 60 * 1000
+  return (
+    <Space direction="vertical" size="lg">
+      <Countdown value={target} size="xs" />
+      <Countdown value={target} size="sm" />
+      <Countdown value={target} size="md" />
+      <Countdown value={target} size="lg" />
+    </Space>
+  )
+}
+
+export default App`,
+  },
+  {
+    id: 'with-labels',
+    title: 'With Labels',
+    description: 'Show labels under each unit.',
+    code: `import { Countdown } from 'asterui'
+
+function App() {
+  const target = Date.now() + 2 * 24 * 60 * 60 * 1000
+  return <Countdown value={target} format="DD:HH:MM:SS" showLabels />
+}
+
+export default App`,
+  },
+  {
+    id: 'boxed',
+    title: 'Boxed Style',
+    description: 'Each unit in a styled box.',
+    code: `import { Countdown } from 'asterui'
+
+function App() {
+  const target = Date.now() + 24 * 60 * 60 * 1000
+  return <Countdown value={target} format="DD:HH:MM:SS" showLabels boxed />
+}
+
+export default App`,
+  },
+  {
+    id: 'callback',
+    title: 'With Callback',
+    description: 'Show a notification and auto-restart when countdown finishes.',
+    code: `import { useState } from 'react'
+import { Countdown, notification } from 'asterui'
+
+function App() {
+  const [target, setTarget] = useState(() => Date.now() + 20 * 1000)
+
+  const handleFinish = () => {
+    notification.success({ message: 'Countdown finished!' })
+    setTarget(Date.now() + 20 * 1000)
+  }
+
+  return (
+    <Countdown
+      key={target}
+      value={target}
+      format="MM:SS"
+      onFinish={handleFinish}
+    />
+  )
+}
+
+export default App`,
+  },
+];
 ---
 
-<ComponentLayout
-  name="Countdown"
-  description="Countdown timer with customizable format and styling."
-  api={api}
->
-  <Example title="Basic Countdown" description="Simple countdown timer." source={CountdownDemoSource} fn="BasicDemo">
-    <BasicDemo client:load slot="demo" />
-  </Example>
+<Layout title="Countdown - AsterUI">
+  <div>
+    <div class="mb-8">
+      <h1 class="text-4xl font-bold mb-2">Countdown</h1>
+      <p class="text-base-content/70 text-lg">Countdown timer with customizable format and styling.</p>
+    </div>
 
-  <Example title="With Days" description="Include days in the countdown." source={CountdownDemoSource} fn="WithDaysDemo">
-    <WithDaysDemo client:load slot="demo" />
-  </Example>
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">Import</h2>
+      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
+        <Code code="import { Countdown } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+      </div>
+    </section>
 
-  <Example title="Sizes" description="Different size variants." source={CountdownDemoSource} fn="SizesDemo">
-    <SizesDemo client:load slot="demo" />
-  </Example>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">Examples</h2>
+      <div class="columns-1 lg:columns-2 gap-6">
+      {examples.map((example) => (
+        <div class="example-card mb-6 border border-base-300 rounded-lg overflow-hidden break-inside-avoid">
+          <div class="flex justify-between items-center px-3 py-2 border-b border-base-300 bg-base-200">
+            <div>
+              <h3 class="text-sm font-semibold">{example.title}</h3>
+              <p class="text-sm text-base-content/70">{example.description}</p>
+            </div>
+            <button class="toggle-code btn btn-ghost btn-xs font-mono" aria-label="Toggle code">
+              &lt;/&gt;
+            </button>
+          </div>
+          <div class="p-4 min-h-[3rem]">
+            <div class="countdown-demo" data-example={example.id}></div>
+          </div>
+          <div class="code-panel hidden border-t border-base-300">
+            <div class="relative">
+              <button class="copy-btn btn btn-ghost btn-xs absolute top-2 right-2 z-10" aria-label="Copy code" data-code={example.code}>
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+              </button>
+              <div class="[&_pre]:!m-0 [&_pre]:!rounded-none">
+                <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+      </div>
+    </section>
 
-  <Example title="With Labels" description="Show labels under each unit." source={CountdownDemoSource} fn="WithLabelsDemo">
-    <WithLabelsDemo client:load slot="demo" />
-  </Example>
+    <section class="mb-12">
+      <h2 class="text-2xl font-bold mb-6">API</h2>
+      <ApiTable title="Countdown" data={countdownApi} />
+    </section>
 
-  <Example title="Boxed Style" description="Each unit in a styled box." source={CountdownDemoSource} fn="BoxedDemo">
-    <BoxedDemo client:load slot="demo" />
-  </Example>
+    <section class="mb-8">
+      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+      <ul class="list-disc list-inside space-y-2 text-base-content/80">
+        <li>Uses aria-live for announcing countdown updates</li>
+        <li>Provides aria-label for each countdown unit</li>
+        <li>Labels are visually associated with their values</li>
+      </ul>
+    </section>
+  </div>
+</Layout>
 
-  <Example title="With Callback" description="Show a notification and auto-restart when countdown finishes." source={CountdownDemoSource} fn="CallbackDemo">
-    <CallbackDemo client:load slot="demo" />
-  </Example>
+<script>
+  import '../../scripts/countdownDemos.tsx';
 
-  <section slot="accessibility" class="mb-8">
-    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-    <ul class="list-disc list-inside space-y-2 text-base-content/80">
-      <li>Uses aria-live for announcing countdown updates</li>
-      <li>Provides aria-label for each countdown unit</li>
-      <li>Labels are visually associated with their values</li>
-    </ul>
-  </section>
-</ComponentLayout>
+  document.querySelectorAll('.toggle-code').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.example-card')
+      const panel = card?.querySelector('.code-panel')
+      panel?.classList.toggle('hidden')
+    })
+  })
+
+  document.querySelectorAll('.copy-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.getAttribute('data-code')
+      if (!code) return
+
+      try {
+        await navigator.clipboard.writeText(code)
+        btn.classList.add('btn-success')
+        setTimeout(() => btn.classList.remove('btn-success'), 1000)
+      } catch (err) {
+        console.error('Failed to copy:', err)
+      }
+    })
+  })
+</script>

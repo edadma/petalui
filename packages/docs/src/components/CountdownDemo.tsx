@@ -1,31 +1,77 @@
-import { useState } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 import { Countdown, Space, notification } from 'asterui'
 import { Demo } from './Demo'
 
-export function BasicDemo() {
-  // 1 hour from now
-  const target = Date.now() + 60 * 60 * 1000
+// Single component with all demos to avoid multiple React roots
+export function AllDemos() {
+  const target1h = useMemo(() => Date.now() + 60 * 60 * 1000, [])
+  const target3d = useMemo(() => Date.now() + 3 * 24 * 60 * 60 * 1000, [])
+  const target2d = useMemo(() => Date.now() + 2 * 24 * 60 * 60 * 1000, [])
+  const target1d = useMemo(() => Date.now() + 24 * 60 * 60 * 1000, [])
+  const [callbackTarget, setCallbackTarget] = useState(() => Date.now() + 20 * 1000)
+
+  const handleFinish = () => {
+    notification.success({ message: 'Countdown finished!' })
+    setCallbackTarget(Date.now() + 20 * 1000)
+  }
 
   return (
-    <Demo>
-      <Countdown value={target} />
-    </Demo>
+    <div className="space-y-8">
+      <div>
+        <h3 className="font-semibold mb-2">Basic Countdown</h3>
+        <Countdown value={target1h} />
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">With Days</h3>
+        <Countdown value={target3d} format="DD:HH:MM:SS" />
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">Sizes</h3>
+        <Space direction="vertical" size="lg">
+          <Countdown value={target1h} size="xs" />
+          <Countdown value={target1h} size="sm" />
+          <Countdown value={target1h} size="md" />
+          <Countdown value={target1h} size="lg" />
+        </Space>
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">With Labels</h3>
+        <Countdown value={target2d} format="DD:HH:MM:SS" showLabels />
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">Boxed Style</h3>
+        <Countdown value={target1d} format="DD:HH:MM:SS" showLabels boxed />
+      </div>
+
+      <div>
+        <h3 className="font-semibold mb-2">With Callback</h3>
+        <Countdown
+          key={callbackTarget}
+          value={callbackTarget}
+          format="MM:SS"
+          onFinish={handleFinish}
+        />
+      </div>
+    </div>
   )
+}
+
+export function BasicDemo() {
+  const target = useMemo(() => Date.now() + 60 * 60 * 1000, [])
+  return <Countdown value={target} />
 }
 
 export function WithDaysDemo() {
-  // 3 days from now
-  const target = Date.now() + 3 * 24 * 60 * 60 * 1000
-
-  return (
-    <Demo>
-      <Countdown value={target} format="DD:HH:MM:SS" />
-    </Demo>
-  )
+  const target = useMemo(() => Date.now() + 3 * 24 * 60 * 60 * 1000, [])
+  return <Countdown value={target} format="DD:HH:MM:SS" />
 }
 
 export function SizesDemo() {
-  const target = Date.now() + 60 * 60 * 1000
+  const [target] = useState(() => Date.now() + 60 * 60 * 1000)
 
   return (
     <Demo>
@@ -40,7 +86,7 @@ export function SizesDemo() {
 }
 
 export function WithLabelsDemo() {
-  const target = Date.now() + 2 * 24 * 60 * 60 * 1000
+  const [target] = useState(() => Date.now() + 2 * 24 * 60 * 60 * 1000)
 
   return (
     <Demo>
@@ -54,7 +100,7 @@ export function WithLabelsDemo() {
 }
 
 export function BoxedDemo() {
-  const target = Date.now() + 24 * 60 * 60 * 1000
+  const [target] = useState(() => Date.now() + 24 * 60 * 60 * 1000)
 
   return (
     <Demo>

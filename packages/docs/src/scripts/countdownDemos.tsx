@@ -75,7 +75,7 @@ const demos: Record<string, React.FC> = {
   callback: CallbackDemo,
 }
 
-document.querySelectorAll('.demo-container').forEach((container) => {
+document.querySelectorAll('.countdown-demo').forEach((container) => {
   const exampleId = container.getAttribute('data-example')
   if (exampleId && demos[exampleId]) {
     const Demo = demos[exampleId]

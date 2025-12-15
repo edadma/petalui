@@ -158,12 +158,12 @@ function NotificationContainer({ manager }: NotificationContainerProps) {
   })
 
   const placementClasses: Record<NotificationPlacement, string> = {
-    topRight: 'toast toast-top toast-end',
-    topLeft: 'toast toast-top toast-start',
-    topCenter: 'toast toast-top toast-center',
-    bottomRight: 'toast toast-bottom toast-end',
-    bottomLeft: 'toast toast-bottom toast-start',
-    bottomCenter: 'toast toast-bottom toast-center',
+    topRight: 'toast toast-top toast-end z-[9999]',
+    topLeft: 'toast toast-top toast-start z-[9999]',
+    topCenter: 'toast toast-top toast-center z-[9999]',
+    bottomRight: 'toast toast-bottom toast-end z-[9999]',
+    bottomLeft: 'toast toast-bottom toast-start z-[9999]',
+    bottomCenter: 'toast toast-bottom toast-center z-[9999]',
   }
 
   return (
