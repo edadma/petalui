@@ -59,6 +59,7 @@ const apiTables = api
     {apiTables.length > 0 && (
       <section class="mb-12">
         <h2 class="text-2xl font-bold mb-6">API</h2>
+        <slot name="api-notes" />
         <div class="space-y-8">
           {apiTables.map((table) => (
             <ApiTable title={table.title} data={table.data} />
@@ -67,7 +68,16 @@ const apiTables = api
       </section>
     )}
 
+    <!-- Additional API (optional slot) -->
+    <slot name="additional-api" />
+
     <!-- Accessibility (optional slot) -->
     <slot name="accessibility" />
+
+    <!-- Testing (optional slot) -->
+    <slot name="testing" />
+
+    <!-- Usage Tips (optional slot) -->
+    <slot name="usage-tips" />
   </div>
 </Layout>

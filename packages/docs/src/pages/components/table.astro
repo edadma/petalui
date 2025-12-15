@@ -1,9 +1,34 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  CustomRenderDemo,
+  StripedDemo,
+  BorderedDemo,
+  SizeXsDemo,
+  SizeXlDemo,
+  EmptyDemo,
+  LoadingDemo,
+  PaginationDemo,
+  PaginationFeaturesDemo,
+  PinnedDemo,
+  SortingDemo,
+  ControlledSortDemo,
+  FilteringDemo,
+  SelectionDemo,
+  RadioSelectionDemo,
+  ExpandableDemo,
+  EllipsisDemo,
+  ScrollDemo,
+  CompleteDemo,
+} from '../../components/TableDemo';
+import TableDemoSource from '../../components/TableDemo.tsx?raw';
 
-const tableApi = [
+const importCode = `import { Table } from 'asterui'
+import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } from 'asterui'`;
+
+const api = [
   { property: 'columns', description: 'Table column configuration', type: 'ColumnType<T>[]', default: '-' },
   { property: 'dataSource', description: 'Data to display in table', type: 'T[]', default: '-' },
   { property: 'rowKey', description: 'Unique key for each row', type: "keyof T | ((record: T) => string)", default: "'id'" },
@@ -77,210 +102,232 @@ const paginationApi = [
   { property: 'onChange', description: 'Callback when page changes', type: '(page, pageSize) => void', default: '-' },
   { property: 'onShowSizeChange', description: 'Callback when page size changes', type: '(current, size) => void', default: '-' },
 ];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic Table',
-    description: 'Simple table with data.',
-  },
-  {
-    id: 'custom-render',
-    title: 'Custom Rendering',
-    description: 'Use render functions for tags, buttons, and custom content.',
-  },
-  {
-    id: 'striped',
-    title: 'Striped Rows',
-    description: 'Zebra striping for better readability.',
-  },
-  {
-    id: 'bordered',
-    title: 'Bordered Table',
-    description: 'Add borders for a more defined look.',
-  },
-  {
-    id: 'size-xs',
-    title: 'Compact Size',
-    description: 'Extra small size for dense data.',
-  },
-  {
-    id: 'size-xl',
-    title: 'Extra Large Size',
-    description: 'Extra large size for emphasis.',
-  },
-  {
-    id: 'empty',
-    title: 'Empty State',
-    description: 'Customizable empty state message.',
-  },
-  {
-    id: 'loading',
-    title: 'Loading State',
-    description: 'Show loading spinner while fetching data.',
-  },
-  {
-    id: 'pagination',
-    title: 'Basic Pagination',
-    description: 'Paginate large datasets.',
-  },
-  {
-    id: 'pagination-features',
-    title: 'Advanced Pagination',
-    description: 'Page size changer, quick jumper, and total display.',
-  },
-  {
-    id: 'pinned',
-    title: 'Pinned Header',
-    description: 'Keep header visible while scrolling.',
-  },
-  {
-    id: 'sorting',
-    title: 'Column Sorting',
-    description: 'Click column headers to sort data.',
-  },
-  {
-    id: 'controlled-sort',
-    title: 'Controlled Sorting',
-    description: 'Externally control sort state.',
-  },
-  {
-    id: 'filtering',
-    title: 'Column Filtering',
-    description: 'Add filter dropdowns to columns.',
-  },
-  {
-    id: 'selection',
-    title: 'Checkbox Selection',
-    description: 'Enable row selection with checkboxes.',
-  },
-  {
-    id: 'radio-selection',
-    title: 'Radio Selection',
-    description: 'Single row selection with radio buttons.',
-  },
-  {
-    id: 'expandable',
-    title: 'Expandable Rows',
-    description: 'Expand rows to show additional content.',
-  },
-  {
-    id: 'ellipsis',
-    title: 'Text Ellipsis',
-    description: 'Truncate long text with ellipsis.',
-  },
-  {
-    id: 'scroll',
-    title: 'Scroll Configuration',
-    description: 'Set max width and height with scrolling.',
-  },
-  {
-    id: 'complete',
-    title: 'Complete Example',
-    description: 'Table with multiple features combined.',
-  },
-];
 ---
 
-<Layout title="Table - AsterUI">
-  <div>
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>Table</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">Table</h1>
-      <p class="text-base-content/70 text-lg">Feature-rich table component for displaying tabular data.</p>
+<ComponentLayout
+  name="Table"
+  description="Feature-rich table component for displaying tabular data."
+  importCode={importCode}
+  api={api}
+>
+  <Example title="Basic Table" description="Simple table with data." source={TableDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Custom Rendering" description="Use render functions for tags, buttons, and custom content." source={TableDemoSource} fn="CustomRenderDemo">
+    <CustomRenderDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Striped Rows" description="Zebra striping for better readability." source={TableDemoSource} fn="StripedDemo">
+    <StripedDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Bordered Table" description="Add borders for a more defined look." source={TableDemoSource} fn="BorderedDemo">
+    <BorderedDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Compact Size" description="Extra small size for dense data." source={TableDemoSource} fn="SizeXsDemo">
+    <SizeXsDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Extra Large Size" description="Extra large size for emphasis." source={TableDemoSource} fn="SizeXlDemo">
+    <SizeXlDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Empty State" description="Customizable empty state message." source={TableDemoSource} fn="EmptyDemo">
+    <EmptyDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Loading State" description="Show loading spinner while fetching data." source={TableDemoSource} fn="LoadingDemo">
+    <LoadingDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Basic Pagination" description="Paginate large datasets." source={TableDemoSource} fn="PaginationDemo">
+    <PaginationDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Advanced Pagination" description="Page size changer, quick jumper, and total display." source={TableDemoSource} fn="PaginationFeaturesDemo">
+    <PaginationFeaturesDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Pinned Header" description="Keep header visible while scrolling." source={TableDemoSource} fn="PinnedDemo">
+    <PinnedDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Column Sorting" description="Click column headers to sort data." source={TableDemoSource} fn="SortingDemo">
+    <SortingDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Controlled Sorting" description="Externally control sort state." source={TableDemoSource} fn="ControlledSortDemo">
+    <ControlledSortDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Column Filtering" description="Add filter dropdowns to columns." source={TableDemoSource} fn="FilteringDemo">
+    <FilteringDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Checkbox Selection" description="Enable row selection with checkboxes." source={TableDemoSource} fn="SelectionDemo">
+    <SelectionDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Radio Selection" description="Single row selection with radio buttons." source={TableDemoSource} fn="RadioSelectionDemo">
+    <RadioSelectionDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Expandable Rows" description="Expand rows to show additional content." source={TableDemoSource} fn="ExpandableDemo">
+    <ExpandableDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Text Ellipsis" description="Truncate long text with ellipsis." source={TableDemoSource} fn="EllipsisDemo">
+    <EllipsisDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Scroll Configuration" description="Set max width and height with scrolling." source={TableDemoSource} fn="ScrollDemo">
+    <ScrollDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Complete Example" description="Table with multiple features combined." source={TableDemoSource} fn="CompleteDemo">
+    <CompleteDemo client:load slot="demo" />
+  </Example>
+
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Uses semantic <code class="bg-base-content/20 px-1 rounded">&lt;table&gt;</code> with <code class="bg-base-content/20 px-1 rounded">role="grid"</code></li>
+      <li>Column headers include <code class="bg-base-content/20 px-1 rounded">role="columnheader"</code> and <code class="bg-base-content/20 px-1 rounded">aria-sort</code> for sortable columns</li>
+      <li>Row selection checkboxes have proper <code class="bg-base-content/20 px-1 rounded">aria-label</code></li>
+      <li>Sort controls are keyboard accessible (Enter/Space to toggle)</li>
+      <li>Filter dropdowns support Escape key to close</li>
+      <li>Pagination buttons include <code class="bg-base-content/20 px-1 rounded">aria-label</code> and <code class="bg-base-content/20 px-1 rounded">aria-current</code></li>
+      <li>Expand/collapse buttons include <code class="bg-base-content/20 px-1 rounded">aria-expanded</code></li>
+      <li>Indeterminate checkbox state for partial selection</li>
+    </ul>
+  </section>
+
+  <section slot="testing" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Testing</h2>
+    <p class="text-base-content/80 mb-4">The component exposes <code class="bg-base-content/20 px-1 rounded">data-testid</code> attributes:</p>
+    <ul class="list-disc list-inside space-y-1 text-base-content/80 text-sm">
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}'}</code> - Root wrapper</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-table'}</code> - Table element</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-header-{columnKey}'}</code> - Column headers</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}'}</code> - Table rows</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}-{columnKey}'}</code> - Table cells</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}-select'}</code> - Row selection checkbox</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}-expanded'}</code> - Expanded row content</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-select-all'}</code> - Select all checkbox</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-pagination'}</code> - Pagination container</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-prev'}</code>, <code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-next'}</code> - Pagination buttons</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-{columnKey}-filter-button'}</code> - Filter button</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-empty'}</code> - Empty state</li>
+      <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-loading'}</code> - Loading state</li>
+    </ul>
+    <p class="text-base-content/80 mt-4">Data attributes:</p>
+    <ul class="list-disc list-inside space-y-1 text-base-content/80 text-sm">
+      <li><code class="bg-base-content/20 px-1 rounded">data-state="selected"</code> - On selected rows</li>
+    </ul>
+  </section>
+
+  <section slot="additional-api" class="mb-12">
+    <div class="mt-8">
+      <h3 class="text-xl font-semibold mb-4">ColumnType</h3>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            {columnTypeApi.map((row) => (
+              <tr>
+                <td><code>{row.property}</code></td>
+                <td>{row.description}</td>
+                <td><code>{row.type}</code></td>
+                <td><code>{row.default}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code={`import { Table } from 'asterui'
-import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } from 'asterui'`} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+    <div class="mt-8">
+      <h3 class="text-xl font-semibold mb-4">RowSelection</h3>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rowSelectionApi.map((row) => (
+              <tr>
+                <td><code>{row.property}</code></td>
+                <td>{row.description}</td>
+                <td><code>{row.type}</code></td>
+                <td><code>{row.default}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </section>
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container overflow-x-auto" data-example={example.id}></div>
-          </div>
-        </div>
-      ))}
+    </div>
+    <div class="mt-8">
+      <h3 class="text-xl font-semibold mb-4">ExpandableConfig</h3>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            {expandableApi.map((row) => (
+              <tr>
+                <td><code>{row.property}</code></td>
+                <td>{row.description}</td>
+                <td><code>{row.type}</code></td>
+                <td><code>{row.default}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-    </section>
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="Table" data={tableApi} />
-      <div class="mt-8">
-        <ApiTable title="ColumnType" data={columnTypeApi} />
+    </div>
+    <div class="mt-8">
+      <h3 class="text-xl font-semibold mb-4">PaginationConfig</h3>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th>Default</th>
+            </tr>
+          </thead>
+          <tbody>
+            {paginationApi.map((row) => (
+              <tr>
+                <td><code>{row.property}</code></td>
+                <td>{row.description}</td>
+                <td><code>{row.type}</code></td>
+                <td><code>{row.default}</code></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      <div class="mt-8">
-        <ApiTable title="RowSelection" data={rowSelectionApi} />
-      </div>
-      <div class="mt-8">
-        <ApiTable title="ExpandableConfig" data={expandableApi} />
-      </div>
-      <div class="mt-8">
-        <ApiTable title="PaginationConfig" data={paginationApi} />
-      </div>
-    </section>
-
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Uses semantic <code class="bg-base-content/20 px-1 rounded">&lt;table&gt;</code> with <code class="bg-base-content/20 px-1 rounded">role="grid"</code></li>
-        <li>Column headers include <code class="bg-base-content/20 px-1 rounded">role="columnheader"</code> and <code class="bg-base-content/20 px-1 rounded">aria-sort</code> for sortable columns</li>
-        <li>Row selection checkboxes have proper <code class="bg-base-content/20 px-1 rounded">aria-label</code></li>
-        <li>Sort controls are keyboard accessible (Enter/Space to toggle)</li>
-        <li>Filter dropdowns support Escape key to close</li>
-        <li>Pagination buttons include <code class="bg-base-content/20 px-1 rounded">aria-label</code> and <code class="bg-base-content/20 px-1 rounded">aria-current</code></li>
-        <li>Expand/collapse buttons include <code class="bg-base-content/20 px-1 rounded">aria-expanded</code></li>
-        <li>Indeterminate checkbox state for partial selection</li>
-      </ul>
-    </section>
-
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Testing</h2>
-      <p class="text-base-content/80 mb-4">The component exposes <code class="bg-base-content/20 px-1 rounded">data-testid</code> attributes:</p>
-      <ul class="list-disc list-inside space-y-1 text-base-content/80 text-sm">
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}'}</code> - Root wrapper</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-table'}</code> - Table element</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-header-{columnKey}'}</code> - Column headers</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}'}</code> - Table rows</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}-{columnKey}'}</code> - Table cells</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}-select'}</code> - Row selection checkbox</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-row-{index}-expanded'}</code> - Expanded row content</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-select-all'}</code> - Select all checkbox</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-pagination'}</code> - Pagination container</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-prev'}</code>, <code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-next'}</code> - Pagination buttons</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-{columnKey}-filter-button'}</code> - Filter button</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-empty'}</code> - Empty state</li>
-        <li><code class="bg-base-content/20 px-1 rounded">{'{baseTestId}-loading'}</code> - Loading state</li>
-      </ul>
-      <p class="text-base-content/80 mt-4">Data attributes:</p>
-      <ul class="list-disc list-inside space-y-1 text-base-content/80 text-sm">
-        <li><code class="bg-base-content/20 px-1 rounded">data-state="selected"</code> - On selected rows</li>
-      </ul>
-    </section>
-  </div>
-</Layout>
-
-<style>
-  .code-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-  .example-card.open .code-panel { max-height: 2000px; }
-</style>
-
-<script>
-  import '../../scripts/tableDemos.tsx';
-</script>
+    </div>
+  </section>
+</ComponentLayout>

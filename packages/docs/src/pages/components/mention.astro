@@ -1,9 +1,14 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  CustomPrefixDemo,
+  MultiTriggerDemo,
+} from '../../components/MentionDemo';
+import MentionDemoSource from '../../components/MentionDemo.tsx?raw';
 
-const mentionApi = [
+const api = [
   {
     property: 'options',
     description: 'Array of mention options',
@@ -47,260 +52,41 @@ const mentionApi = [
     type: 'string',
   },
 ];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic Mention',
-    description: 'Simple mention input with @ trigger.',
-    code: `import React, { useState } from 'react'
-import { Mention } from 'asterui'
-
-const users = [
-  { value: 'john', label: 'John Doe' },
-  { value: 'jane', label: 'Jane Smith' },
-  { value: 'bob', label: 'Bob Johnson' },
-  { value: 'alice', label: 'Alice Williams' },
-]
-
-const App: React.FC = () => {
-  const [text, setText] = useState('')
-
-  return (
-    <div>
-      <Mention
-        options={users}
-        value={text}
-        onChange={setText}
-        placeholder="Type @ to mention someone"
-      />
-      <div className="mt-2 text-sm text-base-content/70">
-        Text: {text || '(empty)'}
-      </div>
-    </div>
-  )
-}
-
-export default App`,
-  },
-  {
-    id: 'custom-prefix',
-    title: 'Custom Prefix',
-    description: 'Using # prefix for hashtag mentions.',
-    code: `import React, { useState } from 'react'
-import { Mention } from 'asterui'
-
-const tags = [
-  { value: 'react', label: 'React' },
-  { value: 'typescript', label: 'TypeScript' },
-  { value: 'javascript', label: 'JavaScript' },
-  { value: 'webdev', label: 'Web Development' },
-]
-
-const App: React.FC = () => {
-  const [text, setText] = useState('')
-
-  return (
-    <div>
-      <Mention
-        options={tags}
-        value={text}
-        onChange={setText}
-        prefix="#"
-        placeholder="Type # to add hashtag"
-      />
-      <div className="mt-2 text-sm text-base-content/70">
-        Text: {text || '(empty)'}
-      </div>
-    </div>
-  )
-}
-
-export default App`,
-  },
-  {
-    id: 'multi-trigger',
-    title: 'Multiple Triggers',
-    description: 'Using multiple mention components with different prefixes.',
-    code: `import React, { useState } from 'react'
-import { Mention, Space } from 'asterui'
-
-const users = [
-  { value: 'john', label: 'John Doe' },
-  { value: 'jane', label: 'Jane Smith' },
-]
-
-const tags = [
-  { value: 'react', label: 'React' },
-  { value: 'typescript', label: 'TypeScript' },
-]
-
-const App: React.FC = () => {
-  const [userText, setUserText] = useState('')
-  const [tagText, setTagText] = useState('')
-
-  return (
-    <Space direction="vertical" size="md">
-      <div>
-        <label className="block mb-2 text-sm font-medium">
-          Mention Users (@)
-        </label>
-        <Mention
-          options={users}
-          value={userText}
-          onChange={setUserText}
-          prefix="@"
-          placeholder="Type @ to mention users"
-        />
-        <div className="mt-1 text-xs text-base-content/70">
-          {userText || '(empty)'}
-        </div>
-      </div>
-
-      <div>
-        <label className="block mb-2 text-sm font-medium">
-          Add Tags (#)
-        </label>
-        <Mention
-          options={tags}
-          value={tagText}
-          onChange={setTagText}
-          prefix="#"
-          placeholder="Type # to add tags"
-        />
-        <div className="mt-1 text-xs text-base-content/70">
-          {tagText || '(empty)'}
-        </div>
-      </div>
-    </Space>
-  )
-}
-
-export default App`,
-  },
-];
 ---
 
-<Layout title="Mention - AsterUI">
-  <div>
-    <!-- Header -->
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>Mention</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">Mention</h1>
-      <p class="text-base-content/70 text-lg">
-        Input component for mentioning users, tags, or other entities with autocomplete suggestions.
-      </p>
+<ComponentLayout
+  name="Mention"
+  description="Input component for mentioning users, tags, or other entities with autocomplete suggestions."
+  api={api}
+>
+  <Example title="Basic Mention" description="Simple mention input with @ trigger." source={MentionDemoSource} fn="BasicDemo">
+    <BasicDemo client:only="react" slot="demo" />
+  </Example>
+
+  <Example title="Custom Prefix" description="Using # prefix for hashtag mentions." source={MentionDemoSource} fn="CustomPrefixDemo">
+    <CustomPrefixDemo client:only="react" slot="demo" />
+  </Example>
+
+  <Example title="Multiple Triggers" description="Using multiple mention components with different prefixes." source={MentionDemoSource} fn="MultiTriggerDemo">
+    <MultiTriggerDemo client:only="react" slot="demo" />
+  </Example>
+
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Keyboard Navigation</h2>
+    <div class="p-4 bg-info/10 border border-info/20 rounded-lg mb-6">
+      <ul class="list-disc list-inside space-y-2 text-base-content/80">
+        <li><kbd class="kbd kbd-sm">↑</kbd> / <kbd class="kbd kbd-sm">↓</kbd> - Navigate through mention suggestions</li>
+        <li><kbd class="kbd kbd-sm">Enter</kbd> - Select highlighted mention</li>
+        <li><kbd class="kbd kbd-sm">Esc</kbd> - Close mention dropdown</li>
+      </ul>
     </div>
 
-    <!-- Import -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { Mention } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
-
-    <!-- Examples -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
-
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example, i) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">
-                &lt;&#8201;&gt;
-              </button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-              <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
-              <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-                <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-              </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
-
-    <!-- API -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="Mention" data={mentionApi} />
-    </section>
-
-    <!-- Keyboard Navigation -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Keyboard Navigation</h2>
-      <div class="p-4 bg-info/10 border border-info/20 rounded-lg">
-        <ul class="list-disc list-inside space-y-2 text-base-content/80">
-          <li><kbd class="kbd kbd-sm">↑</kbd> / <kbd class="kbd kbd-sm">↓</kbd> - Navigate through mention suggestions</li>
-          <li><kbd class="kbd kbd-sm">Enter</kbd> - Select highlighted mention</li>
-          <li><kbd class="kbd kbd-sm">Esc</kbd> - Close mention dropdown</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- Accessibility -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <ul class="list-disc list-inside space-y-2 text-base-content/80">
-        <li>Full keyboard navigation support for selecting mentions</li>
-        <li>ARIA attributes for screen readers to announce suggestions</li>
-        <li>Focus management when dropdown opens and closes</li>
-        <li>Clear visual indicators for selected and focused items</li>
-      </ul>
-    </section>
-  </div>
-</Layout>
-
-<style>
-  .code-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-  .example-card.open .code-panel {
-    max-height: 2000px;
-  }
-</style>
-
-<script>
-  import '../../scripts/mentionDemos';
-
-  // Toggle code visibility
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-</script>
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Full keyboard navigation support for selecting mentions</li>
+      <li>ARIA attributes for screen readers to announce suggestions</li>
+      <li>Focus management when dropdown opens and closes</li>
+      <li>Clear visual indicators for selected and focused items</li>
+    </ul>
+  </section>
+</ComponentLayout>

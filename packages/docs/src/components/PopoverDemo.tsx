@@ -1,0 +1,115 @@
+import { Popover, Button } from 'asterui'
+import { Demo } from './Demo'
+
+export function BasicDemo() {
+  return (
+    <Demo>
+      <Popover content="This is a simple popover">
+        <Button>Hover me</Button>
+      </Popover>
+    </Demo>
+  )
+}
+
+export function TitleDemo() {
+  return (
+    <Demo>
+      <Popover
+        title="User Information"
+        content="Additional details about the user and their account settings."
+      >
+        <Button>Hover me</Button>
+      </Popover>
+    </Demo>
+  )
+}
+
+export function TriggersDemo() {
+  return (
+    <Demo>
+      <div className="flex gap-4">
+        <Popover trigger="hover" content="Triggered by hovering">
+          <Button>Hover</Button>
+        </Popover>
+        <Popover trigger="click" content="Triggered by clicking">
+          <Button>Click</Button>
+        </Popover>
+        <Popover trigger="focus" content="Triggered by focusing">
+          <Button>Focus</Button>
+        </Popover>
+      </div>
+    </Demo>
+  )
+}
+
+export function PlacementTopDemo() {
+  return (
+    <Demo>
+      <div className="flex gap-4 justify-center">
+        <Popover placement="top" content="Top placement">
+          <Button>Top</Button>
+        </Popover>
+        <Popover placement="topLeft" content="Top left placement">
+          <Button>Top Left</Button>
+        </Popover>
+        <Popover placement="topRight" content="Top right placement">
+          <Button>Top Right</Button>
+        </Popover>
+      </div>
+    </Demo>
+  )
+}
+
+export function PlacementBottomDemo() {
+  return (
+    <Demo>
+      <div className="flex gap-4 justify-center">
+        <Popover placement="bottom" content="Bottom placement">
+          <Button>Bottom</Button>
+        </Popover>
+        <Popover placement="bottomLeft" content="Bottom left placement">
+          <Button>Bottom Left</Button>
+        </Popover>
+        <Popover placement="bottomRight" content="Bottom right placement">
+          <Button>Bottom Right</Button>
+        </Popover>
+      </div>
+    </Demo>
+  )
+}
+
+export function PlacementLeftDemo() {
+  return (
+    <Demo>
+      <div className="flex gap-4 justify-center">
+        <Popover placement="left" content="Left placement">
+          <Button>Left</Button>
+        </Popover>
+        <Popover placement="leftTop" content="Left top placement">
+          <Button>Left Top</Button>
+        </Popover>
+        <Popover placement="leftBottom" content="Left bottom placement">
+          <Button>Left Bottom</Button>
+        </Popover>
+      </div>
+    </Demo>
+  )
+}
+
+export function PlacementRightDemo() {
+  return (
+    <Demo>
+      <div className="flex gap-4 justify-center">
+        <Popover placement="right" content="Right placement">
+          <Button>Right</Button>
+        </Popover>
+        <Popover placement="rightTop" content="Right top placement">
+          <Button>Right Top</Button>
+        </Popover>
+        <Popover placement="rightBottom" content="Right bottom placement">
+          <Button>Right Bottom</Button>
+        </Popover>
+      </div>
+    </Demo>
+  )
+}

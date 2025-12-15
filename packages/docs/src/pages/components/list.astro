@@ -1,7 +1,13 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  WithAvatarDemo,
+  LoadingDemo,
+  PaginationDemo,
+} from '../../components/ListDemo';
+import ListDemoSource from '../../components/ListDemo.tsx?raw';
 
 const listApi = [
   {
@@ -134,243 +140,42 @@ const listItemMetaApi = [
   },
 ];
 
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic List',
-    description: 'Simple list with items.',
-    code: `import React from 'react'
-import { List } from 'asterui'
-
-const data = [
-  'Racing car sprints past',
-  'Japanese princess unveiled',
-  'Australian walks 100km',
-  'Man charged over missing wedding',
-]
-
-const App: React.FC = () => (
-  <List
-    dataSource={data}
-    renderItem={(item) => <List.Item>{item}</List.Item>}
-  />
-)
-
-export default App`,
-  },
-  {
-    id: 'with-avatar',
-    title: 'With Avatar',
-    description: 'List items with avatars and descriptions.',
-    code: `import React from 'react'
-import { List, Avatar } from 'asterui'
-
-const data = [
-  {
-    name: 'Alice Johnson',
-    email: 'alice@example.com',
-    avatar: 'https://i.pravatar.cc/150?img=5',
-  },
-  {
-    name: 'Bob Smith',
-    email: 'bob@example.com',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-  },
-  {
-    name: 'Carol White',
-    email: 'carol@example.com',
-    avatar: 'https://i.pravatar.cc/150?img=9',
-  },
-]
-
-const App: React.FC = () => (
-  <List
-    dataSource={data}
-    renderItem={(item) => (
-      <List.Item>
-        <List.Item.Meta
-          avatar={<Avatar src={item.avatar} alt={item.name} />}
-          title={item.name}
-          description={item.email}
-        />
-      </List.Item>
-    )}
-  />
-)
-
-export default App`,
-  },
-  {
-    id: 'loading',
-    title: 'Loading State',
-    description: 'List in loading state with skeleton.',
-    code: `import React from 'react'
-import { List } from 'asterui'
-
-const App: React.FC = () => (
-  <List
-    dataSource={[]}
-    renderItem={(item) => <List.Item>{item}</List.Item>}
-    loading
-  />
-)
-
-export default App`,
-  },
-  {
-    id: 'pagination',
-    title: 'With Pagination',
-    description: 'List with pagination controls.',
-    code: `import React, { useState } from 'react'
-import { List } from 'asterui'
-
-const allData = Array.from({ length: 23 }, (_, i) => \`Item \${i + 1}\`)
-
-const App: React.FC = () => {
-  const [page, setPage] = useState(1)
-  const pageSize = 5
-  const start = (page - 1) * pageSize
-  const end = start + pageSize
-  const currentData = allData.slice(start, end)
-
-  return (
-    <List
-      dataSource={currentData}
-      renderItem={(item) => <List.Item>{item}</List.Item>}
-      pagination={{
-        current: page,
-        pageSize,
-        total: allData.length,
-        onChange: setPage,
-      }}
-    />
-  )
-}
-
-export default App`,
-  },
+const api = [
+  { title: 'List', data: listApi },
+  { title: 'List.Item', data: listItemApi },
+  { title: 'List.Item.Meta', data: listItemMetaApi },
 ];
 ---
 
-<Layout title="List - AsterUI">
-  <div>
-    <!-- Header -->
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>List</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">List</h1>
-      <p class="text-base-content/70 text-lg">
-        Display a list of items with support for pagination and loading states.
-      </p>
-    </div>
+<ComponentLayout
+  name="List"
+  description="Display a list of items with support for pagination and loading states."
+  api={api}
+>
+  <Example title="Basic List" description="Simple list with items." source={ListDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
 
-    <!-- Import -->
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { List } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
+  <Example title="With Avatar" description="List items with avatars and descriptions." source={ListDemoSource} fn="WithAvatarDemo">
+    <WithAvatarDemo client:load slot="demo" />
+  </Example>
 
-    <!-- Examples -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
+  <Example title="Loading State" description="List in loading state with skeleton." source={ListDemoSource} fn="LoadingDemo">
+    <LoadingDemo client:load slot="demo" />
+  </Example>
 
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example, i) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">
-                &lt;&#8201;&gt;
-              </button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-              <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-              </button>
-              <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-                <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-              </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
+  <Example title="With Pagination" description="List with pagination controls." source={ListDemoSource} fn="PaginationDemo">
+    <PaginationDemo client:load slot="demo" />
+  </Example>
 
-    <!-- API -->
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="List" data={listApi} />
-      <div class="mt-8">
-        <ApiTable title="List.Item" data={listItemApi} />
-      </div>
-      <div class="mt-8">
-        <ApiTable title="List.Item.Meta" data={listItemMetaApi} />
-      </div>
-    </section>
-
-    <!-- Usage Tips -->
-    <section class="mb-8">
-      <div class="alert alert-info">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <div>
-          <strong>Usage Tips:</strong>
-          <ul class="list-disc list-inside mt-2 space-y-1">
-            <li>Use dataSource and renderItem for dynamic lists</li>
-            <li>Enable loading prop to show skeleton while fetching data</li>
-            <li>Add pagination for large datasets to improve performance</li>
-            <li>Use header and footer props for additional context</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-  </div>
-</Layout>
-
-<style>
-  .code-panel {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-  .example-card.open .code-panel {
-    max-height: 2000px;
-  }
-</style>
-
-<script>
-  import '../../scripts/listDemos';
-
-  // Toggle code visibility
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-</script>
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <ul class="list-disc list-inside space-y-2 text-base-content/80">
+      <li>Use <code class="bg-base-content/20 px-1 rounded">aria-label</code> to provide context for the list</li>
+      <li>List items are rendered in semantic <code class="bg-base-content/20 px-1 rounded">&lt;ul&gt;</code> or <code class="bg-base-content/20 px-1 rounded">&lt;ol&gt;</code> elements</li>
+      <li>Loading state is communicated to screen readers</li>
+      <li>Pagination controls are keyboard accessible</li>
+      <li>Empty state content is properly announced</li>
+    </ul>
+  </section>
+</ComponentLayout>

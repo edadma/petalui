@@ -1,0 +1,84 @@
+import { Kbd, Space, Typography } from 'asterui'
+import { Demo } from './Demo'
+
+const { Paragraph } = Typography
+
+export function BasicDemo() {
+  return (
+    <Demo>
+      <Kbd>K</Kbd>
+    </Demo>
+  )
+}
+
+export function SizesDemo() {
+  return (
+    <Demo>
+      <Space align="center">
+        <Kbd size="xs">xs</Kbd>
+        <Kbd size="sm">sm</Kbd>
+        <Kbd size="md">md</Kbd>
+        <Kbd size="lg">lg</Kbd>
+        <Kbd size="xl">xl</Kbd>
+      </Space>
+    </Demo>
+  )
+}
+
+export function CombinationDemo() {
+  return (
+    <Demo>
+      <Space align="center" size="xs">
+        <Kbd>⌘</Kbd>
+        <span>+</span>
+        <Kbd>K</Kbd>
+      </Space>
+    </Demo>
+  )
+}
+
+export function InTextDemo() {
+  return (
+    <Demo>
+      <Paragraph>
+        Press <Kbd size="sm">F</Kbd> to pay respects.
+      </Paragraph>
+    </Demo>
+  )
+}
+
+export function ArrowsDemo() {
+  return (
+    <Demo>
+      <div className="flex flex-col items-center gap-1">
+        <Kbd>▲</Kbd>
+        <Space size="xs">
+          <Kbd>◀</Kbd>
+          <Kbd>▼</Kbd>
+          <Kbd>▶</Kbd>
+        </Space>
+      </div>
+    </Demo>
+  )
+}
+
+export function FullKeyboardDemo() {
+  return (
+    <Demo>
+      <div className="flex flex-col gap-1">
+        <div className="flex gap-1">
+          <Kbd>q</Kbd><Kbd>w</Kbd><Kbd>e</Kbd><Kbd>r</Kbd><Kbd>t</Kbd>
+          <Kbd>y</Kbd><Kbd>u</Kbd><Kbd>i</Kbd><Kbd>o</Kbd><Kbd>p</Kbd>
+        </div>
+        <div className="flex gap-1 ml-2">
+          <Kbd>a</Kbd><Kbd>s</Kbd><Kbd>d</Kbd><Kbd>f</Kbd><Kbd>g</Kbd>
+          <Kbd>h</Kbd><Kbd>j</Kbd><Kbd>k</Kbd><Kbd>l</Kbd>
+        </div>
+        <div className="flex gap-1 ml-6">
+          <Kbd>z</Kbd><Kbd>x</Kbd><Kbd>c</Kbd><Kbd>v</Kbd>
+          <Kbd>b</Kbd><Kbd>n</Kbd><Kbd>m</Kbd>
+        </div>
+      </div>
+    </Demo>
+  )
+}

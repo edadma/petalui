@@ -1,9 +1,21 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import ApiTable from '../../components/ApiTable.astro';
-import { Code } from 'astro:components';
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import {
+  BasicDemo,
+  MultipleDemo,
+  CheckableDemo,
+  SearchableDemo,
+  SizesDemo,
+  StatusDemo,
+  AsyncLoadDemo,
+  MaxTagDemo,
+  TreeLineDemo,
+  DisabledItemsDemo,
+} from '../../components/TreeSelectDemo';
+import TreeSelectDemoSource from '../../components/TreeSelectDemo.tsx?raw';
 
-const treeSelectApi = [
+const api = [
   { property: 'treeData', description: 'Tree data structure', type: 'TreeDataNode[]', default: '[]' },
   { property: 'value', description: 'Selected value(s)', type: 'string | string[]', default: '-' },
   { property: 'defaultValue', description: 'Default selected value(s)', type: 'string | string[]', default: '[]' },
@@ -50,417 +62,167 @@ const treeDataNodeApi = [
   { property: 'isLeaf', description: 'Whether this is a leaf node', type: 'boolean', default: '-' },
 ];
 
-const keyboardNav = [
-  { key: 'Enter / Space', action: 'Open dropdown or select focused item' },
-  { key: 'Escape', action: 'Close dropdown' },
-  { key: '↓', action: 'Open dropdown or move focus down' },
-  { key: '↑', action: 'Move focus up' },
-  { key: '→', action: 'Expand focused tree node' },
-  { key: '←', action: 'Collapse focused tree node or move to parent' },
-  { key: 'Home', action: 'Move focus to first item' },
-  { key: 'End', action: 'Move focus to last item' },
-];
-
-const testAttributes = [
-  { element: 'Root', testId: '{baseTestId}', dataAttributes: 'data-state="open|closed", data-disabled' },
-  { element: 'Trigger', testId: '{baseTestId}-trigger', dataAttributes: '-' },
-  { element: 'Dropdown', testId: '{baseTestId}-dropdown', dataAttributes: '-' },
-  { element: 'Search', testId: '{baseTestId}-search', dataAttributes: '-' },
-  { element: 'Clear', testId: '{baseTestId}-clear', dataAttributes: '-' },
-  { element: 'Option', testId: '{baseTestId}-option-{key}', dataAttributes: 'data-state="selected|unselected", data-disabled' },
-  { element: 'Tag', testId: '{baseTestId}-tag-{key}', dataAttributes: '-' },
-  { element: 'Empty', testId: '{baseTestId}-empty', dataAttributes: '-' },
-];
-
-const examples = [
-  {
-    id: 'basic',
-    title: 'Basic TreeSelect',
-    description: 'Select a single value from a tree structure.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-
-const treeData = [
-  {
-    key: 'parent',
-    title: 'Parent Node',
-    children: [
-      {
-        key: 'child1',
-        title: 'Child Node 1',
-        children: [
-          { key: 'leaf1', title: 'Leaf 1' },
-          { key: 'leaf2', title: 'Leaf 2' },
-        ],
-      },
-      { key: 'child2', title: 'Child Node 2' },
-    ],
-  },
-]
-
-function App() {
-  const [value, setValue] = useState<string>()
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      value={value}
-      onChange={(val) => setValue(val as string)}
-      placeholder="Select an item"
-    />
-  )
-}`,
-  },
-  {
-    id: 'multiple',
-    title: 'Multiple Selection',
-    description: 'Select multiple values from the tree.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-
-function App() {
-  const [value, setValue] = useState<string[]>([])
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      value={value}
-      onChange={(val) => setValue(val as string[])}
-      placeholder="Select items"
-      multiple
-    />
-  )
-}`,
-  },
-  {
-    id: 'checkable',
-    title: 'Checkable',
-    description: 'Use checkboxes for selection with parent-child association.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-
-function App() {
-  const [value, setValue] = useState<string[]>([])
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      value={value}
-      onChange={(val) => setValue(val as string[])}
-      placeholder="Check items"
-      treeCheckable
-    />
-  )
-}`,
-  },
-  {
-    id: 'searchable',
-    title: 'Searchable',
-    description: 'Filter tree nodes with search.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-
-function App() {
-  const [value, setValue] = useState<string>()
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      value={value}
-      onChange={(val) => setValue(val as string)}
-      placeholder="Search and select"
-      showSearch
-    />
-  )
-}`,
-  },
-  {
-    id: 'sizes',
-    title: 'Sizes',
-    description: 'TreeSelect comes in various sizes.',
-    code: `import { TreeSelect } from 'asterui'
-
-function App() {
-  return (
-    <div className="flex flex-col gap-2">
-      <TreeSelect treeData={treeData} size="xs" placeholder="Extra small" />
-      <TreeSelect treeData={treeData} size="sm" placeholder="Small" />
-      <TreeSelect treeData={treeData} size="md" placeholder="Medium" />
-      <TreeSelect treeData={treeData} size="lg" placeholder="Large" />
-      <TreeSelect treeData={treeData} size="xl" placeholder="Extra large" />
-    </div>
-  )
-}`,
-  },
-  {
-    id: 'status',
-    title: 'Validation Status',
-    description: 'Show error or warning states.',
-    code: `import { TreeSelect } from 'asterui'
-
-function App() {
-  return (
-    <div className="flex flex-col gap-2">
-      <TreeSelect treeData={treeData} status="error" placeholder="Error state" />
-      <TreeSelect treeData={treeData} status="warning" placeholder="Warning state" />
-    </div>
-  )
-}`,
-  },
-  {
-    id: 'async-load',
-    title: 'Async Loading',
-    description: 'Load tree nodes asynchronously when expanded.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-import type { TreeDataNode } from 'asterui'
-
-function App() {
-  const [treeData, setTreeData] = useState<TreeDataNode[]>([
-    { key: 'region1', title: 'Region 1' },
-    { key: 'region2', title: 'Region 2' },
-  ])
-
-  const loadData = async (node: TreeDataNode) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setTreeData((prev) => {
-      const updateNode = (nodes: TreeDataNode[]): TreeDataNode[] =>
-        nodes.map((n) =>
-          n.key === node.key
-            ? {
-                ...n,
-                children: [
-                  { key: \`\${n.key}-1\`, title: 'Child 1', isLeaf: true },
-                  { key: \`\${n.key}-2\`, title: 'Child 2', isLeaf: true },
-                ],
-              }
-            : { ...n, children: n.children ? updateNode(n.children) : undefined }
-        )
-      return updateNode(prev)
-    })
-  }
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      loadData={loadData}
-      placeholder="Expand to load"
-    />
-  )
-}`,
-  },
-  {
-    id: 'max-tag',
-    title: 'Max Tag Count',
-    description: 'Limit the number of visible tags.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-
-function App() {
-  const [value, setValue] = useState<string[]>([])
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      value={value}
-      onChange={(val) => setValue(val as string[])}
-      placeholder="Select items"
-      treeCheckable
-      maxTagCount={2}
-      maxTagPlaceholder={(omitted) => \`+\${omitted.length} more...\`}
-    />
-  )
-}`,
-  },
-  {
-    id: 'tree-line',
-    title: 'Tree Line',
-    description: 'Show connecting lines between tree nodes.',
-    code: `import { TreeSelect } from 'asterui'
-
-function App() {
-  return (
-    <TreeSelect
-      treeData={treeData}
-      placeholder="With tree lines"
-      treeLine
-      treeDefaultExpandAll
-    />
-  )
-}`,
-  },
-  {
-    id: 'disabled-items',
-    title: 'Disabled Items',
-    description: 'Some tree nodes can be disabled.',
-    code: `import { useState } from 'react'
-import { TreeSelect } from 'asterui'
-
-function App() {
-  const [value, setValue] = useState<string>()
-
-  const treeData = [
-    {
-      key: 'parent',
-      title: 'Available Parent',
-      children: [
-        { key: 'child1', title: 'Available Child' },
-        { key: 'child2', title: 'Disabled Child', disabled: true },
-        { key: 'child3', title: 'Another Available' },
-      ],
-    },
-  ]
-
-  return (
-    <TreeSelect
-      treeData={treeData}
-      value={value}
-      onChange={(val) => setValue(val as string)}
-      placeholder="Select an item"
-    />
-  )
-}`,
-  },
+const apiTables = [
+  { title: 'TreeSelect Props', data: api },
+  { title: 'TreeDataNode', data: treeDataNodeApi },
 ];
 ---
 
-<Layout title="TreeSelect - AsterUI">
-  <div>
-    <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/components">Components</a></li>
-          <li>TreeSelect</li>
-        </ul>
-      </nav>
-      <h1 class="text-4xl font-bold mb-2">TreeSelect</h1>
-      <p class="text-base-content/70 text-lg">Dropdown tree selection for hierarchical data.</p>
+<ComponentLayout
+  name="TreeSelect"
+  description="Dropdown tree selection for hierarchical data."
+  api={apiTables}
+>
+  <Example title="Basic TreeSelect" description="Select a single value from a tree structure." source={TreeSelectDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Multiple Selection" description="Select multiple values from the tree." source={TreeSelectDemoSource} fn="MultipleDemo">
+    <MultipleDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Checkable" description="Use checkboxes for selection with parent-child association." source={TreeSelectDemoSource} fn="CheckableDemo">
+    <CheckableDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Searchable" description="Filter tree nodes with search." source={TreeSelectDemoSource} fn="SearchableDemo">
+    <SearchableDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Sizes" description="TreeSelect comes in various sizes." source={TreeSelectDemoSource} fn="SizesDemo">
+    <SizesDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Validation Status" description="Show error or warning states." source={TreeSelectDemoSource} fn="StatusDemo">
+    <StatusDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Async Loading" description="Load tree nodes asynchronously when expanded." source={TreeSelectDemoSource} fn="AsyncLoadDemo">
+    <AsyncLoadDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Max Tag Count" description="Limit the number of visible tags." source={TreeSelectDemoSource} fn="MaxTagDemo">
+    <MaxTagDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Tree Line" description="Show connecting lines between tree nodes." source={TreeSelectDemoSource} fn="TreeLineDemo">
+    <TreeLineDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Disabled Items" description="Some tree nodes can be disabled." source={TreeSelectDemoSource} fn="DisabledItemsDemo">
+    <DisabledItemsDemo client:load slot="demo" />
+  </Example>
+
+  <section slot="accessibility" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
+    <p class="text-base-content/80 mb-4">
+      The TreeSelect component follows WAI-ARIA combobox and tree patterns with proper ARIA attributes and keyboard navigation.
+    </p>
+    <h3 class="text-xl font-semibold mb-3">Keyboard Navigation</h3>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><kbd class="kbd kbd-sm">Enter / Space</kbd></td>
+            <td>Open dropdown or select focused item</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">Escape</kbd></td>
+            <td>Close dropdown</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">↓</kbd></td>
+            <td>Open dropdown or move focus down</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">↑</kbd></td>
+            <td>Move focus up</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">→</kbd></td>
+            <td>Expand focused tree node</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">←</kbd></td>
+            <td>Collapse focused tree node or move to parent</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">Home</kbd></td>
+            <td>Move focus to first item</td>
+          </tr>
+          <tr>
+            <td><kbd class="kbd kbd-sm">End</kbd></td>
+            <td>Move focus to last item</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Import</h2>
-      <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
-        <Code code="import { TreeSelect } from 'asterui'" lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-      </div>
-    </section>
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Examples</h2>
-      <div class="columns-1 lg:columns-2 gap-6">
-      {examples.map((example) => (
-        <div class="example-card mb-6 border border-base-300 rounded-lg break-inside-avoid">
-          <div class="p-4 bg-base-100 rounded-t-lg">
-            <h3 class="text-lg font-semibold mb-1">{example.title}</h3>
-            <p class="text-sm text-base-content/70 mb-4">{example.description}</p>
-            <div class="demo-container" data-example={example.id}></div>
-          </div>
-          <div class="border-t border-base-300 flex justify-center bg-base-200 rounded-b-lg">
-            <div class="tooltip tooltip-top" data-tip="Show code">
-              <button class="toggle-code btn btn-ghost btn-sm font-mono">&lt;&#8201;&gt;</button>
-            </div>
-          </div>
-          <div class="code-panel relative" aria-hidden="true">
-            <button class="copy-btn absolute top-2 right-2 btn btn-xs btn-ghost z-10" data-code={example.code}>
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-            </button>
-            <div class="[&_pre]:!p-4 [&_pre]:!rounded-none [&_pre]:!m-0 text-sm">
-              <Code code={example.code} lang="tsx" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
-            </div>
-          </div>
-        </div>
-      ))}
-      </div>
-    </section>
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">API</h2>
-      <ApiTable title="TreeSelect Props" data={treeSelectApi} />
-      <div class="mt-8">
-        <ApiTable title="TreeDataNode" data={treeDataNodeApi} />
-      </div>
-    </section>
-
-    <section class="mb-12">
-      <h2 class="text-2xl font-bold mb-4">Accessibility</h2>
-      <p class="text-base-content/80 mb-4">
-        The TreeSelect component follows WAI-ARIA combobox and tree patterns with proper ARIA attributes and keyboard navigation.
-      </p>
-      <h3 class="text-xl font-semibold mb-3">Keyboard Navigation</h3>
-      <div class="overflow-x-auto">
-        <table class="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>Key</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {keyboardNav.map((item) => (
-              <tr>
-                <td><kbd class="kbd kbd-sm">{item.key}</kbd></td>
-                <td>{item.action}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <section class="mb-8">
-      <h2 class="text-2xl font-bold mb-4">Testing</h2>
-      <p class="text-base-content/80 mb-4">
-        The component exposes <code class="badge badge-ghost">data-testid</code> and <code class="badge badge-ghost">data-state</code> attributes for testing:
-      </p>
-      <div class="overflow-x-auto">
-        <table class="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>Element</th>
-              <th>Test ID</th>
-              <th>Data Attributes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {testAttributes.map((item) => (
-              <tr>
-                <td>{item.element}</td>
-                <td><code class="text-sm">{item.testId}</code></td>
-                <td><code class="text-sm">{item.dataAttributes}</code></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <p class="text-base-content/80 mt-4">
-        Pass a custom <code class="badge badge-ghost">data-testid</code> prop to use a different base ID.
-      </p>
-    </section>
-  </div>
-</Layout>
-
-<style>
-  .code-panel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
-  .example-card.open .code-panel { max-height: 2000px; }
-</style>
-
-<script>
-  import '../../scripts/treeselectDemos.tsx';
-  document.querySelectorAll('.toggle-code').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const card = btn.closest('.example-card');
-      if (card) {
-        card.classList.toggle('open');
-        const panel = card.querySelector('.code-panel');
-        const tooltip = btn.closest('.tooltip');
-        if (card.classList.contains('open')) {
-          panel?.setAttribute('aria-hidden', 'false');
-          tooltip?.setAttribute('data-tip', 'Hide code');
-        } else {
-          panel?.setAttribute('aria-hidden', 'true');
-          tooltip?.setAttribute('data-tip', 'Show code');
-        }
-      }
-    });
-  });
-</script>
+    <h3 class="text-xl font-semibold mb-3 mt-6">Testing</h3>
+    <p class="text-base-content/80 mb-4">
+      The component exposes <code class="bg-base-content/20 px-1 rounded">data-testid</code> and <code class="bg-base-content/20 px-1 rounded">data-state</code> attributes for testing:
+    </p>
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Element</th>
+            <th>Test ID</th>
+            <th>Data Attributes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Root</td>
+            <td><code class="text-sm">{'{baseTestId}'}</code></td>
+            <td><code class="text-sm">data-state="open|closed", data-disabled</code></td>
+          </tr>
+          <tr>
+            <td>Trigger</td>
+            <td><code class="text-sm">{'{baseTestId}'}-trigger</code></td>
+            <td><code class="text-sm">-</code></td>
+          </tr>
+          <tr>
+            <td>Dropdown</td>
+            <td><code class="text-sm">{'{baseTestId}'}-dropdown</code></td>
+            <td><code class="text-sm">-</code></td>
+          </tr>
+          <tr>
+            <td>Search</td>
+            <td><code class="text-sm">{'{baseTestId}'}-search</code></td>
+            <td><code class="text-sm">-</code></td>
+          </tr>
+          <tr>
+            <td>Clear</td>
+            <td><code class="text-sm">{'{baseTestId}'}-clear</code></td>
+            <td><code class="text-sm">-</code></td>
+          </tr>
+          <tr>
+            <td>Option</td>
+            <td><code class="text-sm">{'{baseTestId}'}-option-{'{key}'}</code></td>
+            <td><code class="text-sm">data-state="selected|unselected", data-disabled</code></td>
+          </tr>
+          <tr>
+            <td>Tag</td>
+            <td><code class="text-sm">{'{baseTestId}'}-tag-{'{key}'}</code></td>
+            <td><code class="text-sm">-</code></td>
+          </tr>
+          <tr>
+            <td>Empty</td>
+            <td><code class="text-sm">{'{baseTestId}'}-empty</code></td>
+            <td><code class="text-sm">-</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-base-content/80 mt-4">
+      Pass a custom <code class="bg-base-content/20 px-1 rounded">data-testid</code> prop to use a different base ID.
+    </p>
+  </section>
+</ComponentLayout>
