@@ -21,15 +21,9 @@ const { title, description, toc } = Astro.props;
 
 <Layout title={`${title} - AsterUI`}>
   <!-- Main content - left-aligned with constrained width -->
-  <article style="max-width: 48rem; margin: 0 auto;">
+  <article style="max-width: 56rem; margin: 0 auto;">
     <!-- Header -->
     <div class="mb-8">
-      <nav class="text-sm breadcrumbs mb-4">
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li>{title}</li>
-        </ul>
-      </nav>
       <h1 class="text-4xl font-bold mb-2">{title}</h1>
       {description && (
         <p class="text-base-content/70 text-lg">{description}</p>
