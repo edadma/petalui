@@ -37,6 +37,8 @@ export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
   defaultActiveTabKey?: string
   onTabChange?: (key: string) => void
   tabBarExtraContent?: React.ReactNode
+  /** Additional classes for the card-body element */
+  bodyClassName?: string
   'data-testid'?: string
 }
 
@@ -138,6 +140,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
       defaultActiveTabKey,
       onTabChange,
       tabBarExtraContent,
+      bodyClassName,
       'data-testid': testId,
       ...rest
     },
@@ -296,7 +299,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
           <figure data-testid={`${baseTestId}-cover`}>{cover}</figure>
         )}
         {renderTabs()}
-        <div className="card-body" data-testid={`${baseTestId}-body`}>
+        <div className={`card-body ${bodyClassName || ''}`} data-testid={`${baseTestId}-body`}>
           {hasMetaLayout ? (
             <>
               <div className="flex gap-4">

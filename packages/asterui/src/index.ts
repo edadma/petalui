@@ -71,6 +71,12 @@ export type { CountdownProps } from './components/Countdown'
 export { DatePicker } from './components/DatePicker'
 export type { DatePickerProps } from './components/DatePicker'
 
+export { MonthCalendar } from './components/MonthCalendar'
+export type { MonthCalendarProps, CalendarEvent, CalendarLocale } from './components/MonthCalendar'
+
+export { WeekCalendar } from './components/WeekCalendar'
+export type { WeekCalendarProps } from './components/WeekCalendar'
+
 export { Descriptions } from './components/Descriptions'
 export type { DescriptionsProps, DescriptionsItemProps, DescriptionsItemConfig, DescriptionsSize, DescriptionsLayout } from './components/Descriptions'
 

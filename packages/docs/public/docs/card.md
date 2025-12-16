@@ -429,6 +429,7 @@ export default App
 | `tabBarExtraContent` | Extra content in tab bar | `React.ReactNode` | `-` |
 | `data-testid` | Test ID for the component | `string` | `'card'` |
 | `className` | Additional CSS classes | `string` | `-` |
+| `bodyClassName` | Additional CSS classes for the card-body element | `string` | `-` |
 | `style` | Inline styles | `React.CSSProperties` | `-` |
 
 ### CardTabItem

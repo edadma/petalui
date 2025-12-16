@@ -15,9 +15,10 @@ interface Props {
   description: string;
   importCode?: string;
   api?: ApiItem[] | Array<{ title: string; data: ApiItem[] }>;
+  singleColumn?: boolean;
 }
 
-const { name, description, importCode, api } = Astro.props;
+const { name, description, importCode, api, singleColumn = false } = Astro.props;
 const defaultImport = `import { ${name} } from 'asterui'`;
 
 // Normalize api to always be an array of { title, data }
@@ -50,7 +51,7 @@ const apiTables = api
     <!-- Examples -->
     <section class="mb-12">
       <h2 class="text-2xl font-bold mb-6">Examples</h2>
-      <div class="columns-1 lg:columns-2 gap-6">
+      <div class={singleColumn ? "space-y-6" : "columns-1 lg:columns-2 gap-6"}>
         <slot />
       </div>
     </section>
