@@ -180,6 +180,7 @@ async function main() {
           message: 'Optional components (require extra dependencies)',
           options: [
             { value: 'chart', label: 'Chart', hint: 'apexcharts' },
+            { value: 'editor', label: 'RichTextEditor', hint: '@tiptap/react + extensions' },
             { value: 'qrcode', label: 'QRCode', hint: 'qrcode' },
             { value: 'virtuallist', label: 'VirtualList', hint: '@tanstack/react-virtual' },
           ],
@@ -312,6 +313,13 @@ function generatePackageJson(name: string, language: string, optionalDeps: strin
   // Add optional dependencies
   if (optionalDeps.includes('chart')) {
     deps['apexcharts'] = '^5.0.0'
+  }
+  if (optionalDeps.includes('editor')) {
+    deps['@tiptap/react'] = '^2.0.0'
+    deps['@tiptap/starter-kit'] = '^2.0.0'
+    deps['@tiptap/extension-link'] = '^2.0.0'
+    deps['@tiptap/extension-placeholder'] = '^2.0.0'
+    deps['@tiptap/extension-underline'] = '^2.0.0'
   }
   if (optionalDeps.includes('qrcode')) {
     deps['qrcode'] = '^1.5.0'

@@ -20,7 +20,7 @@
 
 /* Code blocks styling */
 pre {
-  @apply overflow-x-auto;
+  @apply overflow-x-auto p-3;
 }
 
 code {

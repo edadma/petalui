@@ -84,6 +84,7 @@ npm install asterui
 - [Radio](https://asterui.com/docs/radio.md)
 - [Range](https://asterui.com/docs/range.md)
 - [Rating](https://asterui.com/docs/rating.md)
+- [RichTextEditor](https://asterui.com/docs/richtexteditor.md) - WYSIWYG editor (requires @tiptap packages)
 - [Select](https://asterui.com/docs/select.md)
 - [Segmented](https://asterui.com/docs/segmented.md)
 - [Textarea](https://asterui.com/docs/textarea.md)
@@ -97,7 +98,6 @@ npm install asterui
 
 - [Avatar](https://asterui.com/docs/avatar.md)
 - [Badge](https://asterui.com/docs/badge.md)
-- [Calendar](https://asterui.com/docs/calendar.md)
 - [Card](https://asterui.com/docs/card.md)
 - [Carousel](https://asterui.com/docs/carousel.md)
 - [Chart](https://asterui.com/docs/chart.md)
@@ -109,6 +109,7 @@ npm install asterui
 - [Image](https://asterui.com/docs/image.md)
 - [Indicator](https://asterui.com/docs/indicator.md)
 - [List](https://asterui.com/docs/list.md)
+- [MonthCalendar](https://asterui.com/docs/monthcalendar.md)
 - [Popover](https://asterui.com/docs/popover.md)
 - [QRCode](https://asterui.com/docs/qrcode.md)
 - [Stat](https://asterui.com/docs/stat.md)
@@ -118,6 +119,7 @@ npm install asterui
 - [Tooltip](https://asterui.com/docs/tooltip.md)
 - [Tree](https://asterui.com/docs/tree.md)
 - [Watermark](https://asterui.com/docs/watermark.md)
+- [WeekCalendar](https://asterui.com/docs/weekcalendar.md)
 
 ### Feedback
 

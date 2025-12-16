@@ -1,0 +1,112 @@
+---
+import ComponentLayout from '../../layouts/ComponentLayout.astro';
+import Example from '../../components/Example.astro';
+import { Code } from 'astro:components';
+import {
+  BasicDemo,
+  ControlledDemo,
+  MinimalToolbarDemo,
+  FullToolbarDemo,
+  NoToolbarDemo,
+  SizesDemo,
+  MaxHeightDemo,
+  ReadOnlyDemo,
+  BorderlessDemo,
+  EditorInstanceDemo,
+} from '../../components/RichTextEditorDemo';
+import RichTextEditorDemoSource from '../../components/RichTextEditorDemo.tsx?raw';
+
+const api = [
+  { property: 'value', description: 'HTML content (controlled)', type: 'string', default: "''" },
+  { property: 'onChange', description: 'Callback when content changes', type: '(html: string) => void' },
+  { property: 'placeholder', description: 'Placeholder text', type: 'string', default: "'Start typing...'" },
+  { property: 'toolbar', description: 'Toolbar items to display', type: 'ToolbarItem[]', default: '[default set]' },
+  { property: 'hideToolbar', description: 'Hide the toolbar', type: 'boolean', default: 'false' },
+  { property: 'readOnly', description: 'Make editor read-only', type: 'boolean', default: 'false' },
+  { property: 'autoFocus', description: 'Auto focus on mount', type: 'boolean', default: 'false' },
+  { property: 'minHeight', description: 'Minimum height of editor', type: 'string | number', default: '200' },
+  { property: 'maxHeight', description: 'Maximum height (enables scrolling)', type: 'string | number' },
+  { property: 'size', description: 'Text size variant', type: "'sm' | 'md' | 'lg'", default: "'md'" },
+  { property: 'bordered', description: 'Show border around editor', type: 'boolean', default: 'true' },
+  { property: 'onEditorReady', description: 'Callback with Tiptap editor instance', type: '(editor: Editor) => void' },
+];
+
+const toolbarItems = [
+  { property: 'bold', description: 'Bold text' },
+  { property: 'italic', description: 'Italic text' },
+  { property: 'underline', description: 'Underlined text' },
+  { property: 'strikethrough', description: 'Strikethrough text' },
+  { property: 'code', description: 'Inline code' },
+  { property: 'heading1', description: 'Heading level 1' },
+  { property: 'heading2', description: 'Heading level 2' },
+  { property: 'heading3', description: 'Heading level 3' },
+  { property: 'bulletList', description: 'Unordered list' },
+  { property: 'orderedList', description: 'Ordered list' },
+  { property: 'blockquote', description: 'Blockquote' },
+  { property: 'codeBlock', description: 'Code block' },
+  { property: 'horizontalRule', description: 'Horizontal line' },
+  { property: 'link', description: 'Insert/edit link' },
+  { property: 'undo', description: 'Undo last change' },
+  { property: 'redo', description: 'Redo last change' },
+  { property: '|', description: 'Toolbar divider' },
+];
+---
+
+<ComponentLayout
+  name="RichTextEditor"
+  description="A theme-aware WYSIWYG editor built on Tiptap for rich text editing with customizable toolbar."
+  importCode="import { RichTextEditor } from 'asterui/editor'"
+  api={[
+    { title: 'RichTextEditor', data: api },
+    { title: 'ToolbarItem', data: toolbarItems },
+  ]}
+  singleColumn
+>
+  <section slot="installation" class="mb-8">
+    <h2 class="text-2xl font-bold mb-4">Installation</h2>
+    <p class="text-base-content/80 mb-4">This component requires <code class="bg-base-content/20 px-1 rounded">@tiptap</code> packages as peer dependencies:</p>
+    <div class="border border-base-300 rounded-lg overflow-hidden [&_pre]:!m-0 [&_pre]:!rounded-none">
+      <Code code="npm install @tiptap/react @tiptap/starter-kit @tiptap/extension-link @tiptap/extension-placeholder @tiptap/extension-underline" lang="bash" themes={{ light: 'github-light', dark: 'github-dark' }} defaultColor={false} />
+    </div>
+  </section>
+
+  <Example title="Basic Editor" description="Simple rich text editor with default toolbar." source={RichTextEditorDemoSource} fn="BasicDemo">
+    <BasicDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Controlled Editor" description="Editor with controlled value showing HTML output." source={RichTextEditorDemoSource} fn="ControlledDemo">
+    <ControlledDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Minimal Toolbar" description="Editor with only basic formatting options." source={RichTextEditorDemoSource} fn="MinimalToolbarDemo">
+    <MinimalToolbarDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Full Toolbar" description="Editor with all available toolbar options." source={RichTextEditorDemoSource} fn="FullToolbarDemo">
+    <FullToolbarDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="No Toolbar" description="Distraction-free writing without toolbar." source={RichTextEditorDemoSource} fn="NoToolbarDemo">
+    <NoToolbarDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Sizes" description="Different text size variants." source={RichTextEditorDemoSource} fn="SizesDemo">
+    <SizesDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Max Height with Scrolling" description="Editor with fixed max height that scrolls." source={RichTextEditorDemoSource} fn="MaxHeightDemo">
+    <MaxHeightDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Read-Only Mode" description="Display formatted content without editing." source={RichTextEditorDemoSource} fn="ReadOnlyDemo">
+    <ReadOnlyDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Borderless" description="Editor without border, useful inside cards." source={RichTextEditorDemoSource} fn="BorderlessDemo">
+    <BorderlessDemo client:load slot="demo" />
+  </Example>
+
+  <Example title="Editor Instance Access" description="Access the Tiptap editor instance for advanced features." source={RichTextEditorDemoSource} fn="EditorInstanceDemo">
+    <EditorInstanceDemo client:load slot="demo" />
+  </Example>
+</ComponentLayout>

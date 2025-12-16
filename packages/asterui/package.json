@@ -30,6 +30,10 @@
     "./virtuallist": {
       "import": "./dist/virtuallist.js",
       "types": "./dist/virtuallist.d.ts"
+    },
+    "./editor": {
+      "import": "./dist/editor.js",
+      "types": "./dist/editor.d.ts"
     }
   },
   "files": [
@@ -43,6 +47,11 @@
   },
   "peerDependencies": {
     "@tanstack/react-virtual": "^3.0.0",
+    "@tiptap/extension-link": "^2.0.0",
+    "@tiptap/extension-placeholder": "^2.0.0",
+    "@tiptap/extension-underline": "^2.0.0",
+    "@tiptap/react": "^2.0.0",
+    "@tiptap/starter-kit": "^2.0.0",
     "apexcharts": "^5.3.6",
     "qrcode": "^1.5.4",
     "react": "^18.0.0 || ^19.0.0",
@@ -51,6 +60,21 @@
   },
   "peerDependenciesMeta": {
     "@tanstack/react-virtual": {
+      "optional": true
+    },
+    "@tiptap/extension-link": {
+      "optional": true
+    },
+    "@tiptap/extension-placeholder": {
+      "optional": true
+    },
+    "@tiptap/extension-underline": {
+      "optional": true
+    },
+    "@tiptap/react": {
+      "optional": true
+    },
+    "@tiptap/starter-kit": {
       "optional": true
     },
     "apexcharts": {
@@ -63,6 +87,11 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-virtual": "^3.13.13",
+    "@tiptap/extension-link": "^2.11.5",
+    "@tiptap/extension-placeholder": "^2.11.5",
+    "@tiptap/extension-underline": "^2.11.5",
+    "@tiptap/react": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
     "@types/qrcode": "^1.5.6",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
