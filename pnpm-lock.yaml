@@ -88,7 +88,7 @@ importers:
         version: 3.6.0
       '@tailwindcss/vite':
         specifier: ^4.1.17
-        version: 4.1.17(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
+        version: 4.1.17(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/react-virtual':
         specifier: ^3.13.13
         version: 3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -115,10 +115,6 @@ importers:
         version: 16.0.0
       tailwindcss:
         specifier: ^4.1.17
-        version: 4.1.18
-    devDependencies:
-      '@tailwindcss/cli':
-        specifier: ^4.1.18
         version: 4.1.18
 
   packages/docs-old:
@@ -485,7 +481,7 @@ importers:
         version: 3.6.0
       '@tailwindcss/vite':
         specifier: ^4.1.17
-        version: 4.1.17(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
+        version: 4.1.17(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
       '@tanstack/react-virtual':
         specifier: ^3.13.13
         version: 3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
