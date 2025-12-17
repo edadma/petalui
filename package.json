@@ -8,6 +8,7 @@
     "dev": "pnpm --filter site dev",
     "dev:docs": "pnpm --filter docs dev",
     "dev:docs-old": "pnpm --filter docs-old dev",
+    "dev:sldocs": "pnpm --filter sldocs dev",
     "test": "pnpm -r test",
     "publish": "pnpm --filter asterui publish --access public",
     "publish:create": "pnpm --filter create-asterui publish --access public",

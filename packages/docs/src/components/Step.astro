@@ -10,30 +10,33 @@ interface Props {
 const { title, class: className } = Astro.props;
 ---
 
-<div class:list={["step", className]}>
-  <h3 class="step-title">{title}</h3>
-  <div class="step-content">
+<div class:list={["docs-step relative pl-10 pb-8", className]}>
+  <span class="absolute left-0 top-0 w-7 h-7 rounded-full bg-base-content/8 border border-base-content/15 text-base-content text-center text-sm font-bold leading-[26px] docs-step-number"></span>
+  <div class="docs-step-line absolute left-[13px] top-10 w-px h-[calc(100%-2.5rem)] bg-base-content/20"></div>
+  <div class="docs-step-title mb-2 leading-7">{title}</div>
+  <div class="docs-step-content">
     <slot />
   </div>
 </div>
 
 <style>
-  .step-title {
-    font-size: 1.125rem;
-    font-weight: 600;
+  .docs-step-number::before {
+    content: counter(docs-steps-counter);
+  }
+
+  .docs-step-content :global(p) {
     margin-bottom: 0.75rem;
-    color: oklch(var(--bc));
   }
 
-  .step-content {
-    color: oklch(var(--bc) / 0.8);
-  }
-
-  .step-content :global(p) {
-    margin-bottom: 1rem;
-  }
-
-  .step-content :global(p:last-child) {
+  .docs-step-content :global(p:last-child) {
     margin-bottom: 0;
+  }
+
+  .docs-step:last-child {
+    padding-bottom: 0;
+  }
+
+  .docs-step:last-child .docs-step-line {
+    display: none;
   }
 </style>

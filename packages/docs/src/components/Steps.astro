@@ -1,7 +1,6 @@
 ---
 /**
  * Steps component - Timeline-style numbered steps like Starlight
- * Uses scoped styles to avoid DaisyUI conflicts
  */
 interface Props {
   class?: string;
@@ -10,57 +9,12 @@ interface Props {
 const { class: className } = Astro.props;
 ---
 
-<div class:list={["steps-container", className]}>
+<div class:list={["docs-steps", className]} style="counter-reset: docs-steps-counter;">
   <slot />
 </div>
 
-<style>
-  .steps-container {
-    --step-color: oklch(var(--bc) / 0.7);
-    --step-bg: oklch(var(--bc) / 0.1);
-    --step-line-color: oklch(var(--bc) / 0.15);
-    --step-number-size: 1.625rem;
-    --step-line-width: 1px;
-    counter-reset: step-counter;
-  }
-
-  .steps-container > :global(.step) {
-    position: relative;
-    padding-left: calc(var(--step-number-size) + 1.25rem);
-    padding-bottom: 2.5rem;
-    counter-increment: step-counter;
-  }
-
-  .steps-container > :global(.step):last-child {
-    padding-bottom: 0;
-  }
-
-  /* Number badge */
-  .steps-container > :global(.step)::before {
-    content: counter(step-counter);
-    position: absolute;
-    left: 0;
-    top: 0.125rem;
-    width: var(--step-number-size);
-    height: var(--step-number-size);
-    background: var(--step-bg);
-    color: var(--step-color);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-    font-size: 0.8125rem;
-  }
-
-  /* Connecting line */
-  .steps-container > :global(.step):not(:last-child)::after {
-    content: '';
-    position: absolute;
-    left: calc(var(--step-number-size) / 2 - var(--step-line-width) / 2);
-    top: calc(var(--step-number-size) + 0.5rem);
-    bottom: 0.5rem;
-    width: var(--step-line-width);
-    background: var(--step-line-color);
+<style is:global>
+  .docs-steps > .docs-step {
+    counter-increment: docs-steps-counter;
   }
 </style>
