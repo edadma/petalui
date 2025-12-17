@@ -1,0 +1,202 @@
+import React, { useContext } from 'react'
+import { useClipboard } from '../hooks/useClipboard'
+import { IconSizeContext } from '../contexts/IconSizeContext'
+
+const iconSizeClasses = {
+  xs: 'w-3.5 h-3.5',
+  sm: 'w-3.5 h-3.5',
+  md: 'w-4 h-4',
+  lg: 'w-5 h-5',
+  xl: 'w-6 h-6',
+}
+
+export type CopyButtonPosition = 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left'
+
+export interface CopyButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'children' | 'onError'> {
+  /** Text to copy to clipboard */
+  text: string
+  /** Duration in ms to show copied state */
+  timeout?: number
+  /** Button color */
+  color?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral'
+  /** Button style variant */
+  variant?: 'solid' | 'outline' | 'dash' | 'soft' | 'ghost' | 'link'
+  /** Button size */
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  /** Button shape */
+  shape?: 'square' | 'circle'
+  /** Absolute position within parent (parent must have position: relative) */
+  position?: CopyButtonPosition
+  /** Custom icon for default state */
+  icon?: React.ReactNode
+  /** Custom icon for copied state */
+  copiedIcon?: React.ReactNode
+  /** Custom content for default state (overrides icon) */
+  children?: React.ReactNode
+  /** Custom content for copied state */
+  copiedChildren?: React.ReactNode
+  /** Callback when copy succeeds */
+  onCopy?: () => void
+  /** Callback when copy fails */
+  onError?: (error: Error) => void
+  /** Show tooltip with copy status */
+  showTooltip?: boolean
+  /** Tooltip text for default state */
+  tooltipText?: string
+  /** Tooltip text for copied state */
+  copiedTooltipText?: string
+}
+
+const CopyIcon: React.FC = () => {
+  const size = useContext(IconSizeContext) ?? 'md'
+  return (
+    <svg
+      className={iconSizeClasses[size]}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+    </svg>
+  )
+}
+
+const CheckIcon: React.FC = () => {
+  const size = useContext(IconSizeContext) ?? 'md'
+  return (
+    <svg
+      className={iconSizeClasses[size]}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m4.5 12.75 6 6 9-13.5" />
+    </svg>
+  )
+}
+
+const positionClasses: Record<CopyButtonPosition, string> = {
+  'top-right': 'absolute top-2 right-2',
+  'top-left': 'absolute top-2 left-2',
+  'bottom-right': 'absolute bottom-2 right-2',
+  'bottom-left': 'absolute bottom-2 left-2',
+}
+
+export const CopyButton: React.FC<CopyButtonProps> = ({
+  text,
+  timeout = 2000,
+  color,
+  variant,
+  size = 'md',
+  shape,
+  position,
+  icon,
+  copiedIcon,
+  children,
+  copiedChildren,
+  onCopy,
+  onError,
+  showTooltip = false,
+  tooltipText = 'Copy',
+  copiedTooltipText = 'Copied!',
+  className = '',
+  disabled,
+  onClick,
+  ...rest
+}) => {
+  const { copy, copied } = useClipboard(timeout)
+
+  const handleClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    onClick?.(e)
+    if (disabled) return
+
+    const success = await copy(text)
+    if (success) {
+      onCopy?.()
+    } else {
+      onError?.(new Error('Failed to copy to clipboard'))
+    }
+  }
+
+  const colorClasses = {
+    primary: 'd-btn-primary',
+    secondary: 'd-btn-secondary',
+    accent: 'd-btn-accent',
+    info: 'd-btn-info',
+    success: 'd-btn-success',
+    warning: 'd-btn-warning',
+    error: 'd-btn-error',
+    neutral: 'd-btn-neutral',
+  }
+
+  const variantClasses = {
+    solid: '',
+    outline: 'd-btn-outline',
+    dash: 'd-btn-dash',
+    soft: 'd-btn-soft',
+    ghost: 'd-btn-ghost',
+    link: 'd-btn-link',
+  }
+
+  const sizeClasses = {
+    xs: 'd-btn-xs',
+    sm: 'd-btn-sm',
+    md: '',
+    lg: 'd-btn-lg',
+    xl: 'd-btn-xl',
+  }
+
+  const shapeClasses = {
+    square: 'd-btn-square',
+    circle: 'd-btn-circle',
+  }
+
+  const classes = [
+    'd-btn',
+    color && colorClasses[color],
+    copied && 'd-btn-success',
+    variant && variantClasses[variant],
+    sizeClasses[size],
+    shape && shapeClasses[shape],
+    // Only add position classes if not using tooltip (tooltip wrapper gets them instead)
+    !showTooltip && position && positionClasses[position],
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const defaultIcon = icon ?? <CopyIcon />
+  const successIcon = copiedIcon ?? <CheckIcon />
+
+  const content = copied
+    ? (copiedChildren ?? successIcon)
+    : (children ?? defaultIcon)
+
+  const button = (
+    <button
+      type="button"
+      className={classes}
+      onClick={handleClick}
+      disabled={disabled}
+      aria-label={copied ? copiedTooltipText : tooltipText}
+      {...rest}
+    >
+      <IconSizeContext.Provider value={size}>
+        {content}
+      </IconSizeContext.Provider>
+    </button>
+  )
+
+  if (showTooltip) {
+    const tooltipClasses = ['d-tooltip', position && positionClasses[position]].filter(Boolean).join(' ')
+    return (
+      <div className={tooltipClasses} data-tip={copied ? copiedTooltipText : tooltipText}>
+        {button}
+      </div>
+    )
+  }
+
+  return button
+}
+
+CopyButton.displayName = 'CopyButton'

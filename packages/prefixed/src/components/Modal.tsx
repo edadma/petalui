@@ -1,0 +1,504 @@
+import React, { useEffect, useRef, useId } from 'react'
+import { createRoot } from 'react-dom/client'
+
+export type ModalPosition = 'top' | 'middle' | 'bottom'
+export type ModalAlign = 'start' | 'end'
+export type Breakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
+
+export type ResponsivePosition = Partial<Record<Breakpoint, ModalPosition>>
+
+export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDialogElement>, 'title'> {
+  children: React.ReactNode
+  title?: React.ReactNode
+  footer?: React.ReactNode
+  open?: boolean
+  onOk?: () => void | Promise<void>
+  onCancel?: () => void
+  okText?: string
+  cancelText?: string
+  maskClosable?: boolean
+  closable?: boolean
+  /** Modal position - can be a single value or responsive object */
+  position?: ModalPosition | ResponsivePosition
+  align?: ModalAlign
+  /** Width of the modal box */
+  width?: number | string
+  /** Center the modal vertically */
+  centered?: boolean
+  /** Callback when modal is closed */
+  onClose?: () => void
+  /** Where to place initial focus: 'ok', 'cancel', or 'close' button */
+  initialFocus?: 'ok' | 'cancel' | 'close'
+  /** Use alertdialog role for urgent messages */
+  alertDialog?: boolean
+}
+
+export interface ModalFuncProps {
+  title?: React.ReactNode
+  content?: React.ReactNode
+  onOk?: () => void | Promise<void>
+  onCancel?: () => void
+  okText?: string
+  cancelText?: string
+  type?: 'info' | 'success' | 'warning' | 'error'
+}
+
+export function Modal({
+  children,
+  title,
+  footer,
+  open = false,
+  onOk,
+  onCancel,
+  okText = 'OK',
+  cancelText = 'Cancel',
+  maskClosable = true,
+  closable = true,
+  position,
+  align,
+  width,
+  centered,
+  onClose,
+  initialFocus,
+  alertDialog = false,
+  className = '',
+  ...rest
+}: ModalProps) {
+  const dialogRef = useRef<HTMLDialogElement>(null)
+  const okButtonRef = useRef<HTMLButtonElement>(null)
+  const cancelButtonRef = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const previousActiveElement = useRef<HTMLElement | null>(null)
+  const [loading, setLoading] = React.useState(false)
+  const titleId = useId()
+  const contentId = useId()
+
+  // Handle close - use onClose if provided, otherwise onCancel
+  const closeHandler = onClose || onCancel
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    if (open) {
+      if (!dialog.open) {
+        // Save currently focused element for restoration
+        previousActiveElement.current = document.activeElement as HTMLElement
+        dialog.showModal()
+
+        // Handle custom initial focus placement
+        if (initialFocus) {
+          setTimeout(() => {
+            switch (initialFocus) {
+              case 'ok':
+                okButtonRef.current?.focus()
+                break
+              case 'cancel':
+                cancelButtonRef.current?.focus()
+                break
+              case 'close':
+                closeButtonRef.current?.focus()
+                break
+            }
+          }, 0)
+        }
+      }
+    } else {
+      if (dialog.open) {
+        dialog.close()
+        // Restore focus to previously focused element
+        previousActiveElement.current?.focus()
+      }
+    }
+  }, [open, initialFocus])
+
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    const onDialogClose = () => {
+      closeHandler?.()
+    }
+
+    dialog.addEventListener('close', onDialogClose)
+    return () => {
+      dialog.removeEventListener('close', onDialogClose)
+    }
+  }, [closeHandler])
+
+  // Static class mappings for positions (no interpolation per qa.md)
+  const positionClasses: Record<ModalPosition, string> = {
+    top: 'd-modal-top',
+    middle: 'd-modal-middle',
+    bottom: 'd-modal-bottom',
+  }
+
+  // Responsive position class mappings for each breakpoint
+  const responsivePositionClasses: Record<Breakpoint, Record<ModalPosition, string>> = {
+    base: {
+      top: 'd-modal-top',
+      middle: 'd-modal-middle',
+      bottom: 'd-modal-bottom',
+    },
+    sm: {
+      top: 'sm:d-modal-top',
+      middle: 'sm:d-modal-middle',
+      bottom: 'sm:d-modal-bottom',
+    },
+    md: {
+      top: 'md:d-modal-top',
+      middle: 'md:d-modal-middle',
+      bottom: 'md:d-modal-bottom',
+    },
+    lg: {
+      top: 'lg:d-modal-top',
+      middle: 'lg:d-modal-middle',
+      bottom: 'lg:d-modal-bottom',
+    },
+    xl: {
+      top: 'xl:d-modal-top',
+      middle: 'xl:d-modal-middle',
+      bottom: 'xl:d-modal-bottom',
+    },
+    '2xl': {
+      top: '2xl:d-modal-top',
+      middle: '2xl:d-modal-middle',
+      bottom: '2xl:d-modal-bottom',
+    },
+  }
+
+  const alignClasses: Record<ModalAlign, string> = {
+    start: 'd-modal-start',
+    end: 'd-modal-end',
+  }
+
+  // Build position classes - handle both simple and responsive values
+  const getPositionClasses = (): string[] => {
+    // centered is an alias for position="middle"
+    if (centered) {
+      return [positionClasses.middle]
+    }
+
+    if (!position) {
+      return []
+    }
+
+    // Simple string position
+    if (typeof position === 'string') {
+      return [positionClasses[position]]
+    }
+
+    // Responsive object position
+    const classes: string[] = []
+    for (const [breakpoint, pos] of Object.entries(position) as [Breakpoint, ModalPosition][]) {
+      if (pos) {
+        classes.push(responsivePositionClasses[breakpoint][pos])
+      }
+    }
+    return classes
+  }
+
+  const classes = [
+    'd-modal',
+    ...getPositionClasses(),
+    align && alignClasses[align],
+    className,
+  ]
+    .filter(Boolean)
+    .join(' ')
+
+  const handleOk = async () => {
+    if (onOk) {
+      setLoading(true)
+      try {
+        await onOk()
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        throw error
+      }
+    }
+  }
+
+  const handleBackdropClick = () => {
+    if (maskClosable && closeHandler) {
+      closeHandler()
+    }
+  }
+
+  // Calculate modal-box style for custom width
+  const modalBoxStyle: React.CSSProperties = width
+    ? { width: typeof width === 'number' ? `${width}px` : width, maxWidth: '90vw' }
+    : {}
+
+  // Render default footer if no custom footer provided and either onOk or onCancel exists
+  const shouldRenderDefaultFooter = !footer && (onOk || onCancel)
+  const shouldRenderCustomFooter = footer !== null && footer !== undefined
+
+  return (
+    <dialog
+      ref={dialogRef}
+      role={alertDialog ? 'alertdialog' : 'dialog'}
+      aria-modal="true"
+      className={classes}
+      data-state={open ? 'open' : 'closed'}
+      aria-labelledby={title ? titleId : undefined}
+      aria-describedby={contentId}
+      {...rest}
+    >
+      <div className="d-modal-box" style={modalBoxStyle}>
+        {title && (
+          <h3 id={titleId} className="text-lg font-bold mb-4">
+            {title}
+          </h3>
+        )}
+        <div id={contentId} className="py-4">
+          {children}
+        </div>
+        {shouldRenderDefaultFooter && (
+          <div className="d-modal-action">
+            {onCancel && (
+              <button ref={cancelButtonRef} className="d-btn" onClick={onCancel}>
+                {cancelText}
+              </button>
+            )}
+            {onOk && (
+              <button
+                ref={okButtonRef}
+                className={`d-btn d-btn-primary ${loading ? 'd-loading' : ''}`}
+                onClick={handleOk}
+                disabled={loading}
+                aria-busy={loading || undefined}
+              >
+                {okText}
+              </button>
+            )}
+          </div>
+        )}
+        {shouldRenderCustomFooter && <div className="d-modal-action">{footer}</div>}
+      </div>
+      {closable && maskClosable && (
+        <form method="dialog" className="d-modal-backdrop">
+          <button ref={closeButtonRef} onClick={handleBackdropClick}>
+            <span className="sr-only">Close modal</span>
+          </button>
+        </form>
+      )}
+    </dialog>
+  )
+}
+
+function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
+  const div = document.createElement('div')
+  document.body.appendChild(div)
+  const root = createRoot(div)
+
+  const destroy = () => {
+    root.unmount()
+    if (div.parentNode) {
+      div.parentNode.removeChild(div)
+    }
+  }
+
+  const ModalContent = () => {
+    const [open, setOpen] = React.useState(true)
+    const [loading, setLoading] = React.useState(false)
+
+    const handleClose = () => {
+      setOpen(false)
+      setTimeout(destroy, 300) // Wait for animation
+    }
+
+    const handleOk = async () => {
+      if (config.onOk) {
+        setLoading(true)
+        try {
+          await config.onOk()
+          handleClose()
+        } catch (error) {
+          setLoading(false)
+        }
+      } else {
+        handleClose()
+      }
+    }
+
+    const handleCancel = () => {
+      config.onCancel?.()
+      handleClose()
+    }
+
+    const getAlertClass = () => {
+      switch (config.type) {
+        case 'success':
+          return 'd-alert-success'
+        case 'warning':
+          return 'd-alert-warning'
+        case 'error':
+          return 'd-alert-error'
+        case 'info':
+        default:
+          return 'd-alert-info'
+      }
+    }
+
+    const getIcon = () => {
+      switch (config.type) {
+        case 'success':
+          return (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          )
+        case 'warning':
+          return (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          )
+        case 'error':
+          return (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="stroke-current shrink-0 h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          )
+        case 'info':
+        default:
+          return (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              className="stroke-current shrink-0 w-6 h-6"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          )
+      }
+    }
+
+    // Use alertdialog role for warning/error types
+    const isAlert = config.type === 'warning' || config.type === 'error'
+
+    return (
+      <Modal
+        open={open}
+        onOk={config.showCancel ? undefined : handleOk}
+        onCancel={handleCancel}
+        alertDialog={isAlert}
+        title={
+          config.type ? (
+            <div className={`alert ${getAlertClass()}`}>
+              {getIcon()}
+              <div>
+                {config.title && <h3 className="font-bold">{config.title}</h3>}
+              </div>
+            </div>
+          ) : (
+            config.title
+          )
+        }
+        okText={config.okText}
+        cancelText={config.cancelText}
+        footer={
+          config.showCancel ? (
+            <>
+              <button className="d-btn" onClick={handleCancel}>
+                {config.cancelText || 'Cancel'}
+              </button>
+              <button
+                className={`d-btn ${config.type === 'error' ? 'd-btn-error' : 'd-btn-primary'} ${loading ? 'd-loading' : ''}`}
+                onClick={handleOk}
+                disabled={loading}
+              >
+                {config.okText || 'OK'}
+              </button>
+            </>
+          ) : (
+            <button
+              className={`d-btn ${config.type === 'error' ? 'd-btn-error' : 'd-btn-primary'} ${loading ? 'd-loading' : ''}`}
+              onClick={handleOk}
+              disabled={loading}
+            >
+              {config.okText || 'OK'}
+            </button>
+          )
+        }
+      >
+        {config.type && config.content && <div className="text-sm">{config.content}</div>}
+        {!config.type && config.content}
+      </Modal>
+    )
+  }
+
+  root.render(<ModalContent />)
+
+  return {
+    destroy,
+  }
+}
+
+function confirm(config: ModalFuncProps) {
+  return createModal({ ...config, showCancel: true })
+}
+
+function info(config: ModalFuncProps) {
+  return createModal({ ...config, type: 'info', showCancel: false })
+}
+
+function success(config: ModalFuncProps) {
+  return createModal({ ...config, type: 'success', showCancel: false })
+}
+
+function warning(config: ModalFuncProps) {
+  return createModal({ ...config, type: 'warning', showCancel: false })
+}
+
+function error(config: ModalFuncProps) {
+  return createModal({ ...config, type: 'error', showCancel: false })
+}
+
+Modal.confirm = confirm
+Modal.info = info
+Modal.success = success
+Modal.warning = warning
+Modal.error = error

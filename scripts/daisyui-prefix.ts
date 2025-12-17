@@ -1007,8 +1007,9 @@ function looksLikeProseText(str: string): boolean {
 function transformFileContentRobust(content: string, options: TransformOptions): string {
   // First pass: identify HTML/JSX attributes to skip (role=, aria-*, etc.)
   // HTML attributes have no space before = : attr="value"
-  // JS assignments have space: var = "value"
-  const skipAttrPattern = /(?:role|type|id|name|placeholder|title|alt|href|src|for|htmlFor|aria-\w+|data-\w+)=(['"])[^'"]*\1/g;
+  // JS parameter defaults have space: alt = "value"
+  // Match both patterns: attr="value" and attr = "value"
+  const skipAttrPattern = /(?:role|type|id|name|placeholder|title|alt|href|src|for|htmlFor|aria-\w+|data-\w+)\s*=\s*(?:(['"])[^'"]*\1|\{[^}]*\})/g;
   const skipRanges: Array<[number, number]> = [];
 
   let skipMatch;
@@ -1032,8 +1033,55 @@ function transformFileContentRobust(content: string, options: TransformOptions):
       return match;
     }
 
+    // Skip if on a line starting with 'export' (type definitions)
+    const lineStart = content.lastIndexOf('\n', index) + 1;
+    const linePrefix = content.slice(lineStart, index).trimStart();
+    if (linePrefix.startsWith('export')) {
+      return match;
+    }
+
+    // Skip if preceded by patterns that indicate non-CSS contexts
+    const beforeMatch = content.slice(Math.max(0, index - 30), index);
+    // Type unions: | 'value'
+    // Nullish coalescing: ?? 'value'
+    // testId assignments: testId = 'value' or testId: 'value'
+    // aria/data object keys: 'aria-*': 'value' or 'data-*': 'value'
+    // type property: type: 'value' or type === 'value' or .type === 'value'
+    // Comparisons: === 'value' or !== 'value'
+    // action property: action: 'value'
+    // Template expression start: ${ (variable names, not CSS classes)
+    if (/(\|\s*|\?\?\s*|testId\s*[=:]\s*|'aria-[^']+'\s*:\s*|'data-[^']+'\s*:\s*|\.?type\??\s*[=:]+\s*|[!=]==?\s*|action\s*:\s*|\$\{\s*)$/.test(beforeMatch)) {
+      return match;
+    }
+
     const quote = match[0];
     const inner = match.slice(1, -1);
+
+    // Skip single-word DaisyUI classes on lines with aria-* object keys (handles ternary values)
+    const lineEnd = content.indexOf('\n', index);
+    const currentLine = content.slice(lineStart, lineEnd === -1 ? content.length : lineEnd);
+    if (DAISYUI_BASE_CLASSES.has(inner) && /'aria-[^']+'\s*:/.test(currentLine)) {
+      return match;
+    }
+
+    // Skip single-word strings that look like function arguments (not className contexts)
+    // DaisyUI classes in this library are used in arrays, template literals, or className props
+    // not as standalone function arguments
+    if (DAISYUI_BASE_CLASSES.has(inner)) {
+      // Check if preceded by ( or , (function argument context)
+      const beforeMatch = content.slice(Math.max(0, index - 10), index);
+      if (/[,(]\s*$/.test(beforeMatch)) {
+        // Check if NOT in an array context (preceded by [ somewhere close)
+        const contextBefore = content.slice(Math.max(0, index - 50), index);
+        const lastBracket = Math.max(contextBefore.lastIndexOf('['), contextBefore.lastIndexOf(']'));
+        const lastParen = Math.max(contextBefore.lastIndexOf('('), contextBefore.lastIndexOf(')'));
+        // If the closest bracket is [ (array open) and closer than (, it's an array context - allow transform
+        // Otherwise if preceded by ( or ,, it's a function argument - skip
+        if (!(lastBracket > lastParen && contextBefore[lastBracket] === '[')) {
+          return match;
+        }
+      }
+    }
 
     // Skip if looks like prose text
     if (looksLikeProseText(inner)) {
@@ -1041,16 +1089,41 @@ function transformFileContentRobust(content: string, options: TransformOptions):
     }
 
     if (quote === '`') {
-      // Template literal - transform parts outside ${...} interpolations
-      return '`' + inner.replace(
-        /((?:[^\\$]|\\.|\$(?!\{))+)/g,
-        (part) => {
-          if (looksLikeProseText(part)) {
-            return part;
+      // Template literal - transform static parts and recurse into ${...} expressions
+      let result = '';
+      let i = 0;
+      while (i < inner.length) {
+        if (inner[i] === '$' && inner[i + 1] === '{') {
+          // Find matching closing brace (handle nested braces)
+          let braceCount = 1;
+          let j = i + 2;
+          while (j < inner.length && braceCount > 0) {
+            if (inner[j] === '{') braceCount++;
+            else if (inner[j] === '}') braceCount--;
+            j++;
           }
-          return transformStringContent(part, options);
+          // Extract expression content and recursively process for string literals
+          const exprContent = inner.slice(i + 2, j - 1);
+          const processedExpr = transformFileContentRobust(exprContent, options);
+          result += '${' + processedExpr + '}';
+          i = j;
+        } else {
+          // Static part - collect until next ${ or end
+          let j = i;
+          while (j < inner.length && !(inner[j] === '$' && inner[j + 1] === '{')) {
+            if (inner[j] === '\\') j++; // Skip escaped char
+            j++;
+          }
+          const staticPart = inner.slice(i, j);
+          if (!looksLikeProseText(staticPart)) {
+            result += transformStringContent(staticPart, options);
+          } else {
+            result += staticPart;
+          }
+          i = j;
         }
-      ) + '`';
+      }
+      return '`' + result + '`';
     }
 
     const transformed = transformStringContent(inner, options);

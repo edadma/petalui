@@ -1,0 +1,131 @@
+{
+  "name": "@aster-ui/prefixed",
+  "version": "0.12.49",
+  "description": "React UI component library with DaisyUI (prefixed classes)",
+  "homepage": "https://asterui.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edadma/asterui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/edadma/asterui/issues"
+  },
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./chart": {
+      "import": "./dist/chart.js",
+      "types": "./dist/chart.d.ts"
+    },
+    "./qrcode": {
+      "import": "./dist/qrcode.js",
+      "types": "./dist/qrcode.d.ts"
+    },
+    "./virtuallist": {
+      "import": "./dist/virtuallist.js",
+      "types": "./dist/virtuallist.d.ts"
+    },
+    "./editor": {
+      "import": "./dist/editor.js",
+      "types": "./dist/editor.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite build --watch",
+    "prepublishOnly": "pnpm build"
+  },
+  "peerDependencies": {
+    "@aster-ui/icons": "^0.1.0",
+    "@tanstack/react-virtual": "^3.0.0",
+    "@tiptap/extension-link": "^2.0.0",
+    "@tiptap/extension-placeholder": "^2.0.0",
+    "@tiptap/extension-underline": "^2.0.0",
+    "@tiptap/react": "^2.0.0",
+    "@tiptap/starter-kit": "^2.0.0",
+    "apexcharts": "^5.3.6",
+    "qrcode": "^1.5.4",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "react-hook-form": "^7.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@aster-ui/icons": {
+      "optional": true
+    },
+    "@tanstack/react-virtual": {
+      "optional": true
+    },
+    "@tiptap/extension-link": {
+      "optional": true
+    },
+    "@tiptap/extension-placeholder": {
+      "optional": true
+    },
+    "@tiptap/extension-underline": {
+      "optional": true
+    },
+    "@tiptap/react": {
+      "optional": true
+    },
+    "@tiptap/starter-kit": {
+      "optional": true
+    },
+    "apexcharts": {
+      "optional": true
+    },
+    "qrcode": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@aster-ui/icons": "workspace:*",
+    "@tailwindcss/vite": "^4.1.17",
+    "@tanstack/react-virtual": "^3.13.13",
+    "@tiptap/extension-link": "^2.11.5",
+    "@tiptap/extension-placeholder": "^2.11.5",
+    "@tiptap/extension-underline": "^2.11.5",
+    "@tiptap/react": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.1",
+    "apexcharts": "^5.3.6",
+    "daisyui": "^5.5.8",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.66.1",
+    "tailwindcss": "^4.1.17",
+    "typescript": "^5.6.3",
+    "vite": "^7.2.2",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "ui-components",
+    "component-library",
+    "daisyui",
+    "tailwind",
+    "tailwindcss",
+    "typescript",
+    "react-components",
+    "design-system",
+    "frontend",
+    "prefixed"
+  ],
+  "license": "ISC"
+}
