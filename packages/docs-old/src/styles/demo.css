@@ -1,6 +1,5 @@
-/* Only import utilities layer, skip base reset that conflicts with Starlight */
-@import "tailwindcss/theme";
-@import "tailwindcss/utilities";
+/* Full Tailwind import - base layer needed for DaisyUI CSS variables */
+@import "tailwindcss";
 
 @plugin "daisyui" {
   prefix: "d-";
@@ -12,3 +11,9 @@
 
 /* Scan built prefixed package for classes */
 @source "../../node_modules/@aster-ui/prefixed/dist";
+
+/* Fix button font-size - DaisyUI uses CSS vars that don't work with Starlight */
+.d-btn-xs { font-size: 0.6875rem; }
+.d-btn-sm { font-size: 0.75rem; }
+.d-btn-lg { font-size: 1.125rem; }
+.d-btn-xl { font-size: 1.375rem; }
