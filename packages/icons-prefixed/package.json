@@ -1,0 +1,55 @@
+{
+  "name": "@aster-ui/icons-prefixed",
+  "version": "0.1.0",
+  "description": "Heroicons wrapper with AsterUI size tokens (prefixed version)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./outline": {
+      "import": "./dist/outline/index.js",
+      "types": "./dist/outline/index.d.ts"
+    },
+    "./solid": {
+      "import": "./dist/solid/index.js",
+      "types": "./dist/solid/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "build": "pnpm generate && vite build",
+    "dev": "vite build --watch"
+  },
+  "peerDependencies": {
+    "@aster-ui/prefixed": "^0.1.0",
+    "react": "^18.0.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@types/react": "^19.2.2",
+    "@aster-ui/prefixed": "workspace:*",
+    "@vitejs/plugin-react": "^5.1.1",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3",
+    "vite": "^7.2.2",
+    "vite-plugin-dts": "^4.5.4"
+  },
+  "keywords": [
+    "react",
+    "icons",
+    "heroicons",
+    "asterui",
+    "ui",
+    "prefixed"
+  ],
+  "license": "ISC"
+}
