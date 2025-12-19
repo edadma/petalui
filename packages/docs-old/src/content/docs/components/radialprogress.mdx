@@ -1,0 +1,84 @@
+---
+title: Radial Progress
+description: Circular progress indicator with customizable appearance
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  ValuesDemo,
+  ColorsDemo,
+  SizesDemo,
+  ThicknessDemo,
+  CustomContentDemo,
+  NoValueDemo,
+  BackgroundDemo,
+} from '../../../components/RadialProgressDemo'
+import RadialProgressDemoSource from '../../../components/RadialProgressDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Circular progress indicator with customizable appearance.
+
+## Import
+
+```tsx
+import { RadialProgress } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple radial progress with value." source={RadialProgressDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Values" description="Radial progress with various completion percentages." source={RadialProgressDemoSource} fn="ValuesDemo">
+  <ValuesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Radial progress with different colors." source={RadialProgressDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Size" description="Adjust size using the size prop." source={RadialProgressDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Thickness" description="Adjust ring thickness." source={RadialProgressDemoSource} fn="ThicknessDemo">
+  <ThicknessDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Content" description="Display custom content instead of percentage." source={RadialProgressDemoSource} fn="CustomContentDemo">
+  <CustomContentDemo client:load slot="demo" />
+</Example>
+
+<Example title="No Value Display" description="Hide the percentage text." source={RadialProgressDemoSource} fn="NoValueDemo">
+  <NoValueDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Background" description="Add background and border styling." source={RadialProgressDemoSource} fn="BackgroundDemo">
+  <BackgroundDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `RadialProgress`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Progress value (0-100) | `number` | - |
+| `size` | Size in rem units or CSS string | `string \| number` | `5rem` |
+| `thickness` | Ring thickness in pixels or CSS string | `string \| number` | `10% of size` |
+| `color` | Progress color | `'primary' \| 'secondary' \| 'accent' \| 'success' \| 'warning' \| 'error' \| 'info' \| 'neutral'` | - |
+| `showValue` | Show percentage text | `boolean` | `true` |
+| `children` | Custom content to display | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses `role="progressbar"` with proper ARIA attributes
+- Value is announced as percentage to screen readers
+- Custom content can include additional accessible labels

@@ -1,0 +1,65 @@
+---
+title: Masonry
+description: Pinterest-style masonry layout for displaying items with varying heights in an organized grid.
+tableOfContents: false
+---
+
+import {
+  DynamicMasonryDemo,
+  BasicMasonryDemo,
+  ResponsiveMasonryDemo,
+  CustomGapDemo,
+} from '../../../components/MasonryDemo'
+import MasonryDemoSource from '../../../components/MasonryDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Pinterest-style masonry layout for displaying items with varying heights in an organized grid.
+
+## Import
+
+```tsx
+import { Masonry } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Dynamic Items" description="Add and remove items dynamically. New items are placed in the shortest column." source={MasonryDemoSource} fn="DynamicMasonryDemo">
+  <DynamicMasonryDemo client:load slot="demo" />
+</Example>
+
+<Example title="Basic Masonry" description="Simple masonry grid with varying height items." source={MasonryDemoSource} fn="BasicMasonryDemo">
+  <BasicMasonryDemo client:load slot="demo" />
+</Example>
+
+<Example title="Responsive Columns" description="Responsive column count at different breakpoints." source={MasonryDemoSource} fn="ResponsiveMasonryDemo">
+  <ResponsiveMasonryDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Gap" description="Different gap sizes between items." source={MasonryDemoSource} fn="CustomGapDemo">
+  <CustomGapDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Masonry`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `columns` | Number of columns or responsive column configuration | `number \| { xs?: number, sm?: number, md?: number, lg?: number, xl?: number, '2xl'?: number }` | `3` |
+| `gap` | Spacing between items in pixels | `number` | `16` |
+| `children` | Items to display in masonry layout | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Usage Notes
+
+- The Masonry component creates a Pinterest-style layout where items are arranged in columns
+- Items flow into the shortest column to create a balanced layout
+- Use the `columns` prop to set a fixed number of columns or make it responsive
+- The `gap` prop controls spacing between items in pixels
+- Responsive breakpoints: xs (<640px), sm (≥640px), md (≥768px), lg (≥1024px), xl (≥1280px), 2xl (≥1536px)
+- Items can have varying heights - the layout will automatically distribute them efficiently
+- Great for image galleries, product grids, and content cards

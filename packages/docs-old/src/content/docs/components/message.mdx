@@ -1,0 +1,66 @@
+---
+title: Message
+description: Lightweight feedback messages displayed at the top center of the screen
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  LoadingDemo,
+  DurationDemo,
+  StackingDemo,
+} from '../../../components/MessageDemo'
+import MessageDemoSource from '../../../components/MessageDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Lightweight feedback messages displayed at the top center of the screen.
+
+## Import
+
+```tsx
+import { message } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Messages" description="Lightweight feedback messages for user actions." source={MessageDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading Message" description="Show a loading message that can be dismissed programmatically." source={MessageDemoSource} fn="LoadingDemo">
+  <LoadingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Duration" description="Control how long messages stay visible." source={MessageDemoSource} fn="DurationDemo">
+  <DurationDemo client:load slot="demo" />
+</Example>
+
+<Example title="Stacking Messages" description="Multiple messages stack at the top center of the screen." source={MessageDemoSource} fn="StackingDemo">
+  <StackingDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### Message Options
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `content` | Message text (first argument) | `React.ReactNode` | - |
+| `duration` | Auto-close duration in seconds | `number` | `3` |
+| `key` | Unique identifier. Updating with same key updates existing message | `string` | - |
+| `icon` | Custom icon to display | `React.ReactNode` | - |
+| `className` | Additional CSS class | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for testing frameworks | `string` | - |
+| `onClick` | Callback when message is clicked | `() => void` | - |
+| `onClose` | Callback when message is closed | `() => void` | - |
+
+## Accessibility
+
+- Messages are announced to screen readers via live regions
+- Icons provide visual cues alongside color for message type
+- Messages auto-dismiss but can be configured to persist

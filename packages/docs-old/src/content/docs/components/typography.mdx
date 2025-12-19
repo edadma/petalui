@@ -1,0 +1,97 @@
+---
+title: Typography
+description: Semantic text components for titles, paragraphs, and text formatting.
+tableOfContents: false
+---
+
+import {
+  TitlesDemo,
+  ParagraphDemo,
+  TextDemo,
+  TextStylesDemo,
+  LinksDemo,
+  CopyableDemo,
+  EllipsisDemo,
+  EditableDemo,
+} from '../../../components/TypographyDemo'
+import TypographyDemoSource from '../../../components/TypographyDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Semantic text components for titles, paragraphs, and text formatting.
+
+## Import
+
+```tsx
+import { Typography } from 'asterui'
+
+const { Title, Paragraph, Text, Link } = Typography
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Titles" description="Heading levels from h1 to h5." source={TypographyDemoSource} fn="TitlesDemo">
+  <TitlesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Paragraph" description="Block-level text content." source={TypographyDemoSource} fn="ParagraphDemo">
+  <ParagraphDemo client:load slot="demo" />
+</Example>
+
+<Example title="Text Types" description="Different text types for various contexts." source={TypographyDemoSource} fn="TextDemo">
+  <TextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Text Styles" description="Various text formatting options." source={TypographyDemoSource} fn="TextStylesDemo">
+  <TextStylesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Links" description="Styled anchor elements." source={TypographyDemoSource} fn="LinksDemo">
+  <LinksDemo client:load slot="demo" />
+</Example>
+
+<Example title="Copyable" description="Copy text to clipboard with a click." source={TypographyDemoSource} fn="CopyableDemo">
+  <CopyableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Ellipsis" description="Truncate long text with ellipsis." source={TypographyDemoSource} fn="EllipsisDemo">
+  <EllipsisDemo client:load slot="demo" />
+</Example>
+
+<Example title="Editable" description="Inline editable text." source={TypographyDemoSource} fn="EditableDemo">
+  <EditableDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `level` | Heading level (h1-h5) - Title only | `1 \| 2 \| 3 \| 4 \| 5` | `1` |
+| `copyable` | Enable copy to clipboard - Title and Paragraph | `boolean \| { text?: string }` | `false` |
+| `ellipsis` | Truncate with ellipsis - Title and Paragraph | `boolean \| { rows?: number }` | `false` |
+| `editable` | Enable inline editing - Title only | `boolean` | `false` |
+| `type` | Text type for styling - Text and Link | `'secondary' \| 'success' \| 'warning' \| 'danger'` | - |
+| `disabled` | Disabled style - Text only | `boolean` | `false` |
+| `strong` | Bold text - Text only | `boolean` | `false` |
+| `italic` | Italic text - Text only | `boolean` | `false` |
+| `underline` | Underlined text - Text only | `boolean` | `false` |
+| `delete` | Strikethrough text - Text only | `boolean` | `false` |
+| `code` | Code style - Text only | `boolean` | `false` |
+| `mark` | Highlighted text - Text only | `boolean` | `false` |
+| `keyboard` | Keyboard style - Text only | `boolean` | `false` |
+| `size` | Text size - Paragraph and Link | `'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl'` | - |
+| `align` | Text alignment - Paragraph only | `'left' \| 'center' \| 'right'` | - |
+| `href` | Link URL - Link only | `string` | `'#'` |
+| `external` | Open in new tab with external icon - Link only | `boolean` | `false` |
+
+## Accessibility
+
+- Uses semantic HTML elements (h1-h5, p, span, a)
+- Proper heading hierarchy maintained
+- Links have accessible labels
+- Copy and edit actions are keyboard accessible

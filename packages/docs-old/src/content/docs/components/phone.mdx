@@ -1,0 +1,66 @@
+---
+title: Phone
+description: Display content in an iPhone-style phone frame mockup
+tableOfContents: false
+---
+
+import {
+  BasicPhoneDemo,
+  ImagePhoneDemo,
+  ColorPhoneDemo,
+  AppPhoneDemo,
+  ChatPhoneDemo,
+} from '../../../components/PhoneDemo'
+import PhoneDemoSource from '../../../components/PhoneDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display content in an iPhone-style phone frame mockup.
+
+## Import
+
+```tsx
+import { Phone } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Phone" description="Simple phone mockup with centered content." source={PhoneDemoSource} fn="BasicPhoneDemo">
+  <BasicPhoneDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Image" description="Display an image as wallpaper." source={PhoneDemoSource} fn="ImagePhoneDemo">
+  <ImagePhoneDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Color" description="Customize the phone frame color." source={PhoneDemoSource} fn="ColorPhoneDemo">
+  <ColorPhoneDemo client:load slot="demo" />
+</Example>
+
+<Example title="App Interface" description="Mock up a mobile app layout." source={PhoneDemoSource} fn="AppPhoneDemo">
+  <AppPhoneDemo client:load slot="demo" />
+</Example>
+
+<Example title="Chat Interface" description="Mock up a chat app layout." source={PhoneDemoSource} fn="ChatPhoneDemo">
+  <ChatPhoneDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Phone`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content inside the phone screen | `React.ReactNode` | - |
+| `color` | Custom frame color | `string` | - |
+| `className` | Classes for phone container | `string` | - |
+| `displayClassName` | Classes for display area | `string` | - |
+
+## Accessibility
+
+- Phone mockup is decorative - content inside should be accessible
+- Images inside should have appropriate `alt` text
+- Interactive elements inside remain fully accessible

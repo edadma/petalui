@@ -1,0 +1,58 @@
+---
+title: Footer
+description: Page footer component with support for links, sections, and centered layouts.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  WithSectionsDemo,
+  CenteredDemo,
+} from '../../../components/FooterDemo'
+import FooterDemoSource from '../../../components/FooterDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Page footer component with support for links, sections, and centered layouts.
+
+## Import
+
+```tsx
+import { Footer } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Footer" description="Simple left-aligned footer with horizontal links." source={FooterDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Footer with Sections" description="Footer with titled sections in columns." source={FooterDemoSource} fn="WithSectionsDemo">
+  <WithSectionsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Centered Footer" description="Footer with centered content." source={FooterDemoSource} fn="CenteredDemo">
+  <CenteredDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Footer`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Footer content | `React.ReactNode` | - |
+| `center` | Center the footer content | `boolean` | `false` |
+| `horizontal` | Display columns horizontally | `boolean` | `false` |
+| `vertical` | Display columns vertically (default) | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Footer.Title`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Title text | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |

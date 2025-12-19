@@ -1,0 +1,75 @@
+---
+title: Filter
+description: A group of radio buttons for single-option filtering. Selecting an option hides the others and shows a reset button.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  SizesDemo,
+  ObjectOptionsDemo,
+  NoResetDemo,
+} from '../../../components/FilterDemo'
+import FilterDemoSource from '../../../components/FilterDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A group of radio buttons for single-option filtering. Selecting an option hides the others and shows a reset button.
+
+## Import
+
+```tsx
+import { Filter } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple filter with string options. Click an option to select, click reset to clear." source={FilterDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Available size variants." source={FilterDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Object Options" description="Use objects for options with custom labels, values, and disabled state." source={FilterDemoSource} fn="ObjectOptionsDemo">
+  <ObjectOptionsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Without Reset Button" description="Hide the reset button when you want to require a selection." source={FilterDemoSource} fn="NoResetDemo">
+  <NoResetDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Filter`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `options` | Filter options | `(string \| FilterOption)[]` | - |
+| `value` | Controlled selected value | `string` | - |
+| `defaultValue` | Default value for uncontrolled mode | `string` | - |
+| `onChange` | Called when selection changes | `(value: string \| undefined) => void` | - |
+| `name` | Radio group name (auto-generated if not provided) | `string` | - |
+| `size` | Button size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `showReset` | Show reset button | `boolean` | `true` |
+| `resetLabel` | Reset button label | `React.ReactNode` | `'×'` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `FilterOption`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `label` | Display text for the option | `string` | - |
+| `value` | Value of the option | `string` | - |
+| `disabled` | Whether the option is disabled | `boolean` | `false` |
+
+## Accessibility
+
+- Uses native radio inputs for keyboard and screen reader support
+- Options use `aria-label` for accessible names
+- Reset button has `aria-label="Reset filter"`
+- Supports keyboard navigation with Tab and Space/Enter

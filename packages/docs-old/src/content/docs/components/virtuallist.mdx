@@ -1,0 +1,82 @@
+---
+title: VirtualList
+description: Efficiently render large lists by only rendering visible items. Powered by @tanstack/react-virtual.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  StyledDemo,
+  GapDemo,
+  ScrollCallbackDemo,
+  VariableHeightDemo,
+} from '../../../components/VirtualListDemo'
+import VirtualListDemoSource from '../../../components/VirtualListDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Efficiently render large lists by only rendering visible items. Powered by @tanstack/react-virtual.
+
+## Installation
+
+This component requires `@tanstack/react-virtual` as a peer dependency:
+
+```bash
+npm install @tanstack/react-virtual
+```
+
+## Import
+
+```tsx
+import { VirtualList } from 'asterui/virtuallist'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Usage" description="Efficiently render a list of 10,000 items." source={VirtualListDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Styled List" description="With card styling and hover effects." source={VirtualListDemoSource} fn="StyledDemo">
+  <StyledDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Gap" description="Spaced items with gap between them." source={VirtualListDemoSource} fn="GapDemo">
+  <GapDemo client:load slot="demo" />
+</Example>
+
+<Example title="Scroll Callback" description="Track scroll position for infinite loading or analytics." source={VirtualListDemoSource} fn="ScrollCallbackDemo">
+  <ScrollCallbackDemo client:load slot="demo" />
+</Example>
+
+<Example title="Variable Height (Chat)" description="Chat messages with different lengths using the Chat component." source={VirtualListDemoSource} fn="VariableHeightDemo">
+  <VariableHeightDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `VirtualList`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Array of items to render | `T[]` | - |
+| `height` | Height of the scrollable container | `number \| string` | - |
+| `itemHeight` | Fixed height, or function returning estimated height per item for variable heights | `number \| ((item: T, index: number) => number)` | - |
+| `renderItem` | Render function for each item | `(item: T, index: number) => ReactNode` | - |
+| `overscan` | Number of items to render outside visible area | `number` | `5` |
+| `gap` | Gap between items in pixels | `number` | `0` |
+| `width` | Width of the container | `number \| string` | - |
+| `className` | Additional class for the scroll container | `string` | - |
+| `innerClassName` | Additional class for the inner container | `string` | - |
+| `itemClassName` | Additional class for each item wrapper | `string` | - |
+| `onScroll` | Callback when scroll position changes | `(scrollTop: number) => void` | - |
+
+## Performance Tips
+
+- Use a fixed `itemHeight` when possible for best performance
+- Memoize your `renderItem` function if it's expensive
+- Increase `overscan` if you see flickering during fast scrolling
+- Keep item components simple - avoid heavy computations in render

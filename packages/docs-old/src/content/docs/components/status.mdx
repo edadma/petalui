@@ -1,0 +1,61 @@
+---
+title: Status
+description: Small indicator dot to show status like online, offline, error, etc
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  SizesDemo,
+  AnimatedDemo,
+  ColorsDemo,
+} from '../../../components/StatusDemo'
+import StatusDemoSource from '../../../components/StatusDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Small indicator dot to show status like online, offline, error, etc.
+
+## Import
+
+```tsx
+import { Status } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple status indicators for different states." source={StatusDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Available size variants." source={StatusDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Animated" description="Ping and bounce animation effects." source={StatusDemoSource} fn="AnimatedDemo">
+  <AnimatedDemo client:load slot="demo" />
+</Example>
+
+<Example title="All Colors" description="All available color types." source={StatusDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `type` | Status color type | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `'neutral'` |
+| `size` | Status size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `ping` | Ping animation effect | `boolean` | `false` |
+| `bounce` | Bounce animation effect | `boolean` | `false` |
+| `label` | Accessibility label | `string` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Use the `label` prop to provide an accessible name
+- Consider pairing with text for screen reader users
+- Ping animation draws attention to important status changes

@@ -1,0 +1,99 @@
+---
+title: Responsive
+description: Components and hooks for building responsive layouts based on screen size
+tableOfContents: false
+---
+
+import {
+  ShowAboveDemo,
+  HideBelowDemo,
+  ShowAtDemo,
+  ShowBetweenDemo,
+  ResponsiveLayoutDemo,
+  UseBreakpointDemo,
+} from '../../../components/ResponsiveDemo'
+import ResponsiveDemoSource from '../../../components/ResponsiveDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Components and hooks for building responsive layouts based on screen size.
+
+## Import
+
+```tsx
+import { Show, Hide, useBreakpoint } from 'asterui'
+```
+
+## Breakpoints
+
+AsterUI uses the same breakpoints as Tailwind CSS:
+
+| Breakpoint | Min Width | Description |
+|------------|-----------|-------------|
+| `xs` | 0px | Extra small screens |
+| `sm` | 640px | Small screens |
+| `md` | 768px | Medium screens |
+| `lg` | 1024px | Large screens |
+| `xl` | 1280px | Extra large screens |
+| `2xl` | 1536px | Double extra large screens |
+
+## Examples
+
+<div class="examples">
+
+<Example title="Show Above Breakpoint" description="Show content only at medium screens and above." source={ResponsiveDemoSource} fn="ShowAboveDemo">
+  <ShowAboveDemo client:load slot="demo" />
+</Example>
+
+<Example title="Hide Below Breakpoint" description="Hide content on small screens." source={ResponsiveDemoSource} fn="HideBelowDemo">
+  <HideBelowDemo client:load slot="demo" />
+</Example>
+
+<Example title="Show At Specific Breakpoints" description="Show content only at specific breakpoints." source={ResponsiveDemoSource} fn="ShowAtDemo">
+  <ShowAtDemo client:load slot="demo" />
+</Example>
+
+<Example title="Show Between Breakpoints" description="Show content within a range of breakpoints." source={ResponsiveDemoSource} fn="ShowBetweenDemo">
+  <ShowBetweenDemo client:load slot="demo" />
+</Example>
+
+<Example title="Responsive Layout" description="Build different layouts for mobile and desktop." source={ResponsiveDemoSource} fn="ResponsiveLayoutDemo">
+  <ResponsiveLayoutDemo client:load slot="demo" />
+</Example>
+
+<Example title="useBreakpoint Hook" description="Access breakpoint info programmatically." source={ResponsiveDemoSource} fn="UseBreakpointDemo">
+  <UseBreakpointDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Show` / `Hide`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content to show/hide | `React.ReactNode` | - |
+| `above` | Show/hide at this breakpoint and above | `Breakpoint` | - |
+| `below` | Show/hide below this breakpoint | `Breakpoint` | - |
+| `at` | Show/hide at exactly this breakpoint (or array of breakpoints) | `Breakpoint \| Breakpoint[]` | - |
+| `between` | Show/hide between two breakpoints (inclusive) | `[Breakpoint, Breakpoint]` | - |
+
+### `useBreakpoint`
+
+Returns an object with the following properties:
+
+| Property | Description | Type |
+|----------|-------------|------|
+| `breakpoint` | Current active breakpoint | `Breakpoint` |
+| `width` | Current window width in pixels | `number` |
+| `isAbove(bp)` | Returns true if current breakpoint >= bp | `(bp: Breakpoint) => boolean` |
+| `isBelow(bp)` | Returns true if current breakpoint < bp | `(bp: Breakpoint) => boolean` |
+| `isAt(bp)` | Returns true if current breakpoint === bp | `(bp: Breakpoint) => boolean` |
+| `isBetween(min, max)` | Returns true if current breakpoint is between min and max (inclusive) | `(min: Breakpoint, max: Breakpoint) => boolean` |
+
+## Notes
+
+- `Show` and `Hide` use JavaScript to detect the breakpoint, not CSS media queries
+- Only one condition prop (`above`, `below`, `at`, or `between`) should be used at a time
+- The hook updates on window resize to track the current breakpoint
+- Server-side rendering defaults to 1024px width (lg breakpoint)

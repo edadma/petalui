@@ -1,0 +1,89 @@
+---
+title: ResponsiveDrawer
+description: A responsive sidebar layout using DaisyUI's drawer. Use for navigation sidebars that toggle on mobile but can be always visible on larger screens.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  ResponsiveDemo,
+  CustomWidthDemo,
+  EndDemo,
+  CustomSidebarDemo,
+} from '../../../components/ResponsiveDrawerDemo'
+import ResponsiveDrawerDemoSource from '../../../components/ResponsiveDrawerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A responsive sidebar layout using DaisyUI's drawer. Use for navigation sidebars that toggle on mobile but can be always visible on larger screens.
+
+## Import
+
+```tsx
+import { ResponsiveDrawer } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic ResponsiveDrawer" description="Responsive sidebar that toggles on mobile." source={ResponsiveDrawerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Always Open on Desktop" description="Sidebar toggles on mobile but is always visible on lg screens and up." source={ResponsiveDrawerDemoSource} fn="ResponsiveDemo">
+  <ResponsiveDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Width" description="Sidebar with custom width." source={ResponsiveDrawerDemoSource} fn="CustomWidthDemo">
+  <CustomWidthDemo client:load slot="demo" />
+</Example>
+
+<Example title="Right-Side Sidebar" description="Sidebar positioned on the right side." source={ResponsiveDrawerDemoSource} fn="EndDemo">
+  <EndDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Sidebar Content" description="Sidebar with custom styled content." source={ResponsiveDrawerDemoSource} fn="CustomSidebarDemo">
+  <CustomSidebarDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `ResponsiveDrawer`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Main content area | `React.ReactNode` | - |
+| `sidebar` | Sidebar content | `React.ReactNode` | - |
+| `open` | Controlled open state | `boolean` | `false` |
+| `onOpenChange` | Callback when open state changes | `(open: boolean) => void` | - |
+| `end` | Position sidebar on the right side | `boolean` | `false` |
+| `width` | Width of the sidebar | `number \| string` | `320` |
+| `responsive` | Breakpoint at which sidebar becomes always visible | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | - |
+| `sidebarClassName` | Additional classes for sidebar container | `string` | - |
+| `contentClassName` | Additional classes for content area | `string` | - |
+| `overlayClassName` | Additional classes for the overlay | `string` | - |
+| `id` | Unique ID for the drawer (auto-generated if not provided) | `string` | - |
+| `className` | Additional CSS classes for drawer wrapper | `string` | - |
+| `data-testid` | Test ID for testing | `string` | - |
+
+## Usage Notes
+
+- ResponsiveDrawer wraps DaisyUI's `drawer` component
+- Use `open` and `onOpenChange` for controlled state
+- Use `responsive` prop to make sidebar always visible above a breakpoint
+- Use `width` to customize sidebar width (default: 320px)
+- Use `end` prop to position the sidebar on the right side
+- For panel drawers that slide over content (like forms or detail views), use the [Drawer](/components/drawer) component instead
+
+## Comparison
+
+| Feature | ResponsiveDrawer | Drawer | Layout.Sider |
+|---------|------------------|--------|--------------|
+| Use Case | Responsive navigation sidebars | Overlay panels for forms, details | Permanent collapsible sidebars |
+| Rendering | Part of page layout | Portal to document.body | Part of Layout structure |
+| Overlay | Yes (mobile) | Yes (always) | No |
+| Responsive | Yes (auto-open at breakpoint) | No | Yes (auto-collapse) |
+| Placement | Left or right | All 4 sides | Left or right |
+| Header/Footer | No built-in | Yes (title, footer props) | No built-in |

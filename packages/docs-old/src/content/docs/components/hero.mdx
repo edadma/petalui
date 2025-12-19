@@ -1,0 +1,61 @@
+---
+title: Hero
+description: Create impactful landing page sections with hero banners and backgrounds.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  WithButtonDemo,
+  WithFigureDemo,
+  OverlayDemo,
+} from '../../../components/HeroDemo'
+import HeroDemoSource from '../../../components/HeroDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Create impactful landing page sections with hero banners and backgrounds.
+
+## Import
+
+```tsx
+import { Hero } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Hero" description="Simple hero section with title and subtitle." source={HeroDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Hero with CTA Button" description="Hero section with a call-to-action button." source={HeroDemoSource} fn="WithButtonDemo">
+  <WithButtonDemo client:load slot="demo" />
+</Example>
+
+<Example title="Hero with Figure" description="Hero with side image or figure element." source={HeroDemoSource} fn="WithFigureDemo">
+  <WithFigureDemo client:load slot="demo" />
+</Example>
+
+<Example title="Hero with Background Overlay" description="Hero with background image and overlay effect." source={HeroDemoSource} fn="OverlayDemo">
+  <OverlayDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Hero content | `React.ReactNode` | - |
+| `overlay` | Show overlay effect (for background images) | `boolean` | `false` |
+| `contentClassName` | CSS classes for the content wrapper | `string` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles (useful for background images) | `React.CSSProperties` | - |
+
+## Accessibility
+
+- Use semantic heading elements (h1, h2) for hero titles
+- Ensure sufficient color contrast between text and background
+- Provide alt text for hero images
+- Make CTA buttons keyboard accessible

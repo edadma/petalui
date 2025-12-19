@@ -1,0 +1,59 @@
+---
+title: TextRotate
+description: Animated text that cycles through multiple options in a loop
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  CenteredDemo,
+  StyledDemo,
+  FastDemo,
+} from '../../../components/TextRotateDemo'
+import TextRotateDemoSource from '../../../components/TextRotateDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Animated text that cycles through multiple options in a loop.
+
+## Import
+
+```tsx
+import { TextRotate } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple rotating text with multiple languages." source={TextRotateDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Centered" description="Center-aligned rotating text." source={TextRotateDemoSource} fn="CenteredDemo">
+  <CenteredDemo client:load slot="demo" />
+</Example>
+
+<Example title="Styled Items" description="Each item can have custom styling." source={TextRotateDemoSource} fn="StyledDemo">
+  <StyledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Duration" description="Faster rotation with 6 second cycle." source={TextRotateDemoSource} fn="FastDemo">
+  <FastDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Text items to rotate through (max 6) | `React.ReactNode[]` | - |
+| `duration` | Animation duration in ms | `6000 \| 9000 \| 12000 \| 15000 \| 18000` | `10000` |
+| `centered` | Center text horizontally | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Animation pauses on hover for easier reading
+- Supports reduced motion preferences
+- Text remains readable at all animation states

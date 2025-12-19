@@ -1,0 +1,96 @@
+---
+title: Segmented
+description: Inline toggle for switching between mutually exclusive options
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  DisabledItemsDemo,
+  SizesDemo,
+  BlockDemo,
+  DisabledDemo,
+  WithIconsDemo,
+} from '../../../components/SegmentedDemo'
+import SegmentedDemoSource from '../../../components/SegmentedDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Inline toggle for switching between mutually exclusive options.
+
+## Import
+
+```tsx
+import { Segmented } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Usage" description="Simple segmented control for view switching." source={SegmentedDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled Items" description="Individual items can be disabled." source={SegmentedDemoSource} fn="DisabledItemsDemo">
+  <DisabledItemsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Four size options available." source={SegmentedDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Block Mode" description="Full width with equally sized options." source={SegmentedDemoSource} fn="BlockDemo">
+  <BlockDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Disabled state for the entire control." source={SegmentedDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Options with icons and labels." source={SegmentedDemoSource} fn="WithIconsDemo">
+  <WithIconsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Segmented`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Currently selected value (controlled) | `string \| number` | - |
+| `defaultValue` | Default selected value (uncontrolled) | `string \| number` | - |
+| `onChange` | Callback when selection changes | `(value: string \| number) => void` | - |
+| `size` | Size of the control | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `block` | Take full width of container | `boolean` | `false` |
+| `disabled` | Disable all options | `boolean` | `false` |
+| `className` | Additional CSS class | `string` | - |
+| `children` | Segmented.Item components | `ReactNode` | - |
+
+### `Segmented.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Option value (required) | `string \| number` | - |
+| `disabled` | Disable this option | `boolean` | `false` |
+| `icon` | Icon before label | `ReactNode` | - |
+| `children` | Label content | `ReactNode` | - |
+| `className` | Additional CSS class | `string` | - |
+
+## When to Use
+
+- **View toggles**: Switch between List/Grid/Table views
+- **Time periods**: Day/Week/Month/Year filters
+- **Size selectors**: S/M/L/XL options
+- **Alignment**: Left/Center/Right controls
+- **Mode switches**: Light/Dark theme toggles
+
+## Segmented vs Radio.Group
+
+| Segmented | Radio.Group |
+|-----------|-------------|
+| Immediate UI state changes | Form field values |
+| Compact, button-like appearance | Traditional radio buttons |
+| Always visible options | Can have many options |
+| 2-5 options typically | Any number of options |

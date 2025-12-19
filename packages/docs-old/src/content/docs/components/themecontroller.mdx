@@ -1,0 +1,104 @@
+---
+title: ThemeController
+description: Components for switching between daisyUI themes.
+tableOfContents: false
+---
+
+import {
+  SwapDemo,
+  CustomThemesDemo,
+  SwapCallbackDemo,
+  DropdownDemo,
+  DropdownDefaultDemo,
+  DropdownCallbackDemo,
+  ToggleDemo,
+  ToggleSizesDemo,
+} from '../../../components/ThemeControllerDemo'
+import ThemeControllerDemoSource from '../../../components/ThemeControllerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Components for switching between daisyUI themes.
+
+## Import
+
+```tsx
+import { ThemeController } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Swap (Sun/Moon)" description="Toggle between light and dark themes with animated icons." source={ThemeControllerDemoSource} fn="SwapDemo">
+  <SwapDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Custom Themes" description="Use custom theme names for light and dark modes." source={ThemeControllerDemoSource} fn="CustomThemesDemo">
+  <CustomThemesDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="With onChange Callback" description="Handle theme changes with a callback." source={ThemeControllerDemoSource} fn="SwapCallbackDemo">
+  <SwapCallbackDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Dropdown (Multiple Themes)" description="Select from multiple themes using a dropdown menu." source={ThemeControllerDemoSource} fn="DropdownDemo">
+  <DropdownDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Dropdown with Default Theme" description="Set a default selected theme for the dropdown." source={ThemeControllerDemoSource} fn="DropdownDefaultDemo">
+  <DropdownDefaultDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Dropdown with onChange" description="Handle theme selection changes." source={ThemeControllerDemoSource} fn="DropdownCallbackDemo">
+  <DropdownCallbackDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Toggle Switch" description="Simple toggle switch for light/dark theme." source={ThemeControllerDemoSource} fn="ToggleDemo">
+  <ToggleDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Toggle Sizes" description="Toggle switches in different sizes." source={ThemeControllerDemoSource} fn="ToggleSizesDemo">
+  <ToggleSizesDemo client:only="react" slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `ThemeController.Swap`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `lightTheme` | Theme name for light mode | `string` | `'light'` |
+| `darkTheme` | Theme name for dark mode | `string` | `'dark'` |
+| `defaultChecked` | Initially checked (dark theme) | `boolean` | - |
+| `onChange` | Callback when theme changes | `(theme: string) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `ThemeController.Dropdown`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `themes` | Array of available theme names | `string[]` | - |
+| `defaultTheme` | Initially selected theme | `string` | - |
+| `onChange` | Callback when theme changes | `(theme: string) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `ThemeController.Toggle`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `lightTheme` | Theme name for light mode | `string` | `'light'` |
+| `darkTheme` | Theme name for dark mode | `string` | `'dark'` |
+| `defaultChecked` | Initially checked (dark theme) | `boolean` | - |
+| `onChange` | Callback when theme changes | `(theme: string) => void` | - |
+| `size` | Toggle size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Swap uses checkbox pattern with animated sun/moon icons
+- Toggle uses checkbox with aria-label for screen readers
+- Dropdown uses radio inputs with aria-label for each theme option
+- Theme changes are immediately visible across all components
+- All variants are keyboard accessible

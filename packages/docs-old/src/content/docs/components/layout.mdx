@@ -1,0 +1,128 @@
+---
+title: Layout
+description: Structural components for building application layouts with header, footer, sidebar, and content areas.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  WithSiderDemo,
+  SiderRightDemo,
+  CollapsibleDemo,
+  MenuNavigationDemo,
+  SubmenuDemo,
+} from '../../../components/LayoutDemo'
+import LayoutDemoSource from '../../../components/LayoutDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Structural components for building application layouts with header, footer, sidebar, and content areas.
+
+## Import
+
+```tsx
+import { Layout, Menu } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Layout" description="Simple header, content, and footer layout." source={LayoutDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Layout with Sider and Menu" description="Layout with side navigation using the Menu component." source={LayoutDemoSource} fn="WithSiderDemo">
+  <WithSiderDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sider on Right" description="Layout with sidebar on the right side using reverseArrow." source={LayoutDemoSource} fn="SiderRightDemo">
+  <SiderRightDemo client:load slot="demo" />
+</Example>
+
+<Example title="Collapsible Sider" description="Sider with collapse/expand functionality and built-in trigger." source={LayoutDemoSource} fn="CollapsibleDemo">
+  <CollapsibleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Menu Navigation" description="Interactive sider with Menu that changes content when items are selected." source={LayoutDemoSource} fn="MenuNavigationDemo">
+  <MenuNavigationDemo client:load slot="demo" />
+</Example>
+
+<Example title="Inline Menu with Submenus" description="Layout with nested submenus using inline mode for expandable navigation." source={LayoutDemoSource} fn="SubmenuDemo">
+  <SubmenuDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Layout`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Layout content (Header, Sider, Content, Footer) | `React.ReactNode` | - |
+| `hasSider` | Whether contains Sider (auto-detected if not specified) | `boolean` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for testing | `string` | - |
+
+### `Layout.Header`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Header content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for testing | `string` | - |
+
+### `Layout.Footer`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Footer content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for testing | `string` | - |
+
+### `Layout.Sider`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Sider content | `React.ReactNode` | - |
+| `width` | Width of the sider | `number \| string` | `200` |
+| `collapsedWidth` | Width when collapsed | `number \| string` | `80` |
+| `collapsed` | Controlled collapsed state | `boolean` | - |
+| `defaultCollapsed` | Initial collapsed state | `boolean` | `false` |
+| `collapsible` | Whether the sider can be collapsed | `boolean` | `false` |
+| `onCollapse` | Callback when collapse state changes | `(collapsed: boolean, type: 'clickTrigger' \| 'responsive') => void` | - |
+| `trigger` | Custom trigger element (null to hide) | `React.ReactNode \| null` | - |
+| `breakpoint` | Breakpoint for auto-collapse | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl'` | - |
+| `onBreakpoint` | Callback when breakpoint is crossed | `(broken: boolean) => void` | - |
+| `reverseArrow` | Reverse direction of arrow (for right-side sider) | `boolean` | `false` |
+| `theme` | Color theme of the sider | `'light' \| 'dark'` | `'dark'` |
+| `zeroWidthTriggerStyle` | Style for zero-width trigger | `React.CSSProperties` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for testing; trigger uses {id}-trigger suffix | `string` | - |
+
+### `Layout.Content`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content area content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for testing | `string` | - |
+
+## Accessibility
+
+- Layout components provide a semantic structure for your application
+- Use `Layout.Header` for the top navigation or branding area
+- Use `Layout.Footer` for the bottom footer content
+- Use `Layout.Sider` for side navigation or auxiliary content
+- Use `Layout.Content` for the main content area
+- The Layout automatically detects Sider components and adjusts to horizontal layout
+- Layouts can be nested to create complex page structures
+- Use `collapsible` prop on Sider for responsive navigation
+- Use `reverseArrow` for right-side siders
+- Combine with `Menu` component for navigation with selectable items
+- All components forward refs and support `data-testid` for testing

@@ -1,0 +1,64 @@
+---
+title: Fieldset
+description: Group related form controls with an optional legend and disabled state.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  WithInputsDemo,
+  DisabledDemo,
+} from '../../../components/FieldsetDemo'
+import FieldsetDemoSource from '../../../components/FieldsetDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Group related form controls with an optional legend and disabled state.
+
+## Import
+
+```tsx
+import { Fieldset } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Fieldset" description="Simple fieldset with legend." source={FieldsetDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Form Inputs" description="Fieldset containing form inputs with labels." source={FieldsetDemoSource} fn="WithInputsDemo">
+  <WithInputsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled Fieldset" description="All form controls within are disabled." source={FieldsetDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Fieldset`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content of the fieldset | `React.ReactNode` | - |
+| `disabled` | Disables all form controls within | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Fieldset.Legend`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Legend text or content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Fieldset.Label`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Label text or content | `React.ReactNode` | - |
+| `htmlFor` | ID of the form element the label is for | `string` | - |
+| `className` | Additional CSS classes | `string` | - |

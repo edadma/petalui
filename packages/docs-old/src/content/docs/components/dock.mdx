@@ -1,0 +1,89 @@
+---
+title: Dock
+description: Mobile-style bottom navigation bar.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  SizesDemo,
+  IconsOnlyDemo,
+  CustomStyleDemo,
+  ChildrenDemo,
+} from '../../../components/DockDemo'
+import DockDemoSource from '../../../components/DockDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Mobile-style bottom navigation bar.
+
+## Import
+
+```tsx
+import { Dock } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Dock" description="Mobile-style bottom navigation with icons and labels. (Shown inline for demo; normally fixed at bottom)" source={DockDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different dock sizes from xs to lg. (Shown inline for demo)" source={DockDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Icons Only" description="Dock without labels for a minimal look. (Shown inline for demo)" source={DockDemoSource} fn="IconsOnlyDemo">
+  <IconsOnlyDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Styling" description="Apply custom colors to the dock. (Shown inline for demo)" source={DockDemoSource} fn="CustomStyleDemo">
+  <CustomStyleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Using Children" description="Use Dock.Item children for more control. (Shown inline for demo)" source={DockDemoSource} fn="ChildrenDemo">
+  <ChildrenDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Dock`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Dock items configuration | `DockItemConfig[]` | - |
+| `size` | Size variant | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `activeIndex` | Controlled active item index | `number` | - |
+| `onChange` | Callback when item is clicked | `(index: number) => void` | - |
+| `children` | Dock.Item children (alternative to items) | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `DockItemConfig` (for items prop)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `icon` | Icon element | `React.ReactNode` | - |
+| `label` | Label text | `string` | - |
+| `active` | Whether item is active (uncontrolled) | `boolean` | `false` |
+| `disabled` | Whether item is disabled | `boolean` | `false` |
+| `onClick` | Click handler | `() => void` | - |
+
+### `Dock.Item` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `active` | Whether this item is active | `boolean` | `false` |
+| `children` | Item content (icon and optional label) | `React.ReactNode` | - |
+| `onClick` | Click handler | `() => void` | - |
+| `disabled` | Whether item is disabled | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses semantic button elements for navigation items
+- Supports keyboard navigation
+- Active state is visually indicated
+- For iOS safe area support, add `viewport-fit=cover` to your viewport meta tag

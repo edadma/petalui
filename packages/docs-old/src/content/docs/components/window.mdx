@@ -1,0 +1,69 @@
+---
+title: Window
+description: OS-style window mockup component for showcasing code or content.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  WithCodeDemo,
+  MultiLineDemo,
+  WithPrefixDemo,
+  StyledDemo,
+  ContentDemo,
+} from '../../../components/WindowDemo'
+import WindowDemoSource from '../../../components/WindowDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+OS-style window mockup component for showcasing code or content.
+
+## Import
+
+```tsx
+import { Window } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Window" description="Simple window mockup with content." source={WindowDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Code" description="Window containing code display." source={WindowDemoSource} fn="WithCodeDemo">
+  <WithCodeDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multi-line Code" description="Window with multiple lines of code." source={WindowDemoSource} fn="MultiLineDemo">
+  <MultiLineDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Prefix" description="Code lines with command prefixes." source={WindowDemoSource} fn="WithPrefixDemo">
+  <WithPrefixDemo client:load slot="demo" />
+</Example>
+
+<Example title="Styled Window" description="Custom styled window with different background." source={WindowDemoSource} fn="StyledDemo">
+  <StyledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Content" description="Window with custom content styling." source={WindowDemoSource} fn="ContentDemo">
+  <ContentDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Window content | `React.ReactNode` | - |
+| `className` | Additional CSS classes for the window | `string` | - |
+| `contentClassName` | Additional CSS classes for the content area | `string` | - |
+
+## Accessibility
+
+- Window chrome is decorative and marked as presentational
+- Content area maintains proper reading order
+- Code blocks are readable by screen readers
+- Traffic light buttons are non-interactive decorations

@@ -1,0 +1,70 @@
+---
+title: Kbd
+description: Display keyboard keys and shortcuts.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  SizesDemo,
+  CombinationDemo,
+  InTextDemo,
+  ArrowsDemo,
+  FullKeyboardDemo,
+} from '../../../components/KbdDemo'
+import KbdDemoSource from '../../../components/KbdDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display keyboard keys and shortcuts.
+
+## Import
+
+```tsx
+import { Kbd } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple keyboard key display." source={KbdDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different sizes for various contexts." source={KbdDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Key Combination" description="Display keyboard shortcuts." source={KbdDemoSource} fn="CombinationDemo">
+  <CombinationDemo client:load slot="demo" />
+</Example>
+
+<Example title="In Text" description="Use kbd inline with text." source={KbdDemoSource} fn="InTextDemo">
+  <InTextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Arrow Keys" description="Arrow key display for navigation instructions." source={KbdDemoSource} fn="ArrowsDemo">
+  <ArrowsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Full Keyboard" description="Complete keyboard layout example." source={KbdDemoSource} fn="FullKeyboardDemo">
+  <FullKeyboardDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Kbd`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `size` | Size of the kbd | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `children` | Key content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses semantic `<kbd>` HTML element
+- Screen readers announce keyboard keys appropriately
+- High contrast styling ensures visibility

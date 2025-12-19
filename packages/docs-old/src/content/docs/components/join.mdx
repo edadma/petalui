@@ -1,0 +1,49 @@
+---
+title: Join
+description: Visually join elements together by removing spacing and borders between them.
+tableOfContents: false
+---
+
+import {
+  JoinedButtonsDemo,
+  VerticalJoinDemo,
+  JoinedInputAndButtonDemo,
+} from '../../../components/JoinDemo'
+import JoinDemoSource from '../../../components/JoinDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Visually join elements together by removing spacing and borders between them.
+
+## Import
+
+```tsx
+import { Join } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Joined Buttons" description="Basic horizontal join with buttons." source={JoinDemoSource} fn="JoinedButtonsDemo">
+  <JoinedButtonsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Join" description="Vertically joined elements." source={JoinDemoSource} fn="VerticalJoinDemo">
+  <VerticalJoinDemo client:load slot="demo" />
+</Example>
+
+<Example title="Joined Input and Button" description="Join input with button for search or forms." source={JoinDemoSource} fn="JoinedInputAndButtonDemo">
+  <JoinedInputAndButtonDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Join`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `direction` | Join direction | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `children` | Elements to join together | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |

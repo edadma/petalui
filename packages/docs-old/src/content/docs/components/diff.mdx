@@ -1,0 +1,54 @@
+---
+title: Diff
+description: Side-by-side comparison with an interactive resizer.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  TextDemo,
+  AspectDemo,
+} from '../../../components/DiffDemo'
+import DiffDemoSource from '../../../components/DiffDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Side-by-side comparison with an interactive resizer.
+
+## Import
+
+```tsx
+import { Diff } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Image Comparison" description="Compare two images with a draggable slider." source={DiffDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Text Comparison" description="Compare text with different styles." source={DiffDemoSource} fn="TextDemo">
+  <TextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Aspect Ratio" description="Use different aspect ratios." source={DiffDemoSource} fn="AspectDemo">
+  <AspectDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `left` | Left side content (revealed when dragging) | `React.ReactNode` | - |
+| `right` | Right side content (hidden when dragging) | `React.ReactNode` | - |
+| `aspect` | Aspect ratio class | `string` | `'aspect-16/9'` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Keyboard accessible with tab navigation
+- Uses `role="img"` for semantic meaning
+- Arrow keys control the resizer position when focused
