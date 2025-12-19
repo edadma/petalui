@@ -6,6 +6,15 @@
   --sl-nav-gap: 0.5rem;
 }
 
+/* Tighter splash page spacing */
+.hero {
+  padding-block: 2rem !important;
+}
+
+.hero .actions {
+  margin-bottom: 1rem;
+}
+
 /* Wider content for component pages */
 body.component-page .sl-markdown-content {
   max-width: none;
