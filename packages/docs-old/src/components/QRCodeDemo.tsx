@@ -1,6 +1,16 @@
-import { useState } from 'react';
-import { QRCode } from 'asterui/qrcode';
+import { useState, useEffect } from 'react';
 import { Demo } from './Demo';
+
+function QRCode(props: any) {
+  const [QRCodeComponent, setQRCodeComponent] = useState<any>(null)
+
+  useEffect(() => {
+    import('@aster-ui/prefixed/qrcode').then(m => setQRCodeComponent(() => m.QRCode))
+  }, [])
+
+  if (!QRCodeComponent) return <div style={{ width: props.size || 160, height: props.size || 160 }} />
+  return <QRCodeComponent {...props} />
+}
 
 // @example-imports: { QRCode } from 'asterui'
 export function BasicDemo() {

@@ -6,7 +6,7 @@ import {
   HeartIcon,
   StarIcon,
   BookmarkIcon,
-} from '@aster-ui/icons';
+} from '@aster-ui/icons-prefixed';
 import { Demo } from './Demo';
 
 // @example-imports: { Tag, Space } from 'asterui'

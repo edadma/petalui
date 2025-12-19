@@ -8,7 +8,7 @@ export function BasicDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar
-        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+        src="/avatar-1.png"
         alt="User avatar"
       />
       {/* @example-return-end */}
@@ -22,11 +22,11 @@ export function SizesDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm" align="center">
-        <Avatar size="xs" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar size="sm" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar size="md" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar size="lg" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar size="xl" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar size="xs" src="/avatar-1.png" />
+        <Avatar size="sm" src="/avatar-1.png" />
+        <Avatar size="md" src="/avatar-1.png" />
+        <Avatar size="lg" src="/avatar-1.png" />
+        <Avatar size="xl" src="/avatar-1.png" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -39,8 +39,8 @@ export function ShapesDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm">
-        <Avatar shape="circle" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar shape="square" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar shape="circle" src="/avatar-1.png" />
+        <Avatar shape="square" src="/avatar-1.png" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -53,8 +53,8 @@ export function StatusDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm">
-        <Avatar status="online" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar status="offline" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar status="online" src="/avatar-1.png" />
+        <Avatar status="offline" src="/avatar-1.png" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -103,10 +103,10 @@ export function GroupDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar.Group>
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
       </Avatar.Group>
       {/* @example-return-end */}
     </Demo>
@@ -119,12 +119,12 @@ export function GroupMaxDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar.Group max={3}>
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.png" />
       </Avatar.Group>
       {/* @example-return-end */}
     </Demo>

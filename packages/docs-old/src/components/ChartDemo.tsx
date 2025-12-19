@@ -1,5 +1,16 @@
-import { Chart } from 'asterui/chart'
+import { useState, useEffect } from 'react'
 import { Demo } from './Demo'
+
+function Chart(props: any) {
+  const [ChartComponent, setChartComponent] = useState<any>(null)
+
+  useEffect(() => {
+    import('@aster-ui/prefixed/chart').then(m => setChartComponent(() => m.Chart))
+  }, [])
+
+  if (!ChartComponent) return <div style={{ height: props.height }} />
+  return <ChartComponent {...props} />
+}
 
 // @example-imports: { Chart } from 'asterui/chart'
 export function LineDemo() {

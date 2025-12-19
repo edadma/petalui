@@ -1,7 +1,17 @@
-import { useState } from 'react'
-import { RichTextEditor } from 'asterui/editor'
+import { useState, useEffect } from 'react'
 import { Card, Space } from '@aster-ui/prefixed'
 import { Demo } from './Demo'
+
+function RichTextEditor(props: any) {
+  const [EditorComponent, setEditorComponent] = useState<any>(null)
+
+  useEffect(() => {
+    import('@aster-ui/prefixed/editor').then(m => setEditorComponent(() => m.RichTextEditor))
+  }, [])
+
+  if (!EditorComponent) return <div style={{ minHeight: props.minHeight || 200 }} className="border border-base-300 rounded" />
+  return <EditorComponent {...props} />
+}
 
 // @example-imports: { RichTextEditor } from 'asterui/editor'
 export function BasicDemo() {
