@@ -1,7 +1,98 @@
 ---
-title: Timepicker
-description: Timepicker component
+title: TimePicker
+description: Select time with an interactive picker interface.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  TwelveHourDemo,
+  SecondsDemo,
+  ControlledDemo,
+  SizesDemo,
+  DisabledDemo,
+  StepsDemo,
+  FormDemo,
+} from '../../../components/TimePickerDemo'
+import TimePickerDemoSource from '../../../components/TimePickerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Select time with an interactive picker interface.
+
+## Import
+
+```tsx
+import { TimePicker } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic TimePicker" description="Simple time picker with default 24-hour format." source={TimePickerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="12-Hour Format" description="Time picker with 12-hour format and AM/PM selection." source={TimePickerDemoSource} fn="TwelveHourDemo">
+  <TwelveHourDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Seconds" description="Time picker that includes seconds selection." source={TimePickerDemoSource} fn="SecondsDemo">
+  <SecondsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled" description="Controlled time picker with state management." source={TimePickerDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Sizes" description="Time picker in various sizes." source={TimePickerDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Disabled time picker with a default value." source={TimePickerDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Time Steps" description="Time picker with custom intervals (15-minute steps)." source={TimePickerDemoSource} fn="StepsDemo">
+  <StepsDemo client:load slot="demo" />
+</Example>
+
+<Example title="In Form" description="TimePicker integrated with Form component using Row/Col layout." source={TimePickerDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `TimePicker`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Controlled selected time | `Date \| null` | `-` |
+| `defaultValue` | Default selected time (uncontrolled) | `Date \| null` | `-` |
+| `onChange` | Callback when time is selected | `(date: Date \| null) => void` | `-` |
+| `format` | Time display format (12-hour or 24-hour) | `'12' \| '24'` | `'24'` |
+| `placeholder` | Input placeholder text | `string` | `"Select time"` |
+| `disabled` | Disable the time picker | `boolean` | `false` |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `showSeconds` | Show seconds column in the time picker | `boolean` | `false` |
+| `allowClear` | Show clear button when time is selected | `boolean` | `true` |
+| `open` | Controlled open state of the dropdown | `boolean` | `-` |
+| `onOpenChange` | Callback when dropdown open state changes | `(open: boolean) => void` | `-` |
+| `hourStep` | Interval between hours in the picker | `number` | `1` |
+| `minuteStep` | Interval between minutes in the picker | `number` | `1` |
+| `secondStep` | Interval between seconds in the picker | `number` | `1` |
+| `status` | Validation status | `'error' \| 'warning'` | `-` |
+| `data-testid` | Test ID prefix for child elements | `string` | `"timepicker"` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Input field has `aria-haspopup` and `aria-expanded` attributes
+- Dropdown uses `role="dialog"` with proper labeling
+- Time columns use `role="listbox"` with `aria-label`
+- Time options use `role="option"` with `aria-selected`
+- Full keyboard navigation: Arrow keys to navigate, Escape to close, Enter to confirm
+- Clear button has `aria-label` for screen readers
+- Disabled state properly communicated to assistive technology

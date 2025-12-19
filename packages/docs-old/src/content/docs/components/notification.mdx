@@ -1,7 +1,66 @@
 ---
 title: Notification
-description: Notification component
+description: Display global notification messages at screen corners.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  PlacementsDemo,
+  DurationDemo,
+} from '../../../components/NotificationDemo'
+import NotificationDemoSource from '../../../components/NotificationDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display global notification messages at screen corners.
+
+## Import
+
+```tsx
+import { notification } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Notifications" description="Different notification types with simple messages." source={NotificationDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Placement" description="Show notifications in different corner positions." source={NotificationDemoSource} fn="PlacementsDemo">
+  <PlacementsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Duration" description="Control how long notifications stay visible." source={NotificationDemoSource} fn="DurationDemo">
+  <DurationDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### Config Object
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `message` | Notification title | `React.ReactNode` | - |
+| `description` | Notification content | `React.ReactNode` | - |
+| `duration` | Auto-close duration in seconds | `number` | `4.5` |
+| `placement` | Position of notification | `'topLeft' \| 'topRight' \| 'bottomLeft' \| 'bottomRight'` | `'topRight'` |
+| `type` | Type of notification (for notification.open) | `'success' \| 'error' \| 'info' \| 'warning'` | - |
+
+### Methods
+
+- `notification.success(config)` - Success notification
+- `notification.error(config)` - Error notification
+- `notification.info(config)` - Info notification
+- `notification.warning(config)` - Warning notification
+- `notification.open(config)` - Generic notification with custom type
+
+## Accessibility
+
+- Uses `role="alert"` for screen reader announcements
+- Notifications are keyboard accessible and can be dismissed with Escape key
+- Color and icons provide redundant information for accessibility
+- Duration set to 0 creates persistent notifications that require manual dismissal

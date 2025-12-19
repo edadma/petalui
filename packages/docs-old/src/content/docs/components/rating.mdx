@@ -1,7 +1,120 @@
 ---
 title: Rating
-description: Rating component
+description: Star ratings for user feedback and reviews.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  ClearableDemo,
+  SizesDemo,
+  HalfDemo,
+  HeartDemo,
+  CustomColorsDemo,
+  DisabledDemo,
+  CountDemo,
+  ControlledDemo,
+  AltStarDemo,
+  FormDemo,
+} from '../../../components/RatingDemo'
+import RatingDemoSource from '../../../components/RatingDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Star ratings for user feedback and reviews.
+
+## Import
+
+```tsx
+import { Rating } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Rating" description="Simple 5-star rating with no configuration needed." source={RatingDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Clearable" description="Click the same star again to clear the rating." source={RatingDemoSource} fn="ClearableDemo">
+  <ClearableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Sizes" description="Rating in various sizes." source={RatingDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Half Star" description="Allow half-star precision." source={RatingDemoSource} fn="HalfDemo">
+  <HalfDemo client:load slot="demo" />
+</Example>
+
+<Example title="Heart Shape" description="Rating with heart icons." source={RatingDemoSource} fn="HeartDemo">
+  <HeartDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Colors" description="Different colors for each rating level using Rating.Item." source={RatingDemoSource} fn="CustomColorsDemo">
+  <CustomColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Display rating without interaction." source={RatingDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Count" description="Specify a different number of stars." source={RatingDemoSource} fn="CountDemo">
+  <CountDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled Rating" description="Control rating value externally." source={RatingDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Alternative Star" description="Different star style." source={RatingDemoSource} fn="AltStarDemo">
+  <AltStarDemo client:load slot="demo" />
+</Example>
+
+<Example title="Form Integration" description="Rating works with Form validation." source={RatingDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Rating`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Custom Rating.Item components (optional) | `React.ReactNode` | - |
+| `value` | Controlled rating value | `number` | - |
+| `defaultValue` | Default rating value (uncontrolled) | `number` | `0` |
+| `onChange` | Callback when rating changes | `(value: number) => void` | - |
+| `onHoverChange` | Callback when hover value changes | `(value: number) => void` | - |
+| `count` | Number of stars | `number` | `5` |
+| `size` | Rating size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `gap` | Space between stars | `'none' \| 'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `color` | Tailwind background color class | `string` | `'bg-warning'` |
+| `mask` | Shape of the rating icons | `'star' \| 'star-2' \| 'heart'` | `'star-2'` |
+| `allowClear` | Allow clearing rating by clicking same value | `boolean` | `true` |
+| `allowHalf` | Allow half-star selection | `boolean` | `false` |
+| `disabled` | Disabled state (non-interactive) | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Rating.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Rating value this item represents | `number` | - |
+| `mask` | Shape of the rating icon | `'star' \| 'star-2' \| 'heart'` | `'star-2'` |
+| `color` | Tailwind background color class | `string` | `'bg-warning'` |
+| `hidden` | Hidden item for clearing rating | `boolean` | `false` |
+| `half` | Half-star position | `'first' \| 'second'` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses `role="radiogroup"` for proper semantics
+- Uses radio button pattern for rating selection
+- Each star has an `aria-label` describing its value
+- Keyboard navigation between rating options
+- Hover preview shows visual feedback before selection
+- Disabled state prevents interaction while displaying value

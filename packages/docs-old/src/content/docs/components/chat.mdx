@@ -1,7 +1,70 @@
 ---
 title: Chat
-description: Chat component
+description: Chat message bubbles for displaying conversations with avatars and metadata.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  AvatarsDemo,
+  HeadersDemo,
+  ColorsDemo,
+  FooterDemo,
+} from '../../../components/ChatDemo'
+import ChatDemoSource from '../../../components/ChatDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Chat message bubbles for displaying conversations with avatars and metadata.
+
+## Import
+
+```tsx
+import { Chat } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Chat" description="Simple chat bubbles with different positions." source={ChatDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Avatars" description="Chat bubbles with user avatars." source={ChatDemoSource} fn="AvatarsDemo">
+  <AvatarsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Headers" description="Chat bubbles with name and timestamp headers." source={ChatDemoSource} fn="HeadersDemo">
+  <HeadersDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colored Bubbles" description="Chat bubbles with different color variants." source={ChatDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Footer" description="Chat bubbles with delivery status footer." source={ChatDemoSource} fn="FooterDemo">
+  <FooterDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Chat`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `message` | Message content | `React.ReactNode` | - |
+| `position` | Bubble position | `'start' \| 'end'` | `'start'` |
+| `avatar` | Avatar image URL | `string` | - |
+| `avatarAlt` | Avatar alt text | `string` | - |
+| `header` | Header content (name, time) | `React.ReactNode` | - |
+| `footer` | Footer content (status) | `React.ReactNode` | - |
+| `color` | Bubble color variant | `'primary' \| 'secondary' \| 'accent' \| 'neutral' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Use meaningful alt text for avatar images
+- Message content is readable by screen readers
+- Position classes help convey conversation flow

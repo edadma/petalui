@@ -1,7 +1,243 @@
 ---
 title: Table
-description: Table component
+description: Feature-rich table component for displaying tabular data.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CustomRenderDemo,
+  StripedDemo,
+  BorderedDemo,
+  SizeXsDemo,
+  SizeXlDemo,
+  EmptyDemo,
+  LoadingDemo,
+  PaginationDemo,
+  PaginationFeaturesDemo,
+  PinnedDemo,
+  SortingDemo,
+  ControlledSortDemo,
+  FilteringDemo,
+  SelectionDemo,
+  RadioSelectionDemo,
+  ExpandableDemo,
+  EllipsisDemo,
+  ScrollDemo,
+  CompleteDemo,
+} from '../../../components/TableDemo'
+import TableDemoSource from '../../../components/TableDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Feature-rich table component for displaying tabular data.
+
+## Import
+
+```tsx
+import { Table } from 'asterui'
+import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Table" description="Simple table with data." source={TableDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Rendering" description="Use render functions for tags, buttons, and custom content." source={TableDemoSource} fn="CustomRenderDemo">
+  <CustomRenderDemo client:load slot="demo" />
+</Example>
+
+<Example title="Striped Rows" description="Zebra striping for better readability." source={TableDemoSource} fn="StripedDemo">
+  <StripedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Bordered Table" description="Add borders for a more defined look." source={TableDemoSource} fn="BorderedDemo">
+  <BorderedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Compact Size" description="Extra small size for dense data." source={TableDemoSource} fn="SizeXsDemo">
+  <SizeXsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Extra Large Size" description="Extra large size for emphasis." source={TableDemoSource} fn="SizeXlDemo">
+  <SizeXlDemo client:load slot="demo" />
+</Example>
+
+<Example title="Empty State" description="Customizable empty state message." source={TableDemoSource} fn="EmptyDemo">
+  <EmptyDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading State" description="Show loading spinner while fetching data." source={TableDemoSource} fn="LoadingDemo">
+  <LoadingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Basic Pagination" description="Paginate large datasets." source={TableDemoSource} fn="PaginationDemo">
+  <PaginationDemo client:load slot="demo" />
+</Example>
+
+<Example title="Advanced Pagination" description="Page size changer, quick jumper, and total display." source={TableDemoSource} fn="PaginationFeaturesDemo">
+  <PaginationFeaturesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Pinned Header" description="Keep header visible while scrolling." source={TableDemoSource} fn="PinnedDemo">
+  <PinnedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Column Sorting" description="Click column headers to sort data." source={TableDemoSource} fn="SortingDemo">
+  <SortingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled Sorting" description="Externally control sort state." source={TableDemoSource} fn="ControlledSortDemo">
+  <ControlledSortDemo client:load slot="demo" />
+</Example>
+
+<Example title="Column Filtering" description="Add filter dropdowns to columns." source={TableDemoSource} fn="FilteringDemo">
+  <FilteringDemo client:load slot="demo" />
+</Example>
+
+<Example title="Checkbox Selection" description="Enable row selection with checkboxes." source={TableDemoSource} fn="SelectionDemo">
+  <SelectionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Radio Selection" description="Single row selection with radio buttons." source={TableDemoSource} fn="RadioSelectionDemo">
+  <RadioSelectionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Expandable Rows" description="Expand rows to show additional content." source={TableDemoSource} fn="ExpandableDemo">
+  <ExpandableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Text Ellipsis" description="Truncate long text with ellipsis." source={TableDemoSource} fn="EllipsisDemo">
+  <EllipsisDemo client:load slot="demo" />
+</Example>
+
+<Example title="Scroll Configuration" description="Set max width and height with scrolling." source={TableDemoSource} fn="ScrollDemo">
+  <ScrollDemo client:load slot="demo" />
+</Example>
+
+<Example title="Complete Example" description="Table with multiple features combined." source={TableDemoSource} fn="CompleteDemo">
+  <CompleteDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Table`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `columns` | Table column configuration | `ColumnType<T>[]` | `-` |
+| `dataSource` | Data to display in table | `T[]` | `-` |
+| `rowKey` | Unique key for each row | `keyof T \| ((record: T) => string)` | `'id'` |
+| `loading` | Loading state | `boolean` | `false` |
+| `size` | Table size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `bordered` | Add border around table | `boolean` | `false` |
+| `hoverable` | Highlight row on hover | `boolean` | `true` |
+| `striped` | Alternating row colors (zebra stripes) | `boolean` | `false` |
+| `pinRows` | Pin header rows while scrolling | `boolean` | `false` |
+| `pinCols` | Pin columns while scrolling | `boolean` | `false` |
+| `pagination` | Pagination configuration or false to disable | `false \| PaginationConfig` | `{ pageSize: 10 }` |
+| `rowSelection` | Row selection configuration | `RowSelection<T>` | `-` |
+| `expandable` | Expandable row configuration | `ExpandableConfig<T>` | `-` |
+| `scroll` | Scroll configuration for fixed dimensions | `ScrollConfig` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+| `onRow` | Row event handlers | `(record: T, index: number) => HTMLAttributes` | `-` |
+| `onChange` | Unified callback for pagination, sorting, and filtering | `(pagination, filters, sorter, extra) => void` | `-` |
+| `onSortChange` | Callback when sort changes | `(sorter: SorterResult<T>) => void` | `-` |
+| `onFilterChange` | Callback when filter changes | `(filters: Record<string, ...>) => void` | `-` |
+| `locale` | Localization config for empty text, filter labels | `{ emptyText?, filterConfirm?, filterReset?, selectAll? }` | `-` |
+| `data-testid` | Test ID for the component | `string` | `'table'` |
+| `aria-label` | Accessible label for the table | `string` | `-` |
+
+### `ColumnType`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for column | `string` | `-` |
+| `title` | Column header title | `ReactNode` | `-` |
+| `dataIndex` | Field name in data record | `keyof T` | `-` |
+| `render` | Custom render function for cell content | `(value, record, index) => ReactNode` | `-` |
+| `width` | Column width | `string \| number` | `-` |
+| `align` | Text alignment | `'left' \| 'center' \| 'right'` | `'left'` |
+| `fixed` | Fix column to left or right | `'left' \| 'right'` | `-` |
+| `sorter` | Enable sorting or custom sort function | `boolean \| ((a: T, b: T) => number)` | `-` |
+| `sortOrder` | Controlled sort order | `'ascend' \| 'descend' \| null` | `-` |
+| `defaultSortOrder` | Default sort order | `'ascend' \| 'descend'` | `-` |
+| `filters` | Filter dropdown configuration | `FilterConfig[]` | `-` |
+| `filteredValue` | Controlled filtered values | `(string \| number \| boolean)[]` | `-` |
+| `defaultFilteredValue` | Default filtered values | `(string \| number \| boolean)[]` | `-` |
+| `onFilter` | Filter function | `(value, record) => boolean` | `-` |
+| `ellipsis` | Truncate text with ellipsis | `boolean` | `false` |
+| `hidden` | Hide column | `boolean` | `false` |
+
+### `RowSelection`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `type` | Selection type | `'checkbox' \| 'radio'` | `'checkbox'` |
+| `selectedRowKeys` | Controlled selected row keys | `React.Key[]` | `-` |
+| `onChange` | Callback when selection changes | `(selectedRowKeys, selectedRows) => void` | `-` |
+| `getCheckboxProps` | Function to customize checkbox props | `(record) => { disabled?, name? }` | `-` |
+
+### `ExpandableConfig`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `expandedRowRender` | Render function for expanded content | `(record, index, expanded) => ReactNode` | `-` |
+| `expandedRowKeys` | Controlled expanded row keys | `React.Key[]` | `-` |
+| `defaultExpandedRowKeys` | Default expanded row keys | `React.Key[]` | `-` |
+| `rowExpandable` | Function to determine if row is expandable | `(record) => boolean` | `-` |
+| `onExpand` | Callback when expand state changes | `(expanded, record) => void` | `-` |
+| `onExpandedRowsChange` | Callback when expanded keys change | `(expandedKeys) => void` | `-` |
+| `expandRowByClick` | Expand row on row click | `boolean` | `false` |
+| `expandIcon` | Custom expand icon | `(props) => ReactNode` | `-` |
+
+### `PaginationConfig`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `current` | Current page number | `number` | `1` |
+| `pageSize` | Number of items per page | `number` | `10` |
+| `total` | Total number of items (for server-side pagination) | `number` | `-` |
+| `showSizeChanger` | Show page size dropdown | `boolean` | `false` |
+| `showQuickJumper` | Show quick page jumper input | `boolean` | `false` |
+| `showTotal` | Function to render total text | `(total, range) => ReactNode` | `-` |
+| `pageSizeOptions` | Page size options | `number[]` | `[10, 20, 50, 100]` |
+| `position` | Pagination position | `'topLeft' \| 'topCenter' \| 'topRight' \| 'bottomLeft' \| 'bottomCenter' \| 'bottomRight'` | `'bottomRight'` |
+| `onChange` | Callback when page changes | `(page, pageSize) => void` | `-` |
+| `onShowSizeChange` | Callback when page size changes | `(current, size) => void` | `-` |
+
+## Accessibility
+
+- Uses semantic `<table>` with `role="grid"`
+- Column headers include `role="columnheader"` and `aria-sort` for sortable columns
+- Row selection checkboxes have proper `aria-label`
+- Sort controls are keyboard accessible (Enter/Space to toggle)
+- Filter dropdowns support Escape key to close
+- Pagination buttons include `aria-label` and `aria-current`
+- Expand/collapse buttons include `aria-expanded`
+- Indeterminate checkbox state for partial selection
+
+## Testing
+
+The component exposes `data-testid` attributes:
+- `{baseTestId}` - Root wrapper
+- `{baseTestId}-table` - Table element
+- `{baseTestId}-header-{columnKey}` - Column headers
+- `{baseTestId}-row-{index}` - Table rows
+- `{baseTestId}-row-{index}-{columnKey}` - Table cells
+- `{baseTestId}-row-{index}-select` - Row selection checkbox
+- `{baseTestId}-row-{index}-expanded` - Expanded row content
+- `{baseTestId}-select-all` - Select all checkbox
+- `{baseTestId}-pagination` - Pagination container
+- `{baseTestId}-prev`, `{baseTestId}-next` - Pagination buttons
+- `{baseTestId}-{columnKey}-filter-button` - Filter button
+- `{baseTestId}-empty` - Empty state
+- `{baseTestId}-loading` - Loading state
+
+Data attributes:
+- `data-state="selected"` - On selected rows

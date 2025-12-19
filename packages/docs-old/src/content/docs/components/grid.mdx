@@ -1,7 +1,88 @@
 ---
 title: Grid
-description: Grid component
+description: Flexible grid system with Row and Col components. Supports 24-column (default) and 120-column modes for precise layouts.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  GutterDemo,
+  OffsetDemo,
+  ResponsiveDemo,
+  Cols120Demo,
+} from '../../../components/GridDemo'
+import GridDemoSource from '../../../components/GridDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Flexible grid system with Row and Col components. Supports 24-column (default) and 120-column modes for precise layouts.
+
+## Import
+
+```tsx
+import { Row, Col } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Grid" description="Basic 24-column grid system." source={GridDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Grid Gutter" description="Customize spacing between columns. Default is 16px; recommended values are 16, 24, 32, 40, 48." source={GridDemoSource} fn="GutterDemo">
+  <GutterDemo client:load slot="demo" />
+</Example>
+
+<Example title="Column Offset" description="Offset columns using the offset prop." source={GridDemoSource} fn="OffsetDemo">
+  <OffsetDemo client:load slot="demo" />
+</Example>
+
+<Example title="Responsive Columns" description="Different column spans at different breakpoints." source={GridDemoSource} fn="ResponsiveDemo">
+  <ResponsiveDemo client:load slot="demo" />
+</Example>
+
+<Example title="120-Column Grid" description="Fine-grained control with 120 columns for precise layouts." source={GridDemoSource} fn="Cols120Demo">
+  <Cols120Demo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Row`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `cols` | Number of grid columns | `24 \| 120` | `24` |
+| `gutter` | Spacing between columns (px) | `number \| [number, number]` | `16` |
+| `justify` | Horizontal alignment of grid items | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | - |
+| `align` | Vertical alignment of grid items | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'` | - |
+| `children` | Column components | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Col`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `span` | Number of columns to span (out of 24 or 120) | `number` | `24` |
+| `offset` | Number of columns to offset | `number` | `0` |
+| `order` | Visual order of the column (1-12) | `number` | - |
+| `xs` | Responsive span for extra small screens (<640px) | `number` | - |
+| `sm` | Responsive span for small screens (≥640px) | `number` | - |
+| `md` | Responsive span for medium screens (≥768px) | `number` | - |
+| `lg` | Responsive span for large screens (≥1024px) | `number` | - |
+| `xl` | Responsive span for extra large screens (≥1280px) | `number` | - |
+| `xxl` | Responsive span for 2x extra large screens (≥1536px) | `number` | - |
+| `children` | Column content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Usage Notes
+
+- Default is a 24-column layout; use `cols={120}` for finer control
+- Use `Row` as the container and `Col` for columns
+- Set `gutter` on Row to add spacing between columns
+- Use responsive props (xs, sm, md, lg, xl, xxl) for different column spans at different screen sizes
+- Column spans must add up to the total columns (24 or 120) or less per row
+- Use `offset` to create empty space before a column
+- 120-column mode is useful for layouts that need ratios like 1:3, 2:3, or percentages like 25%, 37.5%

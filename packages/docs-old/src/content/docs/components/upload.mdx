@@ -1,7 +1,83 @@
 ---
 title: Upload
-description: Upload component
+description: File upload component with drag-and-drop support.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicUploadDemo,
+  DragUploadDemo,
+  PictureCardUploadDemo,
+  ControlledUploadDemo,
+  MaxSizeUploadDemo,
+  AcceptUploadDemo,
+  FormUploadDemo,
+} from '../../../components/UploadDemo'
+import UploadDemoSource from '../../../components/UploadDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+File upload component with drag-and-drop support.
+
+## Import
+
+```tsx
+import { Upload } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Upload" description="Simple file upload with button trigger." source={UploadDemoSource} fn="BasicUploadDemo">
+  <BasicUploadDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Drag and Drop" description="Drag files to the upload area." source={UploadDemoSource} fn="DragUploadDemo">
+  <DragUploadDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Picture Card" description="Display uploaded images as cards." source={UploadDemoSource} fn="PictureCardUploadDemo">
+  <PictureCardUploadDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Controlled Upload" description="Control file list with state and custom request." source={UploadDemoSource} fn="ControlledUploadDemo">
+  <ControlledUploadDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Max File Size" description="Limit file size with validation." source={UploadDemoSource} fn="MaxSizeUploadDemo">
+  <MaxSizeUploadDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Accept File Types" description="Restrict file types that can be uploaded." source={UploadDemoSource} fn="AcceptUploadDemo">
+  <AcceptUploadDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="In Form" description="Upload integrated with Form component." source={UploadDemoSource} fn="FormUploadDemo">
+  <FormUploadDemo client:only="react" slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Upload`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `fileList` | Controlled list of uploaded files | `UploadFile[]` | `-` |
+| `onChange` | Callback when file list changes | `({ fileList }) => void` | `-` |
+| `customRequest` | Custom upload request handler | `({ file, onSuccess, onError }) => void` | `-` |
+| `listType` | Display style of file list | `'text' \| 'picture' \| 'picture-card'` | `'text'` |
+| `maxCount` | Maximum number of files | `number` | `-` |
+| `maxSize` | Maximum file size in bytes | `number` | `-` |
+| `accept` | Accepted file types | `string` | `-` |
+| `disabled` | Disable the upload | `boolean` | `false` |
+| `children` | Upload trigger element | `React.ReactNode` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- File input is properly labeled
+- Drag and drop zone has keyboard support
+- Upload progress is announced to screen readers
+- Remove buttons are keyboard accessible

@@ -1,7 +1,128 @@
 ---
 title: Menu
-description: Menu component
+description: Navigation menu component for displaying hierarchical navigation items.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  HorizontalDemo,
+  WithIconsDemo,
+  SubmenuDemo,
+  SizesDemo,
+  DataDrivenDemo,
+} from '../../../components/MenuDemo'
+import MenuDemoSource from '../../../components/MenuDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Navigation menu component for displaying hierarchical navigation items.
+
+## Import
+
+```tsx
+import { Menu } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Menu" description="Simple vertical menu with selectable items." source={MenuDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Horizontal Menu" description="Menu displayed horizontally." source={MenuDemoSource} fn="HorizontalDemo">
+  <HorizontalDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Menu items with icons for better visual context." source={MenuDemoSource} fn="WithIconsDemo">
+  <WithIconsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Submenu" description="Menu with nested submenus." source={MenuDemoSource} fn="SubmenuDemo">
+  <SubmenuDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Menu in different sizes." source={MenuDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Data-Driven Pattern" description="Use items prop for data-driven menus." source={MenuDemoSource} fn="DataDrivenDemo">
+  <DataDrivenDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Menu`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Menu items (compound pattern) | `React.ReactNode` | - |
+| `items` | Menu items (data-driven pattern) | `MenuItem[]` | - |
+| `mode` | Menu display mode | `'vertical' \| 'horizontal' \| 'inline'` | `'vertical'` |
+| `size` | Menu size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `selectedKeys` | Controlled selected item keys | `string[]` | - |
+| `defaultSelectedKeys` | Default selected keys (uncontrolled) | `string[]` | `[]` |
+| `openKeys` | Controlled open submenu keys | `string[]` | - |
+| `defaultOpenKeys` | Default open submenu keys (uncontrolled) | `string[]` | `[]` |
+| `onSelect` | Callback when item is selected | `(key: string) => void` | - |
+| `onOpenChange` | Callback when submenu open state changes | `(openKeys: string[]) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `MenuItem` (for items prop)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | - |
+| `label` | Item label | `React.ReactNode` | - |
+| `icon` | Icon element | `React.ReactNode` | - |
+| `disabled` | Whether item is disabled | `boolean` | `false` |
+| `children` | Submenu items | `MenuItem[]` | - |
+| `divider` | Render as divider | `boolean` | `false` |
+| `title` | Render as section title | `boolean` | `false` |
+
+### `Menu.Item` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for selection (React key prop) | `string` | - |
+| `children` | Item content | `React.ReactNode` | - |
+| `icon` | Icon element | `React.ReactNode` | - |
+| `disabled` | Whether item is disabled | `boolean` | `false` |
+| `onClick` | Click handler | `() => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Menu.SubMenu` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for open state (React key prop) | `string` | - |
+| `label` | Submenu label | `React.ReactNode` | - |
+| `icon` | Icon element | `React.ReactNode` | - |
+| `disabled` | Whether submenu is disabled | `boolean` | `false` |
+| `children` | Submenu items | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Menu.Title`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Title content | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Menu.Divider`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses semantic navigation patterns with proper ARIA attributes
+- Keyboard navigation support with arrow keys for menu traversal
+- Selected items are properly marked for screen readers
+- Submenu open/close states are communicated to assistive technologies
+- Disabled menu items are properly marked and not focusable
+- Focus states are visible for keyboard navigation

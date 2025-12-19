@@ -1,7 +1,67 @@
 ---
 title: Mention
-description: Mention component
+description: Input component for mentioning users, tags, or other entities with autocomplete suggestions.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CustomPrefixDemo,
+  MultiTriggerDemo,
+} from '../../../components/MentionDemo'
+import MentionDemoSource from '../../../components/MentionDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Input component for mentioning users, tags, or other entities with autocomplete suggestions.
+
+## Import
+
+```tsx
+import { Mention } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Mention" description="Simple mention input with @ trigger." source={MentionDemoSource} fn="BasicDemo">
+  <BasicDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Custom Prefix" description="Using # prefix for hashtag mentions." source={MentionDemoSource} fn="CustomPrefixDemo">
+  <CustomPrefixDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Multiple Triggers" description="Using multiple mention components with different prefixes." source={MentionDemoSource} fn="MultiTriggerDemo">
+  <MultiTriggerDemo client:only="react" slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Mention`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `options` | Array of mention options | `Array<{ value: string, label: string }>` | - |
+| `value` | Controlled value | `string` | - |
+| `onChange` | Callback when value changes | `(value: string) => void` | - |
+| `prefix` | Character that triggers mention suggestions | `string` | `'@'` |
+| `split` | Character used to split mentions in the input | `string` | - |
+| `placeholder` | Input placeholder text | `string` | - |
+| `disabled` | Disable the mention input | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Keyboard Navigation
+
+- **↑** / **↓** - Navigate through mention suggestions
+- **Enter** - Select highlighted mention
+- **Esc** - Close mention dropdown
+
+## Accessibility
+
+- Full keyboard navigation support for selecting mentions
+- ARIA attributes for screen readers to announce suggestions
+- Focus management when dropdown opens and closes
+- Clear visual indicators for selected and focused items

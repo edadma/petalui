@@ -1,7 +1,75 @@
 ---
 title: Anchor
-description: Anchor component
+description: Navigate to page sections with scroll spy highlighting.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  HorizontalDemo,
+  NestedDemo,
+} from '../../../components/AnchorDemo'
+import AnchorDemoSource from '../../../components/AnchorDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Navigate to page sections with scroll spy highlighting.
+
+## Import
+
+```tsx
+import { Anchor } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Vertical anchor navigation with scroll spy." source={AnchorDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Horizontal" description="Horizontal layout for top navigation." source={AnchorDemoSource} fn="HorizontalDemo">
+  <HorizontalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Nested Links" description="Hierarchical navigation with nested links." source={AnchorDemoSource} fn="NestedDemo">
+  <NestedDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Anchor`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Anchor links configuration | `AnchorLinkItem[]` | - |
+| `direction` | Layout direction | `'horizontal' \| 'vertical'` | `'vertical'` |
+| `offsetTop` | Offset from top when calculating scroll position | `number` | `0` |
+| `bounds` | Bounding distance of anchor area | `number` | `5` |
+| `getContainer` | Scroll container (default: window) | `() => HTMLElement \| Window` | - |
+| `getCurrentAnchor` | Customize the anchor highlight | `(activeLink: string) => string` | - |
+| `activeLink` | Currently active link (controlled) | `string` | - |
+| `onChange` | Callback when active link changes | `(activeLink: string) => void` | - |
+| `onClick` | Callback when link is clicked | `(e, link) => void` | - |
+| `affix` | Fix anchor when scrolling | `boolean` | `false` |
+| `affixOffsetTop` | Pixels offset from top when affix is true | `number` | `0` |
+| `replace` | Replace history instead of push | `boolean` | `false` |
+| `className` | Custom CSS class | `string` | - |
+| `children` | Anchor.Link children (alternative to items) | `React.ReactNode` | - |
+
+### `AnchorLinkItem`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `href` | Target element id (without #) | `string` | - |
+| `title` | Link title | `React.ReactNode` | - |
+| `children` | Nested link items | `AnchorLinkItem[]` | - |
+
+## Accessibility
+
+- Uses semantic `<nav>` element for navigation
+- Links are keyboard accessible
+- Active state is visually indicated
+- Smooth scrolling respects user motion preferences

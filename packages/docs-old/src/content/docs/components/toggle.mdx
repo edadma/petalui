@@ -1,7 +1,75 @@
 ---
 title: Toggle
-description: Toggle component
+description: Binary switch control for on/off states.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  SizesDemo,
+  ColorsDemo,
+  DisabledDemo,
+  ControlledDemo,
+  FormDemo,
+} from '../../../components/ToggleDemo'
+import ToggleDemoSource from '../../../components/ToggleDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Binary switch control for on/off states.
+
+## Import
+
+```tsx
+import { Toggle } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Toggle" description="Simple toggle switch." source={ToggleDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Four sizes available for toggles." source={ToggleDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Color variants for different contexts." source={ToggleDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Non-interactive disabled toggles." source={ToggleDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled" description="Toggle with controlled state." source={ToggleDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="In Form" description="Toggle integrated with Form component using valuePropName." source={ToggleDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Toggle`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `checked` | Controlled checked state | `boolean` | `-` |
+| `defaultChecked` | Default checked state (uncontrolled) | `boolean` | `false` |
+| `onChange` | Callback when toggle state changes | `(e: ChangeEvent) => void` | `-` |
+| `size` | Toggle size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `color` | Toggle color | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
+| `disabled` | Disable the toggle | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Uses native checkbox input for accessibility
+- Supports keyboard activation with Space key
+- Checked/unchecked state announced by screen readers
+- Disabled state properly communicated

@@ -1,7 +1,71 @@
 ---
 title: Image
-description: Image component
+description: Display images with preview and fallback support.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  SizesDemo,
+  PreviewDemo,
+  FallbackDemo,
+} from '../../../components/ImageDemo'
+import ImageDemoSource from '../../../components/ImageDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display images with preview and fallback support.
+
+## Import
+
+```tsx
+import { Image } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Image" description="Simple image display with src and alt props." source={ImageDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Sizes" description="Images with various dimensions." source={ImageDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Image Preview" description="Click image to preview in full size." source={ImageDemoSource} fn="PreviewDemo">
+  <PreviewDemo client:load slot="demo" />
+</Example>
+
+<Example title="Fallback Image" description="Display fallback image when source fails to load." source={ImageDemoSource} fn="FallbackDemo">
+  <FallbackDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Image`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `src` | Image source URL | `string` | - |
+| `alt` | Alternative text for the image | `string` | `''` |
+| `width` | Image width | `number \| string` | - |
+| `height` | Image height | `number \| string` | - |
+| `preview` | Enable click to preview image in lightbox | `boolean` | `true` |
+| `fallback` | Fallback image URL when source fails to load | `string` | - |
+| `placeholder` | Placeholder content shown while loading | `React.ReactNode` | - |
+| `onLoad` | Callback when image loads successfully | `() => void` | - |
+| `onError` | Callback when image fails to load | `() => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+
+## Accessibility
+
+- Always provide meaningful `alt` text for screen readers
+- Use fallback images to ensure content is always visible
+- Preview is keyboard accessible: press Enter or Space to open, Escape to close
+- Previewable images have `role="button"` with appropriate aria-label
+- Preview modal has `role="dialog"` and `aria-modal="true"`
+- Error state includes aria-label describing the failure

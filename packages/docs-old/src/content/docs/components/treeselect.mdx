@@ -1,7 +1,162 @@
 ---
-title: Treeselect
-description: Treeselect component
+title: TreeSelect
+description: Dropdown tree selection for hierarchical data.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  MultipleDemo,
+  CheckableDemo,
+  SearchableDemo,
+  SizesDemo,
+  StatusDemo,
+  AsyncLoadDemo,
+  MaxTagDemo,
+  TreeLineDemo,
+  DisabledItemsDemo,
+} from '../../../components/TreeSelectDemo'
+import TreeSelectDemoSource from '../../../components/TreeSelectDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Dropdown tree selection for hierarchical data.
+
+## Import
+
+```tsx
+import { TreeSelect } from 'asterui'
+import type { TreeDataNode } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic TreeSelect" description="Select a single value from a tree structure." source={TreeSelectDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Selection" description="Select multiple values from the tree." source={TreeSelectDemoSource} fn="MultipleDemo">
+  <MultipleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Checkable" description="Use checkboxes for selection with parent-child association." source={TreeSelectDemoSource} fn="CheckableDemo">
+  <CheckableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Searchable" description="Filter tree nodes with search." source={TreeSelectDemoSource} fn="SearchableDemo">
+  <SearchableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="TreeSelect comes in various sizes." source={TreeSelectDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Validation Status" description="Show error or warning states." source={TreeSelectDemoSource} fn="StatusDemo">
+  <StatusDemo client:load slot="demo" />
+</Example>
+
+<Example title="Async Loading" description="Load tree nodes asynchronously when expanded." source={TreeSelectDemoSource} fn="AsyncLoadDemo">
+  <AsyncLoadDemo client:load slot="demo" />
+</Example>
+
+<Example title="Max Tag Count" description="Limit the number of visible tags." source={TreeSelectDemoSource} fn="MaxTagDemo">
+  <MaxTagDemo client:load slot="demo" />
+</Example>
+
+<Example title="Tree Line" description="Show connecting lines between tree nodes." source={TreeSelectDemoSource} fn="TreeLineDemo">
+  <TreeLineDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled Items" description="Some tree nodes can be disabled." source={TreeSelectDemoSource} fn="DisabledItemsDemo">
+  <DisabledItemsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `TreeSelect`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `treeData` | Tree data structure | `TreeDataNode[]` | `[]` |
+| `value` | Selected value(s) | `string \| string[]` | `-` |
+| `defaultValue` | Default selected value(s) | `string \| string[]` | `[]` |
+| `onChange` | Callback when selection changes | `(value: string \| string[], labels: ReactNode[]) => void` | `-` |
+| `multiple` | Allow multiple selection | `boolean` | `false` |
+| `treeCheckable` | Show checkbox for tree nodes | `boolean` | `false` |
+| `treeCheckStrictly` | Check without parent-child association | `boolean` | `false` |
+| `showCheckedStrategy` | How to display checked items | `'SHOW_ALL' \| 'SHOW_PARENT' \| 'SHOW_CHILD'` | `'SHOW_ALL'` |
+| `showSearch` | Enable search functionality | `boolean` | `false` |
+| `searchValue` | Controlled search input value | `string` | `-` |
+| `onSearch` | Callback when search input changes | `(value: string) => void` | `-` |
+| `filterTreeNode` | Custom filter function | `(searchValue: string, node: TreeDataNode) => boolean` | `-` |
+| `placeholder` | Placeholder text | `string` | `'Please select'` |
+| `allowClear` | Show clear button | `boolean` | `true` |
+| `disabled` | Disable the select | `boolean` | `false` |
+| `size` | Size of the input | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `color` | Color theme | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
+| `status` | Validation status | `'error' \| 'warning'` | `-` |
+| `maxTagCount` | Max number of tags to show | `number \| 'responsive'` | `-` |
+| `maxTagPlaceholder` | Content for hidden tags | `ReactNode \| ((omittedValues: string[]) => ReactNode)` | `-` |
+| `treeLine` | Show connecting lines | `boolean` | `false` |
+| `treeDefaultExpandAll` | Expand all tree nodes by default | `boolean` | `false` |
+| `treeDefaultExpandedKeys` | Default expanded tree node keys | `string[]` | `[]` |
+| `treeExpandedKeys` | Controlled expanded tree node keys | `string[]` | `-` |
+| `onTreeExpand` | Callback when tree nodes expand/collapse | `(expandedKeys: string[]) => void` | `-` |
+| `loadData` | Load data asynchronously | `(node: TreeDataNode) => Promise<void>` | `-` |
+| `fieldNames` | Customize field names | `{ label?: string; value?: string; children?: string }` | `-` |
+| `open` | Controlled dropdown visibility | `boolean` | `-` |
+| `onDropdownVisibleChange` | Callback when dropdown visibility changes | `(open: boolean) => void` | `-` |
+| `suffixIcon` | Custom suffix icon | `ReactNode` | `-` |
+| `switcherIcon` | Custom expand/collapse icon | `ReactNode \| ((props: { expanded: boolean }) => ReactNode)` | `-` |
+| `notFoundContent` | Content when no results | `ReactNode` | `'No results found'` |
+| `dropdownRender` | Custom dropdown content renderer | `(menu: ReactNode) => ReactNode` | `-` |
+| `popupClassName` | Class for dropdown | `string` | `-` |
+| `data-testid` | Test ID for the component | `string` | `'treeselect'` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `TreeDataNode`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | `-` |
+| `title` | Display text | `ReactNode` | `-` |
+| `children` | Child nodes | `TreeDataNode[]` | `-` |
+| `disabled` | Whether disabled | `boolean` | `-` |
+| `isLeaf` | Whether this is a leaf node | `boolean` | `-` |
+
+## Accessibility
+
+The TreeSelect component follows WAI-ARIA combobox and tree patterns with proper ARIA attributes and keyboard navigation.
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Open dropdown or select focused item |
+| <kbd>Escape</kbd> | Close dropdown |
+| <kbd>↓</kbd> | Open dropdown or move focus down |
+| <kbd>↑</kbd> | Move focus up |
+| <kbd>→</kbd> | Expand focused tree node |
+| <kbd>←</kbd> | Collapse focused tree node or move to parent |
+| <kbd>Home</kbd> | Move focus to first item |
+| <kbd>End</kbd> | Move focus to last item |
+
+### Testing
+
+The component exposes `data-testid` and `data-state` attributes for testing:
+
+| Element | Test ID | Data Attributes |
+|---------|---------|-----------------|
+| Root | `{baseTestId}` | `data-state="open\|closed"`, `data-disabled` |
+| Trigger | `{baseTestId}-trigger` | `-` |
+| Dropdown | `{baseTestId}-dropdown` | `-` |
+| Search | `{baseTestId}-search` | `-` |
+| Clear | `{baseTestId}-clear` | `-` |
+| Option | `{baseTestId}-option-{key}` | `data-state="selected\|unselected"`, `data-disabled` |
+| Tag | `{baseTestId}-tag-{key}` | `-` |
+| Empty | `{baseTestId}-empty` | `-` |
+
+Pass a custom `data-testid` prop to use a different base ID.

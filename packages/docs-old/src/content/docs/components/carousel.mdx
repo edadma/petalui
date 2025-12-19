@@ -1,7 +1,107 @@
 ---
 title: Carousel
-description: Carousel component
+description: Rotating content carousel with navigation controls, indicators, and autoplay support.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  AutoplayDemo,
+  FadeDemo,
+  VerticalDemo,
+  NoControlsDemo,
+  DotPlacementDemo,
+  CustomContentDemo,
+} from '../../../components/CarouselDemo'
+import CarouselDemoSource from '../../../components/CarouselDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Rotating content carousel with navigation controls, indicators, and autoplay support.
+
+## Import
+
+```tsx
+import { Carousel } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Carousel" description="Simple carousel with navigation controls and indicators." source={CarouselDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Autoplay" description="Carousel with automatic slide advancement. Pauses on hover." source={CarouselDemoSource} fn="AutoplayDemo">
+  <AutoplayDemo client:load slot="demo" />
+</Example>
+
+<Example title="Fade Effect" description="Carousel with fade transition instead of slide." source={CarouselDemoSource} fn="FadeDemo">
+  <FadeDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Carousel" description="Carousel with vertical orientation." source={CarouselDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Without Arrows" description="Carousel with arrows hidden, dots-only navigation." source={CarouselDemoSource} fn="NoControlsDemo">
+  <NoControlsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Dot Placement" description="Position indicator dots at different locations." source={CarouselDemoSource} fn="DotPlacementDemo">
+  <DotPlacementDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Content" description="Carousel with custom slide content like cards." source={CarouselDemoSource} fn="CustomContentDemo">
+  <CustomContentDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Carousel`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Carousel slides (Carousel.Item components) | `ReactNode` | - |
+| `activeIndex` | Current slide index (controlled mode) | `number` | - |
+| `defaultActiveIndex` | Default slide index (uncontrolled mode) | `number` | `0` |
+| `autoplay` | Auto-advance slides | `boolean` | `false` |
+| `autoplaySpeed` | Autoplay interval in milliseconds | `number` | `3000` |
+| `speed` | Animation duration in milliseconds | `number` | `500` |
+| `arrows` | Show prev/next navigation arrows | `boolean` | `true` |
+| `dots` | Show slide indicator dots | `boolean \| { className?: string }` | `true` |
+| `dotPlacement` | Position of indicator dots | `'top' \| 'bottom' \| 'start' \| 'end'` | `'bottom'` |
+| `effect` | Transition effect | `'scrollx' \| 'fade'` | `'scrollx'` |
+| `infinite` | Enable infinite looping | `boolean` | `true` |
+| `pauseOnHover` | Pause autoplay on hover | `boolean` | `true` |
+| `vertical` | Vertical carousel orientation | `boolean` | `false` |
+| `beforeChange` | Callback before slide change | `(current: number, next: number) => void` | - |
+| `afterChange` | Callback after slide change | `(current: number) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `data-testid` | Test ID for testing; child elements use this as prefix | `string` | - |
+
+### `Carousel.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Slide content | `ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `data-testid` | Test ID for testing | `string` | - |
+
+### `CarouselRef` Methods
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `goTo` | Navigate to a specific slide | `(index: number, animate?: boolean) => void` | - |
+| `next` | Go to the next slide | `() => void` | - |
+| `prev` | Go to the previous slide | `() => void` | - |
+
+## Usage Tips
+
+- Use `Carousel.Item` to wrap each slide
+- Set a fixed height on the Carousel for consistent layout
+- Autoplay pauses on hover for better UX
+- Use arrow keys to navigate when the carousel is focused
+- Access `goTo`, `next`, `prev` methods via ref

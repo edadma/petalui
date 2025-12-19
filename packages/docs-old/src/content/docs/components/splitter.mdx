@@ -1,7 +1,111 @@
 ---
 title: Splitter
-description: Splitter component
+description: Create resizable split panes with draggable dividers.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  VerticalDemo,
+  ControlledDemo,
+  MultiplePanelsDemo,
+  MinMaxDemo,
+  NestedDemo,
+  GutterDemo,
+  IdeDemo,
+  CollapsibleDemo,
+  NonResizableDemo,
+} from '../../../components/SplitterDemo'
+import SplitterDemoSource from '../../../components/SplitterDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Create resizable split panes with draggable dividers.
+
+## Import
+
+```tsx
+import { Splitter } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Horizontal Splitter" description="Drag the divider to resize the panels." source={SplitterDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Splitter" description="Split panels vertically." source={SplitterDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled Sizes" description="Control panel sizes programmatically." source={SplitterDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Panels" description="Split into more than two panels." source={SplitterDemoSource} fn="MultiplePanelsDemo">
+  <MultiplePanelsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Min/Max Sizes" description="Constrain panel sizes with min and max values." source={SplitterDemoSource} fn="MinMaxDemo">
+  <MinMaxDemo client:load slot="demo" />
+</Example>
+
+<Example title="Nested Splitters" description="Combine horizontal and vertical splitters." source={SplitterDemoSource} fn="NestedDemo">
+  <NestedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Gutter Size" description="Adjust the gutter (divider) size." source={SplitterDemoSource} fn="GutterDemo">
+  <GutterDemo client:load slot="demo" />
+</Example>
+
+<Example title="IDE-Style Layout" description="Complex layout similar to an IDE." source={SplitterDemoSource} fn="IdeDemo">
+  <IdeDemo client:load slot="demo" />
+</Example>
+
+<Example title="Collapsible Panels" description="Panels can be collapsed using arrow buttons on the gutter." source={SplitterDemoSource} fn="CollapsibleDemo">
+  <CollapsibleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Non-Resizable Panel" description="Disable resizing for specific panels." source={SplitterDemoSource} fn="NonResizableDemo">
+  <NonResizableDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Splitter`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `direction` | Direction of the splitter | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `sizes` | Controlled panel sizes as percentages | `number[]` | `-` |
+| `defaultSizes` | Default panel sizes as percentages (uncontrolled) | `number[]` | `-` |
+| `onSizesChange` | Callback when sizes change | `(sizes: number[]) => void` | `-` |
+| `gutterSize` | Size of the draggable gutter in pixels | `number` | `8` |
+| `minSize` | Default minimum panel size in pixels | `number` | `50` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `Splitter.Panel`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Panel content | `React.ReactNode` | `-` |
+| `defaultSize` | Default size percentage | `number` | `-` |
+| `size` | Controlled size percentage | `number` | `-` |
+| `minSize` | Minimum size in pixels | `number` | `-` |
+| `maxSize` | Maximum size in pixels | `number` | `-` |
+| `collapsible` | Allow panel to be collapsed | `boolean` | `false` |
+| `collapsed` | Controlled collapsed state | `boolean` | `-` |
+| `defaultCollapsed` | Default collapsed state | `boolean` | `false` |
+| `onCollapse` | Callback when collapse state changes | `(collapsed: boolean) => void` | `-` |
+| `resizable` | Allow panel to be resized | `boolean` | `true` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Gutter is keyboard accessible with arrow keys
+- ARIA attributes announce current panel sizes
+- Focus indicators visible on gutter
+- Increase gutterSize for easier touch interaction

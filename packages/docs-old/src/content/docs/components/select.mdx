@@ -1,7 +1,80 @@
 ---
 title: Select
-description: Select component
+description: Dropdown select component for choosing from a list of options.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  DefaultValueDemo,
+  SizesDemo,
+  ColorsDemo,
+  GhostDemo,
+  DisabledDemo,
+  FormDemo,
+} from '../../../components/SelectDemo'
+import SelectDemoSource from '../../../components/SelectDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Dropdown select component for choosing from a list of options.
+
+## Import
+
+```tsx
+import { Select } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Select" description="Simple select dropdown." source={SelectDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Default Value" description="Select with pre-selected option." source={SelectDemoSource} fn="DefaultValueDemo">
+  <DefaultValueDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Five sizes: xs, sm, md, lg, and xl." source={SelectDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Color variants for different states." source={SelectDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Ghost Variant" description="Transparent background style." source={SelectDemoSource} fn="GhostDemo">
+  <GhostDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled State" description="Non-interactive disabled select." source={SelectDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="In Form" description="Select with form validation." source={SelectDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Select`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `size` | Select size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `color` | Select color theme | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `ghost` | Ghost style variant | `boolean` | `false` |
+| `bordered` | Show border | `boolean` | `true` |
+| `disabled` | Disabled state | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+| `children` | Option elements | `React.ReactNode` | - |
+
+## Accessibility
+
+- Uses native `<select>` for full accessibility
+- Keyboard navigation with arrow keys and Enter
+- Works with standard form labels
+- Disabled state is properly communicated

@@ -1,7 +1,102 @@
 ---
-title: Qrcode
-description: Qrcode component
+title: QRCode
+description: Generate QR codes with customizable appearance, icons, and status states.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  SizesDemo,
+  ColorsDemo,
+  IconDemo,
+  ErrorLevelDemo,
+  BorderDemo,
+  LoadingDemo,
+  ExpiredDemo,
+  DynamicDemo,
+} from '../../../components/QRCodeDemo'
+import QRCodeDemoSource from '../../../components/QRCodeDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Generate QR codes with customizable appearance, icons, and status states.
+
+## Installation
+
+This component requires `qrcode` as a peer dependency:
+
+```bash
+npm install qrcode
+```
+
+## Import
+
+```tsx
+import { QRCode } from 'asterui/qrcode'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic QR Code" description="Simple QR code with default settings." source={QRCodeDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Size" description="Different QR code sizes." source={QRCodeDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Colors" description="Customize foreground and background colors." source={QRCodeDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icon" description="QR code with centered logo/icon." source={QRCodeDemoSource} fn="IconDemo">
+  <IconDemo client:load slot="demo" />
+</Example>
+
+<Example title="Error Correction Level" description="Different error correction levels affect QR code density." source={QRCodeDemoSource} fn="ErrorLevelDemo">
+  <ErrorLevelDemo client:load slot="demo" />
+</Example>
+
+<Example title="Without Border" description="Remove the border for seamless integration." source={QRCodeDemoSource} fn="BorderDemo">
+  <BorderDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading Status" description="Show loading state while generating or fetching QR code data." source={QRCodeDemoSource} fn="LoadingDemo">
+  <LoadingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Expired Status" description="Show expired state with optional refresh functionality." source={QRCodeDemoSource} fn="ExpiredDemo">
+  <ExpiredDemo client:load slot="demo" />
+</Example>
+
+<Example title="Dynamic QR Code" description="Update QR code value dynamically." source={QRCodeDemoSource} fn="DynamicDemo">
+  <DynamicDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `QRCode`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | The value to encode in the QR code | `string` | - |
+| `size` | QR code canvas size in pixels | `number` | `160` |
+| `errorLevel` | Error correction level | `'L' \| 'M' \| 'Q' \| 'H'` | `'M'` |
+| `icon` | URL of icon/logo to display in center | `string` | - |
+| `iconSize` | Size of the center icon in pixels | `number` | `40` |
+| `type` | Render type | `'canvas' \| 'svg'` | `'canvas'` |
+| `color` | Foreground color (QR code color) | `string` | `'#000000'` |
+| `bgColor` | Background color | `string` | `'#FFFFFF'` |
+| `bordered` | Show border around QR code | `boolean` | `true` |
+| `status` | QR code status state | `'active' \| 'loading' \| 'expired'` | `'active'` |
+| `onRefresh` | Callback when refresh button is clicked (expired status) | `() => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- QR codes include `role="img"` with descriptive label
+- Loading and expired states are announced to screen readers
+- Refresh button is keyboard accessible

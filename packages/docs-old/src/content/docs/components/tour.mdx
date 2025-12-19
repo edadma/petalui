@@ -1,7 +1,91 @@
 ---
 title: Tour
-description: Tour component
+description: Guided tour with spotlight highlighting and step navigation.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicTourDemo,
+  WithoutTargetDemo,
+  WithCoverDemo,
+  PlacementsDemo,
+} from '../../../components/TourDemo'
+import TourDemoSource from '../../../components/TourDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Guided tour with spotlight highlighting and step navigation.
+
+## Import
+
+```tsx
+import { Tour } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Tour" description="A simple guided tour with multiple steps." source={TourDemoSource} fn="BasicTourDemo">
+  <BasicTourDemo client:load slot="demo" />
+</Example>
+
+<Example title="Tour Without Target" description="Steps without a target appear centered on screen." source={TourDemoSource} fn="WithoutTargetDemo">
+  <WithoutTargetDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Cover Image" description="Add images or custom content above the step title." source={TourDemoSource} fn="WithCoverDemo">
+  <WithCoverDemo client:load slot="demo" />
+</Example>
+
+<Example title="Placements" description="Control where the popover appears relative to the target." source={TourDemoSource} fn="PlacementsDemo">
+  <PlacementsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Tour`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `open` | Whether tour is visible | `boolean` | `false` |
+| `steps` | Tour steps configuration | `TourStepProps[]` | `-` |
+| `current` | Current step index (controlled) | `number` | `-` |
+| `onChange` | Callback when step changes | `(current: number) => void` | `-` |
+| `onClose` | Callback when tour closes | `() => void` | `-` |
+| `onFinish` | Callback when tour finishes | `() => void` | `-` |
+| `mask` | Show mask overlay with spotlight | `boolean` | `true` |
+| `type` | Button style type | `'default' \| 'primary'` | `'default'` |
+| `gap` | Gap between spotlight and target [radius, offset] or number | `number \| [number, number]` | `8` |
+| `showSkip` | Show skip button | `boolean` | `true` |
+| `showIndicators` | Show step indicators | `boolean` | `true` |
+| `closeOnMaskClick` | Close on mask click | `boolean` | `true` |
+| `closeOnEscape` | Close on Escape key | `boolean` | `true` |
+| `scrollIntoView` | Scroll target into view | `boolean` | `true` |
+| `prevButtonText` | Text for previous button | `React.ReactNode` | `'Previous'` |
+| `nextButtonText` | Text for next button | `React.ReactNode` | `'Next'` |
+| `finishButtonText` | Text for finish button | `React.ReactNode` | `'Finish'` |
+| `skipButtonText` | Text for skip button | `React.ReactNode` | `'Skip'` |
+| `zIndex` | Z-index for tour overlay | `number` | `1000` |
+
+### `TourStepProps`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `target` | Target element ref or function returning element | `RefObject<HTMLElement> \| (() => HTMLElement \| null) \| null` | `-` |
+| `title` | Step title | `React.ReactNode` | `-` |
+| `description` | Step description | `React.ReactNode` | `-` |
+| `cover` | Cover image or content above title | `React.ReactNode` | `-` |
+| `placement` | Popover placement relative to target | `TourPlacement` | `'bottom'` |
+| `className` | Custom class for step popover | `string` | `-` |
+| `onOpen` | Called when step becomes active | `() => void` | `-` |
+| `onClose` | Called when leaving step | `() => void` | `-` |
+
+## Accessibility
+
+- Tour dialog has role="dialog" and aria-modal="true"
+- Arrow keys navigate between steps
+- Escape key closes the tour
+- Step indicators are keyboard accessible
+- Focus is trapped within the tour when open

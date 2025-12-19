@@ -1,7 +1,153 @@
 ---
 title: Descriptions
-description: Descriptions component
+description: Display key-value pairs in a structured, readable format.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  BorderedDemo,
+  SizesDemo,
+  VerticalDemo,
+  ColumnsDemo,
+  WithSpanDemo,
+  FilledSpanDemo,
+  TitleExtraDemo,
+  NoColonDemo,
+  CustomStylesDemo,
+  CompoundDemo,
+  ResponsiveDemo,
+} from '../../../components/DescriptionsDemo'
+import DescriptionsDemoSource from '../../../components/DescriptionsDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display key-value pairs in a structured, readable format.
+
+## Import
+
+```tsx
+import { Descriptions } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Descriptions" description="Simple key-value display." source={DescriptionsDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Bordered" description="Descriptions with borders." source={DescriptionsDemoSource} fn="BorderedDemo">
+  <BorderedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different size variants." source={DescriptionsDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Title with Extra" description="Title and extra content in the header." source={DescriptionsDemoSource} fn="TitleExtraDemo">
+  <TitleExtraDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Layout" description="Vertical label and content layout." source={DescriptionsDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Columns" description="Control the number of columns." source={DescriptionsDemoSource} fn="ColumnsDemo">
+  <ColumnsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Responsive Columns" description="Columns adjust based on viewport width." source={DescriptionsDemoSource} fn="ResponsiveDemo">
+  <ResponsiveDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Column Span" description="Items spanning multiple columns." source={DescriptionsDemoSource} fn="WithSpanDemo">
+  <WithSpanDemo client:load slot="demo" />
+</Example>
+
+<Example title="Filled Span" description="Items that fill the remaining row space." source={DescriptionsDemoSource} fn="FilledSpanDemo">
+  <FilledSpanDemo client:load slot="demo" />
+</Example>
+
+<Example title="No Colon" description="Hide the colon after labels." source={DescriptionsDemoSource} fn="NoColonDemo">
+  <NoColonDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Styles" description="Apply custom styles and classes to semantic parts." source={DescriptionsDemoSource} fn="CustomStylesDemo">
+  <CustomStylesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Compound Pattern" description="Use Descriptions.Item children instead of items prop." source={DescriptionsDemoSource} fn="CompoundDemo">
+  <CompoundDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Descriptions`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Description items (alternative to children) | `DescriptionsItemConfig[]` | - |
+| `title` | Title of the descriptions block | `React.ReactNode` | - |
+| `extra` | Extra content in the top-right corner | `React.ReactNode` | - |
+| `column` | Number of columns (or responsive config) | `number \| { xs?, sm?, md?, lg?, xl?, 2xl? }` | `3` |
+| `bordered` | Show borders around cells | `boolean` | `false` |
+| `layout` | Layout direction | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `size` | Size variant | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `colon` | Show colon after labels | `boolean` | `true` |
+| `styles` | Semantic styles for component parts | `Partial<Record<SemanticDOM, CSSProperties>>` | - |
+| `classNames` | Semantic classNames for component parts | `Partial<Record<SemanticDOM, string>>` | - |
+| `labelStyle` | Default label styles (deprecated, use styles.label) | `React.CSSProperties` | - |
+| `contentStyle` | Default content styles (deprecated, use styles.content) | `React.CSSProperties` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles for root element | `React.CSSProperties` | - |
+| `data-testid` | Test ID for the component | `string` | `'descriptions'` |
+
+### `DescriptionsItemConfig`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the item (used for test IDs and React keys) | `string` | - |
+| `label` | Label for the item | `React.ReactNode` | - |
+| `children` | Content of the item | `React.ReactNode` | - |
+| `span` | Number of columns to span, or 'filled' to fill remaining space | `number \| 'filled'` | `1` |
+| `labelStyle` | Custom label styles | `React.CSSProperties` | - |
+| `contentStyle` | Custom content styles | `React.CSSProperties` | - |
+| `labelClassName` | Custom label class | `string` | - |
+| `contentClassName` | Custom content class | `string` | - |
+
+### `Descriptions.Item` (compound)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | React key, extracted by parent | `string` | - |
+| `itemKey` | Explicit key (alternative to React key) | `string` | - |
+| `label` | Label for the item | `React.ReactNode` | - |
+| `children` | Content of the item | `React.ReactNode` | - |
+| `span` | Number of columns to span, or 'filled' | `number \| 'filled'` | `1` |
+| `labelStyle` | Custom label styles | `React.CSSProperties` | - |
+| `contentStyle` | Custom content styles | `React.CSSProperties` | - |
+| `labelClassName` | Custom label class | `string` | - |
+| `contentClassName` | Custom content class | `string` | - |
+
+### `SemanticDOM` keys
+
+| Property | Description | Type |
+|----------|-------------|------|
+| `root` | Root container element | - |
+| `header` | Header containing title and extra | - |
+| `title` | Title element | - |
+| `extra` | Extra content element | - |
+| `table` | Table element | - |
+| `label` | Label cells (th elements) | - |
+| `content` | Content cells (td elements) | - |
+
+## Accessibility
+
+- Uses semantic `<table>` markup for proper structure
+- Header cells use `scope` attribute for screen readers
+- Table has `<caption>` element (visually hidden) when title is provided
+- Content cells have `aria-labelledby` linking to their labels
+- Colons after labels are marked with `aria-hidden` to avoid redundant announcements

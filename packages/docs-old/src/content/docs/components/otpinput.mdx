@@ -1,7 +1,92 @@
 ---
-title: Otpinput
-description: Otpinput component
+title: OTPInput
+description: One-time password input with auto-focus and paste support.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  FourDigitDemo,
+  SizesDemo,
+  MaskedDemo,
+  AlphanumericDemo,
+  ErrorDemo,
+  DisabledDemo,
+} from '../../../components/OTPInputDemo'
+import OTPInputDemoSource from '../../../components/OTPInputDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+One-time password input with auto-focus and paste support.
+
+## Import
+
+```tsx
+import { OTPInput } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic OTP Input" description="Simple 6-digit OTP input." source={OTPInputDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Four Digit" description="Custom length OTP input." source={OTPInputDemoSource} fn="FourDigitDemo">
+  <FourDigitDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different size variants." source={OTPInputDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Masked Input" description="Hide entered values with dots." source={OTPInputDemoSource} fn="MaskedDemo">
+  <MaskedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Alphanumeric" description="Accept both letters and numbers." source={OTPInputDemoSource} fn="AlphanumericDemo">
+  <AlphanumericDemo client:load slot="demo" />
+</Example>
+
+<Example title="Error State" description="Show error styling for invalid input." source={OTPInputDemoSource} fn="ErrorDemo">
+  <ErrorDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled State" description="Non-interactive disabled input." source={OTPInputDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `OTPInput`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `length` | Number of input fields | `number` | `6` |
+| `value` | Current value | `string` | - |
+| `onChange` | Callback when value changes | `(value: string) => void` | - |
+| `onComplete` | Callback when all fields are filled | `(value: string) => void` | - |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `type` | Input type - number only or alphanumeric | `'number' \| 'text'` | `'number'` |
+| `mask` | Mask input (show dots instead of characters) | `boolean` | `false` |
+| `disabled` | Disabled state | `boolean` | `false` |
+| `error` | Error state | `boolean` | `false` |
+| `autoFocus` | Auto focus first input on mount | `boolean` | `false` |
+| `placeholder` | Placeholder character | `string` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### Ref Methods
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `focus` | Focus the first input | `() => void` | - |
+| `clear` | Clear all inputs and focus first | `() => void` | - |
+
+## Accessibility
+
+- Each input has an aria-label indicating its position
+- Supports keyboard navigation with arrow keys
+- Backspace moves focus to previous input
+- Supports pasting full OTP codes

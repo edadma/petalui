@@ -1,7 +1,98 @@
 ---
 title: Pagination
-description: Pagination component
+description: Navigate through pages of data with customizable controls.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  SizeChangerDemo,
+  ShowTotalDemo,
+  CustomTotalDemo,
+  QuickJumperDemo,
+  AllFeaturesDemo,
+  SimpleDemo,
+  SizesDemo,
+  DisabledDemo,
+} from '../../../components/PaginationDemo'
+import PaginationDemoSource from '../../../components/PaginationDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Navigate through pages of data with customizable controls.
+
+## Import
+
+```tsx
+import { Pagination } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Pagination" description="Simple pagination with page numbers." source={PaginationDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Size Changer" description="Allow users to change page size." source={PaginationDemoSource} fn="SizeChangerDemo">
+  <SizeChangerDemo client:load slot="demo" />
+</Example>
+
+<Example title="Show Total" description="Display total count of items." source={PaginationDemoSource} fn="ShowTotalDemo">
+  <ShowTotalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Total" description="Custom rendering of total count." source={PaginationDemoSource} fn="CustomTotalDemo">
+  <CustomTotalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Quick Jumper" description="Allow users to jump to a specific page." source={PaginationDemoSource} fn="QuickJumperDemo">
+  <QuickJumperDemo client:load slot="demo" />
+</Example>
+
+<Example title="All Features" description="Pagination with all features enabled." source={PaginationDemoSource} fn="AllFeaturesDemo">
+  <AllFeaturesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Simple Mode" description="Minimal pagination with only prev/next controls." source={PaginationDemoSource} fn="SimpleDemo">
+  <SimpleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different sizes for pagination controls." source={PaginationDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Disabled state for pagination." source={PaginationDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Pagination`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `current` | Current page number (controlled) | `number` | - |
+| `defaultCurrent` | Default initial page number | `number` | `1` |
+| `total` | Total number of items | `number` | - |
+| `pageSize` | Number of items per page (controlled) | `number` | - |
+| `defaultPageSize` | Default number of items per page | `number` | `10` |
+| `pageSizeOptions` | Options for page size selector | `number[]` | `[10, 20, 50, 100]` |
+| `onChange` | Callback when page or pageSize changes | `(page: number, pageSize: number) => void` | - |
+| `onShowSizeChange` | Callback when pageSize changes | `(current: number, size: number) => void` | - |
+| `showSizeChanger` | Show page size selector | `boolean` | `false` |
+| `showQuickJumper` | Show quick jump to page input | `boolean` | `false` |
+| `showTotal` | Show total count or custom render function | `boolean \| ((total: number, range: [number, number]) => ReactNode)` | `false` |
+| `simple` | Simple mode with minimal controls | `boolean` | `false` |
+| `size` | Size of pagination buttons | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `disabled` | Disable all pagination controls | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses `nav` element with `aria-label="Pagination"`
+- Current page is marked with `aria-current="page"`
+- Disabled buttons have proper `aria-disabled` state
+- Quick jumper input has accessible label

@@ -1,7 +1,64 @@
 ---
 title: Watermark
-description: Watermark component
+description: Overlay repeating text or image watermarks to protect content while keeping it interactive.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  MultilineDemo,
+  ImageDemo,
+} from '../../../components/WatermarkDemo'
+import WatermarkDemoSource from '../../../components/WatermarkDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Overlay repeating text or image watermarks to protect content while keeping it interactive.
+
+## Import
+
+```tsx
+import { Watermark } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Text Watermark" description="Apply a repeating text watermark to a card." source={WatermarkDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Lines" description="Stack multiple lines with custom font, gap, and rotation." source={WatermarkDemoSource} fn="MultilineDemo">
+  <MultilineDemo client:load slot="demo" />
+</Example>
+
+<Example title="Image Watermark" description="Use a data URI or hosted image to watermark content." source={WatermarkDemoSource} fn="ImageDemo">
+  <ImageDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Watermark`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `content` | Watermark text (string or lines) | `string \| string[]` | `-` |
+| `image` | Image URL or data URI to render instead of text | `string` | `-` |
+| `gap` | Horizontal and vertical gap between tiles | `[number, number]` | `[120, 120]` |
+| `offset` | Starting offset for the first tile | `[number, number]` | `gap / 2` |
+| `width` | Tile width in pixels | `number` | `120` |
+| `height` | Tile height in pixels | `number` | `64` |
+| `rotate` | Rotation angle in degrees | `number` | `-22` |
+| `zIndex` | z-index for the overlay | `number` | `1000` |
+| `font` | Font settings for text watermarks | `WatermarkFontOptions` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+| `style` | Custom styles for the wrapper | `React.CSSProperties` | `-` |
+
+## Accessibility
+
+- The watermark overlay uses `pointer-events: none` to ensure content remains interactive
+- Watermark is purely decorative and does not interfere with assistive technologies
+- All interactive elements beneath the watermark remain fully accessible to keyboard and screen reader users
+- Semi-transparent rendering ensures underlying content remains visible and readable

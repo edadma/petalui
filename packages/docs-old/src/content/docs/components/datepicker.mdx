@@ -1,7 +1,69 @@
 ---
-title: Datepicker
-description: Datepicker component
+title: DatePicker
+description: Date selection component with calendar popup.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  ControlledDemo,
+  DefaultValueDemo,
+  FormatDemo,
+  SizesDemo,
+  DisabledDemo,
+} from '../../../components/DatePickerDemo'
+import DatePickerDemoSource from '../../../components/DatePickerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Date selection component with calendar popup.
+
+## Import
+
+```tsx
+import { DatePicker } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic DatePicker" description="Simple date selection." source={DatePickerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled" description="Controlled date picker with onChange handler." source={DatePickerDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Default Value" description="Date picker with initial value." source={DatePickerDemoSource} fn="DefaultValueDemo">
+  <DefaultValueDemo client:load slot="demo" />
+</Example>
+
+<Example title="Date Formats" description="Different display format strings." source={DatePickerDemoSource} fn="FormatDemo">
+  <FormatDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different input sizes." source={DatePickerDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Disabled date picker." source={DatePickerDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `DatePicker`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Controlled date value | `Date \| null` | - |
+| `defaultValue` | Initial date value | `Date \| null` | - |
+| `onChange` | Change handler | `(date: Date \| null) => void` | - |
+| `format` | Display format string | `string` | `'MM/DD/YYYY'` |
+| `placeholder` | Input placeholder | `string` | `'Select date'` |
+| `disabled` | Disable the picker | `boolean` | `false` |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `className` | Additional CSS classes | `string` | - |

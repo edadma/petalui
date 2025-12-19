@@ -1,7 +1,84 @@
 ---
 title: Skeleton
-description: Skeleton component
+description: Animated loading placeholders for content.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CircleDemo,
+  TextDemo,
+  DimensionsDemo,
+  AvatarTextDemo,
+  CardDemo,
+  ListDemo,
+  ComplexDemo,
+} from '../../../components/SkeletonDemo'
+import SkeletonDemoSource from '../../../components/SkeletonDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Animated loading placeholders for content.
+
+## Import
+
+```tsx
+import { Skeleton } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple skeleton shapes with different dimensions." source={SkeletonDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Circle" description="Circular skeleton for avatars." source={SkeletonDemoSource} fn="CircleDemo">
+  <CircleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Text Variant" description="Skeleton that animates text color instead of background." source={SkeletonDemoSource} fn="TextDemo">
+  <TextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Width and Height Props" description="Use width and height props for precise sizing." source={SkeletonDemoSource} fn="DimensionsDemo">
+  <DimensionsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Avatar with Text" description="Common pattern for user profiles." source={SkeletonDemoSource} fn="AvatarTextDemo">
+  <AvatarTextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Card Skeleton" description="Loading placeholder for card content." source={SkeletonDemoSource} fn="CardDemo">
+  <CardDemo client:load slot="demo" />
+</Example>
+
+<Example title="List Skeleton" description="Loading placeholder for list items." source={SkeletonDemoSource} fn="ListDemo">
+  <ListDemo client:load slot="demo" />
+</Example>
+
+<Example title="Complex Layout" description="Skeleton for more complex content layouts." source={SkeletonDemoSource} fn="ComplexDemo">
+  <ComplexDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Skeleton`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `width` | Width in pixels or CSS string | `string \| number` | - |
+| `height` | Height in pixels or CSS string | `string \| number` | - |
+| `circle` | Make skeleton circular | `boolean` | `false` |
+| `variant` | Skeleton variant | `'default' \| 'text'` | `'default'` |
+| `className` | Additional CSS classes | `string` | - |
+| `children` | Content (for text variant) | `React.ReactNode` | - |
+
+## Accessibility
+
+- Skeleton is hidden from screen readers by default
+- Use with loading states to inform users content is loading
+- Match skeleton shapes to actual content layout
+- Combine with ARIA live regions for loading announcements

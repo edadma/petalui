@@ -1,7 +1,92 @@
 ---
 title: List
-description: List component
+description: Display a list of items with support for pagination and loading states.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  WithAvatarDemo,
+  LoadingDemo,
+  PaginationDemo,
+} from '../../../components/ListDemo'
+import ListDemoSource from '../../../components/ListDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display a list of items with support for pagination and loading states.
+
+## Import
+
+```tsx
+import { List } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic List" description="Simple list with items." source={ListDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Avatar" description="List items with avatars and descriptions." source={ListDemoSource} fn="WithAvatarDemo">
+  <WithAvatarDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading State" description="List in loading state with skeleton." source={ListDemoSource} fn="LoadingDemo">
+  <LoadingDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Pagination" description="List with pagination controls." source={ListDemoSource} fn="PaginationDemo">
+  <PaginationDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `List`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `dataSource` | Array of data items to render | `T[]` | - |
+| `renderItem` | Function to render each item | `(item: T, index: number) => React.ReactNode` | - |
+| `header` | List header content | `React.ReactNode` | - |
+| `footer` | List footer content | `React.ReactNode` | - |
+| `loading` | Whether the list is in loading state | `boolean` | `false` |
+| `pagination` | Pagination configuration | `ListPaginationConfig \| false` | `false` |
+| `grid` | Grid layout configuration | `ListGridConfig` | - |
+| `bordered` | Show border around list | `boolean` | `true` |
+| `split` | Show divider between items | `boolean` | `true` |
+| `size` | Size variant | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `itemLayout` | Layout direction for items | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `locale` | Internationalization text | `{ emptyText?: React.ReactNode }` | - |
+| `loadMore` | Load more content (e.g., button) | `React.ReactNode` | - |
+| `rowKey` | Custom key extraction for items | `keyof T \| ((item: T) => React.Key)` | - |
+| `data-testid` | Test ID for the component | `string` | `'list'` |
+| `aria-label` | Accessible label for the list | `string` | - |
+
+### `List.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Item content | `React.ReactNode` | - |
+| `actions` | Action buttons displayed on the right | `React.ReactNode[]` | - |
+| `extra` | Extra content on the right side | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `List.Item.Meta`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `avatar` | Avatar or icon element | `React.ReactNode` | - |
+| `title` | Title content | `React.ReactNode` | - |
+| `description` | Description content | `React.ReactNode` | - |
+
+## Accessibility
+
+- Use `aria-label` to provide context for the list
+- List items are rendered in semantic `<ul>` or `<ol>` elements
+- Loading state is communicated to screen readers
+- Pagination controls are keyboard accessible
+- Empty state content is properly announced

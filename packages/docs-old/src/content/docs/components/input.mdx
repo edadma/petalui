@@ -1,7 +1,126 @@
 ---
 title: Input
-description: Input component
+description: Text input field for user data entry with validation states and customization options.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  SizesDemo,
+  ColorsDemo,
+  TypesDemo,
+  VariantsDemo,
+  MaskDemo,
+  ControlledDemo,
+  DisabledDemo,
+  AllowClearDemo,
+  PrefixSuffixDemo,
+  StatusDemo,
+  FloatingLabelDemo,
+  AddonsDemo,
+} from '../../../components/InputDemo'
+import InputDemoSource from '../../../components/InputDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Text input field for user data entry with validation states and customization options.
+
+## Import
+
+```tsx
+import { Input } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Input" description="Simple text input field." source={InputDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Five sizes: xs, sm, md (default), lg, and xl." source={InputDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Different color variants for visual emphasis." source={InputDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Input Types" description="Different HTML input types." source={InputDemoSource} fn="TypesDemo">
+  <TypesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Variants" description="Bordered and ghost styles." source={InputDemoSource} fn="VariantsDemo">
+  <VariantsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Input Mask" description="Formatted input with masking pattern." source={InputDemoSource} fn="MaskDemo">
+  <MaskDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled Input" description="Input with controlled state." source={InputDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Disabled input state." source={InputDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Allow Clear" description="Input with clear button." source={InputDemoSource} fn="AllowClearDemo">
+  <AllowClearDemo client:load slot="demo" />
+</Example>
+
+<Example title="Prefix & Suffix" description="Input with prefix and suffix icons." source={InputDemoSource} fn="PrefixSuffixDemo">
+  <PrefixSuffixDemo client:load slot="demo" />
+</Example>
+
+<Example title="Validation Status" description="Input with validation status for form feedback." source={InputDemoSource} fn="StatusDemo">
+  <StatusDemo client:load slot="demo" />
+</Example>
+
+<Example title="Floating Label" description="Input with animated floating label that moves above when focused or filled." source={InputDemoSource} fn="FloatingLabelDemo">
+  <FloatingLabelDemo client:load slot="demo" />
+</Example>
+
+<Example title="Addons" description="Input with text or elements before/after (outside the input field)." source={InputDemoSource} fn="AddonsDemo">
+  <AddonsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Input`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `type` | HTML input type | `'text' \| 'password' \| 'email' \| 'number' \| 'date' \| 'datetime-local' \| 'week' \| 'month' \| 'tel' \| 'url' \| 'search' \| 'time'` | `'text'` |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `color` | Input color variant | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `status` | Validation status (sets aria-invalid) | `'error' \| 'warning'` | - |
+| `ghost` | Ghost variant (transparent) | `boolean` | `false` |
+| `bordered` | Show border (set to false to remove) | `boolean` | `true` |
+| `allowClear` | Show clear button when input has value | `boolean \| { clearIcon?: ReactNode }` | `false` |
+| `onClear` | Callback when clear button is clicked | `() => void` | - |
+| `prefix` | Prefix icon or element (inside input) | `React.ReactNode` | - |
+| `suffix` | Suffix icon or element (inside input) | `React.ReactNode` | - |
+| `addonBefore` | Text/element before input (outside, using DaisyUI label) | `React.ReactNode` | - |
+| `addonAfter` | Text/element after input (outside, using DaisyUI label) | `React.ReactNode` | - |
+| `floatingLabel` | Floating label text (uses DaisyUI floating-label) | `string` | - |
+| `mask` | Input mask pattern. Use # for digits, A for letters, * for alphanumeric | `string` | - |
+| `maskPlaceholder` | Placeholder character shown in mask | `string` | `'_'` |
+| `errorId` | ID of error message element (for aria-describedby) | `string` | - |
+| `disabled` | Disabled state | `boolean` | `false` |
+| `placeholder` | Placeholder text | `string` | - |
+| `value` | Input value | `string` | - |
+| `onChange` | Change event handler | `(e: React.ChangeEvent<HTMLInputElement>) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses native `<input>` element for proper keyboard support
+- Disabled state is properly communicated to assistive technologies
+- Clear button has `aria-label` for screen readers
+- Use `status="error"` to set `aria-invalid` automatically
+- Use `errorId` to link input to error message via `aria-describedby`
+- Focus states are clearly visible for keyboard navigation

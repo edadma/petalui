@@ -1,7 +1,115 @@
 ---
 title: Modal
-description: Modal component
+description: Dialog overlay for user interaction and displaying information.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  DefaultFooterDemo,
+  CustomFooterDemo,
+  StaticMethodsDemo,
+  ConfirmDemo,
+  CenteredDemo,
+  SizesDemo,
+  ResponsiveDemo,
+} from '../../../components/ModalDemo'
+import ModalDemoSource from '../../../components/ModalDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Dialog overlay for user interaction and displaying information.
+
+## Import
+
+```tsx
+import { Modal } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Modal" description="Simple modal with open/close functionality." source={ModalDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Default Footer" description="Modal with built-in OK/Cancel buttons using onOk and onCancel props." source={ModalDemoSource} fn="DefaultFooterDemo">
+  <DefaultFooterDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Footer" description="Modal with custom footer buttons." source={ModalDemoSource} fn="CustomFooterDemo">
+  <CustomFooterDemo client:load slot="demo" />
+</Example>
+
+<Example title="Static Methods" description="Quick dialogs using Modal.info, Modal.success, Modal.warning, and Modal.error." source={ModalDemoSource} fn="StaticMethodsDemo">
+  <StaticMethodsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Confirm Dialog" description="Confirmation dialog with OK and Cancel buttons using Modal.confirm." source={ModalDemoSource} fn="ConfirmDemo">
+  <ConfirmDemo client:load slot="demo" />
+</Example>
+
+<Example title="Centered Modal" description="Vertically centered modal." source={ModalDemoSource} fn="CenteredDemo">
+  <CenteredDemo client:load slot="demo" />
+</Example>
+
+<Example title="Modal Sizes" description="Different modal widths." source={ModalDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Responsive Position" description="Modal position can change based on screen size using responsive position object." source={ModalDemoSource} fn="ResponsiveDemo">
+  <ResponsiveDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Modal`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `open` | Controlled open state | `boolean` | `false` |
+| `title` | Modal title | `React.ReactNode` | - |
+| `children` | Modal content | `React.ReactNode` | - |
+| `footer` | Custom footer content (set to null to hide) | `React.ReactNode` | - |
+| `onOk` | OK button click handler (shows default footer) | `() => void \| Promise<void>` | - |
+| `onCancel` | Cancel button click handler | `() => void` | - |
+| `onClose` | Close handler (alias for onCancel) | `() => void` | - |
+| `okText` | OK button text | `string` | `'OK'` |
+| `cancelText` | Cancel button text | `string` | `'Cancel'` |
+| `width` | Modal width | `number \| string` | - |
+| `centered` | Vertically center modal | `boolean` | `false` |
+| `position` | Modal position (supports responsive object) | `'top' \| 'middle' \| 'bottom' \| { base?, sm?, md?, lg?, xl?, '2xl'? }` | - |
+| `align` | Modal alignment | `'start' \| 'end'` | - |
+| `maskClosable` | Close on backdrop click | `boolean` | `true` |
+| `closable` | Show close backdrop | `boolean` | `true` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Modal.info/success/warning/error/confirm`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `title` | Modal title | `React.ReactNode` | - |
+| `content` | Modal content | `React.ReactNode` | - |
+| `onOk` | OK button click handler | `() => void \| Promise<void>` | - |
+| `onCancel` | Cancel button click handler (confirm only) | `() => void` | - |
+| `okText` | OK button text | `string` | `'OK'` |
+| `cancelText` | Cancel button text (confirm only) | `string` | `'Cancel'` |
+| `type` | Modal type for styling | `'info' \| 'success' \| 'warning' \| 'error'` | - |
+
+### Static Methods
+
+- `Modal.info(config)` - Information dialog
+- `Modal.success(config)` - Success dialog
+- `Modal.warning(config)` - Warning dialog
+- `Modal.error(config)` - Error dialog
+- `Modal.confirm(config)` - Confirmation dialog with OK/Cancel
+
+## Accessibility
+
+- Uses native `<dialog>` element for proper modal behavior
+- Focus is trapped within the modal when open
+- Pressing Escape closes the modal
+- Focus is restored to the trigger element when closed
+- Uses `aria-labelledby` and `aria-describedby` for screen readers

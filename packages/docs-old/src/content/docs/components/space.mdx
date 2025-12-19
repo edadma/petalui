@@ -1,7 +1,82 @@
 ---
 title: Space
-description: Space component
+description: Set consistent spacing between components.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  HorizontalDemo,
+  VerticalDemo,
+  SizesDemo,
+  AlignmentDemo,
+  WrapDemo,
+  NestedDemo,
+  JustifyDemo,
+  SplitDemo,
+} from '../../../components/SpaceDemo'
+import SpaceDemoSource from '../../../components/SpaceDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Set consistent spacing between components.
+
+## Import
+
+```tsx
+import { Space } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Horizontal Space" description="Default horizontal spacing between elements." source={SpaceDemoSource} fn="HorizontalDemo">
+  <HorizontalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Space" description="Vertical spacing between elements." source={SpaceDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Sizes" description="Control spacing size with the size prop." source={SpaceDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Alignment" description="Align items within the space." source={SpaceDemoSource} fn="AlignmentDemo">
+  <AlignmentDemo client:load slot="demo" />
+</Example>
+
+<Example title="Wrap Items" description="Allow items to wrap to the next line." source={SpaceDemoSource} fn="WrapDemo">
+  <WrapDemo client:load slot="demo" />
+</Example>
+
+<Example title="Nested Spaces" description="Combine vertical and horizontal spacing." source={SpaceDemoSource} fn="NestedDemo">
+  <NestedDemo client:load slot="demo" />
+</Example>
+
+<Example title="Justify Content" description="Control how items are distributed along the main axis." source={SpaceDemoSource} fn="JustifyDemo">
+  <JustifyDemo client:load slot="demo" />
+</Example>
+
+<Example title="Split Separator" description="Insert a separator element between children." source={SpaceDemoSource} fn="SplitDemo">
+  <SplitDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `direction` | Layout direction | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `size` | Spacing size between children | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| number` | `'sm'` |
+| `align` | Alignment of items | `'start' \| 'end' \| 'center' \| 'baseline' \| 'stretch'` | `-` |
+| `justify` | Justification of items along main axis | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | `-` |
+| `wrap` | Whether to wrap items | `boolean` | `false` |
+| `split` | Separator element between children | `React.ReactNode` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Space is a layout utility with no specific accessibility requirements
+- Maintains semantic structure of child elements
+- Size maps to Tailwind spacing: xs=1, sm=2, md=4, lg=6, xl=8

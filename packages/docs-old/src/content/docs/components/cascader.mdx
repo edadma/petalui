@@ -1,7 +1,146 @@
 ---
 title: Cascader
-description: Cascader component
+description: Cascade selection box for hierarchical data like locations or categories.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  HoverDemo,
+  SizesDemo,
+  DisabledDemo,
+  SearchDemo,
+  ChangeOnSelectDemo,
+  AsyncLoadDemo,
+  StatusDemo,
+  MultipleDemo,
+} from '../../../components/CascaderDemo'
+import CascaderDemoSource from '../../../components/CascaderDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Cascade selection box for hierarchical data like locations or categories.
+
+## Import
+
+```tsx
+import { Cascader } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple hierarchical selection." source={CascaderDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Hover Expand" description="Expand sub-menus on hover." source={CascaderDemoSource} fn="HoverDemo">
+  <HoverDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different cascader sizes." source={CascaderDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled" description="Disabled cascader state." source={CascaderDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Search" description="Enable search/filter functionality." source={CascaderDemoSource} fn="SearchDemo">
+  <SearchDemo client:load slot="demo" />
+</Example>
+
+<Example title="Change On Select" description="Allow selection of any level, not just leaf nodes." source={CascaderDemoSource} fn="ChangeOnSelectDemo">
+  <ChangeOnSelectDemo client:load slot="demo" />
+</Example>
+
+<Example title="Async Loading" description="Load options dynamically when expanding." source={CascaderDemoSource} fn="AsyncLoadDemo">
+  <AsyncLoadDemo client:load slot="demo" />
+</Example>
+
+<Example title="Validation Status" description="Show error or warning validation state." source={CascaderDemoSource} fn="StatusDemo">
+  <StatusDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Selection" description="Select multiple leaf values." source={CascaderDemoSource} fn="MultipleDemo">
+  <MultipleDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Cascader`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `options` | Hierarchical options data | `CascaderOption[]` | `[]` |
+| `value` | Controlled selected value path | `string[]` | - |
+| `defaultValue` | Default selected value (uncontrolled) | `string[]` | `[]` |
+| `onChange` | Callback when selection changes | `(value: string[], selectedOptions: CascaderOption[]) => void` | - |
+| `placeholder` | Input placeholder text | `string` | `'Please select'` |
+| `disabled` | Disable the cascader | `boolean` | `false` |
+| `allowClear` | Show clear button | `boolean` | `true` |
+| `expandTrigger` | How to expand sub-menus | `'click' \| 'hover'` | `'click'` |
+| `changeOnSelect` | Allow selection of any level, not just leaves | `boolean` | `false` |
+| `displayRender` | Custom display render function | `(labels: ReactNode[], selectedOptions: CascaderOption[]) => ReactNode` | - |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `color` | Focus ring color | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `status` | Validation status | `'error' \| 'warning'` | - |
+| `showSearch` | Enable search functionality | `boolean \| { filter?, render?, matchInputWidth? }` | `false` |
+| `notFoundContent` | Content when no search results | `ReactNode` | `'No results found'` |
+| `loadData` | Async data loading function | `(selectedOptions: CascaderOption[]) => Promise<void>` | - |
+| `fieldNames` | Custom field names for data mapping | `{ label?: string; value?: string; children?: string }` | - |
+| `open` | Controlled dropdown open state | `boolean` | - |
+| `onDropdownVisibleChange` | Callback when dropdown visibility changes | `(open: boolean) => void` | - |
+| `popupClassName` | Class name for dropdown | `string` | - |
+| `dropdownRender` | Custom dropdown wrapper render | `(menu: ReactNode) => ReactNode` | - |
+| `multiple` | Enable multiple selection mode | `boolean` | `false` |
+| `maxTagCount` | Max tags to show in multiple mode | `number \| 'responsive'` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `CascaderOption`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Unique identifier | `string` | - |
+| `label` | Display label | `ReactNode` | - |
+| `children` | Child options | `CascaderOption[]` | - |
+| `disabled` | Disable this option | `boolean` | `false` |
+| `isLeaf` | Force as leaf node (no expand, no async load) | `boolean` | - |
+
+## Accessibility
+
+The Cascader component follows WAI-ARIA combobox pattern:
+
+- Uses `role="combobox"` on trigger with `aria-expanded`, `aria-haspopup`
+- `aria-activedescendant` tracks focused option for screen readers
+- `aria-selected` indicates selected state on options
+- `aria-disabled` indicates disabled state
+- Clear button has `aria-label="Clear selection"`
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| Down | Open dropdown or move to next option |
+| Up | Move to previous option |
+| Right | Move to next column (expand) |
+| Left | Move to previous column |
+| Enter | Select focused option or open dropdown |
+| Space | Toggle dropdown (when not searching) |
+| Escape | Close dropdown |
+| Home | Move to first option |
+| End | Move to last option |
+
+### Testing
+
+The component includes data attributes for testing:
+
+- `data-testid="cascader"` on the root container
+- `data-testid="cascader-dropdown"` on the dropdown
+- `data-testid="cascader-option-{value}"` on each option
+- `data-testid="cascader-clear"` on the clear button
+- `data-state="open|closed"` on root indicates dropdown state
+- `data-state="selected|hovered"` on options indicates state
+- `data-value="{value}"` on options provides the value

@@ -1,7 +1,73 @@
 ---
 title: Code
-description: Code component
+description: Code mockup display for terminal commands and code snippets.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  MultilineDemo,
+  LineNumbersDemo,
+  HighlightDemo,
+  CopyableDemo,
+  CopyableMultilineDemo,
+} from '../../../components/CodeDemo'
+import CodeDemoSource from '../../../components/CodeDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Code mockup display for terminal commands and code snippets.
+
+## Import
+
+```tsx
+import { Code } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Code Block" description="Simple code mockup with command prefix." source={CodeDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Lines" description="Code block with multiple lines and different prefixes." source={CodeDemoSource} fn="MultilineDemo">
+  <MultilineDemo client:load slot="demo" />
+</Example>
+
+<Example title="Line Numbers" description="Code block with line number prefixes." source={CodeDemoSource} fn="LineNumbersDemo">
+  <LineNumbersDemo client:load slot="demo" />
+</Example>
+
+<Example title="Highlighted Lines" description="Code block with highlighted lines for emphasis." source={CodeDemoSource} fn="HighlightDemo">
+  <HighlightDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Copy Button" description="Add a copy button with the copyable prop." source={CodeDemoSource} fn="CopyableDemo">
+  <CopyableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Copy Button (Multiline)" description="Copy button works with multiple lines too." source={CodeDemoSource} fn="CopyableMultilineDemo">
+  <CopyableMultilineDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Code`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Code lines content | `React.ReactNode` | - |
+| `copyable` | Show copy button. Pass true to auto-extract text, or a string for custom copy text | `boolean \| string` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Code.Line`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Line content | `React.ReactNode` | - |
+| `prefix` | Line prefix (e.g., $, >, line number) | `string` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `highlight` | Highlight this line | `boolean` | `false` |

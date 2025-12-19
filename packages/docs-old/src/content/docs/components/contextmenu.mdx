@@ -1,7 +1,105 @@
 ---
-title: Contextmenu
-description: Contextmenu component
+title: ContextMenu
+description: Right-click context menu with nested submenus and icons.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  DataDrivenDemo,
+  IconsDemo,
+  DividersDemo,
+  SubmenuDemo,
+  DisabledDemo,
+} from '../../../components/ContextMenuDemo'
+import ContextMenuDemoSource from '../../../components/ContextMenuDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Right-click context menu with nested submenus and icons.
+
+## Import
+
+```tsx
+import { ContextMenu } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Context Menu" description="Right-click on the element to show the menu." source={ContextMenuDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Data-Driven Pattern" description="Use items prop for data-driven menus." source={ContextMenuDemoSource} fn="DataDrivenDemo">
+  <DataDrivenDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Menu items with icons." source={ContextMenuDemoSource} fn="IconsDemo">
+  <IconsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Dividers" description="Separate menu sections with dividers." source={ContextMenuDemoSource} fn="DividersDemo">
+  <DividersDemo client:load slot="demo" />
+</Example>
+
+<Example title="Nested Submenu" description="Menu items with nested submenus." source={ContextMenuDemoSource} fn="SubmenuDemo">
+  <SubmenuDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled Items" description="Some menu items can be disabled." source={ContextMenuDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `ContextMenu`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Element that triggers the context menu on right-click | `React.ReactNode` | - |
+| `items` | Menu items | `ContextMenuItem[]` | - |
+| `onSelect` | Callback when an item is selected | `(key: string) => void` | - |
+| `disabled` | Whether the context menu is disabled | `boolean` | `false` |
+| `className` | Additional CSS classes for the menu | `string` | - |
+
+### `ContextMenuItem` (for items prop)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier for the item | `string` | - |
+| `label` | Display label | `React.ReactNode` | - |
+| `icon` | Icon element | `React.ReactNode` | - |
+| `disabled` | Disabled state | `boolean` | `false` |
+| `danger` | Show as danger/destructive action | `boolean` | `false` |
+| `divider` | Render as a divider | `boolean` | `false` |
+| `children` | Submenu items | `ContextMenuItem[]` | - |
+
+### `ContextMenu.Item` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the item (React key prop) | `string` | - |
+| `children` | Item content | `React.ReactNode` | - |
+| `icon` | Icon to display before label | `React.ReactNode` | - |
+| `disabled` | Whether the item is disabled | `boolean` | `false` |
+| `danger` | Show as danger/destructive action | `boolean` | `false` |
+
+### `ContextMenu.SubMenu` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the submenu (React key prop) | `string` | - |
+| `label` | Submenu label | `React.ReactNode` | - |
+| `icon` | Icon to display before label | `React.ReactNode` | - |
+| `disabled` | Whether the submenu is disabled | `boolean` | `false` |
+| `children` | Submenu items | `React.ReactNode` | - |
+
+## Accessibility
+
+- Menu closes on Escape key press
+- Menu closes when clicking outside
+- Menu items are keyboard navigable
+- Disabled items are properly announced

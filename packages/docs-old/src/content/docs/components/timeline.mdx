@@ -1,7 +1,140 @@
 ---
 title: Timeline
-description: Timeline component
+description: Display events in chronological order with alternating or vertical layouts.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  VerticalDemo,
+  HorizontalDemo,
+  CompactDemo,
+  SnapIconDemo,
+  ColorsDemo,
+  ModeStartDemo,
+  ModeEndDemo,
+  PendingDemo,
+  LoadingDemo,
+  ReverseDemo,
+  DeclarativeDemo,
+} from '../../../components/TimelineDemo'
+import TimelineDemoSource from '../../../components/TimelineDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display events in chronological order with alternating or vertical layouts.
+
+## Import
+
+```tsx
+import { Timeline } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Timeline" description="Simple timeline with alternating content." source={TimelineDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Timeline" description="Stack items vertically." source={TimelineDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Horizontal Timeline" description="Display items horizontally." source={TimelineDemoSource} fn="HorizontalDemo">
+  <HorizontalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Compact Timeline" description="All content on one side." source={TimelineDemoSource} fn="CompactDemo">
+  <CompactDemo client:load slot="demo" />
+</Example>
+
+<Example title="Snap Icon" description="Snap icons to the start instead of center." source={TimelineDemoSource} fn="SnapIconDemo">
+  <SnapIconDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Apply different colors to timeline items." source={TimelineDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Mode: Start" description="All items aligned to start." source={TimelineDemoSource} fn="ModeStartDemo">
+  <ModeStartDemo client:load slot="demo" />
+</Example>
+
+<Example title="Mode: End" description="All items aligned to end." source={TimelineDemoSource} fn="ModeEndDemo">
+  <ModeEndDemo client:load slot="demo" />
+</Example>
+
+<Example title="Pending State" description="Show an ongoing activity at the end." source={TimelineDemoSource} fn="PendingDemo">
+  <PendingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading State" description="Show loading spinner on individual items." source={TimelineDemoSource} fn="LoadingDemo">
+  <LoadingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Reverse Order" description="Reverse the order of timeline items." source={TimelineDemoSource} fn="ReverseDemo">
+  <ReverseDemo client:load slot="demo" />
+</Example>
+
+<Example title="Declarative API" description="Use the items prop for data-driven timelines." source={TimelineDemoSource} fn="DeclarativeDemo">
+  <DeclarativeDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Timeline`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Timeline items (compound pattern) | `React.ReactNode` | `-` |
+| `items` | Timeline items (declarative API) | `TimelineItemConfig[]` | `-` |
+| `vertical` | Vertical layout orientation | `boolean` | `false` |
+| `horizontal` | Horizontal layout (default) | `boolean` | `false` |
+| `compact` | All items on one side | `boolean` | `false` |
+| `snapIcon` | Snap icon to start instead of center | `boolean` | `false` |
+| `mode` | Item distribution layout | `'start' \| 'alternate' \| 'end'` | `'alternate'` |
+| `reverse` | Reverse item order | `boolean` | `false` |
+| `pending` | Show pending/loading indicator at end | `React.ReactNode` | `-` |
+| `pendingIcon` | Custom icon for pending item | `React.ReactNode` | `-` |
+| `data-testid` | Test ID for the component | `string` | `'timeline'` |
+| `aria-label` | Accessible label for the timeline | `string` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `Timeline.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `start` | Content at start position (left/top) | `React.ReactNode` | `-` |
+| `end` | Content at end position (right/bottom) | `React.ReactNode` | `-` |
+| `icon` | Central icon or marker | `React.ReactNode` | `-` |
+| `startBox` | Wrap start content in timeline-box | `boolean` | `false` |
+| `endBox` | Wrap end content in timeline-box | `boolean` | `false` |
+| `color` | Color of the timeline dot/connector | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error' \| 'neutral'` | `-` |
+| `loading` | Show loading spinner instead of icon | `boolean` | `false` |
+| `data-testid` | Test ID for this item | `string` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `TimelineItemConfig`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the item | `React.Key` | `-` |
+| `start` | Content at start position | `React.ReactNode` | `-` |
+| `end` | Content at end position | `React.ReactNode` | `-` |
+| `icon` | Central icon or marker | `React.ReactNode` | `-` |
+| `startBox` | Wrap start content in timeline-box | `boolean` | `false` |
+| `endBox` | Wrap end content in timeline-box | `boolean` | `false` |
+| `color` | Color of the timeline dot/connector | `TimelineColor` | `-` |
+| `loading` | Show loading spinner | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Uses semantic list structure (`role="list"`) for screen readers
+- Timeline items are announced in order
+- Supports `aria-label` for describing the timeline purpose
+- Connectors are decorative and hidden from assistive technology
+- Loading states include visual spinner indicators

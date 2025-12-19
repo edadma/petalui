@@ -1,7 +1,61 @@
 ---
 title: Divider
-description: Divider component
+description: Visual separator for content sections with optional text labels.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  WithTextDemo,
+  PositionDemo,
+  VerticalDemo,
+  ColorsDemo,
+} from '../../../components/DividerDemo'
+import DividerDemoSource from '../../../components/DividerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Visual separator for content sections with optional text labels.
+
+## Import
+
+```tsx
+import { Divider } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Divider" description="Simple horizontal divider." source={DividerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Text" description="Divider with text label." source={DividerDemoSource} fn="WithTextDemo">
+  <WithTextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Text Position" description="Position text at start, center, or end." source={DividerDemoSource} fn="PositionDemo">
+  <PositionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Divider" description="Vertical divider for inline content." source={DividerDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Dividers with different color types." source={DividerDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Divider`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Text or content in the divider | `React.ReactNode` | - |
+| `orientation` | Divider orientation | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `position` | Text position | `'start' \| 'center' \| 'end'` | `'center'` |
+| `type` | Color type | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'success' \| 'warning' \| 'info' \| 'error'` | - |
+| `className` | Additional CSS classes | `string` | - |

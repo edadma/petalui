@@ -1,7 +1,55 @@
 ---
 title: Browser
-description: Browser component
+description: Display content in a browser window mockup with address bar.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  PreviewDemo,
+  GradientDemo,
+  DashboardDemo,
+} from '../../../components/BrowserDemo'
+import BrowserDemoSource from '../../../components/BrowserDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display content in a browser window mockup with address bar.
+
+## Import
+
+```tsx
+import { Browser } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Browser" description="Browser window with URL bar." source={BrowserDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Website Preview" description="Preview a website layout." source={BrowserDemoSource} fn="PreviewDemo">
+  <PreviewDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Background" description="Custom background color." source={BrowserDemoSource} fn="GradientDemo">
+  <GradientDemo client:load slot="demo" />
+</Example>
+
+<Example title="Dashboard Preview" description="Mock up a dashboard UI." source={BrowserDemoSource} fn="DashboardDemo">
+  <DashboardDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Browser`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content inside the browser viewport | `React.ReactNode` | - |
+| `url` | URL shown in address bar | `string` | `'https://example.com'` |
+| `className` | Classes for browser container | `string` | - |
+| `contentClassName` | Classes for content area | `string` | - |

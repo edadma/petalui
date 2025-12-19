@@ -1,7 +1,81 @@
 ---
 title: Result
-description: Result component
+description: Display result pages for success, error, or informational states.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  SuccessResultDemo,
+  ErrorResultDemo,
+  InfoResultDemo,
+  WarningResultDemo,
+  NotFoundResultDemo,
+  ForbiddenResultDemo,
+  ServerErrorResultDemo,
+} from '../../../components/ResultDemo'
+import ResultDemoSource from '../../../components/ResultDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display result pages for success, error, or informational states.
+
+## Import
+
+```tsx
+import { Result } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Success Result" description="Show success state with action buttons." source={ResultDemoSource} fn="SuccessResultDemo">
+  <SuccessResultDemo client:load slot="demo" />
+</Example>
+
+<Example title="Error Result" description="Show error state with retry action." source={ResultDemoSource} fn="ErrorResultDemo">
+  <ErrorResultDemo client:load slot="demo" />
+</Example>
+
+<Example title="Info Result" description="Show informational message." source={ResultDemoSource} fn="InfoResultDemo">
+  <InfoResultDemo client:load slot="demo" />
+</Example>
+
+<Example title="Warning Result" description="Show warning state." source={ResultDemoSource} fn="WarningResultDemo">
+  <WarningResultDemo client:load slot="demo" />
+</Example>
+
+<Example title="404 Page Not Found" description="Show 404 error page." source={ResultDemoSource} fn="NotFoundResultDemo">
+  <NotFoundResultDemo client:load slot="demo" />
+</Example>
+
+<Example title="403 Forbidden" description="Show access denied page." source={ResultDemoSource} fn="ForbiddenResultDemo">
+  <ForbiddenResultDemo client:load slot="demo" />
+</Example>
+
+<Example title="500 Server Error" description="Show server error page." source={ResultDemoSource} fn="ServerErrorResultDemo">
+  <ServerErrorResultDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Result`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `status` | Status type of the result | `'success' \| 'error' \| 'info' \| 'warning' \| '404' \| '403' \| '500'` | `'info'` |
+| `title` | Title of the result | `React.ReactNode` | - |
+| `subTitle` | Subtitle of the result | `React.ReactNode` | - |
+| `icon` | Custom icon (overrides default status icon) | `React.ReactNode` | - |
+| `extra` | Additional action elements (typically buttons) | `React.ReactNode` | - |
+| `children` | Additional content between subtitle and actions | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles | `React.CSSProperties` | - |
+
+## Accessibility
+
+- Status icons have appropriate ARIA labels
+- Semantic heading structure for title and subtitle
+- Action buttons are keyboard accessible
+- Color is not the only indicator of status

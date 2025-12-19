@@ -1,7 +1,63 @@
 ---
 title: Affix
-description: Affix component
+description: Make an element stick to the viewport when scrolling. Useful for navigation, toolbars, or action buttons.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CallbackDemo,
+  BottomDemo,
+  TargetDemo,
+} from '../../../components/AffixDemo'
+import AffixDemoSource from '../../../components/AffixDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Make an element stick to the viewport when scrolling. Useful for navigation, toolbars, or action buttons.
+
+## Import
+
+```tsx
+import { Affix } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Affix" description="Element becomes fixed when scrolled past its position." source={AffixDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Callback" description="Get notified when affix state changes." source={AffixDemoSource} fn="CallbackDemo">
+  <CallbackDemo client:load slot="demo" />
+</Example>
+
+<Example title="Affix to Bottom" description="Fix element to bottom of viewport." source={AffixDemoSource} fn="BottomDemo">
+  <BottomDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Target" description="Affix within a scrollable container." source={AffixDemoSource} fn="TargetDemo">
+  <TargetDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Affix`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Content to make sticky | `React.ReactNode` | - |
+| `offsetTop` | Offset from top when fixed (pixels) | `number` | - |
+| `offsetBottom` | Offset from bottom when fixed (pixels) | `number` | - |
+| `target` | Scroll target element | `() => HTMLElement \| Window` | - |
+| `onChange` | Callback when affix state changes | `(affixed: boolean) => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses CSS `position: sticky` for better performance
+- Does not trap keyboard focus when affixed
+- Content remains in document flow when not affixed

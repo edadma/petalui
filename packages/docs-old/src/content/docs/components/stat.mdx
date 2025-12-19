@@ -1,7 +1,87 @@
 ---
-title: Stat
-description: Stat component
+title: Stats
+description: Display statistics and data in organized blocks for dashboards and analytics.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  DescDemo,
+  MultipleDemo,
+  IconsDemo,
+  ColoredDemo,
+  VerticalDemo,
+  ActionsDemo,
+} from '../../../components/StatDemo'
+import StatDemoSource from '../../../components/StatDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display statistics and data in organized blocks for dashboards and analytics.
+
+## Import
+
+```tsx
+import { Stats } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Stat" description="Simple stat with title and value." source={StatDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Description" description="Add description using desc prop." source={StatDemoSource} fn="DescDemo">
+  <DescDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Stats" description="Display multiple stats horizontally." source={StatDemoSource} fn="MultipleDemo">
+  <MultipleDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Adding icons using figure prop." source={StatDemoSource} fn="IconsDemo">
+  <IconsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colored Values" description="Using className for colored values." source={StatDemoSource} fn="ColoredDemo">
+  <ColoredDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Layout" description="Stack stats vertically." source={StatDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Actions" description="Adding buttons using actions prop." source={StatDemoSource} fn="ActionsDemo">
+  <ActionsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Stats`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Stat items to display | `React.ReactNode` | `-` |
+| `vertical` | Stack stats vertically | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `Stats.Stat`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `title` | Stat title | `React.ReactNode` | `-` |
+| `value` | Stat value | `React.ReactNode` | `-` |
+| `desc` | Description text | `React.ReactNode` | `-` |
+| `figure` | Icon or image figure | `React.ReactNode` | `-` |
+| `actions` | Action buttons or elements | `React.ReactNode` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Semantic heading structure for stat titles
+- Values can include ARIA labels for context
+- Figures have appropriate alt text when using images
+- Action buttons are keyboard accessible

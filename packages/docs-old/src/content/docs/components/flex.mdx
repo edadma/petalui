@@ -1,7 +1,87 @@
 ---
 title: Flex
-description: Flex component
+description: Flexible box layout component for building responsive layouts.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  DirectionDemo,
+  JustifyDemo,
+  AlignDemo,
+  GapDemo,
+  WrapDemo,
+  CenteringDemo,
+  NestedDemo,
+} from '../../../components/FlexDemo'
+import FlexDemoSource from '../../../components/FlexDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Flexible box layout component for building responsive layouts.
+
+## Import
+
+```tsx
+import { Flex } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Default horizontal flex layout." source={FlexDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Direction" description="Control flex direction with the direction prop." source={FlexDemoSource} fn="DirectionDemo">
+  <DirectionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Justify Content" description="Distribute items along the main axis." source={FlexDemoSource} fn="JustifyDemo">
+  <JustifyDemo client:load slot="demo" />
+</Example>
+
+<Example title="Align Items" description="Align items along the cross axis." source={FlexDemoSource} fn="AlignDemo">
+  <AlignDemo client:load slot="demo" />
+</Example>
+
+<Example title="Gap Sizes" description="Control spacing between items." source={FlexDemoSource} fn="GapDemo">
+  <GapDemo client:load slot="demo" />
+</Example>
+
+<Example title="Wrap" description="Allow items to wrap to the next line." source={FlexDemoSource} fn="WrapDemo">
+  <WrapDemo client:load slot="demo" />
+</Example>
+
+<Example title="Centering Content" description="Center content both horizontally and vertically." source={FlexDemoSource} fn="CenteringDemo">
+  <CenteringDemo client:load slot="demo" />
+</Example>
+
+<Example title="Nested Flex" description="Combine flex containers for complex layouts." source={FlexDemoSource} fn="NestedDemo">
+  <NestedDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Flex`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `direction` | Flex direction | `'row' \| 'column' \| 'row-reverse' \| 'column-reverse'` | `'row'` |
+| `justify` | Justify content along main axis | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | - |
+| `align` | Align items along cross axis | `'start' \| 'end' \| 'center' \| 'baseline' \| 'stretch'` | - |
+| `wrap` | Whether to wrap items | `boolean \| 'wrap' \| 'nowrap' \| 'wrap-reverse'` | `false` |
+| `gap` | Gap between items | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| number` | - |
+| `flex` | Flex shorthand for the container | `'1' \| 'auto' \| 'initial' \| 'none'` | - |
+| `inline` | Use inline-flex instead of flex | `boolean` | `false` |
+| `minHeight` | Minimum height | `'screen' \| 'full' \| 'fit' \| 'min' \| 'max'` | - |
+| `minWidth` | Minimum width | `'full' \| 'fit' \| 'min' \| 'max'` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Usage Notes
+
+- Flex is a layout utility with no specific accessibility requirements
+- Maintains semantic structure of child elements
+- Gap maps to Tailwind spacing: xs=1, sm=2, md=4, lg=6, xl=8

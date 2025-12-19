@@ -1,7 +1,81 @@
 ---
-title: Colorpicker
-description: Colorpicker component
+title: ColorPicker
+description: Color selection control with presets and multiple format support.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  ShowTextDemo,
+  PresetsDemo,
+  SizesDemo,
+  ControlledDemo,
+  ModesDemo,
+} from '../../../components/ColorPickerDemo'
+import ColorPickerDemoSource from '../../../components/ColorPickerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Color selection control with presets and multiple format support.
+
+## Import
+
+```tsx
+import { ColorPicker } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic ColorPicker" description="Simple color picker with saturation/lightness panel and hue slider." source={ColorPickerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Text Display" description="Color picker showing the hex value below the picker." source={ColorPickerDemoSource} fn="ShowTextDemo">
+  <ShowTextDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Presets" description="Color picker with custom preset color swatches." source={ColorPickerDemoSource} fn="PresetsDemo">
+  <PresetsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Color pickers in different sizes." source={ColorPickerDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled" description="Controlled color picker with state management." source={ColorPickerDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Display Modes" description="Picker only, swatches only, or both." source={ColorPickerDemoSource} fn="ModesDemo">
+  <ModesDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `ColorPicker`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Controlled color value (hex) | `string` | - |
+| `defaultValue` | Initial color value (uncontrolled) | `string` | `'#000000'` |
+| `onChange` | Callback when color changes | `(color: string) => void` | - |
+| `mode` | Display mode | `'swatches' \| 'picker' \| 'both'` | `'both'` |
+| `presets` | Preset color swatches | `string[]` | Default palette |
+| `showText` | Show hex value below picker | `boolean` | `false` |
+| `allowClear` | Show clear button to reset color | `boolean` | `false` |
+| `disabled` | Disable the picker | `boolean` | `false` |
+| `size` | Picker size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `data-testid` | Test ID prefix for child elements | `string` | `'colorpicker'` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Saturation/lightness panel has `role="slider"` with `aria-valuetext`
+- Hue slider has `role="slider"` with `aria-valuemin`, `aria-valuemax`, and `aria-valuenow`
+- Color presets use `role="listbox"` and `role="option"` with `aria-selected`
+- Full keyboard navigation: Arrow keys adjust color values, Shift+Arrow for larger steps
+- Visible focus indicators on interactive elements
+- All interactive elements have descriptive `aria-label` attributes

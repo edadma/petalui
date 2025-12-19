@@ -1,7 +1,110 @@
 ---
 title: Steps
-description: Steps component
+description: Visual progress indicator showing sequential steps.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  VerticalDemo,
+  ColorsDemo,
+  CustomContentDemo,
+  ResponsiveDemo,
+  CurrentDemo,
+  DataDrivenDemo,
+  WithIconsDemo,
+} from '../../../components/StepsDemo'
+import StepsDemoSource from '../../../components/StepsDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Visual progress indicator showing sequential steps.
+
+## Import
+
+```tsx
+import { Steps } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Steps" description="Horizontal step progression." source={StepsDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Vertical Steps" description="Steps in vertical orientation." source={StepsDemoSource} fn="VerticalDemo">
+  <VerticalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Colors" description="Steps with various semantic colors." source={StepsDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Content" description="Custom indicators using dataContent." source={StepsDemoSource} fn="CustomContentDemo">
+  <CustomContentDemo client:load slot="demo" />
+</Example>
+
+<Example title="Responsive Layout" description="Vertical on mobile, horizontal on desktop." source={StepsDemoSource} fn="ResponsiveDemo">
+  <ResponsiveDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled Current Step" description="Use current prop to control step progress." source={StepsDemoSource} fn="CurrentDemo">
+  <CurrentDemo client:load slot="demo" />
+</Example>
+
+<Example title="Data-Driven Pattern" description="Use items prop for data-driven steps with click navigation." source={StepsDemoSource} fn="DataDrivenDemo">
+  <DataDrivenDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Steps with custom icons." source={StepsDemoSource} fn="WithIconsDemo">
+  <WithIconsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Steps`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Step items (compound pattern) | `React.ReactNode` | `-` |
+| `items` | Step items (data-driven pattern) | `StepItem[]` | `-` |
+| `current` | Current step index (0-based) | `number` | `-` |
+| `direction` | Layout direction | `'horizontal' \| 'vertical'` | `'horizontal'` |
+| `vertical` | Vertical layout (deprecated, use direction) | `boolean` | `false` |
+| `onChange` | Callback when step is clicked | `(current: number) => void` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `StepItem` (for items prop)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | `-` |
+| `title` | Step title | `React.ReactNode` | `-` |
+| `description` | Step description | `React.ReactNode` | `-` |
+| `icon` | Step icon | `React.ReactNode` | `-` |
+| `color` | Step color | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
+| `disabled` | Whether step is disabled | `boolean` | `false` |
+
+### `Steps.Step` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Step content | `React.ReactNode` | `-` |
+| `title` | Step title (alternative to children) | `React.ReactNode` | `-` |
+| `description` | Step description | `React.ReactNode` | `-` |
+| `icon` | Step icon | `React.ReactNode` | `-` |
+| `color` | Step color | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
+| `dataContent` | Custom content for step indicator | `string` | `-` |
+| `disabled` | Whether step is disabled | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+Usage Tips:
+- Use the `current` prop to control which step is active
+- Steps before `current` are automatically marked as completed
+- Use `onChange` to enable clicking on steps for navigation
+- Use responsive classes for mobile-friendly layouts

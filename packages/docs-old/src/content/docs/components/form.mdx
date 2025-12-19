@@ -1,7 +1,121 @@
 ---
 title: Form
-description: Form component
+description: Form wrapper with validation, layout options, and field management.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  ValidationDemo,
+  TooltipExtraDemo,
+  FeedbackDemo,
+  LayoutsDemo,
+  InitialValuesDemo,
+  FloatingLabelDemo,
+  AddonsDemo,
+} from '../../../components/FormDemo'
+import FormDemoSource from '../../../components/FormDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Form wrapper with validation, layout options, and field management.
+
+## Import
+
+```tsx
+import { Form } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Form" description="Simple login form with username and password fields." source={FormDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Form Validation" description="Form with validation rules for required fields and email pattern." source={FormDemoSource} fn="ValidationDemo">
+  <ValidationDemo client:load slot="demo" />
+</Example>
+
+<Example title="Tooltip & Extra" description="Labels with tooltip help icons and extra helper text below fields." source={FormDemoSource} fn="TooltipExtraDemo">
+  <TooltipExtraDemo client:load slot="demo" />
+</Example>
+
+<Example title="Validation Feedback" description="Show validation icons inside inputs with hasFeedback prop." source={FormDemoSource} fn="FeedbackDemo">
+  <FeedbackDemo client:load slot="demo" />
+</Example>
+
+<Example title="Form Layouts" description="Different form layouts: horizontal, vertical, and inline." source={FormDemoSource} fn="LayoutsDemo">
+  <LayoutsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Initial Values" description="Form with pre-populated initial values." source={FormDemoSource} fn="InitialValuesDemo">
+  <InitialValuesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Floating Labels" description="Form.Item with floating labels that animate when focused." source={FormDemoSource} fn="FloatingLabelDemo">
+  <FloatingLabelDemo client:load slot="demo" />
+</Example>
+
+<Example title="Form Addons" description="Form.Item with text/elements before or after inputs." source={FormDemoSource} fn="AddonsDemo">
+  <AddonsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Form`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `onFinish` | Success handler (called when validation passes) | `(values: any) => void` | - |
+| `onFinishFailed` | Failed handler (called when validation fails) | `(errorInfo: any) => void` | - |
+| `initialValues` | Initial form field values | `Record<string, any>` | - |
+| `layout` | Form layout orientation | `'horizontal' \| 'vertical' \| 'inline'` | `'vertical'` |
+| `labelWidth` | Label width in pixels for horizontal layout | `number` | `60` |
+| `disabled` | Disable all form fields | `boolean` | `false` |
+| `children` | Form content (Form.Item elements) | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Form.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `name` | Field name (required for validation) | `string` | - |
+| `label` | Field label text | `string` | - |
+| `floatingLabel` | Floating label text (alternative to label) | `string` | - |
+| `addonBefore` | Text/element before input (outside) | `React.ReactNode` | - |
+| `addonAfter` | Text/element after input (outside) | `React.ReactNode` | - |
+| `rules` | Validation rules | `ValidationRule[]` | - |
+| `required` | Mark field as required (shorthand) | `boolean` | `false` |
+| `valuePropName` | Prop name for value (e.g., "checked" for checkboxes) | `string` | `'value'` |
+| `inline` | Render with auto width instead of full width | `boolean` | `false` |
+| `tooltip` | Tooltip text to show next to label | `string` | - |
+| `extra` | Additional content below the form control | `React.ReactNode` | - |
+| `hasFeedback` | Show validation feedback icon | `boolean` | `false` |
+| `dependencies` | Field names that trigger re-validation when changed | `string[]` | - |
+| `validateTrigger` | When to validate | `'onChange' \| 'onBlur' \| 'onSubmit' \| array` | `'onChange'` |
+| `initialValue` | Initial value for this field | `any` | - |
+| `hidden` | Hide field but still validate and submit | `boolean` | `false` |
+| `children` | Form control element (Input, Select, etc.) | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Form.ErrorList`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `fields` | Specific field names to show errors for (shows all if not specified) | `string[]` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+## Validation Rules
+
+The `rules` prop accepts an array of validation rules:
+
+- `required: boolean` - Field is required
+- `message: string` - Error message to display
+- `type: 'email' | 'url' | 'number'` - Built-in type validation
+- `min: number` - Minimum length for strings or minimum value for numbers
+- `max: number` - Maximum length for strings or maximum value for numbers
+- `pattern: RegExp` - Custom regex pattern validation
+- `validate: (value) => boolean | string | Promise` - Custom validation function

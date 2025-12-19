@@ -1,7 +1,46 @@
 ---
 title: Container
-description: Container component
+description: Centered content container with configurable max-width for page layouts.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  PageLayoutDemo,
+} from '../../../components/ContainerDemo'
+import ContainerDemoSource from '../../../components/ContainerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Centered content container with configurable max-width for page layouts.
+
+## Import
+
+```tsx
+import { Container } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Usage" description="Container provides centered content with max-width and responsive padding." source={ContainerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Page Layout" description="Typical usage for page content." source={ContainerDemoSource} fn="PageLayoutDemo">
+  <PageLayoutDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Container`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Container content | `React.ReactNode` | - |
+| `size` | Max width size | `'sm' \| 'md' \| 'lg' \| 'xl' \| '2xl' \| 'full'` | `'xl'` |
+| `centered` | Center container horizontally | `boolean` | `true` |
+| `padding` | Add horizontal padding | `boolean` | `true` |
+| `className` | Additional CSS classes | `string` | - |

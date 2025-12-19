@@ -1,7 +1,87 @@
 ---
 title: Radio
-description: Radio component
+description: Radio buttons for selecting one option from a set.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  HorizontalDemo,
+  SizesDemo,
+  ColorsDemo,
+  DisabledDemo,
+  FormDemo,
+} from '../../../components/RadioDemo'
+import RadioDemoSource from '../../../components/RadioDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Radio buttons for selecting one option from a set.
+
+## Import
+
+```tsx
+import { Radio } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Usage" description="Use Radio.Group to manage radio selection." source={RadioDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Horizontal Layout" description="Radio buttons in a horizontal row." source={RadioDemoSource} fn="HorizontalDemo">
+  <HorizontalDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Sizes" description="Radio buttons in various sizes." source={RadioDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Colored radio button variants." source={RadioDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled State" description="Disabled radio buttons." source={RadioDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="In Form" description="Radio group in a form with validation." source={RadioDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Radio.Group`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Radio components | `React.ReactNode` | - |
+| `value` | Current selected value (controlled) | `string \| number` | - |
+| `defaultValue` | Default selected value (uncontrolled) | `string \| number` | - |
+| `onChange` | Callback when selection changes | `(e: { target: { value: string \| number, name?: string } }) => void` | - |
+| `name` | Name for all radio inputs in the group | `string` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Radio`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Radio value (required when in Radio.Group) | `string \| number` | - |
+| `children` | Label content (wraps in label element) | `React.ReactNode` | - |
+| `size` | Radio button size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `color` | Radio button color variant | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `disabled` | Disabled state | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses native `<input type="radio">` elements for full accessibility
+- Radio.Group uses `role="radiogroup"` for proper semantics
+- Radio inputs share `name` attribute within a group
+- Labels are properly connected for click targeting
+- Keyboard navigation with arrow keys within groups
+- Disabled state is properly communicated to assistive technologies

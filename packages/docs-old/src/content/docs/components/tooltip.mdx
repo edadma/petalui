@@ -1,7 +1,64 @@
 ---
 title: Tooltip
-description: Tooltip component
+description: Display additional information on hover.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  PositionsDemo,
+  ColorsDemo,
+  OpenStateDemo,
+} from '../../../components/TooltipDemo'
+import TooltipDemoSource from '../../../components/TooltipDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display additional information on hover.
+
+## Import
+
+```tsx
+import { Tooltip } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Tooltip" description="Simple tooltip that appears on hover." source={TooltipDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Positions" description="Tooltips can appear in different positions." source={TooltipDemoSource} fn="PositionsDemo">
+  <PositionsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Color variants for different contexts." source={TooltipDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Always Open" description="Force the tooltip to stay visible." source={TooltipDemoSource} fn="OpenStateDemo">
+  <OpenStateDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Tooltip`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `tip` | Tooltip text content | `string` | `-` |
+| `position` | Tooltip position | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` |
+| `color` | Tooltip color | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
+| `open` | Force tooltip to be visible | `boolean` | `false` |
+| `children` | Element that triggers the tooltip | `React.ReactNode` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+## Accessibility
+
+- Tooltip content is exposed via aria-describedby
+- Tooltips appear on focus as well as hover
+- Sufficient color contrast in all color variants
+- Arrow keys can be used when tooltip contains focusable elements

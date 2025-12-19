@@ -1,7 +1,171 @@
 ---
 title: Tree
-description: Tree component
+description: Hierarchical tree structure for displaying nested data.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CheckableDemo,
+  SelectableDemo,
+  MultipleDemo,
+  ShowLineDemo,
+  ShowIconDemo,
+  CompoundDemo,
+  CheckboxColorsDemo,
+  CheckStrictlyDemo,
+  AsyncLoadDemo,
+} from '../../../components/TreeDemo'
+import TreeDemoSource from '../../../components/TreeDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Hierarchical tree structure for displaying nested data.
+
+## Import
+
+```tsx
+import { Tree } from 'asterui'
+import type { TreeDataNode } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Tree" description="Simple tree with expandable nodes." source={TreeDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Checkable" description="Tree with checkbox selection." source={TreeDemoSource} fn="CheckableDemo">
+  <CheckableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Selectable" description="Tree with node selection." source={TreeDemoSource} fn="SelectableDemo">
+  <SelectableDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Selection" description="Allow selecting multiple nodes." source={TreeDemoSource} fn="MultipleDemo">
+  <MultipleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Show Line" description="Display connecting lines between nodes." source={TreeDemoSource} fn="ShowLineDemo">
+  <ShowLineDemo client:load slot="demo" />
+</Example>
+
+<Example title="Show Icon" description="Display custom icons for nodes." source={TreeDemoSource} fn="ShowIconDemo">
+  <ShowIconDemo client:load slot="demo" />
+</Example>
+
+<Example title="Compound Pattern" description="Use Tree.Node for declarative tree structure." source={TreeDemoSource} fn="CompoundDemo">
+  <CompoundDemo client:load slot="demo" />
+</Example>
+
+<Example title="Checkbox Colors" description="Customize checkbox appearance with DaisyUI colors." source={TreeDemoSource} fn="CheckboxColorsDemo">
+  <CheckboxColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Check Strictly" description="Decouple parent-child checkbox relationship." source={TreeDemoSource} fn="CheckStrictlyDemo">
+  <CheckStrictlyDemo client:load slot="demo" />
+</Example>
+
+<Example title="Async Loading" description="Load child nodes asynchronously on expand." source={TreeDemoSource} fn="AsyncLoadDemo">
+  <AsyncLoadDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Tree`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `treeData` | Tree data structure (alternative to compound pattern) | `TreeDataNode[]` | `[]` |
+| `children` | Tree.Node children for compound pattern | `React.ReactNode` | `-` |
+| `checkable` | Show checkbox for each node | `boolean` | `false` |
+| `checkboxColor` | Checkbox color (DaisyUI) | `'primary' \| 'secondary' \| 'accent' \| 'neutral' \| 'info' \| 'success' \| 'warning' \| 'error'` | `'primary'` |
+| `checkboxSize` | Checkbox size (DaisyUI) | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'sm'` |
+| `checkedKeys` | Controlled checked keys | `string[]` | `-` |
+| `defaultCheckedKeys` | Default checked keys | `string[]` | `[]` |
+| `checkStrictly` | Decouple parent-child checkbox relationship | `boolean` | `false` |
+| `onCheck` | Callback when node is checked | `(keys: string[], info: { node, checked }) => void` | `-` |
+| `selectable` | Enable node selection | `boolean` | `true` |
+| `selectedKeys` | Controlled selected keys | `string[]` | `-` |
+| `defaultSelectedKeys` | Default selected keys | `string[]` | `[]` |
+| `onSelect` | Callback when node is selected | `(keys: string[], info: { node, selected }) => void` | `-` |
+| `multiple` | Allow multiple selection | `boolean` | `false` |
+| `expandedKeys` | Controlled expanded keys | `string[]` | `-` |
+| `defaultExpandedKeys` | Default expanded keys | `string[]` | `[]` |
+| `defaultExpandAll` | Expand all nodes by default | `boolean` | `false` |
+| `autoExpandParent` | Auto expand parent nodes | `boolean` | `true` |
+| `onExpand` | Callback when node is expanded | `(keys: string[], info: { node, expanded }) => void` | `-` |
+| `showLine` | Show connecting lines | `boolean` | `false` |
+| `showIcon` | Show node icons | `boolean` | `false` |
+| `blockNode` | Make nodes fill horizontal space | `boolean` | `false` |
+| `switcherIcon` | Custom expand/collapse icon | `ReactNode \| ((expanded: boolean) => ReactNode)` | `-` |
+| `titleRender` | Custom title render function | `(node: TreeDataNode) => ReactNode` | `-` |
+| `filterTreeNode` | Filter function to highlight nodes | `(node: TreeDataNode) => boolean` | `-` |
+| `loadData` | Async data loading function | `(node: TreeDataNode) => Promise<void>` | `-` |
+| `onRightClick` | Right click handler | `(info: { event, node }) => void` | `-` |
+| `fieldNames` | Custom field names for data mapping | `{ key?: string; title?: string; children?: string }` | `-` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `TreeDataNode`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | `-` |
+| `title` | Display title | `React.ReactNode` | `-` |
+| `children` | Child nodes | `TreeDataNode[]` | `-` |
+| `icon` | Custom icon | `React.ReactNode` | `-` |
+| `disabled` | Disable the node | `boolean` | `false` |
+| `disableCheckbox` | Disable checkbox for the node | `boolean` | `false` |
+| `selectable` | Whether node can be selected | `boolean` | `true` |
+| `checkable` | Whether node shows checkbox | `boolean` | `true` |
+| `isLeaf` | Force node to be a leaf (no expand icon) | `boolean` | `-` |
+
+### `Tree.Node`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier (React key prop) | `string` | `-` |
+| `title` | Display title | `React.ReactNode` | `-` |
+| `children` | Child Tree.Node elements | `React.ReactNode` | `-` |
+| `icon` | Custom icon | `React.ReactNode` | `-` |
+| `disabled` | Disable the node | `boolean` | `false` |
+| `disableCheckbox` | Disable checkbox for the node | `boolean` | `false` |
+| `selectable` | Whether node can be selected | `boolean` | `true` |
+| `checkable` | Whether node shows checkbox | `boolean` | `true` |
+| `isLeaf` | Force node to be a leaf (no expand icon) | `boolean` | `-` |
+
+## Accessibility
+
+The Tree component implements the full WAI-ARIA tree pattern:
+
+- `role="tree"` on container and `role="treeitem"` on nodes
+- `aria-expanded` indicates node expansion state
+- `aria-selected` indicates selection state
+- `aria-checked` indicates checkbox state (with `"mixed"` for indeterminate)
+- `aria-disabled` indicates disabled state
+- `aria-level` indicates nesting depth
+
+### Keyboard Navigation
+
+| Key | Action |
+|-----|--------|
+| <kbd>↓</kbd> | Move focus to next visible node |
+| <kbd>↑</kbd> | Move focus to previous visible node |
+| <kbd>→</kbd> | Expand collapsed node, or move to first child |
+| <kbd>←</kbd> | Collapse expanded node |
+| <kbd>Enter</kbd> / <kbd>Space</kbd> | Toggle checkbox, select node, or expand/collapse |
+| <kbd>Home</kbd> | Move focus to first node |
+| <kbd>End</kbd> | Move focus to last visible node |
+
+### Testing
+
+The component includes data attributes for testing:
+
+- `data-testid="tree"` on the tree container
+- `data-testid="tree-node-{key}"` on each node
+- `data-state="selected|expanded|collapsed"` indicates node state
+- `data-key="{key}"` provides the node key

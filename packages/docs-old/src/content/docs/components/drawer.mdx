@@ -1,7 +1,92 @@
 ---
 title: Drawer
-description: Drawer component
+description: A panel that slides in from the edge of the screen. Use for forms, details, or task panels.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  PlacementDemo,
+  WithFooterDemo,
+  ExtraDemo,
+  SizesDemo,
+  LoadingDemo,
+  NestedDemo,
+  NoMaskDemo,
+} from '../../../components/DrawerDemo'
+import DrawerDemoSource from '../../../components/DrawerDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A panel that slides in from the edge of the screen. Use for forms, details, or task panels.
+
+## Import
+
+```tsx
+import { Drawer } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Drawer" description="Simple drawer from the right side." source={DrawerDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Placement" description="Drawer can slide in from any direction." source={DrawerDemoSource} fn="PlacementDemo">
+  <PlacementDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Footer" description="Drawer with action buttons in footer." source={DrawerDemoSource} fn="WithFooterDemo">
+  <WithFooterDemo client:load slot="demo" />
+</Example>
+
+<Example title="Extra Header Content" description="Drawer with extra actions in the header." source={DrawerDemoSource} fn="ExtraDemo">
+  <ExtraDemo client:load slot="demo" />
+</Example>
+
+<Example title="Preset Sizes" description="Default (378px) and large (736px) preset sizes." source={DrawerDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading State" description="Drawer with skeleton loading state." source={DrawerDemoSource} fn="LoadingDemo">
+  <LoadingDemo client:load slot="demo" />
+</Example>
+
+<Example title="Nested Drawers" description="Multiple drawers with push behavior." source={DrawerDemoSource} fn="NestedDemo">
+  <NestedDemo client:load slot="demo" />
+</Example>
+
+<Example title="No Mask" description="Drawer without backdrop overlay." source={DrawerDemoSource} fn="NoMaskDemo">
+  <NoMaskDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Drawer`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Drawer content | `React.ReactNode` | - |
+| `open` | Controlled open state | `boolean` | `false` |
+| `onClose` | Close handler | `(e?: React.MouseEvent \| React.KeyboardEvent) => void` | - |
+| `afterOpenChange` | Callback after open/close animation completes | `(open: boolean) => void` | - |
+| `title` | Drawer title | `React.ReactNode` | - |
+| `placement` | Drawer position | `'left' \| 'right' \| 'top' \| 'bottom'` | `'right'` |
+| `size` | Preset size (378px or 736px) or custom number | `'default' \| 'large' \| number` | `'default'` |
+| `width` | Custom width (overrides size for left/right) | `string \| number` | - |
+| `height` | Custom height (overrides size for top/bottom) | `string \| number` | - |
+| `closable` | Show close button | `boolean` | `true` |
+| `mask` | Show overlay mask | `boolean` | `true` |
+| `maskClosable` | Close on mask click | `boolean` | `true` |
+| `keyboard` | Close on ESC key | `boolean` | `true` |
+| `footer` | Footer content | `React.ReactNode` | - |
+| `extra` | Extra content in header (right side) | `React.ReactNode` | - |
+| `loading` | Show loading skeleton | `boolean` | `false` |
+| `destroyOnClose` | Destroy content when closed | `boolean` | `false` |
+| `forceRender` | Pre-render content (keep in DOM when closed) | `boolean` | `false` |
+| `push` | Nested drawer push behavior | `boolean \| { distance: number }` | `{ distance: 180 }` |
+| `zIndex` | z-index of drawer | `number` | `1000` |
+| `className` | CSS class for drawer panel | `string` | - |

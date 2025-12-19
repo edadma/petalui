@@ -1,7 +1,114 @@
 ---
 title: Tabs
-description: Tabs component
+description: Organize content into separate views where only one is visible at a time.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  SettingsDemo,
+  BoxDemo,
+  LiftDemo,
+  SizesDemo,
+  DisabledDemo,
+  DataDrivenDemo,
+  PositionDemo,
+} from '../../../components/TabsDemo'
+import TabsDemoSource from '../../../components/TabsDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Organize content into separate views where only one is visible at a time.
+
+## Import
+
+```tsx
+import { Tabs } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Usage" description="Simple tabs with content switching handled automatically." source={TabsDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Settings Page" description="Complete settings page with forms using floating label inputs." source={TabsDemoSource} fn="SettingsDemo">
+  <SettingsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Boxed Variant" description="Tabs with enclosed box styling." source={TabsDemoSource} fn="BoxDemo">
+  <BoxDemo client:load slot="demo" />
+</Example>
+
+<Example title="Lifted Variant" description="Tabs with 3D lifted appearance." source={TabsDemoSource} fn="LiftDemo">
+  <LiftDemo client:load slot="demo" />
+</Example>
+
+<Example title="Different Sizes" description="Tabs in various sizes using Space and Typography components." source={TabsDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled Tab" description="Disable specific tabs." source={TabsDemoSource} fn="DisabledDemo">
+  <DisabledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Data-Driven Pattern" description="Use items prop for data-driven tabs with icons." source={TabsDemoSource} fn="DataDrivenDemo">
+  <DataDrivenDemo client:load slot="demo" />
+</Example>
+
+<Example title="Bottom Position" description="Tabs positioned below the content." source={TabsDemoSource} fn="PositionDemo">
+  <PositionDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Tabs`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Tab panels (compound pattern) | `React.ReactNode` | `-` |
+| `items` | Tab items (data-driven pattern) | `TabItem[]` | `-` |
+| `activeKey` | Current active tab key (controlled) | `string` | `-` |
+| `defaultActiveKey` | Default active tab key (uncontrolled) | `string` | `-` |
+| `onChange` | Callback when tab changes | `(key: string) => void` | `-` |
+| `variant` | Visual style variant | `'box' \| 'border' \| 'lift'` | `-` |
+| `size` | Tab size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
+| `position` | Tab position relative to content | `'top' \| 'bottom'` | `'top'` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `TabItem` (for items prop)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | `-` |
+| `label` | Tab button label | `React.ReactNode` | `-` |
+| `children` | Tab panel content | `React.ReactNode` | `-` |
+| `disabled` | Disable the tab | `boolean` | `false` |
+| `icon` | Tab icon | `React.ReactNode` | `-` |
+
+### `Tabs.Panel` (compound pattern)
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier for the tab (React key prop) | `string` | `-` |
+| `tab` | Tab button label | `React.ReactNode` | `-` |
+| `disabled` | Disable the tab | `boolean` | `false` |
+| `icon` | Tab icon | `React.ReactNode` | `-` |
+| `children` | Tab panel content | `React.ReactNode` | `-` |
+
+## Accessibility
+
+- Uses proper ARIA roles: `tablist`, `tab`, and `tabpanel`
+- Keyboard navigation: Arrow keys move between tabs, Tab key moves focus into the panel
+- Active tab is indicated with `aria-selected="true"`
+- Disabled tabs use `aria-disabled` for proper communication
+- Tab panels use `aria-labelledby` to associate with their tab
+
+## Usage Tips
+
+- Use `activeKey` for controlled tabs, `defaultActiveKey` for uncontrolled
+- Use `items` prop for data-driven tabs, `Tabs.Panel` for compound pattern
+- Use `position="bottom"` to place tabs below content

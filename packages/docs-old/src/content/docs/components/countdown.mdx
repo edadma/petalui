@@ -1,7 +1,76 @@
 ---
 title: Countdown
-description: Countdown component
+description: Countdown timer with customizable format and styling.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  WithDaysDemo,
+  SizesDemo,
+  WithLabelsDemo,
+  BoxedDemo,
+  CallbackDemo,
+} from '../../../components/CountdownDemo'
+import CountdownDemoSource from '../../../components/CountdownDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Countdown timer with customizable format and styling.
+
+## Import
+
+```tsx
+import { Countdown } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Countdown" description="Simple countdown timer." source={CountdownDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Days" description="Include days in the countdown." source={CountdownDemoSource} fn="WithDaysDemo">
+  <WithDaysDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different size variants." source={CountdownDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Labels" description="Show labels under each unit." source={CountdownDemoSource} fn="WithLabelsDemo">
+  <WithLabelsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Boxed Style" description="Each unit in a styled box." source={CountdownDemoSource} fn="BoxedDemo">
+  <BoxedDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Callback" description="Show a notification and auto-restart when countdown finishes." source={CountdownDemoSource} fn="CallbackDemo">
+  <CallbackDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Countdown`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Target timestamp in milliseconds or Date object | `number \| Date` | - |
+| `format` | Format string: 'D' days, 'H' hours, 'M' minutes, 'S' seconds | `string` | `'HH:MM:SS'` |
+| `onFinish` | Callback when countdown reaches zero | `() => void` | - |
+| `onChange` | Callback on each tick with remaining time | `(value: number) => void` | - |
+| `size` | Size variant | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `showLabels` | Show labels under each unit | `boolean` | `false` |
+| `labels` | Custom labels for each unit | `{ days?: string, hours?: string, minutes?: string, seconds?: string }` | - |
+| `boxed` | Show box style around each unit | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses aria-live for announcing countdown updates
+- Provides aria-label for each countdown unit
+- Labels are visually associated with their values

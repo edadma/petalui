@@ -1,7 +1,76 @@
 ---
-title: Fileinput
-description: Fileinput component
+title: FileInput
+description: File input component with support for multiple files, file type filtering, and various styles.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  AcceptTypesDemo,
+  MultipleDemo,
+  SizesDemo,
+  ColorsDemo,
+  StylesDemo,
+} from '../../../components/FileInputDemo'
+import FileInputDemoSource from '../../../components/FileInputDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+File input component with support for multiple files, file type filtering, and various styles.
+
+## Import
+
+```tsx
+import { FileInput } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic FileInput" description="Simple file input." source={FileInputDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Accept Types" description="File input that accepts only specific file types." source={FileInputDemoSource} fn="AcceptTypesDemo">
+  <AcceptTypesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Multiple Files" description="Allow selecting multiple files." source={FileInputDemoSource} fn="MultipleDemo">
+  <MultipleDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different file input sizes." source={FileInputDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Different color variants." source={FileInputDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Styles" description="Bordered and ghost styles." source={FileInputDemoSource} fn="StylesDemo">
+  <StylesDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `FileInput`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `accept` | File types to accept | `string` | - |
+| `multiple` | Allow multiple file selection | `boolean` | `false` |
+| `onChange` | Change handler | `(e: ChangeEvent) => void` | - |
+| `disabled` | Disable the input | `boolean` | `false` |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `color` | Input color | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `bordered` | Show border | `boolean` | `false` |
+| `ghost` | Ghost style | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses native `<input type="file">` for full keyboard support
+- Always pair with a descriptive `<label>` for accessibility
+- The `accept` attribute helps users select appropriate files

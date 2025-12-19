@@ -1,7 +1,124 @@
 ---
 title: Command
-description: Command component
+description: A command palette (⌘K) for quick search and actions. Supports keyboard navigation, grouped items, nested pages, and both data-driven and compound component patterns.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CompoundDemo,
+  WithIconsDemo,
+  KeywordsDemo,
+  NestedPagesDemo,
+  DisabledItemsDemo,
+  CustomShortcutDemo,
+  CustomFilterDemo,
+} from '../../../components/CommandDemo'
+import CommandDemoSource from '../../../components/CommandDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A command palette (⌘K) for quick search and actions. Supports keyboard navigation, grouped items, nested pages, and both data-driven and compound component patterns.
+
+## Import
+
+```tsx
+import { Command } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Usage" description="Data-driven command palette with grouped items." source={CommandDemoSource} fn="BasicDemo">
+  <BasicDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Compound Components" description="Build command palettes using compound components for more control." source={CommandDemoSource} fn="CompoundDemo">
+  <CompoundDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Add icons to command items for visual context." source={CommandDemoSource} fn="WithIconsDemo">
+  <WithIconsDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Search Keywords" description="Add extra keywords to make items findable by alternative terms." source={CommandDemoSource} fn="KeywordsDemo">
+  <KeywordsDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Nested Pages" description="Navigate to sub-pages with back navigation support. Press Backspace (when search is empty) or click the back arrow to return." source={CommandDemoSource} fn="NestedPagesDemo">
+  <NestedPagesDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Disabled Items" description="Disable specific items to prevent selection." source={CommandDemoSource} fn="DisabledItemsDemo">
+  <DisabledItemsDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Custom Shortcut" description="Change the global keyboard shortcut from ⌘K to another key." source={CommandDemoSource} fn="CustomShortcutDemo">
+  <CustomShortcutDemo client:only="react" slot="demo" />
+</Example>
+
+<Example title="Custom Filter" description="Provide a custom filter function for advanced matching logic." source={CommandDemoSource} fn="CustomFilterDemo">
+  <CustomFilterDemo client:only="react" slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Command`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `open` | Controlled open state | `boolean` | - |
+| `onOpenChange` | Callback when open state changes | `(open: boolean) => void` | - |
+| `defaultOpen` | Default open state (uncontrolled) | `boolean` | `false` |
+| `items` | Data-driven item configuration | `CommandItemConfig[]` | - |
+| `filter` | Custom filter function | `(value: string, search: string, keywords?: string[]) => boolean` | - |
+| `loop` | Loop keyboard navigation at edges | `boolean` | `true` |
+| `shortcut` | Global keyboard shortcut key(s) | `string[]` | `['k']` |
+| `placeholder` | Search input placeholder | `string` | `'Type a command or search...'` |
+| `emptyMessage` | Message when no results found | `ReactNode` | `'No results found.'` |
+
+### `CommandItemConfig`
+
+When using the data-driven `items` prop:
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the item | `string` | - |
+| `label` | Display label | `ReactNode` | - |
+| `group` | Group name for categorization | `string` | - |
+| `keywords` | Additional search keywords | `string[]` | - |
+| `disabled` | Disable the item | `boolean` | `false` |
+| `onSelect` | Callback when item is selected | `() => void` | - |
+| `icon` | Icon element to display | `ReactNode` | - |
+
+### Compound Components
+
+For more control, use compound components:
+
+| Component | Description |
+|-----------|-------------|
+| `Command.List` | Container for groups and items |
+| `Command.Group` | Groups items with optional heading |
+| `Command.Item` | Selectable command item |
+| `Command.Empty` | Shown when no results match |
+| `Command.Page` | Nested page for navigation |
+| `Command.Separator` | Visual separator between sections |
+
+## Accessibility
+
+- Uses native `<dialog>` element for focus trapping and ESC handling
+- Search input has `role="combobox"` with proper ARIA attributes
+- List uses `role="listbox"` with `role="option"` items
+- Keyboard navigation with Arrow keys, Enter to select, Escape to close
+- `aria-activedescendant` tracks the highlighted item
+- Groups use `role="group"` with `aria-label`
+
+## Keyboard Shortcuts
+
+- `⌘K` / `Ctrl+K` - Open command palette (customizable)
+- `↑` `↓` - Navigate items
+- `Enter` - Select highlighted item
+- `Escape` - Close palette (or go back on nested page)
+- `Backspace` - Go back to previous page (when search is empty)

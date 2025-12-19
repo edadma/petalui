@@ -1,7 +1,62 @@
 ---
 title: Empty
-description: Empty component
+description: Display placeholder content when there is no data to show.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  CustomDescriptionDemo,
+  CustomImageDemo,
+  WithActionDemo,
+  SimpleImageDemo,
+} from '../../../components/EmptyDemo'
+import EmptyDemoSource from '../../../components/EmptyDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display placeholder content when there is no data to show.
+
+## Import
+
+```tsx
+import { Empty } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Empty" description="Simple empty state with default image." source={EmptyDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Description" description="Empty state with custom description text." source={EmptyDemoSource} fn="CustomDescriptionDemo">
+  <CustomDescriptionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Image" description="Empty state with custom image or icon." source={EmptyDemoSource} fn="CustomImageDemo">
+  <CustomImageDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Action Button" description="Empty state with action button." source={EmptyDemoSource} fn="WithActionDemo">
+  <WithActionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Simple Image" description="Minimal empty state with smaller image." source={EmptyDemoSource} fn="SimpleImageDemo">
+  <SimpleImageDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Empty`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `description` | Text or node to display as description | `React.ReactNode` | `'No Data'` |
+| `image` | Custom image or icon; set to null to hide | `React.ReactNode` | `Empty.PRESENTED_IMAGE_DEFAULT` |
+| `imageStyle` | Styling applied to the image container | `React.CSSProperties` | - |
+| `children` | Extra content like buttons or actions | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `data-testid` | Test ID for the component | `string` | `'empty'` |

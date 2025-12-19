@@ -1,7 +1,81 @@
 ---
-title: Weekcalendar
-description: Weekcalendar component
+title: WeekCalendar
+description: A weekly calendar view with hourly time slots for displaying and scheduling events.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  WithEventsDemo,
+  SlotSelectionDemo,
+  StrikethroughDemo,
+  CustomHoursDemo,
+  AllowPastInteractionDemo,
+} from '../../../components/WeekCalendarDemo'
+import WeekCalendarDemoSource from '../../../components/WeekCalendarDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A weekly calendar view with hourly time slots for displaying and scheduling events.
+
+## Import
+
+```tsx
+import { WeekCalendar, type CalendarEvent, type CalendarLocale } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Calendar" description="Simple week calendar showing hourly time slots." source={WeekCalendarDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Events" description="Calendar displaying events at their scheduled times." source={WeekCalendarDemoSource} fn="WithEventsDemo">
+  <WithEventsDemo client:load slot="demo" />
+</Example>
+
+<Example title="Slot Selection" description="Click on empty time slots to select them." source={WeekCalendarDemoSource} fn="SlotSelectionDemo">
+  <SlotSelectionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Strikethrough Events" description="Show cancelled events with strikethrough styling." source={WeekCalendarDemoSource} fn="StrikethroughDemo">
+  <StrikethroughDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Hours" description="Show only morning hours (6am-12pm) using startHour and endHour." source={WeekCalendarDemoSource} fn="CustomHoursDemo">
+  <CustomHoursDemo client:load slot="demo" />
+</Example>
+
+<Example title="Allow Past Interaction" description="Enable clicking on past time slots." source={WeekCalendarDemoSource} fn="AllowPastInteractionDemo">
+  <AllowPastInteractionDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `WeekCalendar`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `date` | The date to display (determines which week is shown) | `Date` | `new Date()` |
+| `events` | Array of calendar events to display | `CalendarEvent[]` | `[]` |
+| `startHour` | Start hour for the time grid (0-23) | `number` | `9` |
+| `endHour` | End hour for the time grid (0-23) | `number` | `17` |
+| `allowPastInteraction` | Allow clicking on past time slots | `boolean` | `false` |
+| `fitContainer` | Fit rows to container height instead of scrolling | `boolean` | `false` |
+| `locale` | Locale configuration for day names and time format | `CalendarLocale` | `-` |
+| `onDayClick` | Handler when a day header is clicked | `(date: Date) => void` | `-` |
+| `onEventClick` | Handler when an event is clicked | `(event: CalendarEvent) => void` | `-` |
+| `onSelectSlot` | Handler when a time slot is clicked | `(slotInfo: { start: Date; end: Date }) => void` | `-` |
+
+### `CalendarEvent`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `date` | Event date and time (hour determines which row) | `Date` | `-` |
+| `title` | Event title | `string` | `-` |
+| `color` | Event dot color | `string` | `-` |
+| `strikethrough` | Show event with strikethrough (cancelled) | `boolean` | `-` |
+| `style` | Custom inline styles for the event | `CSSProperties` | `-` |

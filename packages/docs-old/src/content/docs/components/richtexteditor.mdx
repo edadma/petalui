@@ -1,7 +1,123 @@
 ---
-title: Richtexteditor
-description: Richtexteditor component
+title: RichTextEditor
+description: A theme-aware WYSIWYG editor built on Tiptap for rich text editing with customizable toolbar.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  ControlledDemo,
+  MinimalToolbarDemo,
+  FullToolbarDemo,
+  NoToolbarDemo,
+  SizesDemo,
+  MaxHeightDemo,
+  ReadOnlyDemo,
+  BorderlessDemo,
+  EditorInstanceDemo,
+} from '../../../components/RichTextEditorDemo'
+import RichTextEditorDemoSource from '../../../components/RichTextEditorDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A theme-aware WYSIWYG editor built on Tiptap for rich text editing with customizable toolbar.
+
+## Installation
+
+This component requires `@tiptap` packages and `@aster-ui/icons` as peer dependencies:
+
+```bash
+npm install @aster-ui/icons @tiptap/react @tiptap/starter-kit @tiptap/extension-link @tiptap/extension-placeholder @tiptap/extension-underline
+```
+
+## Import
+
+```tsx
+import { RichTextEditor } from 'asterui/editor'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Editor" description="Simple rich text editor with default toolbar." source={RichTextEditorDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled Editor" description="Editor with controlled value showing HTML output." source={RichTextEditorDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Minimal Toolbar" description="Editor with only basic formatting options." source={RichTextEditorDemoSource} fn="MinimalToolbarDemo">
+  <MinimalToolbarDemo client:load slot="demo" />
+</Example>
+
+<Example title="Full Toolbar" description="Editor with all available toolbar options." source={RichTextEditorDemoSource} fn="FullToolbarDemo">
+  <FullToolbarDemo client:load slot="demo" />
+</Example>
+
+<Example title="No Toolbar" description="Distraction-free writing without toolbar." source={RichTextEditorDemoSource} fn="NoToolbarDemo">
+  <NoToolbarDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Different text size variants." source={RichTextEditorDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Max Height with Scrolling" description="Editor with fixed max height that scrolls." source={RichTextEditorDemoSource} fn="MaxHeightDemo">
+  <MaxHeightDemo client:load slot="demo" />
+</Example>
+
+<Example title="Read-Only Mode" description="Display formatted content without editing." source={RichTextEditorDemoSource} fn="ReadOnlyDemo">
+  <ReadOnlyDemo client:load slot="demo" />
+</Example>
+
+<Example title="Borderless" description="Editor without border, useful inside cards." source={RichTextEditorDemoSource} fn="BorderlessDemo">
+  <BorderlessDemo client:load slot="demo" />
+</Example>
+
+<Example title="Editor Instance Access" description="Access the Tiptap editor instance for advanced features." source={RichTextEditorDemoSource} fn="EditorInstanceDemo">
+  <EditorInstanceDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `RichTextEditor`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | HTML content (controlled) | `string` | `''` |
+| `onChange` | Callback when content changes | `(html: string) => void` | - |
+| `placeholder` | Placeholder text | `string` | `'Start typing...'` |
+| `toolbar` | Toolbar items to display | `ToolbarItem[]` | `[default set]` |
+| `hideToolbar` | Hide the toolbar | `boolean` | `false` |
+| `readOnly` | Make editor read-only | `boolean` | `false` |
+| `autoFocus` | Auto focus on mount | `boolean` | `false` |
+| `minHeight` | Minimum height of editor | `string \| number` | `200` |
+| `maxHeight` | Maximum height (enables scrolling) | `string \| number` | - |
+| `size` | Text size variant | `'sm' \| 'md' \| 'lg'` | `'md'` |
+| `bordered` | Show border around editor | `boolean` | `true` |
+| `onEditorReady` | Callback with Tiptap editor instance | `(editor: Editor) => void` | - |
+
+### `ToolbarItem`
+
+| Property | Description |
+|----------|-------------|
+| `bold` | Bold text |
+| `italic` | Italic text |
+| `underline` | Underlined text |
+| `strikethrough` | Strikethrough text |
+| `code` | Inline code |
+| `heading1` | Heading level 1 |
+| `heading2` | Heading level 2 |
+| `heading3` | Heading level 3 |
+| `bulletList` | Unordered list |
+| `orderedList` | Ordered list |
+| `blockquote` | Blockquote |
+| `codeBlock` | Code block |
+| `horizontalRule` | Horizontal line |
+| `link` | Insert/edit link |
+| `undo` | Undo last change |
+| `redo` | Redo last change |
+| `\|` | Toolbar divider |

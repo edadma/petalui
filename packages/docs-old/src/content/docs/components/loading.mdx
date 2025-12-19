@@ -1,7 +1,61 @@
 ---
 title: Loading
-description: Loading component
+description: Display loading states with various animated indicators to show ongoing processes.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicDemo,
+  TypesDemo,
+  SizesDemo,
+  ColorsDemo,
+} from '../../../components/LoadingDemo'
+import LoadingDemoSource from '../../../components/LoadingDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Display loading states with various animated indicators to show ongoing processes.
+
+## Import
+
+```tsx
+import { Loading } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Loading" description="Default loading spinner." source={LoadingDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Loading Types" description="Different animation types for loading indicators." source={LoadingDemoSource} fn="TypesDemo">
+  <TypesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Sizes" description="Control loading indicator size." source={LoadingDemoSource} fn="SizesDemo">
+  <SizesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Colors" description="Different color variants for loading indicators." source={LoadingDemoSource} fn="ColorsDemo">
+  <ColorsDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Loading`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `size` | Loading indicator size | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
+| `type` | Loading animation type | `'spinner' \| 'dots' \| 'ring' \| 'ball' \| 'bars' \| 'infinity'` | `'spinner'` |
+| `color` | Loading indicator color | `'primary' \| 'secondary' \| 'accent' \| 'neutral' \| 'info' \| 'success' \| 'warning' \| 'error'` | `'primary'` |
+| `className` | Additional CSS classes | `string` | - |
+
+## Accessibility
+
+- Uses `aria-label` to describe loading state
+- Animation can be paused by users who prefer reduced motion
+- Ensure loading indicators are paired with text for screen readers when possible

@@ -1,7 +1,79 @@
 ---
 title: Transfer
-description: Transfer component
+description: Two-column transfer component for moving items between lists.
 tableOfContents: false
 ---
 
-Coming soon.
+import {
+  BasicTransferDemo,
+  SearchTransferDemo,
+  CustomRenderTransferDemo,
+  DisabledItemsTransferDemo,
+  TitlesTransferDemo,
+} from '../../../components/TransferDemo'
+import TransferDemoSource from '../../../components/TransferDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Two-column transfer component for moving items between lists.
+
+## Import
+
+```tsx
+import { Transfer } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Transfer" description="Move items between two columns." source={TransferDemoSource} fn="BasicTransferDemo">
+  <BasicTransferDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Search" description="Filter items with search input." source={TransferDemoSource} fn="SearchTransferDemo">
+  <SearchTransferDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Render" description="Custom item rendering with title and description." source={TransferDemoSource} fn="CustomRenderTransferDemo">
+  <CustomRenderTransferDemo client:load slot="demo" />
+</Example>
+
+<Example title="Disabled Items" description="Some items can be disabled." source={TransferDemoSource} fn="DisabledItemsTransferDemo">
+  <DisabledItemsTransferDemo client:load slot="demo" />
+</Example>
+
+<Example title="Custom Titles" description="Customize column headers." source={TransferDemoSource} fn="TitlesTransferDemo">
+  <TitlesTransferDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Transfer`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `dataSource` | Data source array | `TransferItem[]` | `[]` |
+| `targetKeys` | Keys of items in the right column | `string[]` | `[]` |
+| `onChange` | Callback when items are transferred | `(targetKeys: string[]) => void` | `-` |
+| `render` | Custom render function for items | `(item: TransferItem) => React.ReactNode` | `-` |
+| `showSearch` | Show search input | `boolean` | `false` |
+| `titles` | Titles for left and right columns | `[string, string]` | `['Source', 'Target']` |
+| `className` | Additional CSS classes | `string` | `-` |
+
+### `TransferItem`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique identifier | `string` | `-` |
+| `title` | Display title | `string` | `-` |
+| `description` | Optional description | `string` | `-` |
+| `disabled` | Whether item is disabled | `boolean` | `false` |
+
+## Accessibility
+
+- Uses checkbox inputs for item selection
+- Keyboard navigation between items
+- Transfer buttons are keyboard accessible
+- Disabled items are properly announced
