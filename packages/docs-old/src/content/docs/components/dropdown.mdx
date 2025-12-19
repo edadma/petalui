@@ -1,0 +1,126 @@
+---
+title: Dropdown
+description: Dropdown menu component for displaying actions and options.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  ItemsPropDemo,
+  PositionDemo,
+  TriggerDemo,
+  WithIconsDemo,
+  WithDividerDemo,
+  ItemStatesDemo,
+  AlignDemo,
+  ContextMenuDemo,
+  SubmenuDemo,
+} from '../../../components/DropdownDemo'
+import DropdownDemoSource from '../../../components/DropdownDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Dropdown menu component for displaying actions and options.
+
+## Import
+
+```tsx
+import { Dropdown } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic Dropdown" description="Simple dropdown menu with items using compound pattern." source={DropdownDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Data-Driven (items prop)" description="Define menu items via the items prop instead of compound components." source={DropdownDemoSource} fn="ItemsPropDemo">
+  <ItemsPropDemo client:load slot="demo" />
+</Example>
+
+<Example title="Position" description="Dropdown menu can be positioned in different directions." source={DropdownDemoSource} fn="PositionDemo">
+  <PositionDemo client:load slot="demo" />
+</Example>
+
+<Example title="Trigger Modes" description="Control how the dropdown opens: click, hover, or both." source={DropdownDemoSource} fn="TriggerDemo">
+  <TriggerDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Icons" description="Menu items with icons for better visual context." source={DropdownDemoSource} fn="WithIconsDemo">
+  <WithIconsDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Divider" description="Separate menu sections with dividers." source={DropdownDemoSource} fn="WithDividerDemo">
+  <WithDividerDemo client:load slot="demo" />
+</Example>
+
+<Example title="Item States" description="Items can be active, disabled, or styled as danger." source={DropdownDemoSource} fn="ItemStatesDemo">
+  <ItemStatesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Alignment" description="Align the dropdown menu to start, center, or end." source={DropdownDemoSource} fn="AlignDemo">
+  <AlignDemo client:load slot="demo" />
+</Example>
+
+<Example title="Context Menu" description="Open dropdown on right-click using contextMenu trigger." source={DropdownDemoSource} fn="ContextMenuDemo">
+  <ContextMenuDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Submenu" description="Nested submenus for hierarchical options." source={DropdownDemoSource} fn="SubmenuDemo">
+  <SubmenuDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `Dropdown`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Trigger element and dropdown content (compound pattern) | `React.ReactNode` | - |
+| `items` | Menu items (data-driven pattern) | `DropdownMenuItemType[]` | - |
+| `trigger` | Trigger mode(s) for dropdown | `('click' \| 'hover' \| 'contextMenu')[]` | `['click']` |
+| `position` | Dropdown menu position | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
+| `align` | Dropdown menu alignment | `'start' \| 'center' \| 'end'` | `'start'` |
+| `open` | Controlled open state | `boolean` | - |
+| `onOpenChange` | Callback when open state changes | `(open: boolean, info?: { source }) => void` | - |
+| `disabled` | Disable the dropdown | `boolean` | `false` |
+| `arrow` | Show arrow pointing to trigger | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `mouseEnterDelay` | Delay before showing on hover (seconds) | `number` | `0.15` |
+| `mouseLeaveDelay` | Delay before hiding on mouse leave (seconds) | `number` | `0.1` |
+| `destroyOnHidden` | Destroy dropdown when hidden | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Dropdown.Item`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the item (React key prop) | `string` | - |
+| `children` | Item content | `React.ReactNode` | - |
+| `label` | Item label (alternative to children) | `React.ReactNode` | - |
+| `icon` | Icon to display before label | `React.ReactNode` | - |
+| `onClick` | Click handler | `() => void` | - |
+| `active` | Active/selected state | `boolean` | `false` |
+| `disabled` | Disable the item | `boolean` | `false` |
+| `danger` | Danger/destructive styling | `boolean` | `false` |
+| `className` | Additional CSS classes | `string` | - |
+
+### `Dropdown.SubMenu`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `key` | Unique key for the submenu (React key prop) | `string` | - |
+| `children` | Submenu items | `React.ReactNode` | - |
+| `title` | Submenu title/label | `React.ReactNode` | - |
+| `icon` | Icon to display before title | `React.ReactNode` | - |
+| `disabled` | Disable the submenu | `boolean` | `false` |
+
+## Accessibility
+
+- Keyboard navigation with `Enter`, `Space`, and `Escape` keys
+- Arrow keys to navigate through menu items
+- Proper ARIA attributes for screen readers
+- Focus management when opening and closing the menu
+- Click outside to close behavior

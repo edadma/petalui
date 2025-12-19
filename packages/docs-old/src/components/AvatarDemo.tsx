@@ -1,8 +1,6 @@
 import { Avatar, Space } from '@aster-ui/prefixed'
-import { Demo } from './Demo'
 import { UserIcon, UserCircleIcon } from '@aster-ui/icons-prefixed'
-
-const avatarSrc = '/avatar-1.webp'
+import { Demo } from './Demo'
 
 // @example-imports: { Avatar } from 'asterui'
 export function BasicDemo() {
@@ -10,7 +8,7 @@ export function BasicDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar
-        src={avatarSrc}
+        src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
         alt="User avatar"
       />
       {/* @example-return-end */}
@@ -24,11 +22,11 @@ export function SizesDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm" align="center">
-        <Avatar size="xs" src={avatarSrc} />
-        <Avatar size="sm" src={avatarSrc} />
-        <Avatar size="md" src={avatarSrc} />
-        <Avatar size="lg" src={avatarSrc} />
-        <Avatar size="xl" src={avatarSrc} />
+        <Avatar size="xs" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar size="sm" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar size="md" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar size="lg" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar size="xl" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -41,8 +39,8 @@ export function ShapesDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm">
-        <Avatar shape="circle" src={avatarSrc} />
-        <Avatar shape="square" src={avatarSrc} />
+        <Avatar shape="circle" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar shape="square" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -55,8 +53,8 @@ export function StatusDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm">
-        <Avatar status="online" src={avatarSrc} />
-        <Avatar status="offline" src={avatarSrc} />
+        <Avatar status="online" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar status="offline" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -105,10 +103,10 @@ export function GroupDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar.Group>
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
       </Avatar.Group>
       {/* @example-return-end */}
     </Demo>
@@ -121,12 +119,12 @@ export function GroupMaxDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar.Group max={3}>
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
-        <Avatar src={avatarSrc} />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        <Avatar src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
       </Avatar.Group>
       {/* @example-return-end */}
     </Demo>

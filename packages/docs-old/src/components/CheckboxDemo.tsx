@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import { Checkbox, Space, Button } from '@aster-ui/prefixed'
+import { Checkbox, Space, Modal } from '@aster-ui/prefixed'
+import { SpeakerWaveIcon, SpeakerXMarkIcon, SunIcon, MoonIcon } from '@aster-ui/icons-prefixed/solid'
 import { Demo } from './Demo'
 
-// @example-imports: { Checkbox, Space } from 'asterui'
+// @example-imports: { Checkbox } from 'asterui'
 export function BasicDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Space direction="horizontal" wrap size="md">
-        <Checkbox>Remember me</Checkbox>
-        <Checkbox defaultChecked>Subscribed</Checkbox>
-      </Space>
+      <Checkbox>Accept terms and conditions</Checkbox>
       {/* @example-return-end */}
     </Demo>
   )
@@ -40,12 +38,12 @@ export function SizesDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Space direction="horizontal" wrap size="md" align="center">
-        <Checkbox size="xs" defaultChecked>Extra Small</Checkbox>
-        <Checkbox size="sm" defaultChecked>Small</Checkbox>
-        <Checkbox size="md" defaultChecked>Medium</Checkbox>
-        <Checkbox size="lg" defaultChecked>Large</Checkbox>
-        <Checkbox size="xl" defaultChecked>Extra Large</Checkbox>
+      <Space direction="horizontal" size="md" align="center">
+        <Checkbox size="xs" defaultChecked>XS</Checkbox>
+        <Checkbox size="sm" defaultChecked>SM</Checkbox>
+        <Checkbox size="md" defaultChecked>MD</Checkbox>
+        <Checkbox size="lg" defaultChecked>LG</Checkbox>
+        <Checkbox size="xl" defaultChecked>XL</Checkbox>
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -57,7 +55,7 @@ export function DisabledDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Space direction="horizontal" wrap size="md">
+      <Space direction="horizontal" size="md">
         <Checkbox disabled>Disabled</Checkbox>
         <Checkbox disabled defaultChecked>Disabled Checked</Checkbox>
       </Space>
@@ -70,14 +68,12 @@ export function DisabledDemo() {
 // @example-imports: { useState } from 'react'
 export function IndeterminateDemo() {
   // @example-include
-  const [checkedList, setCheckedList] = useState<string[]>(['Apple'])
-  const options = ['Apple', 'Pear', 'Orange']
+  const [items, setItems] = useState([true, false, true])
+  const allChecked = items.every(Boolean)
+  const someChecked = items.some(Boolean) && !allChecked
 
-  const indeterminate = checkedList.length > 0 && checkedList.length < options.length
-  const checkAll = checkedList.length === options.length
-
-  const onCheckAllChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCheckedList(e.target.checked ? options : [])
+  const handleSelectAll = () => {
+    setItems(allChecked ? [false, false, false] : [true, true, true])
   }
   // @example-include-end
 
@@ -86,42 +82,55 @@ export function IndeterminateDemo() {
       {/* @example-return */}
       <Space direction="vertical" size="sm">
         <Checkbox
-          indeterminate={indeterminate}
-          checked={checkAll}
-          onChange={onCheckAllChange}
+          checked={allChecked}
+          indeterminate={someChecked}
+          onChange={handleSelectAll}
+          className="font-medium"
         >
-          Check all
+          Select All
         </Checkbox>
-        <div className="border-t border-base-300 my-2" />
-        <Checkbox.Group
-          value={checkedList}
-          onChange={(values) => setCheckedList(values as string[])}
-          options={options}
-        />
+        <div className="ml-6">
+          <Space direction="vertical" size="xs">
+            {['Item 1', 'Item 2', 'Item 3'].map((item, i) => (
+              <Checkbox
+                key={i}
+                checked={items[i]}
+                onChange={() => {
+                  const newItems = [...items]
+                  newItems[i] = !newItems[i]
+                  setItems(newItems)
+                }}
+              >
+                {item}
+              </Checkbox>
+            ))}
+          </Space>
+        </div>
       </Space>
       {/* @example-return-end */}
     </Demo>
   )
 }
 
-// @example-imports: { Checkbox, Space } from 'asterui'
-// @example-imports: { useState } from 'react'
+// @example-imports: { Checkbox, Modal } from 'asterui'
 export function GroupDemo() {
   // @example-include
-  const [values, setValues] = useState<(string | number)[]>(['B'])
+  const options = [
+    { label: 'Apple', value: 'apple' },
+    { label: 'Banana', value: 'banana' },
+    { label: 'Orange', value: 'orange' },
+    { label: 'Mango', value: 'mango' },
+  ]
   // @example-include-end
 
   return (
     <Demo>
       {/* @example-return */}
-      <Space direction="vertical" size="md">
-        <Checkbox.Group
-          value={values}
-          onChange={setValues}
-          options={['A', 'B', 'C', 'D']}
-        />
-        <span className="text-sm text-base-content/70">Selected: {values.join(', ') || 'None'}</span>
-      </Space>
+      <Checkbox.Group
+        options={options}
+        defaultValue={['apple', 'orange']}
+        onChange={(values) => Modal.info({ title: 'Selected', content: values.join(', ') })}
+      />
       {/* @example-return-end */}
     </Demo>
   )
@@ -129,17 +138,20 @@ export function GroupDemo() {
 
 // @example-imports: { Checkbox } from 'asterui'
 export function GroupOptionsDemo() {
+  // @example-include
+  const options = [
+    { label: 'Read', value: 'read' },
+    { label: 'Write', value: 'write' },
+    { label: 'Delete', value: 'delete', disabled: true },
+  ]
+  // @example-include-end
+
   return (
     <Demo>
       {/* @example-return */}
       <Checkbox.Group
-        defaultValue={['red']}
-        options={[
-          { label: 'Red', value: 'red' },
-          { label: 'Green', value: 'green' },
-          { label: 'Blue', value: 'blue' },
-          { label: 'Yellow', value: 'yellow', disabled: true },
-        ]}
+        options={options}
+        defaultValue={['read']}
       />
       {/* @example-return-end */}
     </Demo>
@@ -148,24 +160,21 @@ export function GroupOptionsDemo() {
 
 // @example-imports: { Checkbox, Space } from 'asterui'
 export function GroupDirectionDemo() {
+  // @example-include
+  const options = ['Option A', 'Option B', 'Option C']
+  // @example-include-end
+
   return (
     <Demo>
       {/* @example-return */}
       <Space direction="vertical" size="lg">
         <div>
-          <span className="text-sm text-base-content/70 mb-2 block">Vertical (default):</span>
-          <Checkbox.Group
-            defaultValue={['A']}
-            options={['A', 'B', 'C']}
-          />
+          <p className="text-sm font-medium mb-2">Horizontal (default)</p>
+          <Checkbox.Group options={options} direction="horizontal" defaultValue={['Option A']} />
         </div>
         <div>
-          <span className="text-sm text-base-content/70 mb-2 block">Horizontal:</span>
-          <Checkbox.Group
-            direction="horizontal"
-            defaultValue={['A']}
-            options={['A', 'B', 'C']}
-          />
+          <p className="text-sm font-medium mb-2">Vertical</p>
+          <Checkbox.Group options={options} direction="vertical" defaultValue={['Option B']} />
         </div>
       </Space>
       {/* @example-return-end */}
@@ -173,7 +182,7 @@ export function GroupDirectionDemo() {
   )
 }
 
-// @example-imports: { Checkbox, Space, Button } from 'asterui'
+// @example-imports: { Checkbox, Space } from 'asterui'
 // @example-imports: { useState } from 'react'
 export function ControlledDemo() {
   // @example-include
@@ -183,16 +192,16 @@ export function ControlledDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Space direction="horizontal" wrap size="md" align="center">
+      <Space direction="vertical" size="sm">
         <Checkbox
           checked={checked}
           onChange={(e) => setChecked(e.target.checked)}
         >
           Controlled checkbox
         </Checkbox>
-        <Button size="sm" color="primary" onClick={() => setChecked(!checked)}>
-          Toggle
-        </Button>
+        <p className="text-sm text-base-content/70">
+          Checked: {checked ? 'Yes' : 'No'}
+        </p>
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -200,35 +209,65 @@ export function ControlledDemo() {
 }
 
 // @example-imports: { Checkbox, Space } from 'asterui'
+// @example-imports: { SpeakerWaveIcon, SpeakerXMarkIcon } from '@aster-ui/icons/solid'
+// @example-imports: { useState } from 'react'
 export function SwapDemo() {
+  // @example-include
+  const [volume, setVolume] = useState(true)
+  // @example-include-end
+
   return (
     <Demo>
       {/* @example-return */}
-      <Space direction="horizontal" wrap size="lg">
+      <Space size="lg">
         <Checkbox
+          checked={volume}
+          onChange={(e) => setVolume(e.target.checked)}
           swap={{
-            on: '🌙',
-            off: '☀️',
+            on: <SpeakerWaveIcon size={32} />,
+            off: <SpeakerXMarkIcon size={32} />,
           }}
-          className="text-3xl"
         />
         <Checkbox
           swap={{
-            on: '❤️',
-            off: '🤍',
-            effect: 'flip',
-          }}
-          className="text-3xl"
-        />
-        <Checkbox
-          swap={{
-            on: '🔔',
-            off: '🔕',
+            on: <span className="text-2xl">😀</span>,
+            off: <span className="text-2xl">😴</span>,
             effect: 'rotate',
           }}
-          className="text-3xl"
+        />
+        <Checkbox
+          swap={{
+            on: <span className="text-xl font-bold text-success">ON</span>,
+            off: <span className="text-xl font-bold text-error">OFF</span>,
+            effect: 'flip',
+          }}
         />
       </Space>
+      {/* @example-return-end */}
+    </Demo>
+  )
+}
+
+// @example-imports: { Checkbox } from 'asterui'
+// @example-imports: { SunIcon, MoonIcon } from '@aster-ui/icons/solid'
+// @example-imports: { useState } from 'react'
+export function SwapIconsDemo() {
+  // @example-include
+  const [isDark, setIsDark] = useState(false)
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Checkbox
+        checked={isDark}
+        onChange={(e) => setIsDark(e.target.checked)}
+        swap={{
+          on: <MoonIcon size={32} />,
+          off: <SunIcon size={32} />,
+          effect: 'rotate',
+        }}
+      />
       {/* @example-return-end */}
     </Demo>
   )

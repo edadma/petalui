@@ -1,4 +1,4 @@
-import { Badge, Avatar, Button, Space, Card } from '@aster-ui/prefixed'
+import { Badge, Button, Avatar, Space, Card } from '@aster-ui/prefixed'
 import { Demo } from './Demo'
 
 // @example-imports: { Badge, Button, Space } from 'asterui'

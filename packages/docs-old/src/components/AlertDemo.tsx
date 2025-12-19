@@ -1,11 +1,6 @@
-import { Alert, Button, Space } from '@aster-ui/prefixed'
+import { Alert, Space, Button } from '@aster-ui/prefixed'
+import { InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon, XCircleIcon } from '@aster-ui/icons-prefixed'
 import { Demo } from './Demo'
-import {
-  InformationCircleIcon,
-  CheckCircleIcon,
-  ExclamationTriangleIcon,
-  XCircleIcon,
-} from '@aster-ui/icons-prefixed'
 
 // @example-imports: { Alert } from 'asterui'
 // @example-imports: { InformationCircleIcon } from '@aster-ui/icons'
@@ -14,7 +9,7 @@ export function BasicDemo() {
     <Demo>
       {/* @example-return */}
       <Alert>
-        <InformationCircleIcon className="h-6 w-6 shrink-0" />
+        <InformationCircleIcon size="lg" className="shrink-0" />
         <span>This is a basic alert</span>
       </Alert>
       {/* @example-return-end */}
@@ -30,22 +25,22 @@ export function TypesDemo() {
       {/* @example-return */}
       <Space direction="vertical" size="sm">
         <Alert type="info">
-          <InformationCircleIcon className="h-6 w-6 shrink-0" />
+          <InformationCircleIcon size="lg" className="shrink-0" />
           <span>Info: New software update available</span>
         </Alert>
 
         <Alert type="success">
-          <CheckCircleIcon className="h-6 w-6 shrink-0" />
+          <CheckCircleIcon size="lg" className="shrink-0" />
           <span>Success: Your purchase has been confirmed</span>
         </Alert>
 
         <Alert type="warning">
-          <ExclamationTriangleIcon className="h-6 w-6 shrink-0" />
+          <ExclamationTriangleIcon size="lg" className="shrink-0" />
           <span>Warning: Invalid email address</span>
         </Alert>
 
         <Alert type="error">
-          <XCircleIcon className="h-6 w-6 shrink-0" />
+          <XCircleIcon size="lg" className="shrink-0" />
           <span>Error: Invalid credentials</span>
         </Alert>
       </Space>
@@ -61,7 +56,7 @@ export function ActionDemo() {
     <Demo>
       {/* @example-return */}
       <Alert type="warning">
-        <ExclamationTriangleIcon className="h-6 w-6 shrink-0" />
+        <ExclamationTriangleIcon size="lg" className="shrink-0" />
         <span>We use cookies for no reason</span>
         <div>
           <Button size="sm">Accept</Button>
@@ -80,12 +75,12 @@ export function OutlineDemo() {
       {/* @example-return */}
       <Space direction="vertical" size="sm">
         <Alert type="info" outline>
-          <InformationCircleIcon className="h-6 w-6 shrink-0" />
+          <InformationCircleIcon size="lg" className="shrink-0" />
           <span>Info outline alert</span>
         </Alert>
 
         <Alert type="success" outline>
-          <CheckCircleIcon className="h-6 w-6 shrink-0" />
+          <CheckCircleIcon size="lg" className="shrink-0" />
           <span>Success outline alert</span>
         </Alert>
       </Space>
@@ -102,12 +97,12 @@ export function DashDemo() {
       {/* @example-return */}
       <Space direction="vertical" size="sm">
         <Alert type="warning" dash>
-          <ExclamationTriangleIcon className="h-6 w-6 shrink-0" />
+          <ExclamationTriangleIcon size="lg" className="shrink-0" />
           <span>Warning dash alert</span>
         </Alert>
 
         <Alert type="error" dash>
-          <XCircleIcon className="h-6 w-6 shrink-0" />
+          <XCircleIcon size="lg" className="shrink-0" />
           <span>Error dash alert</span>
         </Alert>
       </Space>
@@ -124,12 +119,12 @@ export function SoftDemo() {
       {/* @example-return */}
       <Space direction="vertical" size="sm">
         <Alert type="info" soft>
-          <InformationCircleIcon className="h-6 w-6 shrink-0" />
+          <InformationCircleIcon size="lg" className="shrink-0" />
           <span>Info soft alert</span>
         </Alert>
 
         <Alert type="success" soft>
-          <CheckCircleIcon className="h-6 w-6 shrink-0" />
+          <CheckCircleIcon size="lg" className="shrink-0" />
           <span>Success soft alert</span>
         </Alert>
       </Space>

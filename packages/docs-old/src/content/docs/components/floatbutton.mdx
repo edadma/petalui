@@ -1,0 +1,113 @@
+---
+title: FloatButton
+description: Floating action button that stays fixed on the page for quick access to common actions.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  WithTooltipDemo,
+  TypesDemo,
+  ShapesDemo,
+  WithBadgeDemo,
+  GroupDemo,
+  BackTopDemo,
+} from '../../../components/FloatButtonDemo'
+import FloatButtonDemoSource from '../../../components/FloatButtonDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Floating action button that stays fixed on the page for quick access to common actions.
+
+## Import
+
+```tsx
+import { FloatButton } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Simple floating action button." source={FloatButtonDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Tooltip" description="Float button with tooltip on hover." source={FloatButtonDemoSource} fn="WithTooltipDemo">
+  <WithTooltipDemo client:load slot="demo" />
+</Example>
+
+<Example title="Types" description="Default and primary button types." source={FloatButtonDemoSource} fn="TypesDemo">
+  <TypesDemo client:load slot="demo" />
+</Example>
+
+<Example title="Shapes" description="Circle and square button shapes." source={FloatButtonDemoSource} fn="ShapesDemo">
+  <ShapesDemo client:load slot="demo" />
+</Example>
+
+<Example title="With Badge" description="Float button with notification badge." source={FloatButtonDemoSource} fn="WithBadgeDemo">
+  <WithBadgeDemo client:load slot="demo" />
+</Example>
+
+<Example title="Float Button Group" description="Group of float buttons that expand on click." source={FloatButtonDemoSource} fn="GroupDemo">
+  <GroupDemo client:load slot="demo" />
+</Example>
+
+<Example title="Back to Top" description="Scroll to top button that appears after scrolling down." source={FloatButtonDemoSource} fn="BackTopDemo">
+  <BackTopDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `FloatButton`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `icon` | Icon to display in the button | `React.ReactNode` | - |
+| `description` | Description text below icon | `React.ReactNode` | - |
+| `type` | Button type/color | `'default' \| 'primary'` | `'default'` |
+| `shape` | Button shape | `'circle' \| 'square'` | `'circle'` |
+| `tooltip` | Tooltip text on hover | `string` | - |
+| `tooltipPlacement` | Tooltip position | `'left' \| 'right' \| 'top' \| 'bottom'` | `'left'` |
+| `badge` | Badge content to show | `number \| React.ReactNode` | - |
+| `href` | Link URL (renders as anchor) | `string` | - |
+| `target` | Link target | `string` | - |
+| `onClick` | Click event handler | `() => void` | - |
+| `className` | Additional CSS classes | `string` | - |
+
+### `FloatButton.Group`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | FloatButton components to group | `React.ReactNode` | - |
+| `flower` | Arrange buttons in quarter-circle (radial) layout | `boolean` | `false` |
+| `shape` | Button shape for children | `'circle' \| 'square'` | `'circle'` |
+| `icon` | Main trigger button icon | `React.ReactNode` | - |
+| `mainAction` | Main action button icon (replaces trigger when open) | `React.ReactNode` | - |
+| `onMainAction` | Click handler for main action button | `() => void` | - |
+| `showClose` | Show close button when open | `boolean` | `false` |
+| `type` | Button type/color | `'default' \| 'primary'` | `'default'` |
+| `position` | Position on screen | `'bottom-right' \| 'bottom-left' \| 'top-right' \| 'top-left'` | `'bottom-right'` |
+| `offset` | Distance from edge in pixels | `number` | `24` |
+
+### `FloatButton.BackTop`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `visibilityHeight` | Scroll distance before button appears (pixels) | `number` | `400` |
+| `target` | Scroll target element | `() => HTMLElement \| Window` | - |
+| `onClick` | Click event handler (called before scrolling) | `() => void` | - |
+| `icon` | Custom icon | `React.ReactNode` | - |
+| `duration` | Scroll animation duration in ms | `number` | `450` |
+| `position` | Position on screen | `'bottom-right' \| 'bottom-left'` | `'bottom-right'` |
+| `offset` | Distance from edge in pixels | `number` | `24` |
+
+## Accessibility
+
+- Uses native `<button>` element for proper keyboard support
+- Supports `href` prop to render as anchor for link functionality
+- Tooltips provide context for screen readers when present
+- Focus states are clearly visible for keyboard navigation
+- Group expansion is keyboard accessible
+- BackTop button appears/disappears based on scroll position
