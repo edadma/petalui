@@ -1,16 +1,32 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Demo } from './Demo';
 
-function QRCode(props: any) {
-  const [QRCodeComponent, setQRCodeComponent] = useState<any>(null)
+// Singleton: load QRCode component once, share across all instances
+let cachedQRCode: React.ComponentType<any> | null = null
+let loadPromise: Promise<void> | null = null
+
+const QRCode = memo((props: any) => {
+  const [, forceUpdate] = useState(0)
 
   useEffect(() => {
-    import('@aster-ui/prefixed/qrcode').then(m => setQRCodeComponent(() => m.QRCode))
+    if (cachedQRCode) return
+
+    if (!loadPromise) {
+      loadPromise = import('@aster-ui/prefixed/qrcode').then(m => {
+        cachedQRCode = m.QRCode
+      })
+    }
+
+    loadPromise.then(() => forceUpdate(n => n + 1))
   }, [])
 
-  if (!QRCodeComponent) return <div style={{ width: props.size || 160, height: props.size || 160 }} />
-  return <QRCodeComponent {...props} />
-}
+  if (!cachedQRCode) {
+    return <div style={{ width: props.size || 160, height: props.size || 160 }} className="animate-pulse bg-base-300/50 rounded" />
+  }
+
+  const LoadedQRCode = cachedQRCode
+  return <LoadedQRCode {...props} />
+})
 
 // @example-imports: { QRCode } from 'asterui'
 export function BasicDemo() {

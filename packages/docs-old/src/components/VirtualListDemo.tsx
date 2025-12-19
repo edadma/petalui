@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Chat } from '@aster-ui/prefixed'
+import { VirtualList } from '@aster-ui/prefixed/virtuallist'
 import { Demo } from './Demo'
-
-function VirtualList(props: any) {
-  const [VirtualListComponent, setVirtualListComponent] = useState<any>(null)
-
-  useEffect(() => {
-    import('@aster-ui/prefixed/virtuallist').then(m => setVirtualListComponent(() => m.VirtualList))
-  }, [])
-
-  if (!VirtualListComponent) return <div style={{ height: props.height }} className="border border-base-300 rounded" />
-  return <VirtualListComponent {...props} />
-}
 
 const basicItems = Array.from({ length: 10000 }, (_, i) => ({
   id: i,

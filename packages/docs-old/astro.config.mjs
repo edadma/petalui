@@ -6,6 +6,11 @@ import react from '@astrojs/react';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://asterui.com',
+  vite: {
+    ssr: {
+      external: ['apexcharts', 'qrcode', '@tiptap/react', '@tiptap/starter-kit', '@tanstack/react-virtual'],
+    },
+  },
   markdown: {
     shikiConfig: {
       themes: {
@@ -82,12 +87,17 @@ export default defineConfig({
                 { label: 'Collapse', slug: 'components/collapse' },
                 { label: 'Countdown', slug: 'components/countdown' },
                 { label: 'Descriptions', slug: 'components/descriptions' },
+                { label: 'Diff', slug: 'components/diff' },
                 { label: 'Empty', slug: 'components/empty' },
+                { label: 'HoverGallery', slug: 'components/hovergallery' },
                 { label: 'Image', slug: 'components/image' },
                 { label: 'List', slug: 'components/list' },
+                { label: 'VirtualList', slug: 'components/virtuallist' },
                 { label: 'MonthCalendar', slug: 'components/monthcalendar' },
+                { label: 'Popover', slug: 'components/popover' },
                 { label: 'QRCode', slug: 'components/qrcode' },
                 { label: 'Stat', slug: 'components/stat' },
+                { label: 'Status', slug: 'components/status' },
                 { label: 'Table', slug: 'components/table' },
                 { label: 'Tag', slug: 'components/tag' },
                 { label: 'Timeline', slug: 'components/timeline' },
