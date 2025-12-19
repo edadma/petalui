@@ -683,6 +683,17 @@ const DAISYUI_BASE_CLASSES = new Set([
   "cally",
 ]);
 
+// DaisyUI CSS custom properties that get set via JavaScript
+// These need to be prefixed when they appear in style objects
+const DAISYUI_CSS_VARIABLES = new Set([
+  // Countdown
+  "--value",
+  "--digits",
+  // Radial Progress
+  "--size",
+  "--thickness",
+]);
+
 // Tailwind responsive prefixes
 const RESPONSIVE_PREFIXES = ["sm", "md", "lg", "xl", "2xl"];
 
@@ -985,6 +996,22 @@ function transformStringContent(str: string, options: TransformOptions): string 
       const newClass = mode === "prefix" ? prefix + className : className.slice(prefix.length);
       return modifiers + newClass;
     });
+  }
+
+  // Also transform DaisyUI CSS custom properties (e.g., '--value' → '--d-value')
+  for (const cssVar of DAISYUI_CSS_VARIABLES) {
+    const escapedVar = cssVar.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    if (mode === "prefix") {
+      // Transform --value → --d-value (insert prefix after --)
+      const pattern = new RegExp(`(${escapedVar})(?![a-zA-Z0-9-])`, "g");
+      result = result.replace(pattern, `--${prefix.replace(/-$/, "")}-${cssVar.slice(2)}`);
+    } else {
+      // Transform --d-value → --value (remove prefix after --)
+      const prefixedVar = `--${prefix.replace(/-$/, "")}-${cssVar.slice(2)}`;
+      const escapedPrefixedVar = prefixedVar.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const pattern = new RegExp(`(${escapedPrefixedVar})(?![a-zA-Z0-9-])`, "g");
+      result = result.replace(pattern, cssVar);
+    }
   }
 
   return result;

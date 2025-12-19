@@ -1,0 +1,127 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import Example from '../../components/Example.astro'
+import {
+  BasicDemo,
+  WithDaysDemo,
+  SizesDemo,
+  WithLabelsDemo,
+  BoxedDemo,
+} from '../../components/CountdownDemo'
+import CountdownDemoSource from '../../components/CountdownDemo.tsx?raw'
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Countdown',
+    description: 'Countdown timer with customizable format and styling.',
+    tableOfContents: false,
+  }}
+>
+  <div class="sl-markdown-content">
+  <p>Countdown timer with customizable format and styling.</p>
+
+  <h2>Import</h2>
+  <pre><code>import {'{ Countdown }'} from 'asterui'</code></pre>
+
+  <h2>Examples</h2>
+
+  <div class="examples">
+    <Example title="Basic Countdown" description="Simple countdown timer." source={CountdownDemoSource} fn="BasicDemo">
+      <BasicDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="With Days" description="Include days in the countdown." source={CountdownDemoSource} fn="WithDaysDemo">
+      <WithDaysDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Sizes" description="Different size variants." source={CountdownDemoSource} fn="SizesDemo">
+      <SizesDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="With Labels" description="Show labels under each unit." source={CountdownDemoSource} fn="WithLabelsDemo">
+      <WithLabelsDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Boxed Style" description="Each unit in a styled box." source={CountdownDemoSource} fn="BoxedDemo">
+      <BoxedDemo client:only="react" slot="demo" />
+    </Example>
+  </div>
+
+  <h2>API</h2>
+  <h3><code>Countdown</code></h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th>Description</th>
+        <th>Type</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>value</code></td>
+        <td>Target timestamp in milliseconds or Date object</td>
+        <td><code>number | Date</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><code>format</code></td>
+        <td>Format string: 'D' days, 'H' hours, 'M' minutes, 'S' seconds</td>
+        <td><code>string</code></td>
+        <td><code>'HH:MM:SS'</code></td>
+      </tr>
+      <tr>
+        <td><code>onFinish</code></td>
+        <td>Callback when countdown reaches zero</td>
+        <td><code>() =&gt; void</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><code>onChange</code></td>
+        <td>Callback on each tick with remaining time</td>
+        <td><code>(value: number) =&gt; void</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><code>size</code></td>
+        <td>Size variant</td>
+        <td><code>'xs' | 'sm' | 'md' | 'lg' | 'xl'</code></td>
+        <td><code>'md'</code></td>
+      </tr>
+      <tr>
+        <td><code>showLabels</code></td>
+        <td>Show labels under each unit</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+      </tr>
+      <tr>
+        <td><code>labels</code></td>
+        <td>Custom labels for each unit</td>
+        <td><code>{'{ days?: string, hours?: string, minutes?: string, seconds?: string }'}</code></td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td><code>boxed</code></td>
+        <td>Show box style around each unit</td>
+        <td><code>boolean</code></td>
+        <td><code>false</code></td>
+      </tr>
+      <tr>
+        <td><code>className</code></td>
+        <td>Additional CSS classes</td>
+        <td><code>string</code></td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Accessibility</h2>
+  <ul>
+    <li>Uses aria-live for announcing countdown updates</li>
+    <li>Provides aria-label for each countdown unit</li>
+    <li>Labels are visually associated with their values</li>
+  </ul>
+  </div>
+</StarlightPage>

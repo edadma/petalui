@@ -92,63 +92,6 @@ importers:
 
   packages/docs:
     dependencies:
-      '@aster-ui/icons':
-        specifier: workspace:*
-        version: link:../icons
-      '@astrojs/react':
-        specifier: ^4.4.2
-        version: 4.4.2(@types/node@24.10.1)(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tsx@4.21.0)(yaml@2.8.2)
-      '@astrojs/sitemap':
-        specifier: ^3.2.0
-        version: 3.6.0
-      '@tailwindcss/vite':
-        specifier: ^4.1.17
-        version: 4.1.17(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
-      '@tanstack/react-virtual':
-        specifier: ^3.13.13
-        version: 3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@tiptap/extension-link':
-        specifier: ^2.11.5
-        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)
-      '@tiptap/extension-placeholder':
-        specifier: ^2.11.5
-        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)
-      '@tiptap/extension-underline':
-        specifier: ^2.11.5
-        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))
-      '@tiptap/react':
-        specifier: ^2.11.5
-        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@tiptap/starter-kit':
-        specifier: ^2.11.5
-        version: 2.27.1
-      asterui:
-        specifier: workspace:*
-        version: link:../asterui
-      astro:
-        specifier: ^5.9.0
-        version: 5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
-      daisyui:
-        specifier: ^5.5.11
-        version: 5.5.11
-      prism-react-renderer:
-        specifier: ^2.4.1
-        version: 2.4.1(react@19.2.0)
-      react:
-        specifier: ^19.2.0
-        version: 19.2.0
-      react-dom:
-        specifier: ^19.2.0
-        version: 19.2.0(react@19.2.0)
-      simple-icons:
-        specifier: ^16.0.0
-        version: 16.0.0
-      tailwindcss:
-        specifier: ^4.1.17
-        version: 4.1.18
-
-  packages/docs-old:
-    dependencies:
       '@aster-ui/icons-prefixed':
         specifier: workspace:*
         version: link:../icons-prefixed
@@ -207,6 +150,9 @@ importers:
       '@tailwindcss/cli':
         specifier: ^4.1.18
         version: 4.1.18
+      '@tailwindcss/vite':
+        specifier: ^4.1.17
+        version: 4.1.17(vite@6.4.1(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
       '@types/react':
         specifier: ^19.0.0
         version: 19.2.5
@@ -218,6 +164,63 @@ importers:
         version: 5.5.11
       tailwindcss:
         specifier: '4'
+        version: 4.1.18
+
+  packages/docs-slclone:
+    dependencies:
+      '@aster-ui/icons':
+        specifier: workspace:*
+        version: link:../icons
+      '@astrojs/react':
+        specifier: ^4.4.2
+        version: 4.4.2(@types/node@24.10.1)(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(jiti@2.6.1)(lightningcss@1.30.2)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)(tsx@4.21.0)(yaml@2.8.2)
+      '@astrojs/sitemap':
+        specifier: ^3.2.0
+        version: 3.6.0
+      '@tailwindcss/vite':
+        specifier: ^4.1.17
+        version: 4.1.17(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/react-virtual':
+        specifier: ^3.13.13
+        version: 3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@tiptap/extension-link':
+        specifier: ^2.11.5
+        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)
+      '@tiptap/extension-placeholder':
+        specifier: ^2.11.5
+        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)
+      '@tiptap/extension-underline':
+        specifier: ^2.11.5
+        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))
+      '@tiptap/react':
+        specifier: ^2.11.5
+        version: 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
+      '@tiptap/starter-kit':
+        specifier: ^2.11.5
+        version: 2.27.1
+      asterui:
+        specifier: workspace:*
+        version: link:../asterui
+      astro:
+        specifier: ^5.9.0
+        version: 5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
+      daisyui:
+        specifier: ^5.5.11
+        version: 5.5.11
+      prism-react-renderer:
+        specifier: ^2.4.1
+        version: 2.4.1(react@19.2.0)
+      react:
+        specifier: ^19.2.0
+        version: 19.2.0
+      react-dom:
+        specifier: ^19.2.0
+        version: 19.2.0(react@19.2.0)
+      simple-icons:
+        specifier: ^16.0.0
+        version: 16.0.0
+      tailwindcss:
+        specifier: ^4.1.17
         version: 4.1.18
 
   packages/examples/autocomplete-search:
@@ -663,18 +666,6 @@ importers:
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
-
-  packages/sldocs:
-    dependencies:
-      '@astrojs/starlight':
-        specifier: ^0.37.1
-        version: 0.37.1(astro@5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))
-      astro:
-        specifier: ^5.6.1
-        version: 5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
-      sharp:
-        specifier: ^0.34.2
-        version: 0.34.5
 
 packages:
 
@@ -4180,7 +4171,7 @@ snapshots:
 
   '@astrojs/starlight@0.37.1(astro@5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))':
     dependencies:
-      '@astrojs/markdown-remark': 6.3.9
+      '@astrojs/markdown-remark': 6.3.10
       '@astrojs/mdx': 4.3.13(astro@5.16.3(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.53.2)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2))
       '@astrojs/sitemap': 3.6.0
       '@pagefind/default-ui': 1.4.0
@@ -4535,7 +4526,7 @@ snapshots:
   '@expressive-code/plugin-shiki@0.41.4':
     dependencies:
       '@expressive-code/core': 0.41.4
-      shiki: 3.17.1
+      shiki: 3.19.0
 
   '@expressive-code/plugin-text-markers@0.41.4':
     dependencies:

@@ -2,11 +2,13 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import react from '@astrojs/react';
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://asterui.com',
   vite: {
+    plugins: [tailwindcss()],
     optimizeDeps: {
       include: ['apexcharts'],
     },
@@ -26,6 +28,7 @@ export default defineConfig({
   integrations: [
     react({
       include: ['**/components/**/*.tsx'],
+      exclude: ['**/scripts/**/*.tsx'],
     }),
     starlight({
       title: 'AsterUI',
@@ -88,7 +91,7 @@ export default defineConfig({
                 { label: 'Chart', link: '/components/chart' },
                 { label: 'Chat', slug: 'components/chat' },
                 { label: 'Collapse', slug: 'components/collapse' },
-                { label: 'Countdown', slug: 'components/countdown' },
+                { label: 'Countdown', link: '/components/countdown' },
                 { label: 'Descriptions', slug: 'components/descriptions' },
                 { label: 'Diff', slug: 'components/diff' },
                 { label: 'Empty', slug: 'components/empty' },

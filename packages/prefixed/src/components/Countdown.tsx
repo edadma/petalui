@@ -67,7 +67,7 @@ const CountdownUnit: React.FC<{
   const content = (
     <span className={`d-countdown font-mono ${sizeClasses[size || 'md']}`}>
       <span
-        style={{ '--value': value, '--digits': 2 } as React.CSSProperties}
+        style={{ '--d-value': value, '--d-digits': 2 } as React.CSSProperties}
         aria-live="polite"
         aria-label={String(value)}
       >

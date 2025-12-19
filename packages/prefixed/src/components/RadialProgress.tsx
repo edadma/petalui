@@ -47,15 +47,15 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
 
   const getStyle = (): React.CSSProperties => {
     const style: Record<string, string | number> = {
-      '--value': value,
+      '--d-value': value,
     }
 
     if (size !== undefined) {
-      style['--size'] = typeof size === 'number' ? `${size}rem` : size
+      style['--d-size'] = typeof size === 'number' ? `${size}rem` : size
     }
 
     if (thickness !== undefined) {
-      style['--thickness'] = typeof thickness === 'number' ? `${thickness}px` : thickness
+      style['--d-thickness'] = typeof thickness === 'number' ? `${thickness}px` : thickness
     }
 
     return style as React.CSSProperties

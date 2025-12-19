@@ -12,10 +12,10 @@
   },
   "dependencies": {
     "@aster-ui/icons-prefixed": "workspace:*",
+    "@aster-ui/prefixed": "workspace:*",
     "@astrojs/react": "^4.2.1",
     "@astrojs/starlight": "^0.37.1",
     "@remixicon/react": "^4.7.0",
-    "@aster-ui/prefixed": "workspace:*",
     "@tanstack/react-virtual": "^3.0.0",
     "@tiptap/extension-link": "^2.0.0",
     "@tiptap/extension-placeholder": "^2.0.0",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
+    "@tailwindcss/vite": "^4.1.17",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "daisyui": "^5.0.0",
