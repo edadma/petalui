@@ -34,6 +34,7 @@
     "@tailwindcss/vite": "^4.1.17",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "astro-expressive-code": "^0.41.5",
     "daisyui": "^5.0.0",
     "tailwindcss": "4"
   }

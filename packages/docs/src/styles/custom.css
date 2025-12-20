@@ -54,3 +54,9 @@ body.component-page .content-panel {
 .component-preview.not-content > * {
   max-width: none;
 }
+
+/* Theme-aware code blocks */
+.theme-code.dark-only { display: none; }
+.theme-code.light-only { display: block; }
+:root[data-theme="dark"] .theme-code.dark-only { display: block; }
+:root[data-theme="dark"] .theme-code.light-only { display: none; }
