@@ -3,6 +3,7 @@
 
 @plugin "daisyui" {
   prefix: "d-";
+  themes: all;
 }
 
 /* Scan demo components for used classes */
