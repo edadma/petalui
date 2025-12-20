@@ -67,7 +67,7 @@ export function BasicDemo() {
   const target = useMemo(() => Date.now() + 60 * 60 * 1000, [])
   // @example-include-end
   return (
-    <Demo contained>
+    <Demo contained height="3.5rem">
       {/* @example-return */}
       <Countdown value={target} />
       {/* @example-return-end */}
@@ -82,7 +82,7 @@ export function WithDaysDemo() {
   const target = useMemo(() => Date.now() + 3 * 24 * 60 * 60 * 1000, [])
   // @example-include-end
   return (
-    <Demo contained>
+    <Demo contained height="3.5rem">
       {/* @example-return */}
       <Countdown value={target} format="DD:HH:MM:SS" />
       {/* @example-return-end */}
@@ -98,7 +98,7 @@ export function SizesDemo() {
   // @example-include-end
 
   return (
-    <Demo contained height="16rem">
+    <Demo contained height="14.3rem">
       {/* @example-return */}
       <Space direction="vertical" size="lg">
         <Countdown value={target} size="xs" />
@@ -119,7 +119,7 @@ export function WithLabelsDemo() {
   // @example-include-end
 
   return (
-    <Demo contained height="6rem">
+    <Demo contained height="5rem">
       {/* @example-return */}
       <Countdown
         value={target}
@@ -139,7 +139,7 @@ export function BoxedDemo() {
   // @example-include-end
 
   return (
-    <Demo contained height="7rem">
+    <Demo contained height="6rem">
       {/* @example-return */}
       <Countdown
         value={target}
@@ -165,7 +165,7 @@ export function CallbackDemo() {
   // @example-include-end
 
   return (
-    <Demo contained>
+    <Demo contained height="3.5rem">
       {/* @example-return */}
       <Countdown
         key={target}
