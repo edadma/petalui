@@ -1,6 +1,21 @@
 import React from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dBtn = 'btn'
+const dBtnGhost = 'btn-ghost'
+const dBtnActive = 'btn-active'
+const dBtnDisabled = 'btn-disabled'
+const dBtnXs = 'btn-xs'
+const dBtnSm = 'btn-sm'
+const dBtnLg = 'btn-lg'
+const dBtnXl = 'btn-xl'
+const dSelect = 'select'
+const dSelectBordered = 'select-bordered'
+const dJoin = 'join'
+const dJoinItem = 'join-item'
+const dInput = 'input'
+
 export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   current?: number
   defaultCurrent?: number
@@ -116,11 +131,11 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   const sizeClass = {
-    xs: 'btn-xs',
-    sm: 'btn-sm',
+    xs: dBtnXs,
+    sm: dBtnSm,
     md: '',
-    lg: 'btn-lg',
-    xl: 'btn-xl',
+    lg: dBtnLg,
+    xl: dBtnXl,
   }[effectiveSize]
 
   const range: [number, number] = [
@@ -132,7 +147,7 @@ export const Pagination: React.FC<PaginationProps> = ({
     return (
       <div className={`flex items-center gap-2 ${className}`} {...rest}>
         <button
-          className={`btn btn-ghost ${sizeClass}`}
+          className={`${dBtn} ${dBtnGhost} ${sizeClass}`}
           onClick={() => handlePageChange(current - 1)}
           disabled={disabled || current === 1}
         >
@@ -142,7 +157,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           {current} / {totalPages}
         </span>
         <button
-          className={`btn btn-ghost ${sizeClass}`}
+          className={`${dBtn} ${dBtnGhost} ${sizeClass}`}
           onClick={() => handlePageChange(current + 1)}
           disabled={disabled || current === totalPages}
         >
@@ -166,7 +181,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       {/* Page Size Changer */}
       {showSizeChanger && (
         <select
-          className={`select select-bordered ${sizeClass}`}
+          className={`${dSelect} ${dSelectBordered} ${sizeClass}`}
           value={pageSize}
           onChange={(e) => handlePageSizeChange(Number(e.target.value))}
           disabled={disabled}
@@ -180,10 +195,10 @@ export const Pagination: React.FC<PaginationProps> = ({
       )}
 
       {/* Pagination Controls */}
-      <div className="join">
+      <div className={dJoin}>
         {/* First */}
         <button
-          className={`join-item btn ${sizeClass}`}
+          className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(1)}
           disabled={disabled || current === 1}
           title="First page"
@@ -193,7 +208,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
         {/* Previous */}
         <button
-          className={`join-item btn ${sizeClass}`}
+          className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(current - 1)}
           disabled={disabled || current === 1}
           title="Previous page"
@@ -205,7 +220,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         {getPageNumbers().map((page, index) => {
           if (page === 'ellipsis') {
             return (
-              <button key={`ellipsis-${index}`} className={`join-item btn btn-disabled ${sizeClass}`}>
+              <button key={`ellipsis-${index}`} className={`${dJoinItem} ${dBtn} ${dBtnDisabled} ${sizeClass}`}>
                 ...
               </button>
             )
@@ -214,7 +229,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           return (
             <button
               key={page}
-              className={`join-item btn ${sizeClass} ${current === page ? 'btn-active' : ''}`}
+              className={`${dJoinItem} ${dBtn} ${sizeClass} ${current === page ? dBtnActive : ''}`}
               onClick={() => handlePageChange(page)}
               disabled={disabled}
             >
@@ -225,7 +240,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
         {/* Next */}
         <button
-          className={`join-item btn ${sizeClass}`}
+          className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(current + 1)}
           disabled={disabled || current === totalPages}
           title="Next page"
@@ -235,7 +250,7 @@ export const Pagination: React.FC<PaginationProps> = ({
 
         {/* Last */}
         <button
-          className={`join-item btn ${sizeClass}`}
+          className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(totalPages)}
           disabled={disabled || current === totalPages}
           title="Last page"
@@ -250,7 +265,7 @@ export const Pagination: React.FC<PaginationProps> = ({
           <span className="text-sm">Go to</span>
           <input
             type="number"
-            className={`input w-16 ${sizeClass}`}
+            className={`${dInput} w-16 ${sizeClass}`}
             min={1}
             max={totalPages}
             value={jumpPage}

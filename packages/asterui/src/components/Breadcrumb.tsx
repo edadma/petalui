@@ -1,5 +1,8 @@
 import React from 'react'
 
+// DaisyUI classes
+const dBreadcrumbs = 'breadcrumbs'
+
 export interface BreadcrumbItemType {
   /** Item title/label */
   title: React.ReactNode
@@ -86,8 +89,8 @@ function BreadcrumbRoot({ children, items, separator, className = '', ...rest }:
 
   // When custom separator is provided, hide default DaisyUI separator
   const cssClass = hasCustomSeparator
-    ? `breadcrumbs text-sm [&_li::before]:!hidden ${className}`
-    : `breadcrumbs text-sm ${className}`
+    ? `${dBreadcrumbs} text-sm [&_li::before]:!hidden ${className}`
+    : `${dBreadcrumbs} text-sm ${className}`
 
   return (
     <div className={cssClass} {...rest}>

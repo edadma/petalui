@@ -180,7 +180,7 @@ def generate_llms_txt(component_map: dict[str, str]) -> str:
         "",
         "## Overview",
         "",
-        "AsterUI provides 90+ production-ready React components with:",
+        "AsterUI provides 100+ production-ready React components with:",
         "- Familiar, intuitive API patterns (Form.Item, Table columns, etc.)",
         "- DaisyUI v5 styling and theming",
         "- Full TypeScript support",

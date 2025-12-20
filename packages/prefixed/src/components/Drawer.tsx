@@ -12,6 +12,12 @@ import React, {
 import { createPortal } from 'react-dom'
 import { Skeleton } from './Skeleton'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnSm = 'd-btn-sm'
+const dBtnSquare = 'd-btn-square'
+
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left'
 export type DrawerSize = 'default' | 'large' | number
 
@@ -199,7 +205,7 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>(
       if (!drawerRef.current || e.key !== 'Tab' || typeof document === 'undefined') return
 
       const focusableElements = drawerRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], d-input, d-select, d-textarea, [tabindex]:not([tabindex="-1"])'
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
       )
       const firstElement = focusableElements[0]
       const lastElement = focusableElements[focusableElements.length - 1]
@@ -250,7 +256,7 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>(
             closeButtonRef.current.focus()
           } else if (contentRef.current) {
             const firstFocusable = contentRef.current.querySelector<HTMLElement>(
-              'button, [href], d-input, d-select, d-textarea, [tabindex]:not([tabindex="-1"])'
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             )
             firstFocusable?.focus()
           }
@@ -391,7 +397,7 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>(
                     <button
                       ref={closeButtonRef}
                       type="button"
-                      className="d-btn d-btn-ghost d-btn-sm d-btn-square"
+                      className={`${dBtn} ${dBtnGhost} ${dBtnSm} ${dBtnSquare}`}
                       onClick={onClose}
                       aria-label="Close drawer"
                       data-testid={getTestId('close')}

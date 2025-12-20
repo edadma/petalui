@@ -1,5 +1,28 @@
 import React, { useState, forwardRef } from 'react'
 
+// DaisyUI classes
+const dBadge = 'd-badge'
+const dBadgePrimary = 'd-badge-primary'
+const dBadgeSecondary = 'd-badge-secondary'
+const dBadgeAccent = 'd-badge-accent'
+const dBadgeNeutral = 'd-badge-neutral'
+const dBadgeInfo = 'd-badge-info'
+const dBadgeSuccess = 'd-badge-success'
+const dBadgeWarning = 'd-badge-warning'
+const dBadgeError = 'd-badge-error'
+const dBadgeGhost = 'd-badge-ghost'
+const dBadgeXs = 'd-badge-xs'
+const dBadgeSm = 'd-badge-sm'
+const dBadgeMd = 'd-badge-md'
+const dBadgeLg = 'd-badge-lg'
+const dBadgeXl = 'd-badge-xl'
+const dBadgeOutline = 'd-badge-outline'
+const dBadgeSoft = 'd-badge-soft'
+const dBadgeDash = 'd-badge-dash'
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnXs = 'd-btn-xs'
+
 export type TagSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type TagColor =
   | 'primary'
@@ -43,30 +66,30 @@ export interface CheckableTagProps extends Omit<React.HTMLAttributes<HTMLSpanEle
 }
 
 const colorClasses: Record<string, string> = {
-  primary: 'd-badge-primary',
-  secondary: 'd-badge-secondary',
-  accent: 'd-badge-accent',
-  neutral: 'd-badge-neutral',
-  info: 'd-badge-info',
-  success: 'd-badge-success',
-  warning: 'd-badge-warning',
-  error: 'd-badge-error',
-  ghost: 'd-badge-ghost',
+  primary: dBadgePrimary,
+  secondary: dBadgeSecondary,
+  accent: dBadgeAccent,
+  neutral: dBadgeNeutral,
+  info: dBadgeInfo,
+  success: dBadgeSuccess,
+  warning: dBadgeWarning,
+  error: dBadgeError,
+  ghost: dBadgeGhost,
 }
 
 const sizeClasses: Record<TagSize, string> = {
-  xs: 'd-badge-xs text-xs',
-  sm: 'd-badge-sm text-sm',
-  md: 'd-badge-md',
-  lg: 'd-badge-lg text-lg',
-  xl: 'd-badge-xl text-xl',
+  xs: `${dBadgeXs} text-xs`,
+  sm: `${dBadgeSm} text-sm`,
+  md: dBadgeMd,
+  lg: `${dBadgeLg} text-lg`,
+  xl: `${dBadgeXl} text-xl`,
 }
 
 const variantClasses: Record<TagVariant, string> = {
   filled: '',
-  outlined: 'd-badge-outline',
-  soft: 'd-badge-soft',
-  dash: 'd-badge-dash',
+  outlined: dBadgeOutline,
+  soft: dBadgeSoft,
+  dash: dBadgeDash,
 }
 
 const TagLiveRegion: React.FC = () => (
@@ -143,7 +166,7 @@ export const Tag = forwardRef<HTMLElement, TagProps>(
       color && !colorClasses[color] ? { backgroundColor: color, borderColor: color } : undefined
 
     const tagClasses = [
-      'd-badge gap-1 inline-flex items-center',
+      `${dBadge} gap-1 inline-flex items-center`,
       colorClass,
       sizeClasses[size],
       variantClasses[variant],
@@ -164,7 +187,7 @@ export const Tag = forwardRef<HTMLElement, TagProps>(
             onClick={handleClose}
             onKeyDown={handleCloseKeyDown}
             disabled={disabled}
-            className="d-btn d-btn-ghost d-btn-xs p-0 min-h-0 h-auto hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-1 rounded"
+            className={`${dBtn} ${dBtnGhost} ${dBtnXs} p-0 min-h-0 h-auto hover:bg-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-1 rounded`}
             aria-label={`Remove ${tagLabel}`}
             data-testid={`${baseTestId}-close`}
           >
@@ -225,27 +248,27 @@ export const Tag = forwardRef<HTMLElement, TagProps>(
 Tag.displayName = 'Tag'
 
 const checkedColorClasses: Record<TagColor, string> = {
-  primary: 'd-badge-primary',
-  secondary: 'd-badge-secondary',
-  accent: 'd-badge-accent',
-  neutral: 'd-badge-neutral',
-  info: 'd-badge-info',
-  success: 'd-badge-success',
-  warning: 'd-badge-warning',
-  error: 'd-badge-error',
-  ghost: 'd-badge-ghost',
+  primary: dBadgePrimary,
+  secondary: dBadgeSecondary,
+  accent: dBadgeAccent,
+  neutral: dBadgeNeutral,
+  info: dBadgeInfo,
+  success: dBadgeSuccess,
+  warning: dBadgeWarning,
+  error: dBadgeError,
+  ghost: dBadgeGhost,
 }
 
 const uncheckedColorClasses: Record<TagColor, string> = {
-  primary: 'd-badge-outline hover:d-badge-primary hover:d-badge-outline',
-  secondary: 'd-badge-outline hover:d-badge-secondary hover:d-badge-outline',
-  accent: 'd-badge-outline hover:d-badge-accent hover:d-badge-outline',
-  neutral: 'd-badge-outline hover:d-badge-neutral hover:d-badge-outline',
-  info: 'd-badge-outline hover:d-badge-info hover:d-badge-outline',
-  success: 'd-badge-outline hover:d-badge-success hover:d-badge-outline',
-  warning: 'd-badge-outline hover:d-badge-warning hover:d-badge-outline',
-  error: 'd-badge-outline hover:d-badge-error hover:d-badge-outline',
-  ghost: 'd-badge-outline hover:d-badge-ghost hover:d-badge-outline',
+  primary: `${dBadgeOutline} hover:${dBadgePrimary} hover:${dBadgeOutline}`,
+  secondary: `${dBadgeOutline} hover:${dBadgeSecondary} hover:${dBadgeOutline}`,
+  accent: `${dBadgeOutline} hover:${dBadgeAccent} hover:${dBadgeOutline}`,
+  neutral: `${dBadgeOutline} hover:${dBadgeNeutral} hover:${dBadgeOutline}`,
+  info: `${dBadgeOutline} hover:${dBadgeInfo} hover:${dBadgeOutline}`,
+  success: `${dBadgeOutline} hover:${dBadgeSuccess} hover:${dBadgeOutline}`,
+  warning: `${dBadgeOutline} hover:${dBadgeWarning} hover:${dBadgeOutline}`,
+  error: `${dBadgeOutline} hover:${dBadgeError} hover:${dBadgeOutline}`,
+  ghost: `${dBadgeOutline} hover:${dBadgeGhost} hover:${dBadgeOutline}`,
 }
 
 export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
@@ -272,7 +295,7 @@ export const CheckableTag = forwardRef<HTMLSpanElement, CheckableTagProps>(
     }
 
     const tagClasses = [
-      'd-badge gap-1 cursor-pointer transition-colors',
+      `${dBadge} gap-1 cursor-pointer transition-colors`,
       'focus:outline-none focus-visible:ring-2 focus-visible:ring-current focus-visible:ring-offset-2',
       sizeClasses[size],
       checked ? checkedColorClasses[color] : uncheckedColorClasses[color],

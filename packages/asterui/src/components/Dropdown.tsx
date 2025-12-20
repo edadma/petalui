@@ -1,5 +1,18 @@
 import React, { createContext, useContext, useId, useRef, useState, useCallback, useEffect } from 'react'
 
+// DaisyUI classes
+const dDropdown = 'dropdown'
+const dDropdownTop = 'dropdown-top'
+const dDropdownBottom = 'dropdown-bottom'
+const dDropdownLeft = 'dropdown-left'
+const dDropdownRight = 'dropdown-right'
+const dDropdownCenter = 'dropdown-center'
+const dDropdownEnd = 'dropdown-end'
+const dDropdownHover = 'dropdown-hover'
+const dDropdownOpen = 'dropdown-open'
+const dDropdownContent = 'dropdown-content'
+const dMenu = 'menu'
+
 // Types for data-driven items prop
 export type DropdownTriggerType = 'click' | 'hover' | 'contextMenu'
 
@@ -241,26 +254,26 @@ function DropdownRoot({
   }, [])
 
   const positionClasses: Record<string, string> = {
-    top: 'dropdown-top',
-    bottom: 'dropdown-bottom',
-    left: 'dropdown-left',
-    right: 'dropdown-right',
+    top: dDropdownTop,
+    bottom: dDropdownBottom,
+    left: dDropdownLeft,
+    right: dDropdownRight,
   }
 
   const alignClasses: Record<string, string> = {
     start: '',
-    center: 'dropdown-center',
-    end: 'dropdown-end',
+    center: dDropdownCenter,
+    end: dDropdownEnd,
   }
 
   const showArrow = typeof arrow === 'boolean' ? arrow : !!arrow
 
   const dropdownClasses = [
-    'dropdown',
+    dDropdown,
     positionClasses[position],
     alignClasses[align],
-    triggers.includes('hover') && 'dropdown-hover',
-    isOpen && 'dropdown-open',
+    triggers.includes('hover') && dDropdownHover,
+    isOpen && dDropdownOpen,
     className,
   ]
     .filter(Boolean)
@@ -480,8 +493,8 @@ function DropdownMenu({ children, className = '' }: DropdownMenuProps) {
   }
 
   const menuClasses = [
-    'dropdown-content',
-    'menu',
+    dDropdownContent,
+    dMenu,
     'bg-base-100',
     'rounded-box',
     'z-50',
@@ -696,7 +709,7 @@ function DropdownSubMenu({
         <ul
           ref={subMenuListRef}
           id={subMenuId}
-          className="menu bg-base-100 rounded-box z-50 shadow"
+          className={`${dMenu} bg-base-100 rounded-box z-50 shadow`}
           role="menu"
           aria-label={typeof title === 'string' ? title : undefined}
           onKeyDown={handleSubMenuKeyDown}

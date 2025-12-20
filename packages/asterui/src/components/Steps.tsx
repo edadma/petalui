@@ -1,5 +1,19 @@
 import React from 'react'
 
+// DaisyUI classes
+const dSteps = 'steps'
+const dStepsVertical = 'steps-vertical'
+const dStep = 'step'
+const dStepNeutral = 'step-neutral'
+const dStepPrimary = 'step-primary'
+const dStepSecondary = 'step-secondary'
+const dStepAccent = 'step-accent'
+const dStepInfo = 'step-info'
+const dStepSuccess = 'step-success'
+const dStepWarning = 'step-warning'
+const dStepError = 'step-error'
+const dStepDisabled = 'step-disabled'
+
 export type StepsDirection = 'horizontal' | 'vertical'
 
 export interface StepItem {
@@ -50,14 +64,14 @@ export interface StepProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, '
 }
 
 const colorClasses: Record<string, string> = {
-  neutral: 'step-neutral',
-  primary: 'step-primary',
-  secondary: 'step-secondary',
-  accent: 'step-accent',
-  info: 'step-info',
-  success: 'step-success',
-  warning: 'step-warning',
-  error: 'step-error',
+  neutral: dStepNeutral,
+  primary: dStepPrimary,
+  secondary: dStepSecondary,
+  accent: dStepAccent,
+  info: dStepInfo,
+  success: dStepSuccess,
+  warning: dStepWarning,
+  error: dStepError,
 }
 
 function StepsRoot({
@@ -72,7 +86,7 @@ function StepsRoot({
 }: StepsProps) {
   const isVertical = direction === 'vertical' || vertical
 
-  const classes = ['steps', isVertical && 'steps-vertical', className]
+  const classes = [dSteps, isVertical && dStepsVertical, className]
     .filter(Boolean)
     .join(' ')
 
@@ -146,7 +160,7 @@ function Step({
   _onClick,
   ...rest
 }: StepProps) {
-  const classes = ['step', color && colorClasses[color], disabled && 'step-disabled', className]
+  const classes = [dStep, color && colorClasses[color], disabled && dStepDisabled, className]
     .filter(Boolean)
     .join(' ')
 

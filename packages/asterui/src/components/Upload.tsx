@@ -1,5 +1,15 @@
 import React, { useState, useRef, DragEvent, ChangeEvent } from 'react'
 
+// DaisyUI classes
+const dLoading = 'loading'
+const dLoadingSpinner = 'loading-spinner'
+const dLoadingSm = 'loading-sm'
+const dBtn = 'btn'
+const dBtnXs = 'btn-xs'
+const dBtnGhost = 'btn-ghost'
+const dBtnCircle = 'btn-circle'
+const dBtnError = 'btn-error'
+
 export interface UploadFile {
   uid: string
   name: string
@@ -265,7 +275,7 @@ export const Upload: React.FC<UploadProps> = ({
             >
               {file.status === 'uploading' && (
                 <div className="absolute inset-0 bg-base-300/80 flex items-center justify-center">
-                  <span className="loading loading-spinner loading-sm"></span>
+                  <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingSm}`}></span>
                 </div>
               )}
               {file.status === 'done' && file.url && (
@@ -294,7 +304,7 @@ export const Upload: React.FC<UploadProps> = ({
               )}
               <button
                 onClick={() => handleRemove(file)}
-                className="absolute top-1 right-1 btn btn-xs btn-circle btn-error"
+                className={`absolute top-1 right-1 ${dBtn} ${dBtnXs} ${dBtnCircle} ${dBtnError}`}
                 type="button"
               >
                 ✕
@@ -335,7 +345,7 @@ export const Upload: React.FC<UploadProps> = ({
             </div>
             <button
               onClick={() => handleRemove(file)}
-              className="btn btn-xs btn-ghost btn-circle"
+              className={`${dBtn} ${dBtnXs} ${dBtnGhost} ${dBtnCircle}`}
               type="button"
             >
               ✕

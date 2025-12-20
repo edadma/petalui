@@ -1,5 +1,10 @@
 import React from 'react'
 
+// DaisyUI classes
+const dHero = 'hero'
+const dHeroOverlay = 'hero-overlay'
+const dHeroContent = 'hero-content'
+
 export interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   overlay?: boolean
@@ -13,12 +18,12 @@ export function Hero({
   className = '',
   ...rest
 }: HeroProps) {
-  const heroClasses = ['hero', className].filter(Boolean).join(' ')
-  const contentClasses = ['hero-content', contentClassName].filter(Boolean).join(' ')
+  const heroClasses = [dHero, className].filter(Boolean).join(' ')
+  const contentClasses = [dHeroContent, contentClassName].filter(Boolean).join(' ')
 
   return (
     <div className={heroClasses} {...rest}>
-      {overlay && <div className="hero-overlay bg-opacity-60" />}
+      {overlay && <div className={`${dHeroOverlay} bg-opacity-60`} />}
       <div className={contentClasses}>{children}</div>
     </div>
   )

@@ -6,6 +6,13 @@ import Link from '@tiptap/extension-link'
 import Placeholder from '@tiptap/extension-placeholder'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnXs = 'd-btn-xs'
+const dLink = 'd-link'
+const dLinkPrimary = 'd-link-primary'
+
 // Inline toolbar icons (from Heroicons outline)
 const iconProps = (size: number) => ({
   xmlns: 'http://www.w3.org/2000/svg',
@@ -212,7 +219,7 @@ const ToolbarButton: React.FC<ToolbarButtonProps> = ({
     disabled={disabled}
     title={title}
     className={`
-      d-btn d-btn-ghost d-btn-xs px-2 min-h-8 h-8
+      ${dBtn} ${dBtnGhost} ${dBtnXs} px-2 min-h-8 h-8
       ${isActive ? 'bg-base-300 text-base-content' : 'text-base-content/70'}
       ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
     `}
@@ -260,7 +267,7 @@ const EditorToolbar: React.FC<{
 
   const renderToolbarItem = (item: ToolbarItem, index: number) => {
     if (item === '|') {
-      return <ToolbarDivider key={`d-divider-${index}`} />
+      return <ToolbarDivider key={`divider-${index}`} />
     }
 
     const toolbarActions: Record<
@@ -437,7 +444,7 @@ export const RichTextEditor = forwardRef<HTMLDivElement, RichTextEditorProps>(
         Link.configure({
           openOnClick: false,
           HTMLAttributes: {
-            class: 'd-link d-link-primary',
+            class: `${dLink} ${dLinkPrimary}`,
           },
         }),
         Placeholder.configure({

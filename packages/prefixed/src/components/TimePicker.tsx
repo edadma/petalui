@@ -2,6 +2,16 @@ import React, { useState, useRef, useEffect, forwardRef, useCallback, useId } fr
 import { Input } from './Input'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnPrimary = 'd-btn-primary'
+const dBtnXs = 'd-btn-xs'
+const dBtnSm = 'd-btn-sm'
+const dBtnCircle = 'd-btn-circle'
+const dInputError = 'd-input-error'
+const dInputWarning = 'd-input-warning'
+
 export interface TimePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: Date | null
   defaultValue?: Date | null
@@ -287,8 +297,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(({
   const displayHours = format === '12' ? (hours % 12 || 12) : hours
 
   const statusClasses = {
-    error: 'd-input-error',
-    warning: 'd-input-warning',
+    error: dInputError,
+    warning: dInputWarning,
   }
 
   return (
@@ -321,7 +331,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(({
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-2 top-1/2 -translate-y-1/2 d-btn d-btn-ghost d-btn-xs d-btn-circle"
+            className={`absolute right-2 top-1/2 -translate-y-1/2 ${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnCircle}`}
             aria-label="Clear time"
             data-testid={`${baseTestId}-clear`}
           >
@@ -376,8 +386,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(({
                     onClick={() => handlePeriodChange('AM')}
                     data-testid={`${baseTestId}-period-am`}
                     className={[
-                      'd-btn d-btn-sm',
-                      period === 'AM' ? 'd-btn-primary' : 'd-btn-ghost'
+                      dBtn, dBtnSm,
+                      period === 'AM' ? dBtnPrimary : dBtnGhost
                     ].join(' ')}
                   >
                     AM
@@ -389,8 +399,8 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(({
                     onClick={() => handlePeriodChange('PM')}
                     data-testid={`${baseTestId}-period-pm`}
                     className={[
-                      'd-btn d-btn-sm',
-                      period === 'PM' ? 'd-btn-primary' : 'd-btn-ghost'
+                      dBtn, dBtnSm,
+                      period === 'PM' ? dBtnPrimary : dBtnGhost
                     ].join(' ')}
                   >
                     PM
@@ -411,7 +421,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(({
                 setPeriod(now.getHours() >= 12 ? 'PM' : 'AM')
                 handleTimeChange(now.getHours(), now.getMinutes(), now.getSeconds())
               }}
-              className="d-btn d-btn-ghost d-btn-sm"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
               data-testid={`${baseTestId}-now`}
             >
               Now
@@ -419,7 +429,7 @@ export const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>(({
             <button
               type="button"
               onClick={() => setOpen(false)}
-              className="d-btn d-btn-primary d-btn-sm"
+              className={`${dBtn} ${dBtnPrimary} ${dBtnSm}`}
               data-testid={`${baseTestId}-ok`}
             >
               OK

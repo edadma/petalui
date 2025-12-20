@@ -1,6 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback, createContext, useContext } from 'react'
 import { createPortal } from 'react-dom'
 
+// DaisyUI classes
+const dMenu = 'menu'
+const dDivider = 'divider'
+
 export interface ContextMenuItem {
   key: string
   label: React.ReactNode
@@ -115,7 +119,7 @@ const ContextMenuItemComponent: React.FC<ContextMenuItemProps> = ({
 }
 
 const ContextMenuDividerComponent: React.FC<ContextMenuDividerProps> = ({ className = '' }) => {
-  return <li className={`divider my-1 ${className}`}></li>
+  return <li className={`${dDivider} my-1 ${className}`}></li>
 }
 
 const ContextMenuSubMenuComponent: React.FC<ContextMenuSubMenuProps> = ({
@@ -160,7 +164,7 @@ const ContextMenuSubMenuComponent: React.FC<ContextMenuSubMenuProps> = ({
       </button>
       {showSubmenu && (
         <ul
-          className="menu bg-base-100 rounded-box shadow-lg border border-base-300 absolute left-full top-0 min-w-[160px] z-50 p-1"
+          className={`${dMenu} bg-base-100 rounded-box shadow-lg border border-base-300 absolute left-full top-0 min-w-[160px] z-50 p-1`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -181,7 +185,7 @@ const MenuItem: React.FC<{
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   if (item.divider) {
-    return <li className="divider my-1"></li>
+    return <li className={`${dDivider} my-1`}></li>
   }
 
   const handleClick = () => {
@@ -229,7 +233,7 @@ const MenuItem: React.FC<{
       </button>
       {hasSubmenu && showSubmenu && (
         <ul
-          className="menu bg-base-100 rounded-box shadow-lg border border-base-300 absolute left-full top-0 min-w-[160px] z-50 p-1"
+          className={`${dMenu} bg-base-100 rounded-box shadow-lg border border-base-300 absolute left-full top-0 min-w-[160px] z-50 p-1`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
@@ -371,7 +375,7 @@ const ContextMenuRoot: React.FC<ContextMenuProps> = ({
           <ContextMenuContext.Provider value={contextValue}>
             <ul
               ref={menuRef}
-              className={`menu bg-base-100 rounded-box shadow-lg border border-base-300 min-w-[160px] p-1 fixed z-[9999] ${className}`}
+              className={`${dMenu} bg-base-100 rounded-box shadow-lg border border-base-300 min-w-[160px] p-1 fixed z-[9999] ${className}`}
               style={{ left: position.x, top: position.y }}
             >
               {useDataDriven

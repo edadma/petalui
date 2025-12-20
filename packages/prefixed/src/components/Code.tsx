@@ -1,6 +1,9 @@
 import React from 'react'
 import { CopyButton } from './CopyButton'
 
+// DaisyUI classes
+const dMockupCode = 'd-mockup-code'
+
 export interface CodeLineProps extends React.HTMLAttributes<HTMLPreElement> {
   children: React.ReactNode
   prefix?: string
@@ -59,7 +62,7 @@ export const Code: React.FC<CodeProps> & { Line: typeof Line } = ({
 
   return (
     <div
-      className={`d-mockup-code ${className}`}
+      className={`${dMockupCode} ${className}`}
       style={{ position: 'relative', overflow: 'hidden', ...style }}
       {...rest}
     >

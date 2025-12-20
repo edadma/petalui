@@ -19,7 +19,7 @@ export function Demo({ children, contained, height = '5rem' }: DemoProps) {
       {children}
       <style>{`
         .demo-area {
-          background-color: oklch(96% 0 0);
+          background-color: oklch(98% 0 0);
           background-image: repeating-linear-gradient(
             -45deg,
             rgba(0, 0, 0, 0.06),

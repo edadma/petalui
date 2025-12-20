@@ -1,5 +1,13 @@
 import React, { forwardRef } from 'react'
 
+// DaisyUI classes
+const dDrawer = 'd-drawer'
+const dDrawerEnd = 'd-drawer-end'
+const dDrawerToggle = 'd-drawer-toggle'
+const dDrawerContent = 'd-drawer-content'
+const dDrawerSide = 'd-drawer-side'
+const dDrawerOverlay = 'd-drawer-overlay'
+
 export type ResponsiveDrawerBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 export interface ResponsiveDrawerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -63,16 +71,16 @@ export const ResponsiveDrawer = forwardRef<HTMLDivElement, ResponsiveDrawerProps
 
     // Build responsive class if specified
     const responsiveClasses: Record<ResponsiveDrawerBreakpoint, string> = {
-      sm: 'sm:d-drawer-open',
-      md: 'md:d-drawer-open',
-      lg: 'lg:d-drawer-open',
-      xl: 'xl:d-drawer-open',
-      '2xl': '2xl:d-drawer-open',
+      sm: 'sm:drawer-open',
+      md: 'md:drawer-open',
+      lg: 'lg:drawer-open',
+      xl: 'xl:drawer-open',
+      '2xl': '2xl:drawer-open',
     }
 
     const drawerClasses = [
-      'd-drawer',
-      end && 'd-drawer-end',
+      dDrawer,
+      end && dDrawerEnd,
       responsive && responsiveClasses[responsive],
       className,
     ]
@@ -83,11 +91,11 @@ export const ResponsiveDrawer = forwardRef<HTMLDivElement, ResponsiveDrawerProps
       .filter(Boolean)
       .join(' ')
 
-    const contentClasses = ['d-drawer-content', contentClassName]
+    const contentClasses = [dDrawerContent, contentClassName]
       .filter(Boolean)
       .join(' ')
 
-    const overlayClasses = ['d-drawer-overlay', overlayClassName]
+    const overlayClasses = [dDrawerOverlay, overlayClassName]
       .filter(Boolean)
       .join(' ')
 
@@ -105,13 +113,13 @@ export const ResponsiveDrawer = forwardRef<HTMLDivElement, ResponsiveDrawerProps
         <input
           id={drawerId}
           type="checkbox"
-          className="d-drawer-toggle"
+          className={dDrawerToggle}
           checked={open}
           onChange={handleToggle}
           aria-label={end ? 'Toggle right sidebar' : 'Toggle sidebar'}
         />
         <div className={contentClasses}>{children}</div>
-        <div className="d-drawer-side" style={{ '--drawer-width': widthStyle } as React.CSSProperties}>
+        <div className={dDrawerSide} style={{ '--drawer-width': widthStyle } as React.CSSProperties}>
           <label
             htmlFor={drawerId}
             aria-label="Close sidebar"

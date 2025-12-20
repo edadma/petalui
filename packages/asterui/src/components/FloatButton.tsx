@@ -1,5 +1,26 @@
 import React, { useState, useEffect, createContext, useContext } from 'react'
 
+// DaisyUI classes
+const dBtn = 'btn'
+const dBtnLg = 'btn-lg'
+const dBtnCircle = 'btn-circle'
+const dBtnSquare = 'btn-square'
+const dBtnNeutral = 'btn-neutral'
+const dBtnPrimary = 'btn-primary'
+const dTooltip = 'tooltip'
+const dTooltipLeft = 'tooltip-left'
+const dTooltipRight = 'tooltip-right'
+const dTooltipTop = 'tooltip-top'
+const dTooltipBottom = 'tooltip-bottom'
+const dIndicator = 'indicator'
+const dIndicatorItem = 'indicator-item'
+const dBadge = 'badge'
+const dBadgeSecondary = 'badge-secondary'
+const dFab = 'fab'
+const dFabFlower = 'fab-flower'
+const dFabMainAction = 'fab-main-action'
+const dFabClose = 'fab-close'
+
 // Default icons
 const PlusIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -97,20 +118,20 @@ interface FloatButtonGroupContextValue {
 const FloatButtonGroupContext = createContext<FloatButtonGroupContextValue>({ inGroup: false })
 
 const tooltipPlacementClasses: Record<string, string> = {
-  left: 'tooltip-left',
-  right: 'tooltip-right',
-  top: 'tooltip-top',
-  bottom: 'tooltip-bottom',
+  left: dTooltipLeft,
+  right: dTooltipRight,
+  top: dTooltipTop,
+  bottom: dTooltipBottom,
 }
 
 const typeClasses: Record<string, string> = {
-  default: 'btn-neutral',
-  primary: 'btn-primary',
+  default: dBtnNeutral,
+  primary: dBtnPrimary,
 }
 
 const shapeClasses: Record<string, string> = {
-  circle: 'btn-circle',
-  square: 'btn-square',
+  circle: dBtnCircle,
+  square: dBtnSquare,
 }
 
 interface FloatButtonComponent extends React.FC<FloatButtonProps> {
@@ -138,8 +159,8 @@ const FloatButtonBase: React.FC<FloatButtonProps & { style?: React.CSSProperties
   const effectiveShape = groupContext.inGroup ? (groupContext.shape || shape) : shape
 
   const buttonClasses = [
-    'btn',
-    'btn-lg',
+    dBtn,
+    dBtnLg,
     'shadow-lg',
     shapeClasses[effectiveShape],
     typeClasses[type],
@@ -202,8 +223,8 @@ const FloatButtonBase: React.FC<FloatButtonProps & { style?: React.CSSProperties
   )
 
   const withBadge = badge !== undefined ? (
-    <div className="indicator" style={style}>
-      <span className="indicator-item badge badge-secondary">
+    <div className={dIndicator} style={style}>
+      <span className={`${dIndicatorItem} ${dBadge} ${dBadgeSecondary}`}>
         {badge}
       </span>
       {href ? (
@@ -220,10 +241,10 @@ const FloatButtonBase: React.FC<FloatButtonProps & { style?: React.CSSProperties
 
   if (tooltip) {
     return (
-      <div className={`tooltip ${tooltipPlacementClasses[tooltipPlacement]}`} data-tip={tooltip} style={style}>
+      <div className={`${dTooltip} ${tooltipPlacementClasses[tooltipPlacement]}`} data-tip={tooltip} style={style}>
         {badge !== undefined ? (
-          <div className="indicator">
-            <span className="indicator-item badge badge-secondary">{badge}</span>
+          <div className={dIndicator}>
+            <span className={`${dIndicatorItem} ${dBadge} ${dBadgeSecondary}`}>{badge}</span>
             {href ? (
               <a href={href} target={target} className={buttonClasses} onClick={onClick as any} {...(rest as any)}>
                 {buttonContent}
@@ -290,16 +311,16 @@ const FloatButtonGroup: React.FC<FloatButtonGroupProps> = ({
   style: propStyle,
 }) => {
   const fabClasses = [
-    'fab',
-    flower ? 'fab-flower' : '',
+    dFab,
+    flower ? dFabFlower : '',
     className,
   ]
     .filter(Boolean)
     .join(' ')
 
   const triggerButtonClasses = [
-    'btn',
-    'btn-lg',
+    dBtn,
+    dBtnLg,
     'shadow-lg',
     shapeClasses[shape],
     typeClasses[type],
@@ -327,7 +348,7 @@ const FloatButtonGroup: React.FC<FloatButtonGroupProps> = ({
       {/* Main action button - shown when open (replaces trigger in flower mode) */}
       {mainAction && (
         <button
-          className={`${triggerButtonClasses} fab-main-action`}
+          className={`${triggerButtonClasses} ${dFabMainAction}`}
           onClick={onMainAction}
         >
           {mainAction}
@@ -336,7 +357,7 @@ const FloatButtonGroup: React.FC<FloatButtonGroupProps> = ({
 
       {/* Close button - shown when open */}
       {showClose && (
-        <button className={`${triggerButtonClasses} fab-close`}>
+        <button className={`${triggerButtonClasses} ${dFabClose}`}>
           <CloseIcon />
         </button>
       )}
@@ -394,10 +415,10 @@ const BackTop: React.FC<BackTopProps> = ({
   if (!visible) return null
 
   const buttonClasses = [
-    'btn',
-    'btn-lg',
-    'btn-circle',
-    'btn-neutral',
+    dBtn,
+    dBtnLg,
+    dBtnCircle,
+    dBtnNeutral,
     'shadow-lg',
     'transition-opacity',
     className,

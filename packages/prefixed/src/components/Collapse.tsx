@@ -1,5 +1,15 @@
 import React, { forwardRef, useState } from 'react'
 
+// DaisyUI classes
+const dCollapse = 'd-collapse'
+const dCollapseArrow = 'd-collapse-arrow'
+const dCollapsePlus = 'd-collapse-plus'
+const dCollapseOpen = 'd-collapse-open'
+const dCollapseClose = 'd-collapse-close'
+const dCollapseArrowEnd = 'd-collapse-arrow-end'
+const dCollapseTitle = 'd-collapse-title'
+const dCollapseContent = 'd-collapse-content'
+
 export type CollapseSize = 'sm' | 'md' | 'lg'
 export type CollapseIconPosition = 'start' | 'end'
 export type CollapseCollapsible = 'header' | 'icon' | 'disabled'
@@ -69,19 +79,19 @@ const CollapsePanel = forwardRef<
   const isDisabled = item.collapsible === 'disabled'
 
   const iconClasses = {
-    arrow: 'd-collapse-arrow',
-    plus: 'd-collapse-plus',
+    arrow: dCollapseArrow,
+    plus: dCollapsePlus,
     none: '',
   }
 
   const panelClasses = [
-    'd-collapse',
+    dCollapse,
     iconClasses[icon],
-    isOpen ? 'd-collapse-open' : 'd-collapse-close',
+    isOpen ? dCollapseOpen : dCollapseClose,
     !ghost && 'bg-base-200',
     ghost && 'bg-transparent',
     bordered && 'border border-base-300',
-    expandIconPlacement === 'end' && icon !== 'none' && 'd-collapse-arrow-end',
+    expandIconPlacement === 'end' && icon !== 'none' && dCollapseArrowEnd,
     sizeClasses[size],
     isDisabled && 'opacity-50 cursor-not-allowed',
     item.className,
@@ -103,7 +113,7 @@ const CollapsePanel = forwardRef<
       data-state={isOpen ? 'open' : 'closed'}
     >
       <div
-        className="d-collapse-title font-medium flex items-center justify-between cursor-pointer"
+        className={`${dCollapseTitle} font-medium flex items-center justify-between cursor-pointer`}
         onClick={handleClick}
         role="button"
         tabIndex={isDisabled ? -1 : 0}
@@ -119,7 +129,7 @@ const CollapsePanel = forwardRef<
         <span>{item.label}</span>
         {item.extra && <span className="ml-auto mr-6">{item.extra}</span>}
       </div>
-      <div className="d-collapse-content">
+      <div className={dCollapseContent}>
         {item.children}
       </div>
     </div>

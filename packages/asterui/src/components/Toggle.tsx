@@ -1,6 +1,22 @@
 import React, { forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dToggle = 'toggle'
+const dToggleXs = 'toggle-xs'
+const dToggleSm = 'toggle-sm'
+const dToggleMd = 'toggle-md'
+const dToggleLg = 'toggle-lg'
+const dToggleXl = 'toggle-xl'
+const dTogglePrimary = 'toggle-primary'
+const dToggleSecondary = 'toggle-secondary'
+const dToggleAccent = 'toggle-accent'
+const dToggleNeutral = 'toggle-neutral'
+const dToggleSuccess = 'toggle-success'
+const dToggleWarning = 'toggle-warning'
+const dToggleInfo = 'toggle-info'
+const dToggleError = 'toggle-error'
+
 export interface ToggleProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'info' | 'error'
@@ -21,26 +37,26 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const sizeClasses = {
-      xs: 'toggle-xs',
-      sm: 'toggle-sm',
-      md: 'toggle-md',
-      lg: 'toggle-lg',
-      xl: 'toggle-xl',
+      xs: dToggleXs,
+      sm: dToggleSm,
+      md: dToggleMd,
+      lg: dToggleLg,
+      xl: dToggleXl,
     }
 
     const colorClasses = {
-      primary: 'toggle-primary',
-      secondary: 'toggle-secondary',
-      accent: 'toggle-accent',
-      neutral: 'toggle-neutral',
-      success: 'toggle-success',
-      warning: 'toggle-warning',
-      info: 'toggle-info',
-      error: 'toggle-error',
+      primary: dTogglePrimary,
+      secondary: dToggleSecondary,
+      accent: dToggleAccent,
+      neutral: dToggleNeutral,
+      success: dToggleSuccess,
+      warning: dToggleWarning,
+      info: dToggleInfo,
+      error: dToggleError,
     }
 
     const toggleClasses = [
-      'toggle',
+      dToggle,
       effectiveSize && sizeClasses[effectiveSize],
       color && colorClasses[color],
       className,

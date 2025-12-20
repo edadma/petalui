@@ -10,6 +10,14 @@ import React, {
   isValidElement,
 } from 'react'
 
+// DaisyUI classes
+const dCarousel = 'carousel'
+const dCarouselVertical = 'carousel-vertical'
+const dCarouselItem = 'carousel-item'
+const dBtn = 'btn'
+const dBtnCircle = 'btn-circle'
+const dBtnSm = 'btn-sm'
+
 export type CarouselEffect = 'scrollx' | 'fade'
 export type CarouselDotPlacement = 'top' | 'bottom' | 'start' | 'end'
 
@@ -31,7 +39,7 @@ const CarouselItemComponent = forwardRef<HTMLDivElement, CarouselItemProps>(
         ref={ref}
         role="group"
         aria-roledescription="slide"
-        className={`carousel-item w-full flex-shrink-0 ${className}`}
+        className={`${dCarouselItem} w-full flex-shrink-0 ${className}`}
         data-testid={testId}
         {...rest}
       >
@@ -214,8 +222,8 @@ const CarouselComponent = forwardRef<CarouselRef, CarouselProps>(
 
     // Build carousel classes
     const carouselClasses = [
-      'carousel',
-      vertical ? 'carousel-vertical' : '',
+      dCarousel,
+      vertical ? dCarouselVertical : '',
       className,
     ]
       .filter(Boolean)
@@ -306,7 +314,7 @@ const CarouselComponent = forwardRef<CarouselRef, CarouselProps>(
           onClick={onClick}
           disabled={disabled}
           aria-label={isPrev ? 'Previous slide' : 'Next slide'}
-          className={`absolute ${positionClass} btn btn-circle btn-sm bg-base-100/80 hover:bg-base-100 border-none shadow-md z-10 disabled:opacity-50 disabled:cursor-not-allowed`}
+          className={`absolute ${positionClass} ${dBtn} ${dBtnCircle} ${dBtnSm} bg-base-100/80 hover:bg-base-100 border-none shadow-md z-10 disabled:opacity-50 disabled:cursor-not-allowed`}
           data-testid={testId ? `${testId}-${direction}` : undefined}
         >
           {arrowIcon}

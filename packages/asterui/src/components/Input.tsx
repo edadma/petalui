@@ -1,6 +1,24 @@
 import React, { forwardRef, useState, useCallback, useRef, useEffect } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dInput = 'input'
+const dInputXs = 'input-xs'
+const dInputSm = 'input-sm'
+const dInputMd = 'input-md'
+const dInputLg = 'input-lg'
+const dInputXl = 'input-xl'
+const dInputNeutral = 'input-neutral'
+const dInputPrimary = 'input-primary'
+const dInputSecondary = 'input-secondary'
+const dInputAccent = 'input-accent'
+const dInputInfo = 'input-info'
+const dInputSuccess = 'input-success'
+const dInputWarning = 'input-warning'
+const dInputError = 'input-error'
+const dInputGhost = 'input-ghost'
+const dFloatingLabel = 'floating-label'
+
 export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'prefix'> {
   type?: 'text' | 'password' | 'email' | 'number' | 'date' | 'datetime-local' | 'week' | 'month' | 'tel' | 'url' | 'search' | 'time'
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
@@ -136,27 +154,27 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const sizeClasses = {
-      xs: 'input-xs',
-      sm: 'input-sm',
-      md: 'input-md',
-      lg: 'input-lg',
-      xl: 'input-xl',
+      xs: dInputXs,
+      sm: dInputSm,
+      md: dInputMd,
+      lg: dInputLg,
+      xl: dInputXl,
     }
 
     const colorClasses = {
-      neutral: 'input-neutral',
-      primary: 'input-primary',
-      secondary: 'input-secondary',
-      accent: 'input-accent',
-      info: 'input-info',
-      success: 'input-success',
-      warning: 'input-warning',
-      error: 'input-error',
+      neutral: dInputNeutral,
+      primary: dInputPrimary,
+      secondary: dInputSecondary,
+      accent: dInputAccent,
+      info: dInputInfo,
+      success: dInputSuccess,
+      warning: dInputWarning,
+      error: dInputError,
     }
 
     const statusClasses = {
-      error: 'input-error',
-      warning: 'input-warning',
+      error: dInputError,
+      warning: dInputWarning,
     }
 
     // Status takes precedence over color for validation feedback
@@ -170,9 +188,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputClasses = shouldBeUnstyled
       ? ['grow', 'bg-transparent', 'border-0', 'outline-none', 'focus:outline-none', className].filter(Boolean).join(' ')
       : [
-          'input',
+          dInput,
           !bordered && 'border-0',
-          ghost && 'input-ghost',
+          ghost && dInputGhost,
           sizeClasses[effectiveSize],
           effectiveColorClass,
           className,
@@ -364,11 +382,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     // Size class for floating label
     const floatingSizeClasses = {
-      xs: 'input-xs',
-      sm: 'input-sm',
-      md: 'input-md',
-      lg: 'input-lg',
-      xl: 'input-xl',
+      xs: dInputXs,
+      sm: dInputSm,
+      md: dInputMd,
+      lg: dInputLg,
+      xl: dInputXl,
     }
 
     // Build the masked value if needed
@@ -426,7 +444,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       if (!floatingLabel) return input
 
       const floatingClasses = [
-        'floating-label',
+        dFloatingLabel,
         floatingSizeClasses[effectiveSize],
       ].filter(Boolean).join(' ')
 
@@ -443,7 +461,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       if (!hasExternalAddons) return input
 
       const addonClasses = [
-        'input',
+        dInput,
         'flex',
         'items-center',
         'gap-2',
@@ -462,7 +480,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
     // Build the final element
     const inputElement = buildInputWithInternalAddons(
-      floatingLabel ? 'input w-full' : undefined
+      floatingLabel ? `${dInput} w-full` : undefined
     )
 
     // Apply wrappers
@@ -472,7 +490,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         <input
           ref={inputRef}
           type={mask ? 'text' : type}
-          className="input w-full"
+          className={`${dInput} w-full`}
           value={maskedValue ?? (value !== undefined ? value : internalValue)}
           defaultValue={value === undefined && !mask ? defaultValue : undefined}
           onChange={mask ? handleMaskedChange : handleChange}

@@ -1,5 +1,8 @@
 import React from 'react'
 
+// DaisyUI classes
+const dTextRotate = 'd-text-rotate'
+
 export type TextRotateDuration = 6000 | 9000 | 12000 | 15000 | 18000
 
 const durationClasses: Record<TextRotateDuration, string> = {
@@ -31,7 +34,7 @@ export const TextRotate: React.FC<TextRotateProps> = ({
 
   return (
     <span
-      className={`d-text-rotate ${durationClass} ${centered ? 'justify-items-center' : ''} ${className}`.trim()}
+      className={`${dTextRotate} ${durationClass} ${centered ? 'justify-items-center' : ''} ${className}`.trim()}
     >
       <span>
         {items.slice(0, 6).map((item, index) => (

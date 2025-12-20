@@ -1,5 +1,25 @@
 import React, { useState, useRef, useEffect, useCallback, useId, forwardRef, useMemo } from 'react'
 
+// DaisyUI classes
+const dInput = 'd-input'
+const dInputXs = 'd-input-xs'
+const dInputSm = 'd-input-sm'
+const dInputMd = 'd-input-md'
+const dInputLg = 'd-input-lg'
+const dInputDisabled = 'd-input-disabled'
+const dInputPrimary = 'd-input-primary'
+const dInputError = 'd-input-error'
+const dInputWarning = 'd-input-warning'
+const dBadge = 'd-badge'
+const dBadgeSm = 'd-badge-sm'
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnXs = 'd-btn-xs'
+const dBtnCircle = 'd-btn-circle'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingXs = 'd-loading-xs'
+
 export interface CascaderOption {
   value: string
   label: React.ReactNode
@@ -495,10 +515,10 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
 
   // Size classes
   const sizeClasses: Record<CascaderSize, string> = {
-    xs: 'd-input-xs text-xs min-h-6',
-    sm: 'd-input-sm text-sm min-h-8',
-    md: 'd-input-md min-h-10',
-    lg: 'd-input-lg text-lg min-h-12',
+    xs: `${dInputXs} text-xs min-h-6`,
+    sm: `${dInputSm} text-sm min-h-8`,
+    md: `${dInputMd} min-h-10`,
+    lg: `${dInputLg} text-lg min-h-12`,
   }
 
   const dropdownSizeClasses: Record<CascaderSize, string> = {
@@ -520,10 +540,10 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
   }
 
   const getColorClass = () => {
-    if (status === 'error') return 'd-input-error'
-    if (status === 'warning') return 'd-input-warning'
+    if (status === 'error') return dInputError
+    if (status === 'warning') return dInputWarning
     if (color && isOpen) return colorClasses[color]
-    if (isOpen) return 'd-input-primary'
+    if (isOpen) return dInputPrimary
     return ''
   }
 
@@ -549,12 +569,12 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
           return (
             <span
               key={path.join('/')}
-              className="d-badge d-badge-sm gap-1"
+              className={`${dBadge} ${dBadgeSm} gap-1`}
             >
               {label}
               <button
                 type="button"
-                className="d-btn d-btn-ghost d-btn-xs d-btn-circle w-3 h-3 min-h-0"
+                className={`${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnCircle} w-3 h-3 min-h-0`}
                 onClick={(e) => handleRemoveTag(path, e)}
                 aria-label={`Remove ${label}`}
               >
@@ -566,7 +586,7 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
           )
         })}
         {hiddenCount > 0 && (
-          <span className="d-badge d-badge-sm">+{hiddenCount}</span>
+          <span className={`${dBadge} ${dBadgeSm}`}>+{hiddenCount}</span>
         )}
       </div>
     )
@@ -671,7 +691,7 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
                 >
                   <span>{option.label}</span>
                   {isLoading ? (
-                    <span className="d-loading d-loading-spinner d-loading-xs" />
+                    <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`} />
                   ) : hasChildren ? (
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -722,8 +742,8 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
         aria-label={ariaLabel}
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : 0}
-        className={`d-input w-full flex items-center justify-between cursor-pointer gap-1 ${sizeClasses[size]} ${
-          disabled ? 'd-input-disabled cursor-not-allowed' : ''
+        className={`${dInput} w-full flex items-center justify-between cursor-pointer gap-1 ${sizeClasses[size]} ${
+          disabled ? `${dInputDisabled} cursor-not-allowed` : ''
         } ${getColorClass()}`}
         onClick={() => {
           if (!disabled) {
@@ -757,7 +777,7 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
           {allowClear && hasValue && !disabled && (
             <button
               type="button"
-              className="d-btn d-btn-ghost d-btn-xs d-btn-circle"
+              className={`${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnCircle}`}
               onClick={handleClear}
               aria-label="Clear selection"
               data-testid={`${baseTestId}-clear`}

@@ -1,6 +1,25 @@
 import React, { forwardRef, useRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dSelect = 'd-select'
+const dSelectBordered = 'd-select-bordered'
+const dSelectGhost = 'd-select-ghost'
+const dSelectXs = 'd-select-xs'
+const dSelectSm = 'd-select-sm'
+const dSelectMd = 'd-select-md'
+const dSelectLg = 'd-select-lg'
+const dSelectXl = 'd-select-xl'
+const dSelectNeutral = 'd-select-neutral'
+const dSelectPrimary = 'd-select-primary'
+const dSelectSecondary = 'd-select-secondary'
+const dSelectAccent = 'd-select-accent'
+const dSelectInfo = 'd-select-info'
+const dSelectSuccess = 'd-select-success'
+const dSelectWarning = 'd-select-warning'
+const dSelectError = 'd-select-error'
+const dFloatingLabel = 'd-floating-label'
+
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
@@ -42,27 +61,27 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const selectRef = (ref as React.RefObject<HTMLSelectElement>) || innerRef
 
     const sizeClasses = {
-      xs: 'd-select-xs',
-      sm: 'd-select-sm',
-      md: 'd-select-md',
-      lg: 'd-select-lg',
-      xl: 'd-select-xl',
+      xs: dSelectXs,
+      sm: dSelectSm,
+      md: dSelectMd,
+      lg: dSelectLg,
+      xl: dSelectXl,
     }
 
     const colorClasses = {
-      neutral: 'd-select-neutral',
-      primary: 'd-select-primary',
-      secondary: 'd-select-secondary',
-      accent: 'd-select-accent',
-      info: 'd-select-info',
-      success: 'd-select-success',
-      warning: 'd-select-warning',
-      error: 'd-select-error',
+      neutral: dSelectNeutral,
+      primary: dSelectPrimary,
+      secondary: dSelectSecondary,
+      accent: dSelectAccent,
+      info: dSelectInfo,
+      success: dSelectSuccess,
+      warning: dSelectWarning,
+      error: dSelectError,
     }
 
     const statusClasses = {
-      error: 'd-select-error',
-      warning: 'd-select-warning',
+      error: dSelectError,
+      warning: dSelectWarning,
     }
 
     // Status takes precedence over color for validation feedback
@@ -74,10 +93,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     const selectClasses = hasExternalAddons
       ? ['grow', 'bg-transparent', 'border-0', 'outline-none', 'focus:outline-none', className].filter(Boolean).join(' ')
       : [
-          'd-select',
+          dSelect,
           'w-full',
-          bordered && 'd-select-bordered',
-          ghost && 'd-select-ghost',
+          bordered && dSelectBordered,
+          ghost && dSelectGhost,
           effectiveSize && sizeClasses[effectiveSize],
           effectiveColorClass,
           className,
@@ -93,13 +112,13 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     // Wrap with floating label if specified
     if (floatingLabel) {
       const floatingClasses = [
-        'd-floating-label',
+        dFloatingLabel,
         effectiveSize && sizeClasses[effectiveSize],
       ].filter(Boolean).join(' ')
 
       return (
         <label className={floatingClasses}>
-          <select ref={selectRef} className="d-select d-select-bordered w-full" {...props}>
+          <select ref={selectRef} className={`${dSelect} ${dSelectBordered} w-full`} {...props}>
             {children}
           </select>
           <span>{floatingLabel}</span>
@@ -110,8 +129,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     // Wrap with external addons if specified
     if (hasExternalAddons) {
       const addonClasses = [
-        'd-select',
-        'd-select-bordered',
+        dSelect,
+        dSelectBordered,
         'flex',
         'items-center',
         'gap-2',

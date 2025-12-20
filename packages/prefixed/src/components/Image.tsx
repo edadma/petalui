@@ -1,5 +1,10 @@
 import React, { useState, useEffect, forwardRef, useCallback } from 'react'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnCircle = 'd-btn-circle'
+const dBtnSm = 'd-btn-sm'
+
 export interface ImageProps extends Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'placeholder'> {
   /** Image source URL */
   src: string
@@ -184,7 +189,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
           >
             <div className="relative max-w-full max-h-full">
               <button
-                className="absolute top-4 right-4 d-btn d-btn-circle d-btn-sm"
+                className={`absolute top-4 right-4 ${dBtn} ${dBtnCircle} ${dBtnSm}`}
                 onClick={handleClosePreview}
                 aria-label="Close preview"
                 autoFocus

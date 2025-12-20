@@ -1,5 +1,13 @@
 import React from 'react'
 
+// DaisyUI classes
+const dKbd = 'kbd'
+const dKbdXs = 'kbd-xs'
+const dKbdSm = 'kbd-sm'
+const dKbdMd = 'kbd-md'
+const dKbdLg = 'kbd-lg'
+const dKbdXl = 'kbd-xl'
+
 export type KbdSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
 export interface KbdProps extends React.HTMLAttributes<HTMLElement> {
@@ -10,11 +18,11 @@ export interface KbdProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const sizeClasses: Record<KbdSize, string> = {
-  xs: 'kbd-xs',
-  sm: 'kbd-sm',
-  md: 'kbd-md',
-  lg: 'kbd-lg',
-  xl: 'kbd-xl',
+  xs: dKbdXs,
+  sm: dKbdSm,
+  md: dKbdMd,
+  lg: dKbdLg,
+  xl: dKbdXl,
 }
 
 export const Kbd: React.FC<KbdProps> = ({
@@ -23,7 +31,7 @@ export const Kbd: React.FC<KbdProps> = ({
   className = '',
   ...rest
 }) => {
-  const classes = ['kbd', size ? sizeClasses[size] : '', className]
+  const classes = [dKbd, size ? sizeClasses[size] : '', className]
     .filter(Boolean)
     .join(' ')
 

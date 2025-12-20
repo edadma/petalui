@@ -9,6 +9,17 @@ import React, {
 } from 'react'
 import type { TreeDataNode } from './Tree'
 
+// DaisyUI classes
+const dCheckbox = 'd-checkbox'
+const dCheckboxSm = 'd-checkbox-sm'
+const dCheckboxPrimary = 'd-checkbox-primary'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingXs = 'd-loading-xs'
+const dInput = 'd-input'
+const dInputSm = 'd-input-sm'
+const dInputDisabled = 'd-input-disabled'
+
 export type TreeSelectSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type TreeSelectColor =
   | 'primary'
@@ -296,7 +307,7 @@ function TreeSelectNode({
   const renderSwitcherIcon = () => {
     if (loading) {
       return (
-        <span className="d-loading d-loading-spinner d-loading-xs" />
+        <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`} />
       )
     }
 
@@ -365,7 +376,7 @@ function TreeSelectNode({
           <span className="mr-2 flex-shrink-0" onClick={handleCheck}>
             <input
               type="checkbox"
-              className="d-checkbox d-checkbox-sm d-checkbox-primary"
+              className={`${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
               checked={checked}
               ref={(el) => {
                 if (el) el.indeterminate = indeterminate
@@ -1194,11 +1205,12 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : 0}
           className={[
-            'd-input flex items-center gap-2 cursor-pointer flex-wrap',
+            dInput,
+            'flex items-center gap-2 cursor-pointer flex-wrap',
             sizeClasses[size],
             variantClass,
             borderClass,
-            disabled && 'd-input-disabled opacity-50 cursor-not-allowed',
+            disabled && `${dInputDisabled} opacity-50 cursor-not-allowed`,
             open && !borderClass && 'border-primary',
           ]
             .filter(Boolean)
@@ -1268,7 +1280,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
                 <input
                   ref={inputRef}
                   type="text"
-                  className="d-input d-input-sm w-full"
+                  className={`${dInput} ${dInputSm} w-full`}
                   placeholder="Search..."
                   value={searchValue}
                   onChange={handleSearchChange}

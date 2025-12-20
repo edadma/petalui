@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://asterui.com/sitemap-index.xml

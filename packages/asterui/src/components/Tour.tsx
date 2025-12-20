@@ -8,6 +8,14 @@ import React, {
 } from 'react'
 import { createPortal } from 'react-dom'
 
+// DaisyUI classes
+const dBtn = 'btn'
+const dBtnGhost = 'btn-ghost'
+const dBtnSm = 'btn-sm'
+const dBtnPrimary = 'btn-primary'
+const dBtnXs = 'btn-xs'
+const dBtnCircle = 'btn-circle'
+
 export type TourPlacement =
   | 'top'
   | 'topLeft'
@@ -562,7 +570,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
         <div>
           {showSkip && !isLastStep && (
             <button
-              className="btn btn-ghost btn-sm"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
               onClick={handleSkip}
               data-testid={getTestId('skip')}
             >
@@ -573,7 +581,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
         <div className="flex gap-2">
           {!isFirstStep && (
             <button
-              className="btn btn-ghost btn-sm"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
               onClick={handlePrev}
               data-testid={getTestId('prev')}
             >
@@ -581,7 +589,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
             </button>
           )}
           <button
-            className={`btn btn-sm ${resolvedType === 'primary' ? 'btn-primary' : ''}`}
+            className={`${dBtn} ${dBtnSm} ${resolvedType === 'primary' ? dBtnPrimary : ''}`}
             onClick={handleNext}
             data-testid={getTestId('next')}
           >
@@ -702,7 +710,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
           {/* Close button */}
           {resolvedCloseIcon !== false && (
             <button
-              className={`absolute top-2 right-2 btn btn-ghost btn-xs btn-circle ${
+              className={`absolute top-2 right-2 ${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnCircle} ${
                 classNames.close ?? ''
               }`}
               style={styles.close}

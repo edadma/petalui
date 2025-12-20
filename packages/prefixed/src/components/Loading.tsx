@@ -1,6 +1,20 @@
 import React from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dLoading = 'd-loading'
+const dLoadingXs = 'd-loading-xs'
+const dLoadingSm = 'd-loading-sm'
+const dLoadingMd = 'd-loading-md'
+const dLoadingLg = 'd-loading-lg'
+const dLoadingXl = 'd-loading-xl'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingDots = 'd-loading-dots'
+const dLoadingRing = 'd-loading-ring'
+const dLoadingBall = 'd-loading-ball'
+const dLoadingBars = 'd-loading-bars'
+const dLoadingInfinity = 'd-loading-infinity'
+
 export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   type?: 'spinner' | 'dots' | 'ring' | 'ball' | 'bars' | 'infinity'
@@ -22,23 +36,23 @@ export const Loading: React.FC<LoadingProps> = ({
   const effectiveSize = size ?? componentSize ?? 'md'
 
   const sizeClasses = {
-    xs: 'd-loading-xs',
-    sm: 'd-loading-sm',
-    md: 'd-loading-md',
-    lg: 'd-loading-lg',
-    xl: 'd-loading-xl',
+    xs: dLoadingXs,
+    sm: dLoadingSm,
+    md: dLoadingMd,
+    lg: dLoadingLg,
+    xl: dLoadingXl,
   }
 
   const typeClasses = {
-    spinner: 'd-loading-spinner',
-    dots: 'd-loading-dots',
-    ring: 'd-loading-ring',
-    ball: 'd-loading-ball',
-    bars: 'd-loading-bars',
-    infinity: 'd-loading-infinity',
+    spinner: dLoadingSpinner,
+    dots: dLoadingDots,
+    ring: dLoadingRing,
+    ball: dLoadingBall,
+    bars: dLoadingBars,
+    infinity: dLoadingInfinity,
   }
 
-  const spinnerClasses = ['d-loading', typeClasses[type], sizeClasses[effectiveSize], className]
+  const spinnerClasses = [dLoading, typeClasses[type], sizeClasses[effectiveSize], className]
     .filter(Boolean)
     .join(' ')
 

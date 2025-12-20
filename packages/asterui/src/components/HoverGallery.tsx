@@ -1,5 +1,8 @@
 import React from 'react'
 
+// DaisyUI classes
+const dHoverGallery = 'hover-gallery'
+
 export interface HoverGalleryProps {
   /** Image sources (2-10 images) */
   images: string[]
@@ -18,7 +21,7 @@ export const HoverGallery: React.FC<HoverGalleryProps> = ({
   const limitedImages = images.slice(0, 10)
 
   return (
-    <figure className={`hover-gallery ${className}`.trim()}>
+    <figure className={`${dHoverGallery} ${className}`.trim()}>
       {limitedImages.map((src, index) => (
         <img
           key={index}

@@ -1,5 +1,9 @@
 import React from 'react'
 
+// DaisyUI classes
+const dSkeleton = 'skeleton'
+const dSkeletonText = 'skeleton-text'
+
 export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   width?: string | number
   height?: string | number
@@ -19,10 +23,10 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   ...rest
 }) => {
   const getClasses = () => {
-    const classes = ['skeleton']
+    const classes = [dSkeleton]
 
     if (variant === 'text') {
-      classes.push('skeleton-text')
+      classes.push(dSkeletonText)
     }
 
     if (circle) {

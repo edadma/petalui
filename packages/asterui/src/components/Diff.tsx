@@ -1,5 +1,11 @@
 import React from 'react'
 
+// DaisyUI classes
+const dDiff = 'diff'
+const dDiffItem1 = 'diff-item-1'
+const dDiffItem2 = 'diff-item-2'
+const dDiffResizer = 'diff-resizer'
+
 export interface DiffProps {
   /** Left side content (revealed when dragging) */
   left: React.ReactNode
@@ -19,16 +25,16 @@ export const Diff: React.FC<DiffProps> = ({
 }) => {
   return (
     <figure
-      className={`diff ${aspect} ${className}`.trim()}
+      className={`${dDiff} ${aspect} ${className}`.trim()}
       tabIndex={0}
     >
-      <div className="diff-item-1" role="img" tabIndex={0}>
+      <div className={dDiffItem1} role="img" tabIndex={0}>
         {left}
       </div>
-      <div className="diff-item-2" role="img">
+      <div className={dDiffItem2} role="img">
         {right}
       </div>
-      <div className="diff-resizer" />
+      <div className={dDiffResizer} />
     </figure>
   )
 }

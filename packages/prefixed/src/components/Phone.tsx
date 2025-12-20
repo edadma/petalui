@@ -1,5 +1,10 @@
 import React from 'react'
 
+// DaisyUI classes
+const dMockupPhone = 'd-mockup-phone'
+const dMockupPhoneCamera = 'd-mockup-phone-camera'
+const dMockupPhoneDisplay = 'd-mockup-phone-display'
+
 export interface PhoneProps {
   children: React.ReactNode
   color?: string
@@ -16,9 +21,9 @@ export const Phone: React.FC<PhoneProps> = ({
   const style: React.CSSProperties = color ? { borderColor: color } : {}
 
   return (
-    <div className={`d-mockup-phone ${className}`} style={style}>
-      <div className="d-mockup-phone-camera"></div>
-      <div className={`d-mockup-phone-display ${displayClassName}`}>
+    <div className={`${dMockupPhone} ${className}`} style={style}>
+      <div className={dMockupPhoneCamera}></div>
+      <div className={`${dMockupPhoneDisplay} ${displayClassName}`}>
         {children}
       </div>
     </div>

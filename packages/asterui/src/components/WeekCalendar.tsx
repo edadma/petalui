@@ -1,5 +1,8 @@
 import React, { useMemo, useRef, useEffect, forwardRef } from 'react'
 
+// DaisyUI classes
+// (No DaisyUI classes used in this component)
+
 // Types (shared with MonthCalendar)
 export type CalendarEvent = {
   date: Date

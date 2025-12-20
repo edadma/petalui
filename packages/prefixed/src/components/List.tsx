@@ -3,6 +3,10 @@ import { Pagination } from './Pagination'
 import { Loading } from './Loading'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dList = 'd-list'
+const dListRow = 'd-list-row'
+
 export interface ListPaginationConfig {
   current?: number
   pageSize?: number
@@ -90,7 +94,7 @@ const sizeClasses = {
 
 const ListItem = forwardRef<HTMLLIElement, ListItemProps>(
   ({ children, actions, extra, className = '', 'data-testid': testId, ...rest }, ref) => {
-    const classes = ['d-list-row', className].filter(Boolean).join(' ')
+    const classes = [dListRow, className].filter(Boolean).join(' ')
 
     return (
       <li ref={ref} className={classes} data-testid={testId} {...rest}>
@@ -161,9 +165,9 @@ const ListRoot = forwardRef<HTMLUListElement, ListProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const listClasses = [
-      'd-list bg-base-100 d-rounded-box',
+      `${dList} bg-base-100 rounded-box`,
       bordered && 'border border-base-300',
-      split && '[&_.list-row]:border-b [&_.list-row]:border-base-200 [&_.list-row:last-child]:border-b-0',
+      split && `[&_.${dListRow}]:border-b [&_.${dListRow}]:border-base-200 [&_.${dListRow}:last-child]:border-b-0`,
       className,
     ]
       .filter(Boolean)

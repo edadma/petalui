@@ -1,6 +1,18 @@
 import React, { useState, useRef, useEffect, useCallback, forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dInput = 'd-input'
+const dInputXs = 'd-input-xs'
+const dInputSm = 'd-input-sm'
+const dInputMd = 'd-input-md'
+const dInputLg = 'd-input-lg'
+const dInputXl = 'd-input-xl'
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnXs = 'd-btn-xs'
+const dBtnCircle = 'd-btn-circle'
+
 export interface ColorPickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: string
   defaultValue?: string
@@ -286,11 +298,11 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(({
 
   // Size configurations
   const sizeConfig = {
-    xs: { panel: 'w-32 h-32', hue: 'h-3', swatch: 'w-4 h-4', input: 'd-input-xs' },
-    sm: { panel: 'w-40 h-40', hue: 'h-4', swatch: 'w-5 h-5', input: 'd-input-sm' },
-    md: { panel: 'w-48 h-48', hue: 'h-5', swatch: 'w-6 h-6', input: 'd-input-md' },
-    lg: { panel: 'w-56 h-56', hue: 'h-6', swatch: 'w-7 h-7', input: 'd-input-lg' },
-    xl: { panel: 'w-64 h-64', hue: 'h-7', swatch: 'w-8 h-8', input: 'd-input-xl' },
+    xs: { panel: 'w-32 h-32', hue: 'h-3', swatch: 'w-4 h-4', input: dInputXs },
+    sm: { panel: 'w-40 h-40', hue: 'h-4', swatch: 'w-5 h-5', input: dInputSm },
+    md: { panel: 'w-48 h-48', hue: 'h-5', swatch: 'w-6 h-6', input: dInputMd },
+    lg: { panel: 'w-56 h-56', hue: 'h-6', swatch: 'w-7 h-7', input: dInputLg },
+    xl: { panel: 'w-64 h-64', hue: 'h-7', swatch: 'w-8 h-8', input: dInputXl },
   }
 
   const config = sizeConfig[effectiveSize]
@@ -385,7 +397,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(({
               type="text"
               value={hexInput}
               onChange={handleHexChange}
-              className={['d-input', config.input, 'w-full font-mono uppercase'].join(' ')}
+              className={[dInput, config.input, 'w-full font-mono uppercase'].join(' ')}
               placeholder="#000000"
               maxLength={7}
               disabled={disabled}
@@ -396,7 +408,7 @@ export const ColorPicker = forwardRef<HTMLDivElement, ColorPickerProps>(({
               <button
                 type="button"
                 onClick={handleClear}
-                className="d-btn d-btn-ghost d-btn-xs d-btn-circle"
+                className={`${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnCircle}`}
                 aria-label="Clear color"
                 data-testid={`${baseTestId}-clear`}
               >

@@ -1,5 +1,12 @@
 import React from 'react'
 
+// DaisyUI classes
+const dFooter = 'd-footer'
+const dFooterCenter = 'd-footer-center'
+const dFooterHorizontal = 'd-footer-horizontal'
+const dFooterVertical = 'd-footer-vertical'
+const dFooterTitle = 'd-footer-title'
+
 export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
   center?: boolean
@@ -13,10 +20,10 @@ export interface FooterTitleProps extends React.HTMLAttributes<HTMLHeadingElemen
 
 function FooterRoot({ children, className = '', center = false, horizontal = false, vertical = false, ...rest }: FooterProps) {
   const classes = [
-    'd-footer',
-    center && 'd-footer-center',
-    horizontal && 'd-footer-horizontal',
-    vertical && 'd-footer-vertical',
+    dFooter,
+    center && dFooterCenter,
+    horizontal && dFooterHorizontal,
+    vertical && dFooterVertical,
     className,
   ]
     .filter(Boolean)
@@ -26,7 +33,7 @@ function FooterRoot({ children, className = '', center = false, horizontal = fal
 }
 
 function FooterTitle({ children, className = '', ...rest }: FooterTitleProps) {
-  return <h6 className={`d-footer-title ${className}`} {...rest}>{children}</h6>
+  return <h6 className={`${dFooterTitle} ${className}`} {...rest}>{children}</h6>
 }
 
 export const Footer = Object.assign(FooterRoot, {

@@ -1,6 +1,15 @@
 import React, { useState, useId } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dFilter = 'filter'
+const dBtn = 'btn'
+const dBtnXs = 'btn-xs'
+const dBtnSm = 'btn-sm'
+const dBtnLg = 'btn-lg'
+const dBtnXl = 'btn-xl'
+const dBtnSquare = 'btn-square'
+
 export interface FilterOption {
   label: string
   value: string
@@ -29,11 +38,11 @@ export interface FilterProps {
 }
 
 const sizeClasses: Record<string, string> = {
-  xs: 'btn-xs',
-  sm: 'btn-sm',
+  xs: dBtnXs,
+  sm: dBtnSm,
   md: '',
-  lg: 'btn-lg',
-  xl: 'btn-xl',
+  lg: dBtnLg,
+  xl: dBtnXl,
 }
 
 export const Filter: React.FC<FilterProps> = ({
@@ -75,11 +84,11 @@ export const Filter: React.FC<FilterProps> = ({
     onChange?.(undefined)
   }
 
-  const buttonClasses = ['btn', sizeClasses[effectiveSize]].filter(Boolean).join(' ')
-  const resetClasses = ['btn', 'btn-square', sizeClasses[effectiveSize]].filter(Boolean).join(' ')
+  const buttonClasses = [dBtn, sizeClasses[effectiveSize]].filter(Boolean).join(' ')
+  const resetClasses = [dBtn, dBtnSquare, sizeClasses[effectiveSize]].filter(Boolean).join(' ')
 
   return (
-    <form className={`filter ${className}`.trim()} onReset={handleReset}>
+    <form className={`${dFilter} ${className}`.trim()} onReset={handleReset}>
       {showReset && (
         <input
           className={resetClasses}

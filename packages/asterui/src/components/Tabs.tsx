@@ -1,5 +1,19 @@
 import React, { useState } from 'react'
 
+// DaisyUI classes
+const dTabs = 'tabs'
+const dTabsBox = 'tabs-box'
+const dTabsBorder = 'tabs-border'
+const dTabsLift = 'tabs-lift'
+const dTabsXs = 'tabs-xs'
+const dTabsSm = 'tabs-sm'
+const dTabsMd = 'tabs-md'
+const dTabsLg = 'tabs-lg'
+const dTabsXl = 'tabs-xl'
+const dTab = 'tab'
+const dTabActive = 'tab-active'
+const dTabDisabled = 'tab-disabled'
+
 export type TabsVariant = 'box' | 'border' | 'lift'
 export type TabsSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type TabsPosition = 'top' | 'bottom'
@@ -43,17 +57,17 @@ export interface TabPanelProps {
 }
 
 const variantClasses: Record<TabsVariant, string> = {
-  box: 'tabs-box',
-  border: 'tabs-border',
-  lift: 'tabs-lift',
+  box: dTabsBox,
+  border: dTabsBorder,
+  lift: dTabsLift,
 }
 
 const sizeClasses: Record<TabsSize, string> = {
-  xs: 'tabs-xs',
-  sm: 'tabs-sm',
-  md: 'tabs-md',
-  lg: 'tabs-lg',
-  xl: 'tabs-xl',
+  xs: dTabsXs,
+  sm: dTabsSm,
+  md: dTabsMd,
+  lg: dTabsLg,
+  xl: dTabsXl,
 }
 
 interface InternalPanelProps extends TabPanelProps {
@@ -106,7 +120,7 @@ function TabsRoot({
   }
 
   const classes = [
-    'tabs',
+    dTabs,
     variant && variantClasses[variant],
     size && sizeClasses[size],
     className,
@@ -121,9 +135,9 @@ function TabsRoot({
       {effectivePanels.map((panel) => {
         const isActive = currentActiveKey === panel._key
         const tabClasses = [
-          'tab',
-          isActive && 'tab-active',
-          panel.disabled && 'tab-disabled',
+          dTab,
+          isActive && dTabActive,
+          panel.disabled && dTabDisabled,
         ]
           .filter(Boolean)
           .join(' ')

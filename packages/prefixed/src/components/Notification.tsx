@@ -1,6 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom/client'
 
+// DaisyUI classes
+const dToast = 'd-toast'
+const dToastTop = 'd-toast-top'
+const dToastBottom = 'd-toast-bottom'
+const dToastStart = 'd-toast-start'
+const dToastEnd = 'd-toast-end'
+const dToastCenter = 'd-toast-center'
+const dAlert = 'd-alert'
+const dAlertSuccess = 'd-alert-success'
+const dAlertError = 'd-alert-error'
+const dAlertInfo = 'd-alert-info'
+const dAlertWarning = 'd-alert-warning'
+const dBtn = 'd-btn'
+const dBtnXs = 'd-btn-xs'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnCircle = 'd-btn-circle'
+
 export type NotificationType = 'success' | 'info' | 'warning' | 'error'
 export type NotificationPlacement = 'topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight' | 'topCenter' | 'bottomCenter'
 export type NotificationVariant = 'default' | 'compact'
@@ -158,12 +175,12 @@ function NotificationContainer({ manager }: NotificationContainerProps) {
   })
 
   const placementClasses: Record<NotificationPlacement, string> = {
-    topRight: 'd-toast d-toast-top d-toast-end z-[9999]',
-    topLeft: 'd-toast d-toast-top d-toast-start z-[9999]',
-    topCenter: 'd-toast d-toast-top d-toast-center z-[9999]',
-    bottomRight: 'd-toast d-toast-bottom d-toast-end z-[9999]',
-    bottomLeft: 'd-toast d-toast-bottom d-toast-start z-[9999]',
-    bottomCenter: 'd-toast d-toast-bottom d-toast-center z-[9999]',
+    topRight: `${dToast} ${dToastTop} ${dToastEnd} z-[9999]`,
+    topLeft: `${dToast} ${dToastTop} ${dToastStart} z-[9999]`,
+    topCenter: `${dToast} ${dToastTop} ${dToastCenter} z-[9999]`,
+    bottomRight: `${dToast} ${dToastBottom} ${dToastEnd} z-[9999]`,
+    bottomLeft: `${dToast} ${dToastBottom} ${dToastStart} z-[9999]`,
+    bottomCenter: `${dToast} ${dToastBottom} ${dToastCenter} z-[9999]`,
   }
 
   return (
@@ -196,10 +213,10 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
   const isCompact = notification.variant === 'compact'
 
   const alertTypeClasses: Record<NotificationType, string> = {
-    success: 'd-alert-success',
-    error: 'd-alert-error',
-    info: 'd-alert-info',
-    warning: 'd-alert-warning',
+    success: dAlertSuccess,
+    error: dAlertError,
+    info: dAlertInfo,
+    warning: dAlertWarning,
   }
 
   const typeIcons: Record<NotificationType, React.ReactNode> = {
@@ -220,7 +237,7 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
   if (isCompact) {
     return (
       <div
-        className={`d-alert ${alertTypeClasses[notification.type!]} shadow-md py-2 px-4 cursor-pointer${notification.className ? ` ${notification.className}` : ''}`}
+        className={`${dAlert} ${alertTypeClasses[notification.type!]} shadow-md py-2 px-4 cursor-pointer${notification.className ? ` ${notification.className}` : ''}`}
         style={notification.style}
         data-testid={notification['data-testid']}
         onClick={handleClick}
@@ -235,7 +252,7 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
 
   return (
     <div
-      className={`d-alert ${alertTypeClasses[notification.type!]} shadow-lg cursor-pointer min-w-[300px] max-w-[400px] relative${notification.className ? ` ${notification.className}` : ''}`}
+      className={`${dAlert} ${alertTypeClasses[notification.type!]} shadow-lg cursor-pointer min-w-[300px] max-w-[400px] relative${notification.className ? ` ${notification.className}` : ''}`}
       style={notification.style}
       data-testid={notification['data-testid']}
       onClick={handleClick}
@@ -246,7 +263,7 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
       </div>
       {notification.closable && (
         <button
-          className="d-btn d-btn-xs d-btn-ghost d-btn-circle absolute top-2 right-2"
+          className={`${dBtn} ${dBtnXs} ${dBtnGhost} ${dBtnCircle} absolute top-2 right-2`}
           onClick={(e) => {
             e.stopPropagation()
             onClose()

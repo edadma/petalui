@@ -12,6 +12,12 @@ import React, {
 import { createPortal } from 'react-dom'
 import { Skeleton } from './Skeleton'
 
+// DaisyUI classes
+const dBtn = 'btn'
+const dBtnGhost = 'btn-ghost'
+const dBtnSm = 'btn-sm'
+const dBtnSquare = 'btn-square'
+
 export type DrawerPlacement = 'top' | 'right' | 'bottom' | 'left'
 export type DrawerSize = 'default' | 'large' | number
 
@@ -391,7 +397,7 @@ export const Drawer = forwardRef<DrawerRef, DrawerProps>(
                     <button
                       ref={closeButtonRef}
                       type="button"
-                      className="btn btn-ghost btn-sm btn-square"
+                      className={`${dBtn} ${dBtnGhost} ${dBtnSm} ${dBtnSquare}`}
                       onClick={onClose}
                       aria-label="Close drawer"
                       data-testid={getTestId('close')}

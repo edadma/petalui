@@ -1,6 +1,16 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
+// DaisyUI classes
+const dTextarea = 'd-textarea'
+const dTextareaBordered = 'd-textarea-bordered'
+const dMenu = 'd-menu'
+const dMenuSm = 'd-menu-sm'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingSm = 'd-loading-sm'
+const dAvatar = 'd-avatar'
+
 export interface MentionOption {
   value: string
   label?: string
@@ -291,14 +301,14 @@ export const Mention: React.FC<MentionProps> = ({
     >
       {loading ? (
         <div className="p-3 text-center text-base-content/60">
-          <span className="d-loading d-loading-spinner d-loading-sm"></span>
+          <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingSm}`}></span>
         </div>
       ) : filtered.length === 0 ? (
         <div className="p-3 text-center text-base-content/60 text-sm">
           {notFoundContent}
         </div>
       ) : (
-        <ul className="d-menu d-menu-sm p-1">
+        <ul className={`${dMenu} ${dMenuSm} p-1`}>
           {filtered.map((option, index) => (
             <li key={option.value}>
               <button
@@ -311,7 +321,7 @@ export const Mention: React.FC<MentionProps> = ({
                 onMouseEnter={() => setActiveIndex(index)}
               >
                 {option.avatar && (
-                  <div className="d-avatar">
+                  <div className={dAvatar}>
                     <div className="w-6 h-6 rounded-full">
                       <img src={option.avatar} alt="" />
                     </div>
@@ -349,7 +359,7 @@ export const Mention: React.FC<MentionProps> = ({
         disabled={disabled}
         readOnly={readOnly}
         rows={typeof autoSize === 'object' ? autoSize.minRows || rows : autoSize ? 1 : rows}
-        className="d-textarea d-textarea-bordered w-full resize-none"
+        className={`${dTextarea} ${dTextareaBordered} w-full resize-none`}
       />
 
       {createPortal(dropdown, document.body)}

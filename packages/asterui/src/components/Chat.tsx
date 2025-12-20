@@ -1,5 +1,23 @@
 import React from 'react'
 
+// DaisyUI classes
+const dChat = 'chat'
+const dChatStart = 'chat-start'
+const dChatEnd = 'chat-end'
+const dChatImage = 'chat-image'
+const dChatHeader = 'chat-header'
+const dChatBubble = 'chat-bubble'
+const dChatBubblePrimary = 'chat-bubble-primary'
+const dChatBubbleSecondary = 'chat-bubble-secondary'
+const dChatBubbleAccent = 'chat-bubble-accent'
+const dChatBubbleNeutral = 'chat-bubble-neutral'
+const dChatBubbleInfo = 'chat-bubble-info'
+const dChatBubbleSuccess = 'chat-bubble-success'
+const dChatBubbleWarning = 'chat-bubble-warning'
+const dChatBubbleError = 'chat-bubble-error'
+const dChatFooter = 'chat-footer'
+const dAvatar = 'avatar'
+
 export interface ChatProps extends React.HTMLAttributes<HTMLDivElement> {
   message: React.ReactNode
   position?: 'start' | 'end'
@@ -21,36 +39,36 @@ export const Chat: React.FC<ChatProps> = ({
   className = '',
   ...rest
 }) => {
-  const positionClass = position === 'start' ? 'chat-start' : 'chat-end'
+  const positionClass = position === 'start' ? dChatStart : dChatEnd
 
   const colorClasses: Record<string, string> = {
-    primary: 'chat-bubble-primary',
-    secondary: 'chat-bubble-secondary',
-    accent: 'chat-bubble-accent',
-    neutral: 'chat-bubble-neutral',
-    info: 'chat-bubble-info',
-    success: 'chat-bubble-success',
-    warning: 'chat-bubble-warning',
-    error: 'chat-bubble-error',
+    primary: dChatBubblePrimary,
+    secondary: dChatBubbleSecondary,
+    accent: dChatBubbleAccent,
+    neutral: dChatBubbleNeutral,
+    info: dChatBubbleInfo,
+    success: dChatBubbleSuccess,
+    warning: dChatBubbleWarning,
+    error: dChatBubbleError,
   }
 
-  const bubbleClasses = ['chat-bubble']
+  const bubbleClasses = [dChatBubble]
   if (color && colorClasses[color]) {
     bubbleClasses.push(colorClasses[color])
   }
 
   return (
-    <div className={`chat ${positionClass} ${className}`} {...rest}>
+    <div className={`${dChat} ${positionClass} ${className}`} {...rest}>
       {avatar && (
-        <div className="chat-image avatar">
+        <div className={`${dChatImage} ${dAvatar}`}>
           <div className="w-10 rounded-full">
             <img alt={avatarAlt} src={avatar} />
           </div>
         </div>
       )}
-      {header && <div className="chat-header">{header}</div>}
+      {header && <div className={dChatHeader}>{header}</div>}
       <div className={bubbleClasses.join(' ')}>{message}</div>
-      {footer && <div className="chat-footer">{footer}</div>}
+      {footer && <div className={dChatFooter}>{footer}</div>}
     </div>
   )
 }

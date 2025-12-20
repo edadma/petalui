@@ -1,6 +1,24 @@
 import React, { forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dTextarea = 'd-textarea'
+const dTextareaBordered = 'd-textarea-bordered'
+const dTextareaGhost = 'd-textarea-ghost'
+const dTextareaXs = 'd-textarea-xs'
+const dTextareaSm = 'd-textarea-sm'
+const dTextareaMd = 'd-textarea-md'
+const dTextareaLg = 'd-textarea-lg'
+const dTextareaXl = 'd-textarea-xl'
+const dTextareaNeutral = 'd-textarea-neutral'
+const dTextareaPrimary = 'd-textarea-primary'
+const dTextareaSecondary = 'd-textarea-secondary'
+const dTextareaAccent = 'd-textarea-accent'
+const dTextareaInfo = 'd-textarea-info'
+const dTextareaSuccess = 'd-textarea-success'
+const dTextareaWarning = 'd-textarea-warning'
+const dTextareaError = 'd-textarea-error'
+
 export interface TextareaProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'size'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
@@ -25,29 +43,29 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const sizeClasses = {
-      xs: 'd-textarea-xs',
-      sm: 'd-textarea-sm',
-      md: 'd-textarea-md',
-      lg: 'd-textarea-lg',
-      xl: 'd-textarea-xl',
+      xs: dTextareaXs,
+      sm: dTextareaSm,
+      md: dTextareaMd,
+      lg: dTextareaLg,
+      xl: dTextareaXl,
     }
 
     const colorClasses = {
-      neutral: 'd-textarea-neutral',
-      primary: 'd-textarea-primary',
-      secondary: 'd-textarea-secondary',
-      accent: 'd-textarea-accent',
-      info: 'd-textarea-info',
-      success: 'd-textarea-success',
-      warning: 'd-textarea-warning',
-      error: 'd-textarea-error',
+      neutral: dTextareaNeutral,
+      primary: dTextareaPrimary,
+      secondary: dTextareaSecondary,
+      accent: dTextareaAccent,
+      info: dTextareaInfo,
+      success: dTextareaSuccess,
+      warning: dTextareaWarning,
+      error: dTextareaError,
     }
 
     const textareaClasses = [
-      'd-textarea',
+      dTextarea,
       'w-full',
-      bordered && 'd-textarea-bordered',
-      ghost && 'd-textarea-ghost',
+      bordered && dTextareaBordered,
+      ghost && dTextareaGhost,
       effectiveSize && sizeClasses[effectiveSize],
       color && colorClasses[color],
       className,

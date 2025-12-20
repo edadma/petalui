@@ -1,5 +1,19 @@
 import React from 'react'
 
+// DaisyUI classes
+const dSteps = 'd-steps'
+const dStepsVertical = 'd-steps-vertical'
+const dStep = 'd-step'
+const dStepNeutral = 'd-step-neutral'
+const dStepPrimary = 'd-step-primary'
+const dStepSecondary = 'd-step-secondary'
+const dStepAccent = 'd-step-accent'
+const dStepInfo = 'd-step-info'
+const dStepSuccess = 'd-step-success'
+const dStepWarning = 'd-step-warning'
+const dStepError = 'd-step-error'
+const dStepDisabled = 'd-step-disabled'
+
 export type StepsDirection = 'horizontal' | 'vertical'
 
 export interface StepItem {
@@ -50,14 +64,14 @@ export interface StepProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, '
 }
 
 const colorClasses: Record<string, string> = {
-  neutral: 'd-step-neutral',
-  primary: 'd-step-primary',
-  secondary: 'd-step-secondary',
-  accent: 'd-step-accent',
-  info: 'd-step-info',
-  success: 'd-step-success',
-  warning: 'd-step-warning',
-  error: 'd-step-error',
+  neutral: dStepNeutral,
+  primary: dStepPrimary,
+  secondary: dStepSecondary,
+  accent: dStepAccent,
+  info: dStepInfo,
+  success: dStepSuccess,
+  warning: dStepWarning,
+  error: dStepError,
 }
 
 function StepsRoot({
@@ -72,7 +86,7 @@ function StepsRoot({
 }: StepsProps) {
   const isVertical = direction === 'vertical' || vertical
 
-  const classes = ['d-steps', isVertical && 'd-steps-vertical', className]
+  const classes = [dSteps, isVertical && dStepsVertical, className]
     .filter(Boolean)
     .join(' ')
 
@@ -146,7 +160,7 @@ function Step({
   _onClick,
   ...rest
 }: StepProps) {
-  const classes = ['d-step', color && colorClasses[color], disabled && 'step-disabled', className]
+  const classes = [dStep, color && colorClasses[color], disabled && dStepDisabled, className]
     .filter(Boolean)
     .join(' ')
 
@@ -166,7 +180,7 @@ function Step({
       style={_clickable && !disabled ? { cursor: 'pointer' } : undefined}
       {...rest}
     >
-      {icon && <span className="d-step-icon">{icon}</span>}
+      {icon && <span className="step-icon">{icon}</span>}
       {displayContent}
       {description && <span className="text-xs opacity-70 block">{description}</span>}
     </li>

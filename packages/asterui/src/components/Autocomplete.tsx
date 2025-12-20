@@ -1,6 +1,27 @@
 import React, { useState, useRef, useEffect, useId } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dDropdown = 'dropdown'
+const dDropdownBottom = 'dropdown-bottom'
+const dDropdownOpen = 'dropdown-open'
+const dDropdownContent = 'dropdown-content'
+const dMenu = 'menu'
+const dInput = 'input'
+const dInputXs = 'input-xs'
+const dInputSm = 'input-sm'
+const dInputMd = 'input-md'
+const dInputLg = 'input-lg'
+const dInputXl = 'input-xl'
+const dInputNeutral = 'input-neutral'
+const dInputPrimary = 'input-primary'
+const dInputSecondary = 'input-secondary'
+const dInputAccent = 'input-accent'
+const dInputInfo = 'input-info'
+const dInputSuccess = 'input-success'
+const dInputWarning = 'input-warning'
+const dInputError = 'input-error'
+
 export interface AutocompleteOption {
   value: string
   label: string
@@ -224,27 +245,27 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   }
 
   const sizeClasses = {
-    xs: 'input-xs',
-    sm: 'input-sm',
-    md: 'input-md',
-    lg: 'input-lg',
-    xl: 'input-xl',
+    xs: dInputXs,
+    sm: dInputSm,
+    md: dInputMd,
+    lg: dInputLg,
+    xl: dInputXl,
   }
 
   const colorClasses = {
-    neutral: 'input-neutral',
-    primary: 'input-primary',
-    secondary: 'input-secondary',
-    accent: 'input-accent',
-    info: 'input-info',
-    success: 'input-success',
-    warning: 'input-warning',
-    error: 'input-error',
+    neutral: dInputNeutral,
+    primary: dInputPrimary,
+    secondary: dInputSecondary,
+    accent: dInputAccent,
+    info: dInputInfo,
+    success: dInputSuccess,
+    warning: dInputWarning,
+    error: dInputError,
   }
 
   const statusClasses = {
-    error: 'input-error',
-    warning: 'input-warning',
+    error: dInputError,
+    warning: dInputWarning,
   }
 
   // Status takes precedence over color for validation feedback
@@ -270,7 +291,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
   const getOptionId = (index: number) => `${baseId}-option-${index}`
 
   const inputClasses = [
-    'input w-full',
+    `${dInput} w-full`,
     sizeClasses[effectiveSize],
     effectiveColorClass,
     showClear && 'pr-10',
@@ -278,7 +299,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
 
   return (
     <div
-      className={`dropdown dropdown-bottom w-full ${isOpen && !disabled ? 'dropdown-open' : ''} ${className}`}
+      className={`${dDropdown} ${dDropdownBottom} w-full ${isOpen && !disabled ? dDropdownOpen : ''} ${className}`}
       data-state={isOpen ? 'open' : 'closed'}
       {...rest}
     >
@@ -317,7 +338,7 @@ export const Autocomplete: React.FC<AutocompleteProps> = ({
           role="listbox"
           aria-label="Suggestions"
           tabIndex={-1}
-          className="dropdown-content menu bg-base-100 rounded-box z-50 w-full shadow-lg border border-base-300 max-h-60 overflow-auto flex-nowrap"
+          className={`${dDropdownContent} ${dMenu} bg-base-100 rounded-box z-50 w-full shadow-lg border border-base-300 max-h-60 overflow-auto flex-nowrap`}
         >
           {filteredOptions.length > 0 ? (
             filteredOptions.map((option, index) => (

@@ -1,5 +1,21 @@
 import React from 'react'
 
+// DaisyUI classes
+const dTooltip = 'tooltip'
+const dTooltipTop = 'tooltip-top'
+const dTooltipBottom = 'tooltip-bottom'
+const dTooltipLeft = 'tooltip-left'
+const dTooltipRight = 'tooltip-right'
+const dTooltipNeutral = 'tooltip-neutral'
+const dTooltipPrimary = 'tooltip-primary'
+const dTooltipSecondary = 'tooltip-secondary'
+const dTooltipAccent = 'tooltip-accent'
+const dTooltipInfo = 'tooltip-info'
+const dTooltipSuccess = 'tooltip-success'
+const dTooltipWarning = 'tooltip-warning'
+const dTooltipError = 'tooltip-error'
+const dTooltipOpen = 'tooltip-open'
+
 export interface TooltipProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   tip: string
@@ -18,30 +34,30 @@ export const Tooltip: React.FC<TooltipProps> = ({
   ...rest
 }) => {
   const positionClasses = {
-    top: 'tooltip-top',
-    bottom: 'tooltip-bottom',
-    left: 'tooltip-left',
-    right: 'tooltip-right',
+    top: dTooltipTop,
+    bottom: dTooltipBottom,
+    left: dTooltipLeft,
+    right: dTooltipRight,
   }
 
   const colorClasses = color
     ? {
-        neutral: 'tooltip-neutral',
-        primary: 'tooltip-primary',
-        secondary: 'tooltip-secondary',
-        accent: 'tooltip-accent',
-        info: 'tooltip-info',
-        success: 'tooltip-success',
-        warning: 'tooltip-warning',
-        error: 'tooltip-error',
+        neutral: dTooltipNeutral,
+        primary: dTooltipPrimary,
+        secondary: dTooltipSecondary,
+        accent: dTooltipAccent,
+        info: dTooltipInfo,
+        success: dTooltipSuccess,
+        warning: dTooltipWarning,
+        error: dTooltipError,
       }[color]
     : undefined
 
   const classes = [
-    'tooltip',
+    dTooltip,
     positionClasses[position],
     colorClasses,
-    open && 'tooltip-open',
+    open && dTooltipOpen,
     className,
   ]
     .filter(Boolean)

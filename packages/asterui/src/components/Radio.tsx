@@ -1,6 +1,22 @@
 import React, { forwardRef, createContext, useContext } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dRadio = 'radio'
+const dRadioXs = 'radio-xs'
+const dRadioSm = 'radio-sm'
+const dRadioMd = 'radio-md'
+const dRadioLg = 'radio-lg'
+const dRadioXl = 'radio-xl'
+const dRadioNeutral = 'radio-neutral'
+const dRadioPrimary = 'radio-primary'
+const dRadioSecondary = 'radio-secondary'
+const dRadioAccent = 'radio-accent'
+const dRadioInfo = 'radio-info'
+const dRadioSuccess = 'radio-success'
+const dRadioWarning = 'radio-warning'
+const dRadioError = 'radio-error'
+
 export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
@@ -57,25 +73,25 @@ const RadioRoot = forwardRef<HTMLInputElement, RadioProps>(
     const groupContext = useContext(RadioGroupContext)
 
     const sizeClasses = {
-      xs: 'radio-xs',
-      sm: 'radio-sm',
-      md: 'radio-md',
-      lg: 'radio-lg',
-      xl: 'radio-xl',
+      xs: dRadioXs,
+      sm: dRadioSm,
+      md: dRadioMd,
+      lg: dRadioLg,
+      xl: dRadioXl,
     }
 
     const colorClasses = {
-      neutral: 'radio-neutral',
-      primary: 'radio-primary',
-      secondary: 'radio-secondary',
-      accent: 'radio-accent',
-      info: 'radio-info',
-      success: 'radio-success',
-      warning: 'radio-warning',
-      error: 'radio-error',
+      neutral: dRadioNeutral,
+      primary: dRadioPrimary,
+      secondary: dRadioSecondary,
+      accent: dRadioAccent,
+      info: dRadioInfo,
+      success: dRadioSuccess,
+      warning: dRadioWarning,
+      error: dRadioError,
     }
 
-    const radioClasses = ['radio', effectiveSize && sizeClasses[effectiveSize], color && colorClasses[color]]
+    const radioClasses = [dRadio, effectiveSize && sizeClasses[effectiveSize], color && colorClasses[color]]
       .filter(Boolean)
       .join(' ')
 

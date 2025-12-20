@@ -1,5 +1,17 @@
 import React, { createContext, useContext, useState, useCallback, useId } from 'react'
 
+// DaisyUI classes
+const dMenu = 'menu'
+const dMenuVertical = 'menu-vertical'
+const dMenuHorizontal = 'menu-horizontal'
+const dMenuXs = 'menu-xs'
+const dMenuSm = 'menu-sm'
+const dMenuMd = 'menu-md'
+const dMenuLg = 'menu-lg'
+const dMenuXl = 'menu-xl'
+const dMenuIcon = 'menu-icon'
+const dMenuTitle = 'menu-title'
+
 export type MenuMode = 'vertical' | 'horizontal' | 'inline'
 export type MenuSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
@@ -153,20 +165,20 @@ function MenuRoot({
   )
 
   const modeClasses: Record<MenuMode, string> = {
-    vertical: 'menu-vertical',
-    horizontal: 'menu-horizontal',
-    inline: 'menu-vertical',
+    vertical: dMenuVertical,
+    horizontal: dMenuHorizontal,
+    inline: dMenuVertical,
   }
 
   const sizeClasses: Record<MenuSize, string> = {
-    xs: 'menu-xs',
-    sm: 'menu-sm',
-    md: 'menu-md',
-    lg: 'menu-lg',
-    xl: 'menu-xl',
+    xs: dMenuXs,
+    sm: dMenuSm,
+    md: dMenuMd,
+    lg: dMenuLg,
+    xl: dMenuXl,
   }
 
-  const menuClasses = ['menu', modeClasses[mode], size && sizeClasses[size], className].filter(Boolean).join(' ')
+  const menuClasses = [dMenu, modeClasses[mode], size && sizeClasses[size], className].filter(Boolean).join(' ')
 
   const contextValue = {
     mode,
@@ -242,7 +254,7 @@ function MenuItem({
         data-state={isSelected ? 'active' : 'inactive'}
         {...rest}
       >
-        {icon && <span className="menu-icon">{icon}</span>}
+        {icon && <span className={dMenuIcon}>{icon}</span>}
         {children}
       </a>
     </li>
@@ -287,7 +299,7 @@ function MenuSubMenu({
             aria-controls={submenuId}
             aria-disabled={disabled}
           >
-            {icon && <span className="menu-icon">{icon}</span>}
+            {icon && <span className={dMenuIcon}>{icon}</span>}
             {displayLabel}
           </summary>
           <ul id={submenuId} role="menu">
@@ -311,7 +323,7 @@ function MenuSubMenu({
           aria-controls={submenuId}
           aria-disabled={disabled}
         >
-          {icon && <span className="menu-icon">{icon}</span>}
+          {icon && <span className={dMenuIcon}>{icon}</span>}
           {displayLabel}
         </summary>
         <ul id={submenuId} role="menu">
@@ -323,7 +335,7 @@ function MenuSubMenu({
 }
 
 function MenuTitle({ children, className = '', ...rest }: MenuTitleProps) {
-  const titleClasses = ['menu-title', className].filter(Boolean).join(' ')
+  const titleClasses = [dMenuTitle, className].filter(Boolean).join(' ')
 
   return <li className={titleClasses} {...rest}>{children}</li>
 }

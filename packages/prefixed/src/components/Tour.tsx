@@ -8,6 +8,14 @@ import React, {
 } from 'react'
 import { createPortal } from 'react-dom'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnSm = 'd-btn-sm'
+const dBtnPrimary = 'd-btn-primary'
+const dBtnXs = 'd-btn-xs'
+const dBtnCircle = 'd-btn-circle'
+
 export type TourPlacement =
   | 'top'
   | 'topLeft'
@@ -486,7 +494,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
           // Focus trap within popover
           if (popoverRef.current) {
             const focusableElements = popoverRef.current.querySelectorAll<HTMLElement>(
-              'button, [href], d-input, d-select, d-textarea, [tabindex]:not([tabindex="-1"])'
+              'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
             )
             const firstElement = focusableElements[0]
             const lastElement = focusableElements[focusableElements.length - 1]
@@ -562,7 +570,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
         <div>
           {showSkip && !isLastStep && (
             <button
-              className="d-btn d-btn-ghost d-btn-sm"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
               onClick={handleSkip}
               data-testid={getTestId('skip')}
             >
@@ -573,7 +581,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
         <div className="flex gap-2">
           {!isFirstStep && (
             <button
-              className="d-btn d-btn-ghost d-btn-sm"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
               onClick={handlePrev}
               data-testid={getTestId('prev')}
             >
@@ -581,7 +589,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
             </button>
           )}
           <button
-            className={`d-btn d-btn-sm ${resolvedType === 'primary' ? 'd-btn-primary' : ''}`}
+            className={`${dBtn} ${dBtnSm} ${resolvedType === 'primary' ? dBtnPrimary : ''}`}
             onClick={handleNext}
             data-testid={getTestId('next')}
           >
@@ -702,7 +710,7 @@ export const Tour = forwardRef<TourRef, TourProps>(
           {/* Close button */}
           {resolvedCloseIcon !== false && (
             <button
-              className={`absolute top-2 right-2 d-btn d-btn-ghost d-btn-xs d-btn-circle ${
+              className={`absolute top-2 right-2 ${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnCircle} ${
                 classNames.close ?? ''
               }`}
               style={styles.close}

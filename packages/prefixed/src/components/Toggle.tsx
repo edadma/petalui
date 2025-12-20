@@ -1,6 +1,22 @@
 import React, { forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dToggle = 'd-toggle'
+const dToggleXs = 'd-toggle-xs'
+const dToggleSm = 'd-toggle-sm'
+const dToggleMd = 'd-toggle-md'
+const dToggleLg = 'd-toggle-lg'
+const dToggleXl = 'd-toggle-xl'
+const dTogglePrimary = 'd-toggle-primary'
+const dToggleSecondary = 'd-toggle-secondary'
+const dToggleAccent = 'd-toggle-accent'
+const dToggleNeutral = 'd-toggle-neutral'
+const dToggleSuccess = 'd-toggle-success'
+const dToggleWarning = 'd-toggle-warning'
+const dToggleInfo = 'd-toggle-info'
+const dToggleError = 'd-toggle-error'
+
 export interface ToggleProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'info' | 'error'
@@ -21,26 +37,26 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const sizeClasses = {
-      xs: 'd-toggle-xs',
-      sm: 'd-toggle-sm',
-      md: 'd-toggle-md',
-      lg: 'd-toggle-lg',
-      xl: 'd-toggle-xl',
+      xs: dToggleXs,
+      sm: dToggleSm,
+      md: dToggleMd,
+      lg: dToggleLg,
+      xl: dToggleXl,
     }
 
     const colorClasses = {
-      primary: 'd-toggle-primary',
-      secondary: 'd-toggle-secondary',
-      accent: 'd-toggle-accent',
-      neutral: 'd-toggle-neutral',
-      success: 'd-toggle-success',
-      warning: 'd-toggle-warning',
-      info: 'd-toggle-info',
-      error: 'd-toggle-error',
+      primary: dTogglePrimary,
+      secondary: dToggleSecondary,
+      accent: dToggleAccent,
+      neutral: dToggleNeutral,
+      success: dToggleSuccess,
+      warning: dToggleWarning,
+      info: dToggleInfo,
+      error: dToggleError,
     }
 
     const toggleClasses = [
-      'd-toggle',
+      dToggle,
       effectiveSize && sizeClasses[effectiveSize],
       color && colorClasses[color],
       className,

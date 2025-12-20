@@ -1,5 +1,33 @@
 import React, { forwardRef } from 'react'
 
+// DaisyUI classes
+const dBadge = 'badge'
+const dBadgePrimary = 'badge-primary'
+const dBadgeSecondary = 'badge-secondary'
+const dBadgeAccent = 'badge-accent'
+const dBadgeNeutral = 'badge-neutral'
+const dBadgeInfo = 'badge-info'
+const dBadgeSuccess = 'badge-success'
+const dBadgeWarning = 'badge-warning'
+const dBadgeError = 'badge-error'
+const dBadgeXs = 'badge-xs'
+const dBadgeSm = 'badge-sm'
+const dBadgeMd = 'badge-md'
+const dBadgeLg = 'badge-lg'
+const dBadgeXl = 'badge-xl'
+const dBadgeOutline = 'badge-outline'
+const dBadgeDash = 'badge-dash'
+const dBadgeSoft = 'badge-soft'
+const dBadgeGhost = 'badge-ghost'
+const dIndicator = 'indicator'
+const dIndicatorItem = 'indicator-item'
+const dIndicatorTop = 'indicator-top'
+const dIndicatorMiddle = 'indicator-middle'
+const dIndicatorBottom = 'indicator-bottom'
+const dIndicatorStart = 'indicator-start'
+const dIndicatorCenter = 'indicator-center'
+const dIndicatorEnd = 'indicator-end'
+
 export type BadgePosition =
   | 'top-start'
   | 'top-center'
@@ -60,30 +88,30 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 
 const typeClasses: Record<BadgeType, string> = {
   default: '',
-  primary: 'badge-primary',
-  secondary: 'badge-secondary',
-  accent: 'badge-accent',
-  neutral: 'badge-neutral',
-  info: 'badge-info',
-  success: 'badge-success',
-  warning: 'badge-warning',
-  error: 'badge-error',
+  primary: dBadgePrimary,
+  secondary: dBadgeSecondary,
+  accent: dBadgeAccent,
+  neutral: dBadgeNeutral,
+  info: dBadgeInfo,
+  success: dBadgeSuccess,
+  warning: dBadgeWarning,
+  error: dBadgeError,
 }
 
 const sizeClasses: Record<BadgeSize, string> = {
-  xs: 'badge-xs',
-  sm: 'badge-sm',
-  md: 'badge-md',
-  lg: 'badge-lg',
-  xl: 'badge-xl',
+  xs: dBadgeXs,
+  sm: dBadgeSm,
+  md: dBadgeMd,
+  lg: dBadgeLg,
+  xl: dBadgeXl,
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
   solid: '',
-  outline: 'badge-outline',
-  dash: 'badge-dash',
-  soft: 'badge-soft',
-  ghost: 'badge-ghost',
+  outline: dBadgeOutline,
+  dash: dBadgeDash,
+  soft: dBadgeSoft,
+  ghost: dBadgeGhost,
 }
 
 const statusTypeMap: Record<BadgeStatus, BadgeType> = {
@@ -101,25 +129,25 @@ const getPositionClasses = (pos: BadgePosition): string => {
 
   switch (vertical) {
     case 'top':
-      classes.push('indicator-top')
+      classes.push(dIndicatorTop)
       break
     case 'middle':
-      classes.push('indicator-middle')
+      classes.push(dIndicatorMiddle)
       break
     case 'bottom':
-      classes.push('indicator-bottom')
+      classes.push(dIndicatorBottom)
       break
   }
 
   switch (horizontal) {
     case 'start':
-      classes.push('indicator-start')
+      classes.push(dIndicatorStart)
       break
     case 'center':
-      classes.push('indicator-center')
+      classes.push(dIndicatorCenter)
       break
     case 'end':
-      classes.push('indicator-end')
+      classes.push(dIndicatorEnd)
       break
   }
 
@@ -179,7 +207,7 @@ const BadgeInner = forwardRef<HTMLSpanElement, BadgeProps>(
         >
           <span
             className={[
-              'badge badge-xs w-2 h-2 p-0',
+              `${dBadge} ${dBadgeXs} w-2 h-2 p-0`,
               typeClasses[statusType],
               status === 'processing' && 'animate-pulse',
             ]
@@ -205,7 +233,7 @@ const BadgeInner = forwardRef<HTMLSpanElement, BadgeProps>(
       return (
         <div
           ref={ref as React.Ref<HTMLDivElement>}
-          className={`indicator inline-block ${className}`}
+          className={`${dIndicator} inline-block ${className}`}
           data-testid={testId}
           {...rest}
         >
@@ -214,10 +242,10 @@ const BadgeInner = forwardRef<HTMLSpanElement, BadgeProps>(
               role="status"
               aria-label={ariaLabel}
               className={[
-                'indicator-item badge',
+                `${dIndicatorItem} ${dBadge}`,
                 getPositionClasses(position),
                 !color && typeClasses[type],
-                dot ? 'badge-xs p-0 w-2 h-2' : sizeClasses[size],
+                dot ? `${dBadgeXs} p-0 w-2 h-2` : sizeClasses[size],
                 variantClasses[resolvedVariant],
               ]
                 .filter(Boolean)
@@ -237,7 +265,7 @@ const BadgeInner = forwardRef<HTMLSpanElement, BadgeProps>(
 
     // Standalone badge mode (like a label)
     const badgeClasses = [
-      'badge',
+      dBadge,
       !color && typeClasses[type],
       sizeClasses[size],
       variantClasses[resolvedVariant],

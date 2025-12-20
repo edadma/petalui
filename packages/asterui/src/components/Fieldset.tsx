@@ -1,5 +1,10 @@
 import React from 'react'
 
+// DaisyUI classes
+const dFieldset = 'fieldset'
+const dFieldsetLegend = 'fieldset-legend'
+const dFieldsetLabel = 'fieldset-label'
+
 export interface FieldsetProps extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {
   children: React.ReactNode
   className?: string
@@ -16,7 +21,7 @@ export interface FieldsetLabelProps extends React.LabelHTMLAttributes<HTMLLabelE
 }
 
 function FieldsetRoot({ children, className = '', ...props }: FieldsetProps) {
-  const classes = ['fieldset', className].filter(Boolean).join(' ')
+  const classes = [dFieldset, className].filter(Boolean).join(' ')
 
   return (
     <fieldset className={classes} {...props}>
@@ -26,11 +31,11 @@ function FieldsetRoot({ children, className = '', ...props }: FieldsetProps) {
 }
 
 function FieldsetLegend({ children, className = '' }: FieldsetLegendProps) {
-  return <legend className={`fieldset-legend ${className}`}>{children}</legend>
+  return <legend className={`${dFieldsetLegend} ${className}`}>{children}</legend>
 }
 
 function FieldsetLabel({ children, className = '', ...props }: FieldsetLabelProps) {
-  const classes = ['fieldset-label', className].filter(Boolean).join(' ')
+  const classes = [dFieldsetLabel, className].filter(Boolean).join(' ')
   return <label className={classes} {...props}>{children}</label>
 }
 

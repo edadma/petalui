@@ -1,5 +1,12 @@
 import React, { useState } from 'react'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnXs = 'd-btn-xs'
+const dLink = 'd-link'
+const dLinkPrimary = 'd-link-primary'
+
 export type TypographySize = 'sm' | 'base' | 'lg' | 'xl' | '2xl'
 export type TitleLevel = 1 | 2 | 3 | 4 | 5
 
@@ -58,7 +65,7 @@ function CopyButton({ text }: { text: string }) {
   return (
     <button
       onClick={handleCopy}
-      className="d-btn d-btn-ghost d-btn-xs ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
+      className={`${dBtn} ${dBtnGhost} ${dBtnXs} ml-2 opacity-0 group-hover:opacity-100 transition-opacity`}
       title="Copy to clipboard"
     >
       {copied ? (
@@ -266,8 +273,8 @@ function Link({ href = '#', children, target, external, size, className = '', ..
   const rel = isExternal ? 'noopener noreferrer' : undefined
 
   const classes = [
-    'd-link',
-    'd-link-primary',
+    dLink,
+    dLinkPrimary,
     size === 'sm' && 'text-sm',
     size === 'base' && 'text-base',
     size === 'lg' && 'text-lg',

@@ -1,6 +1,16 @@
 import React, { useState, useCallback, createContext, useContext } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dJoin = 'join'
+const dJoinItem = 'join-item'
+const dBtn = 'btn'
+const dBtnXs = 'btn-xs'
+const dBtnSm = 'btn-sm'
+const dBtnLg = 'btn-lg'
+const dBtnXl = 'btn-xl'
+const dBtnActive = 'btn-active'
+
 export type SegmentedValue = string | number
 
 interface SegmentedContextValue {
@@ -34,11 +44,11 @@ export interface SegmentedItemProps {
 }
 
 const sizeClasses = {
-  xs: 'btn-xs',
-  sm: 'btn-sm',
+  xs: dBtnXs,
+  sm: dBtnSm,
   md: '',
-  lg: 'btn-lg',
-  xl: 'btn-xl',
+  lg: dBtnLg,
+  xl: dBtnXl,
 }
 
 const SegmentedItem: React.FC<SegmentedItemProps> = ({
@@ -60,10 +70,10 @@ const SegmentedItem: React.FC<SegmentedItemProps> = ({
   }
 
   const buttonClasses = [
-    'join-item',
-    'btn',
+    dJoinItem,
+    dBtn,
     sizeClasses[size],
-    isSelected ? 'btn-active' : '',
+    isSelected ? dBtnActive : '',
     className,
   ]
     .filter(Boolean)
@@ -138,7 +148,7 @@ export const Segmented: React.FC<SegmentedProps> & { Item: typeof SegmentedItem 
     disabled,
   }
 
-  const containerClasses = ['join', block ? 'w-full [&>.join-item]:flex-1' : '', className]
+  const containerClasses = [dJoin, block ? `w-full [&>.${dJoinItem}]:flex-1` : '', className]
     .filter(Boolean)
     .join(' ')
 

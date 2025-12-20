@@ -9,6 +9,24 @@ import React, {
   useEffect,
 } from 'react'
 
+// DaisyUI classes
+const dCheckbox = 'checkbox'
+const dCheckboxXs = 'checkbox-xs'
+const dCheckboxSm = 'checkbox-sm'
+const dCheckboxLg = 'checkbox-lg'
+const dCheckboxXl = 'checkbox-xl'
+const dCheckboxPrimary = 'checkbox-primary'
+const dCheckboxSecondary = 'checkbox-secondary'
+const dCheckboxAccent = 'checkbox-accent'
+const dCheckboxNeutral = 'checkbox-neutral'
+const dCheckboxInfo = 'checkbox-info'
+const dCheckboxSuccess = 'checkbox-success'
+const dCheckboxWarning = 'checkbox-warning'
+const dCheckboxError = 'checkbox-error'
+const dLoading = 'loading'
+const dLoadingSpinner = 'loading-spinner'
+const dLoadingXs = 'loading-xs'
+
 // ============================================================================
 // Types
 // ============================================================================
@@ -373,21 +391,21 @@ function TreeNodeInternal({ node, level }: TreeNodeInternalProps) {
 
   // Checkbox classes - must use static strings for Tailwind JIT
   const checkboxSizeClasses: Record<TreeSize, string> = {
-    xs: 'checkbox-xs',
-    sm: 'checkbox-sm',
+    xs: dCheckboxXs,
+    sm: dCheckboxSm,
     md: '',
-    lg: 'checkbox-lg',
-    xl: 'checkbox-xl',
+    lg: dCheckboxLg,
+    xl: dCheckboxXl,
   }
   const checkboxColorClasses: Record<TreeColor, string> = {
-    primary: 'checkbox-primary',
-    secondary: 'checkbox-secondary',
-    accent: 'checkbox-accent',
-    neutral: 'checkbox-neutral',
-    info: 'checkbox-info',
-    success: 'checkbox-success',
-    warning: 'checkbox-warning',
-    error: 'checkbox-error',
+    primary: dCheckboxPrimary,
+    secondary: dCheckboxSecondary,
+    accent: dCheckboxAccent,
+    neutral: dCheckboxNeutral,
+    info: dCheckboxInfo,
+    success: dCheckboxSuccess,
+    warning: dCheckboxWarning,
+    error: dCheckboxError,
   }
   const checkboxSizeClass = checkboxSizeClasses[checkboxSize]
   const checkboxColorClass = checkboxColorClasses[checkboxColor]
@@ -395,7 +413,7 @@ function TreeNodeInternal({ node, level }: TreeNodeInternalProps) {
   // Render switcher icon
   const renderSwitcher = () => {
     if (isLoading) {
-      return <span className="loading loading-spinner loading-xs" />
+      return <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`} />
     }
 
     if (isLeaf) {
@@ -481,7 +499,7 @@ function TreeNodeInternal({ node, level }: TreeNodeInternalProps) {
           <span className="mr-1 flex-shrink-0" onClick={handleCheck}>
             <input
               type="checkbox"
-              className={`checkbox ${checkboxSizeClass} ${checkboxColorClass}`}
+              className={`${dCheckbox} ${checkboxSizeClass} ${checkboxColorClass}`}
               checked={checked}
               ref={(el) => {
                 if (el) el.indeterminate = indeterminate

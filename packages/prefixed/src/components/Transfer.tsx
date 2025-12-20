@@ -1,5 +1,15 @@
 import React, { useState, useCallback, useMemo } from 'react'
 
+// DaisyUI classes
+const dCheckbox = 'd-checkbox'
+const dCheckboxSm = 'd-checkbox-sm'
+const dCheckboxPrimary = 'd-checkbox-primary'
+const dInput = 'd-input'
+const dInputSm = 'd-input-sm'
+const dBtn = 'd-btn'
+const dBtnSm = 'd-btn-sm'
+const dBtnOutline = 'd-btn-outline'
+
 export interface TransferItem {
   key: string
   title: React.ReactNode
@@ -93,7 +103,7 @@ function TransferList({
         {showSelectAll && (
           <input
             type="checkbox"
-            className="d-checkbox d-checkbox-sm d-checkbox-primary"
+            className={`${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
             checked={allSelected}
             ref={(el) => {
               if (el) el.indeterminate = someSelected && !allSelected
@@ -114,7 +124,7 @@ function TransferList({
         <div className="px-2 py-2 border-b border-base-300">
           <input
             type="text"
-            className="d-input d-input-sm w-full"
+            className={`${dInput} ${dInputSm} w-full`}
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
@@ -140,7 +150,7 @@ function TransferList({
             >
               <input
                 type="checkbox"
-                className="d-checkbox d-checkbox-sm d-checkbox-primary"
+                className={`${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
                 checked={selectedKeys.includes(item.key)}
                 disabled={disabled || item.disabled}
                 onChange={() => {}}
@@ -283,7 +293,7 @@ export function Transfer({
       <div className="flex flex-col gap-2">
         <button
           type="button"
-          className="d-btn d-btn-sm d-btn-outline"
+          className={`${dBtn} ${dBtnSm} ${dBtnOutline}`}
           onClick={moveToTarget}
           disabled={disabled || !canMoveToTarget}
           aria-label="Move to target"
@@ -294,7 +304,7 @@ export function Transfer({
         </button>
         <button
           type="button"
-          className="d-btn d-btn-sm d-btn-outline"
+          className={`${dBtn} ${dBtnSm} ${dBtnOutline}`}
           onClick={moveToSource}
           disabled={disabled || !canMoveToSource}
           aria-label="Move to source"

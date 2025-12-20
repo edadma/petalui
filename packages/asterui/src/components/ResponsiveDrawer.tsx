@@ -1,5 +1,13 @@
 import React, { forwardRef } from 'react'
 
+// DaisyUI classes
+const dDrawer = 'drawer'
+const dDrawerEnd = 'drawer-end'
+const dDrawerToggle = 'drawer-toggle'
+const dDrawerContent = 'drawer-content'
+const dDrawerSide = 'drawer-side'
+const dDrawerOverlay = 'drawer-overlay'
+
 export type ResponsiveDrawerBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | '2xl'
 
 export interface ResponsiveDrawerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
@@ -71,8 +79,8 @@ export const ResponsiveDrawer = forwardRef<HTMLDivElement, ResponsiveDrawerProps
     }
 
     const drawerClasses = [
-      'drawer',
-      end && 'drawer-end',
+      dDrawer,
+      end && dDrawerEnd,
       responsive && responsiveClasses[responsive],
       className,
     ]
@@ -83,11 +91,11 @@ export const ResponsiveDrawer = forwardRef<HTMLDivElement, ResponsiveDrawerProps
       .filter(Boolean)
       .join(' ')
 
-    const contentClasses = ['drawer-content', contentClassName]
+    const contentClasses = [dDrawerContent, contentClassName]
       .filter(Boolean)
       .join(' ')
 
-    const overlayClasses = ['drawer-overlay', overlayClassName]
+    const overlayClasses = [dDrawerOverlay, overlayClassName]
       .filter(Boolean)
       .join(' ')
 
@@ -105,13 +113,13 @@ export const ResponsiveDrawer = forwardRef<HTMLDivElement, ResponsiveDrawerProps
         <input
           id={drawerId}
           type="checkbox"
-          className="drawer-toggle"
+          className={dDrawerToggle}
           checked={open}
           onChange={handleToggle}
           aria-label={end ? 'Toggle right sidebar' : 'Toggle sidebar'}
         />
         <div className={contentClasses}>{children}</div>
-        <div className="drawer-side" style={{ '--drawer-width': widthStyle } as React.CSSProperties}>
+        <div className={dDrawerSide} style={{ '--drawer-width': widthStyle } as React.CSSProperties}>
           <label
             htmlFor={drawerId}
             aria-label="Close sidebar"

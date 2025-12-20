@@ -1,5 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnSm = 'd-btn-sm'
+const dBtnPrimary = 'd-btn-primary'
+const dBtnSecondary = 'd-btn-secondary'
+const dBtnAccent = 'd-btn-accent'
+const dBtnSuccess = 'd-btn-success'
+const dBtnWarning = 'd-btn-warning'
+const dBtnError = 'd-btn-error'
+const dBtnInfo = 'd-btn-info'
+const dBtnGhost = 'd-btn-ghost'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingXs = 'd-loading-xs'
+
 export interface PopconfirmProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   children: React.ReactElement
   title: React.ReactNode
@@ -110,14 +125,14 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
   }
 
   const buttonClasses = {
-    primary: 'd-btn-primary',
-    secondary: 'd-btn-secondary',
-    accent: 'd-btn-accent',
-    success: 'd-btn-success',
-    warning: 'd-btn-warning',
-    error: 'd-btn-error',
-    info: 'd-btn-info',
-    ghost: 'd-btn-ghost',
+    primary: dBtnPrimary,
+    secondary: dBtnSecondary,
+    accent: dBtnAccent,
+    success: dBtnSuccess,
+    warning: dBtnWarning,
+    error: dBtnError,
+    info: dBtnInfo,
+    ghost: dBtnGhost,
   } as const
 
   const getButtonClass = (type: keyof typeof buttonClasses) => {
@@ -167,7 +182,7 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
                 <div className="flex justify-end gap-2 mt-3">
                   {showCancel && (
                     <button
-                      className={`d-btn d-btn-sm ${getButtonClass(cancelType)}`}
+                      className={`${dBtn} ${dBtnSm} ${getButtonClass(cancelType)}`}
                       onClick={handleCancel}
                       disabled={loading}
                     >
@@ -175,11 +190,11 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
                     </button>
                   )}
                   <button
-                    className={`d-btn d-btn-sm ${getButtonClass(okType)}`}
+                    className={`${dBtn} ${dBtnSm} ${getButtonClass(okType)}`}
                     onClick={handleConfirm}
                     disabled={loading}
                   >
-                    {loading && <span className="d-loading d-loading-spinner d-loading-xs"></span>}
+                    {loading && <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`}></span>}
                     {okText}
                   </button>
                 </div>

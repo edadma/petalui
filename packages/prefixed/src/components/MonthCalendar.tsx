@@ -1,5 +1,8 @@
 import React, { useState, forwardRef } from 'react'
 
+// DaisyUI classes
+// (No DaisyUI classes used in this component)
+
 // Types
 export type CalendarEvent = {
   date: Date

@@ -1,6 +1,17 @@
 import React, { forwardRef, useMemo } from 'react'
 import { Loading } from './Loading'
 
+// DaisyUI classes
+const dTimeline = 'timeline'
+const dTimelineVertical = 'timeline-vertical'
+const dTimelineHorizontal = 'timeline-horizontal'
+const dTimelineCompact = 'timeline-compact'
+const dTimelineSnapIcon = 'timeline-snap-icon'
+const dTimelineStart = 'timeline-start'
+const dTimelineEnd = 'timeline-end'
+const dTimelineMiddle = 'timeline-middle'
+const dTimelineBox = 'timeline-box'
+
 export type TimelineMode = 'start' | 'alternate' | 'end'
 export type TimelineColor = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral'
 
@@ -128,9 +139,9 @@ const TimelineItem = forwardRef<HTMLLIElement, TimelineItemInternalProps>(
   ) => {
     const itemTestId = testId ?? (_baseTestId ? `${_baseTestId}-item-${_index}` : undefined)
 
-    const startClasses = ['timeline-start', startBox && 'timeline-box'].filter(Boolean).join(' ')
-    const endClasses = ['timeline-end', endBox && 'timeline-box'].filter(Boolean).join(' ')
-    const middleClasses = ['timeline-middle', color && colorClasses[color]].filter(Boolean).join(' ')
+    const startClasses = [dTimelineStart, startBox && dTimelineBox].filter(Boolean).join(' ')
+    const endClasses = [dTimelineEnd, endBox && dTimelineBox].filter(Boolean).join(' ')
+    const middleClasses = [dTimelineMiddle, color && colorClasses[color]].filter(Boolean).join(' ')
     const hrClasses = color ? hrColorClasses[color] : undefined
 
     const isFirst = _index === 0
@@ -223,11 +234,11 @@ const TimelineRoot = forwardRef<HTMLUListElement, TimelineProps>(
     ref
   ) => {
     const classes = [
-      'timeline',
-      vertical && 'timeline-vertical',
-      horizontal && 'timeline-horizontal',
-      compact && 'timeline-compact',
-      snapIcon && 'timeline-snap-icon',
+      dTimeline,
+      vertical && dTimelineVertical,
+      horizontal && dTimelineHorizontal,
+      compact && dTimelineCompact,
+      snapIcon && dTimelineSnapIcon,
       className,
     ]
       .filter(Boolean)

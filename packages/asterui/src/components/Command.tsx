@@ -10,6 +10,12 @@ import React, {
   useState,
 } from 'react'
 
+// DaisyUI classes
+const dModal = 'modal'
+const dModalBox = 'modal-box'
+const dKbd = 'kbd'
+const dKbdXs = 'kbd-xs'
+
 // Types
 export interface CommandItemConfig {
   key: string
@@ -463,12 +469,12 @@ const CommandRoot = forwardRef<HTMLDialogElement, CommandProps>(
           if (typeof ref === 'function') ref(node)
           else if (ref) ref.current = node
         }}
-        className={`modal ${className}`}
+        className={`${dModal} ${className}`}
         onClick={handleBackdropClick}
         {...rest}
       >
         <div
-          className="modal-box p-0 max-w-lg w-full overflow-hidden"
+          className={`${dModalBox} p-0 max-w-lg w-full overflow-hidden`}
           role="dialog"
           aria-modal="true"
           aria-label="Command palette"
@@ -551,13 +557,13 @@ const CommandRoot = forwardRef<HTMLDialogElement, CommandProps>(
             <div className="px-3 py-2 border-t border-base-content/10 flex items-center justify-between text-xs text-base-content/50">
               <div className="flex items-center gap-4">
                 <span className="flex items-center gap-1">
-                  <kbd className="kbd kbd-xs">↑↓</kbd> navigate
+                  <kbd className={`${dKbd} ${dKbdXs}`}>↑↓</kbd> navigate
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="kbd kbd-xs">↵</kbd> select
+                  <kbd className={`${dKbd} ${dKbdXs}`}>↵</kbd> select
                 </span>
                 <span className="flex items-center gap-1">
-                  <kbd className="kbd kbd-xs">esc</kbd> close
+                  <kbd className={`${dKbd} ${dKbdXs}`}>esc</kbd> close
                 </span>
               </div>
             </div>

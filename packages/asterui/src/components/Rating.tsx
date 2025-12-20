@@ -1,6 +1,22 @@
 import React, { createContext, useContext, useId, useState } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dRating = 'rating'
+const dRatingXs = 'rating-xs'
+const dRatingSm = 'rating-sm'
+const dRatingMd = 'rating-md'
+const dRatingLg = 'rating-lg'
+const dRatingXl = 'rating-xl'
+const dRatingHalf = 'rating-half'
+const dRatingHidden = 'rating-hidden'
+const dMask = 'mask'
+const dMaskStar = 'mask-star'
+const dMaskStar2 = 'mask-star-2'
+const dMaskHeart = 'mask-heart'
+const dMaskHalf1 = 'mask-half-1'
+const dMaskHalf2 = 'mask-half-2'
+
 export interface RatingProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   children?: React.ReactNode
   value?: number
@@ -82,11 +98,11 @@ function RatingRoot({
   }
 
   const sizeClasses = {
-    xs: 'rating-xs',
-    sm: 'rating-sm',
-    md: 'rating-md',
-    lg: 'rating-lg',
-    xl: 'rating-xl',
+    xs: dRatingXs,
+    sm: dRatingSm,
+    md: dRatingMd,
+    lg: dRatingLg,
+    xl: dRatingXl,
   }
 
   const gapClasses = {
@@ -98,10 +114,10 @@ function RatingRoot({
   }
 
   const classes = [
-    'rating',
+    dRating,
     // Half-star mode requires a size class to render correctly, default to md
     allowHalf ? sizeClasses[effectiveSize] : (effectiveSize && sizeClasses[effectiveSize]),
-    allowHalf ? 'rating-half' : (gap && gapClasses[gap]),
+    allowHalf ? dRatingHalf : (gap && gapClasses[gap]),
     className,
   ].filter(Boolean).join(' ')
 
@@ -153,9 +169,9 @@ function RatingItem({ value, mask = 'star-2', color = 'bg-warning', hidden = fal
   const { name, currentValue, hoverValue, onChange, onHover, disabled, halfGap } = context
 
   const maskClasses = {
-    star: 'mask-star',
-    'star-2': 'mask-star-2',
-    heart: 'mask-heart',
+    star: dMaskStar,
+    'star-2': dMaskStar2,
+    heart: dMaskHeart,
   }
 
   const halfGapClasses = {
@@ -167,16 +183,16 @@ function RatingItem({ value, mask = 'star-2', color = 'bg-warning', hidden = fal
   }
 
   const halfClasses = {
-    first: 'mask-half-1',
-    second: `mask-half-2 ${halfGap ? halfGapClasses[halfGap] : ''}`.trim(),
+    first: dMaskHalf1,
+    second: `${dMaskHalf2} ${halfGap ? halfGapClasses[halfGap] : ''}`.trim(),
   }
 
   // Hidden items only get rating-hidden class (no mask)
   // Visible items get mask classes - DaisyUI CSS handles filled/unfilled state
   const classes = hidden
-    ? 'rating-hidden'
+    ? dRatingHidden
     : [
-        'mask',
+        dMask,
         maskClasses[mask],
         half && halfClasses[half],
         color,

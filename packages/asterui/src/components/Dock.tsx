@@ -1,6 +1,16 @@
 import React, { forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dDock = 'dock'
+const dDockXs = 'dock-xs'
+const dDockSm = 'dock-sm'
+const dDockMd = 'dock-md'
+const dDockLg = 'dock-lg'
+const dDockXl = 'dock-xl'
+const dDockActive = 'dock-active'
+const dDockLabel = 'dock-label'
+
 export interface DockItemConfig {
   /** Icon element */
   icon: React.ReactNode
@@ -40,7 +50,7 @@ export interface DockItemProps extends React.ButtonHTMLAttributes<HTMLButtonElem
 
 const DockItem = forwardRef<HTMLButtonElement, DockItemProps>(
   ({ active, children, className = '', ...props }, ref) => {
-    const classes = [active && 'dock-active', className].filter(Boolean).join(' ')
+    const classes = [active && dDockActive, className].filter(Boolean).join(' ')
 
     return (
       <button ref={ref} className={classes || undefined} {...props}>
@@ -58,14 +68,14 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const sizeClasses = {
-      xs: 'dock-xs',
-      sm: 'dock-sm',
-      md: 'dock-md',
-      lg: 'dock-lg',
-      xl: 'dock-xl',
+      xs: dDockXs,
+      sm: dDockSm,
+      md: dDockMd,
+      lg: dDockLg,
+      xl: dDockXl,
     }
 
-    const classes = ['dock', sizeClasses[effectiveSize], className].filter(Boolean).join(' ')
+    const classes = [dDock, sizeClasses[effectiveSize], className].filter(Boolean).join(' ')
 
     // If items array is provided, render from config
     if (items) {
@@ -77,7 +87,7 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
             return (
               <button
                 key={index}
-                className={isActive ? 'dock-active' : undefined}
+                className={isActive ? dDockActive : undefined}
                 disabled={item.disabled}
                 onClick={() => {
                   item.onClick?.()
@@ -85,7 +95,7 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
                 }}
               >
                 {item.icon}
-                {item.label && <span className="dock-label">{item.label}</span>}
+                {item.label && <span className={dDockLabel}>{item.label}</span>}
               </button>
             )
           })}

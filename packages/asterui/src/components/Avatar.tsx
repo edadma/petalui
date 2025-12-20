@@ -1,5 +1,12 @@
 import React from 'react'
 
+// DaisyUI classes
+const dAvatar = 'avatar'
+const dAvatarOnline = 'avatar-online'
+const dAvatarOffline = 'avatar-offline'
+const dAvatarPlaceholder = 'avatar-placeholder'
+const dAvatarGroup = 'avatar-group'
+
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type AvatarShape = 'circle' | 'square'
 export type AvatarStatus = 'online' | 'offline'
@@ -58,10 +65,10 @@ function AvatarRoot({
   const isPlaceholder = placeholder || (!src && (icon || children))
 
   const avatarClasses = [
-    'avatar',
-    resolvedStatus === 'online' && 'avatar-online',
-    resolvedStatus === 'offline' && 'avatar-offline',
-    isPlaceholder && 'avatar-placeholder',
+    dAvatar,
+    resolvedStatus === 'online' && dAvatarOnline,
+    resolvedStatus === 'offline' && dAvatarOffline,
+    isPlaceholder && dAvatarPlaceholder,
     className,
   ]
     .filter(Boolean)
@@ -119,10 +126,10 @@ function AvatarGroup({ children, max, size, className = '', style, ...rest }: Av
   }
 
   return (
-    <div className={`avatar-group -space-x-6 rtl:space-x-reverse ${className}`} style={style} {...rest}>
+    <div className={`${dAvatarGroup} -space-x-6 rtl:space-x-reverse ${className}`} style={style} {...rest}>
       {displayAvatars}
       {remainingCount > 0 && (
-        <div className="avatar placeholder">
+        <div className={`${dAvatar} ${dAvatarPlaceholder}`}>
           <div className={`bg-neutral text-neutral-content rounded-full ${size ? sizeClasses[size] : 'w-12'}`}>
             <span>+{remainingCount}</span>
           </div>

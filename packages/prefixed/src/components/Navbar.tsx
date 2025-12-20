@@ -1,5 +1,11 @@
 import React from 'react'
 
+// DaisyUI classes
+const dNavbar = 'd-navbar'
+const dNavbarStart = 'd-navbar-start'
+const dNavbarCenter = 'd-navbar-center'
+const dNavbarEnd = 'd-navbar-end'
+
 export type NavbarColor = 'base' | 'neutral' | 'primary' | 'secondary' | 'accent'
 export type NavbarShadow = 'none' | 'sm' | 'md' | 'lg' | 'xl'
 export type NavbarRounded = 'none' | 'sm' | 'md' | 'lg' | 'xl' | 'full'
@@ -60,7 +66,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   ...rest
 }) => {
   const navbarClasses = [
-    'd-navbar',
+    dNavbar,
     colorClasses[color],
     sticky && 'sticky top-0 z-50',
     shadowClasses[shadow],
@@ -76,9 +82,9 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   return (
     <nav className={navbarClasses} {...rest}>
-      {start && <div className="d-navbar-start">{start}</div>}
-      {center && <div className="d-navbar-center">{center}</div>}
-      {end && <div className="d-navbar-end">{end}</div>}
+      {start && <div className={dNavbarStart}>{start}</div>}
+      {center && <div className={dNavbarCenter}>{center}</div>}
+      {end && <div className={dNavbarEnd}>{end}</div>}
     </nav>
   )
 }

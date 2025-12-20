@@ -1,5 +1,16 @@
 import React from 'react'
 
+// DaisyUI classes
+const dStats = 'd-stats'
+const dStatsHorizontal = 'd-stats-horizontal'
+const dStatsVertical = 'd-stats-vertical'
+const dStat = 'd-stat'
+const dStatFigure = 'd-stat-figure'
+const dStatTitle = 'd-stat-title'
+const dStatValue = 'd-stat-value'
+const dStatDesc = 'd-stat-desc'
+const dStatActions = 'd-stat-actions'
+
 export interface StatsProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   vertical?: boolean
@@ -15,8 +26,8 @@ export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
 
 function StatsRoot({ children, className = '', vertical = false, ...rest }: StatsProps) {
   const classes = [
-    'd-stats',
-    vertical ? 'd-stats-vertical' : 'd-stats-horizontal',
+    dStats,
+    vertical ? dStatsVertical : dStatsHorizontal,
     className,
   ]
     .filter(Boolean)
@@ -27,12 +38,12 @@ function StatsRoot({ children, className = '', vertical = false, ...rest }: Stat
 
 function StatItem({ title, value, desc, figure, actions, className = '', ...rest }: StatProps) {
   return (
-    <div className={`d-stat ${className}`} {...rest}>
-      {figure && <div className="d-stat-figure">{figure}</div>}
-      {title && <div className="d-stat-title">{title}</div>}
-      {value && <div className="d-stat-value">{value}</div>}
-      {desc && <div className="d-stat-desc">{desc}</div>}
-      {actions && <div className="d-stat-actions">{actions}</div>}
+    <div className={`${dStat} ${className}`} {...rest}>
+      {figure && <div className={dStatFigure}>{figure}</div>}
+      {title && <div className={dStatTitle}>{title}</div>}
+      {value && <div className={dStatValue}>{value}</div>}
+      {desc && <div className={dStatDesc}>{desc}</div>}
+      {actions && <div className={dStatActions}>{actions}</div>}
     </div>
   )
 }

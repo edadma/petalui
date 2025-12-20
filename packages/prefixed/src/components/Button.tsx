@@ -2,6 +2,33 @@ import React from 'react'
 import { IconSizeContext } from '../contexts/IconSizeContext'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnPrimary = 'd-btn-primary'
+const dBtnSecondary = 'd-btn-secondary'
+const dBtnAccent = 'd-btn-accent'
+const dBtnInfo = 'd-btn-info'
+const dBtnSuccess = 'd-btn-success'
+const dBtnWarning = 'd-btn-warning'
+const dBtnError = 'd-btn-error'
+const dBtnNeutral = 'd-btn-neutral'
+const dBtnOutline = 'd-btn-outline'
+const dBtnDash = 'd-btn-dash'
+const dBtnSoft = 'd-btn-soft'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnLink = 'd-btn-link'
+const dBtnXs = 'd-btn-xs'
+const dBtnSm = 'd-btn-sm'
+const dBtnLg = 'd-btn-lg'
+const dBtnXl = 'd-btn-xl'
+const dBtnActive = 'd-btn-active'
+const dBtnSquare = 'd-btn-square'
+const dBtnCircle = 'd-btn-circle'
+const dBtnWide = 'd-btn-wide'
+const dBtnBlock = 'd-btn-block'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+
 type BaseButtonProps = {
   /** Button color */
   color?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral'
@@ -65,47 +92,47 @@ export const Button: React.FC<ButtonProps> = ({
   const effectiveColor = danger ? 'error' : color
 
   const colorClasses = {
-    primary: 'd-btn-primary',
-    secondary: 'd-btn-secondary',
-    accent: 'd-btn-accent',
-    info: 'd-btn-info',
-    success: 'd-btn-success',
-    warning: 'd-btn-warning',
-    error: 'd-btn-error',
-    neutral: 'd-btn-neutral',
+    primary: dBtnPrimary,
+    secondary: dBtnSecondary,
+    accent: dBtnAccent,
+    info: dBtnInfo,
+    success: dBtnSuccess,
+    warning: dBtnWarning,
+    error: dBtnError,
+    neutral: dBtnNeutral,
   }
 
   const variantClasses = {
     solid: '', // default, no extra class needed
-    outline: 'd-btn-outline',
-    dash: 'd-btn-dash',
-    soft: 'd-btn-soft',
-    ghost: 'd-btn-ghost',
-    link: 'd-btn-link',
+    outline: dBtnOutline,
+    dash: dBtnDash,
+    soft: dBtnSoft,
+    ghost: dBtnGhost,
+    link: dBtnLink,
   }
 
   const sizeClasses = {
-    xs: 'd-btn-xs',
-    sm: 'd-btn-sm',
+    xs: dBtnXs,
+    sm: dBtnSm,
     md: '',
-    lg: 'd-btn-lg',
-    xl: 'd-btn-xl',
+    lg: dBtnLg,
+    xl: dBtnXl,
   }
 
   const shapeClasses = {
-    square: 'd-btn-square',
-    circle: 'd-btn-circle',
-    wide: 'd-btn-wide',
-    block: 'd-btn-block',
+    square: dBtnSquare,
+    circle: dBtnCircle,
+    wide: dBtnWide,
+    block: dBtnBlock,
     round: 'rounded-full',
   }
 
   const classes = [
-    'd-btn',
+    dBtn,
     effectiveColor && colorClasses[effectiveColor],
     variant && variantClasses[variant],
     sizeClasses[effectiveSize],
-    active && 'd-btn-active',
+    active && dBtnActive,
     shape && shapeClasses[shape],
     noAnimation && 'no-animation',
     className,
@@ -134,7 +161,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   const content = (
     <>
-      {loading && <span className="d-loading d-loading-spinner" aria-hidden="true"></span>}
+      {loading && <span className={`${dLoading} ${dLoadingSpinner}`} aria-hidden="true"></span>}
       {!loading && icon && iconPosition === 'start' && iconElement}
       {children}
       {!loading && icon && iconPosition === 'end' && iconElement}

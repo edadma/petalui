@@ -1,5 +1,21 @@
 import React from 'react'
 
+// DaisyUI classes
+const dStatus = 'status'
+const dStatusNeutral = 'status-neutral'
+const dStatusPrimary = 'status-primary'
+const dStatusSecondary = 'status-secondary'
+const dStatusAccent = 'status-accent'
+const dStatusInfo = 'status-info'
+const dStatusSuccess = 'status-success'
+const dStatusWarning = 'status-warning'
+const dStatusError = 'status-error'
+const dStatusXs = 'status-xs'
+const dStatusSm = 'status-sm'
+const dStatusMd = 'status-md'
+const dStatusLg = 'status-lg'
+const dStatusXl = 'status-xl'
+
 export type StatusType = 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
 export type StatusSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
@@ -19,22 +35,22 @@ export interface StatusProps {
 }
 
 const typeClasses: Record<StatusType, string> = {
-  neutral: 'status-neutral',
-  primary: 'status-primary',
-  secondary: 'status-secondary',
-  accent: 'status-accent',
-  info: 'status-info',
-  success: 'status-success',
-  warning: 'status-warning',
-  error: 'status-error',
+  neutral: dStatusNeutral,
+  primary: dStatusPrimary,
+  secondary: dStatusSecondary,
+  accent: dStatusAccent,
+  info: dStatusInfo,
+  success: dStatusSuccess,
+  warning: dStatusWarning,
+  error: dStatusError,
 }
 
 const sizeClasses: Record<StatusSize, string> = {
-  xs: 'status-xs',
-  sm: 'status-sm',
-  md: 'status-md',
-  lg: 'status-lg',
-  xl: 'status-xl',
+  xs: dStatusXs,
+  sm: dStatusSm,
+  md: dStatusMd,
+  lg: dStatusLg,
+  xl: dStatusXl,
 }
 
 export const Status: React.FC<StatusProps> = ({
@@ -45,7 +61,7 @@ export const Status: React.FC<StatusProps> = ({
   label,
   className = '',
 }) => {
-  const baseClasses = `status ${typeClasses[type]} ${sizeClasses[size]} ${bounce ? 'animate-bounce' : ''} ${className}`.trim()
+  const baseClasses = `${dStatus} ${typeClasses[type]} ${sizeClasses[size]} ${bounce ? 'animate-bounce' : ''} ${className}`.trim()
 
   if (ping) {
     return (

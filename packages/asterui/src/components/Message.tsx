@@ -1,6 +1,11 @@
 import React from 'react'
 import { notification } from './Notification'
 
+// DaisyUI classes
+const dLoading = 'loading'
+const dLoadingSpinner = 'loading-spinner'
+const dLoadingSm = 'loading-sm'
+
 export interface MessageConfig {
   duration?: number
   key?: string
@@ -51,7 +56,7 @@ export class MessageManager {
 
   loading(content: React.ReactNode, config?: MessageConfig) {
     const loadingIcon = (
-      <span className="loading loading-spinner loading-sm" />
+      <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingSm}`} />
     )
     return notification.open({
       message: content,

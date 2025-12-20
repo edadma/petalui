@@ -1,6 +1,27 @@
 import React, { forwardRef, createContext, useContext } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dCheckbox = 'd-checkbox'
+const dCheckboxXs = 'd-checkbox-xs'
+const dCheckboxSm = 'd-checkbox-sm'
+const dCheckboxMd = 'd-checkbox-md'
+const dCheckboxLg = 'd-checkbox-lg'
+const dCheckboxXl = 'd-checkbox-xl'
+const dCheckboxPrimary = 'd-checkbox-primary'
+const dCheckboxSecondary = 'd-checkbox-secondary'
+const dCheckboxAccent = 'd-checkbox-accent'
+const dCheckboxNeutral = 'd-checkbox-neutral'
+const dCheckboxSuccess = 'd-checkbox-success'
+const dCheckboxWarning = 'd-checkbox-warning'
+const dCheckboxInfo = 'd-checkbox-info'
+const dCheckboxError = 'd-checkbox-error'
+const dSwap = 'd-swap'
+const dSwapRotate = 'd-swap-rotate'
+const dSwapFlip = 'd-swap-flip'
+const dSwapOn = 'd-swap-on'
+const dSwapOff = 'd-swap-off'
+
 export interface CheckboxSwapConfig {
   /** Content shown when checked */
   on: React.ReactNode
@@ -142,26 +163,26 @@ const CheckboxRoot = forwardRef<HTMLInputElement, CheckboxProps>(
     const groupContext = useContext(CheckboxGroupContext)
 
     const sizeClasses = {
-      xs: 'd-checkbox-xs',
-      sm: 'd-checkbox-sm',
-      md: 'd-checkbox-md',
-      lg: 'd-checkbox-lg',
-      xl: 'd-checkbox-xl',
+      xs: dCheckboxXs,
+      sm: dCheckboxSm,
+      md: dCheckboxMd,
+      lg: dCheckboxLg,
+      xl: dCheckboxXl,
     }
 
     const colorClasses = {
-      primary: 'd-checkbox-primary',
-      secondary: 'd-checkbox-secondary',
-      accent: 'd-checkbox-accent',
-      neutral: 'd-checkbox-neutral',
-      success: 'd-checkbox-success',
-      warning: 'd-checkbox-warning',
-      info: 'd-checkbox-info',
-      error: 'd-checkbox-error',
+      primary: dCheckboxPrimary,
+      secondary: dCheckboxSecondary,
+      accent: dCheckboxAccent,
+      neutral: dCheckboxNeutral,
+      success: dCheckboxSuccess,
+      warning: dCheckboxWarning,
+      info: dCheckboxInfo,
+      error: dCheckboxError,
     }
 
     const checkboxClasses = [
-      'd-checkbox',
+      dCheckbox,
       effectiveSize && sizeClasses[effectiveSize],
       color && colorClasses[color],
     ]
@@ -208,9 +229,9 @@ const CheckboxRoot = forwardRef<HTMLInputElement, CheckboxProps>(
     // Swap mode: render as a swap toggle instead of checkbox
     if (swap) {
       const swapClasses = [
-        'd-swap',
-        swap.effect === 'rotate' && 'd-swap-rotate',
-        swap.effect === 'flip' && 'd-swap-flip',
+        dSwap,
+        swap.effect === 'rotate' && dSwapRotate,
+        swap.effect === 'flip' && dSwapFlip,
         className,
       ]
         .filter(Boolean)
@@ -229,8 +250,8 @@ const CheckboxRoot = forwardRef<HTMLInputElement, CheckboxProps>(
             data-state={dataState}
             {...props}
           />
-          <div className="d-swap-on">{swap.on}</div>
-          <div className="d-swap-off">{swap.off}</div>
+          <div className={dSwapOn}>{swap.on}</div>
+          <div className={dSwapOff}>{swap.off}</div>
         </label>
       )
     }

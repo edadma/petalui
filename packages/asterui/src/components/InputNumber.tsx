@@ -1,6 +1,19 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dInput = 'input'
+const dInputXs = 'input-xs'
+const dInputSm = 'input-sm'
+const dInputMd = 'input-md'
+const dInputLg = 'input-lg'
+const dInputXl = 'input-xl'
+const dInputDisabled = 'input-disabled'
+const dBtn = 'btn'
+const dBtnXs = 'btn-xs'
+const dBtnSm = 'btn-sm'
+const dBtnGhost = 'btn-ghost'
+
 export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
   value?: number
   defaultValue?: number
@@ -130,24 +143,24 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     }
 
     const sizeClasses = {
-      xs: 'input-xs',
-      sm: 'input-sm',
-      md: 'input-md',
-      lg: 'input-lg',
-      xl: 'input-xl',
+      xs: dInputXs,
+      sm: dInputSm,
+      md: dInputMd,
+      lg: dInputLg,
+      xl: dInputXl,
     }
 
     const inputClasses = [
-      'input',
+      dInput,
       'w-full',
       effectiveSize && sizeClasses[effectiveSize],
-      disabled && 'input-disabled',
+      disabled && dInputDisabled,
       controls && 'pr-8',
     ]
       .filter(Boolean)
       .join(' ')
 
-    const buttonSize = effectiveSize === 'xs' || effectiveSize === 'sm' ? 'btn-xs' : 'btn-sm'
+    const buttonSize = effectiveSize === 'xs' || effectiveSize === 'sm' ? dBtnXs : dBtnSm
 
     return (
       <div className={`relative ${block ? 'w-full' : 'inline-block'} group ${className}`}>
@@ -172,7 +185,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             <button
               type="button"
               aria-label="Increase value"
-              className={`btn ${buttonSize} btn-ghost px-1 min-h-0 h-3.5`}
+              className={`${dBtn} ${buttonSize} ${dBtnGhost} px-1 min-h-0 h-3.5`}
               onClick={handleIncrement}
               disabled={disabled || (value !== null && value >= max)}
               tabIndex={-1}
@@ -195,7 +208,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             <button
               type="button"
               aria-label="Decrease value"
-              className={`btn ${buttonSize} btn-ghost px-1 min-h-0 h-3.5`}
+              className={`${dBtn} ${buttonSize} ${dBtnGhost} px-1 min-h-0 h-3.5`}
               onClick={handleDecrement}
               disabled={disabled || (value !== null && value <= min)}
               tabIndex={-1}

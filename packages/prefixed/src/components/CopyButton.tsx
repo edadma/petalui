@@ -3,6 +3,29 @@ import { useClipboard } from '../hooks/useClipboard'
 import { IconSizeContext } from '../contexts/IconSizeContext'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dBtn = 'd-btn'
+const dBtnPrimary = 'd-btn-primary'
+const dBtnSecondary = 'd-btn-secondary'
+const dBtnAccent = 'd-btn-accent'
+const dBtnInfo = 'd-btn-info'
+const dBtnSuccess = 'd-btn-success'
+const dBtnWarning = 'd-btn-warning'
+const dBtnError = 'd-btn-error'
+const dBtnNeutral = 'd-btn-neutral'
+const dBtnOutline = 'd-btn-outline'
+const dBtnDash = 'd-btn-dash'
+const dBtnSoft = 'd-btn-soft'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnLink = 'd-btn-link'
+const dBtnXs = 'd-btn-xs'
+const dBtnSm = 'd-btn-sm'
+const dBtnLg = 'd-btn-lg'
+const dBtnXl = 'd-btn-xl'
+const dBtnSquare = 'd-btn-square'
+const dBtnCircle = 'd-btn-circle'
+const dTooltip = 'd-tooltip'
+
 const iconSizeClasses = {
   xs: 'w-3.5 h-3.5',
   sm: 'w-3.5 h-3.5',
@@ -122,42 +145,42 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
   }
 
   const colorClasses = {
-    primary: 'd-btn-primary',
-    secondary: 'd-btn-secondary',
-    accent: 'd-btn-accent',
-    info: 'd-btn-info',
-    success: 'd-btn-success',
-    warning: 'd-btn-warning',
-    error: 'd-btn-error',
-    neutral: 'd-btn-neutral',
+    primary: dBtnPrimary,
+    secondary: dBtnSecondary,
+    accent: dBtnAccent,
+    info: dBtnInfo,
+    success: dBtnSuccess,
+    warning: dBtnWarning,
+    error: dBtnError,
+    neutral: dBtnNeutral,
   }
 
   const variantClasses = {
     solid: '',
-    outline: 'd-btn-outline',
-    dash: 'd-btn-dash',
-    soft: 'd-btn-soft',
-    ghost: 'd-btn-ghost',
-    link: 'd-btn-link',
+    outline: dBtnOutline,
+    dash: dBtnDash,
+    soft: dBtnSoft,
+    ghost: dBtnGhost,
+    link: dBtnLink,
   }
 
   const sizeClasses = {
-    xs: 'd-btn-xs',
-    sm: 'd-btn-sm',
+    xs: dBtnXs,
+    sm: dBtnSm,
     md: '',
-    lg: 'd-btn-lg',
-    xl: 'd-btn-xl',
+    lg: dBtnLg,
+    xl: dBtnXl,
   }
 
   const shapeClasses = {
-    square: 'd-btn-square',
-    circle: 'd-btn-circle',
+    square: dBtnSquare,
+    circle: dBtnCircle,
   }
 
   const classes = [
-    'd-btn',
+    dBtn,
     color && colorClasses[color],
-    copied && 'd-btn-success',
+    copied && dBtnSuccess,
     variant && variantClasses[variant],
     sizeClasses[effectiveSize],
     shape && shapeClasses[shape],
@@ -191,7 +214,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
   )
 
   if (showTooltip) {
-    const tooltipClasses = ['d-tooltip', position && positionClasses[position]].filter(Boolean).join(' ')
+    const tooltipClasses = [dTooltip, position && positionClasses[position]].filter(Boolean).join(' ')
     return (
       <div className={tooltipClasses} data-tip={copied ? copiedTooltipText : tooltipText}>
         {button}

@@ -1,6 +1,21 @@
 import React, { useState } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dRange = 'range'
+const dRangeXs = 'range-xs'
+const dRangeSm = 'range-sm'
+const dRangeMd = 'range-md'
+const dRangeLg = 'range-lg'
+const dRangeXl = 'range-xl'
+const dRangePrimary = 'range-primary'
+const dRangeSecondary = 'range-secondary'
+const dRangeAccent = 'range-accent'
+const dRangeSuccess = 'range-success'
+const dRangeWarning = 'range-warning'
+const dRangeInfo = 'range-info'
+const dRangeError = 'range-error'
+
 export interface RangeProps {
   value?: number
   defaultValue?: number
@@ -44,21 +59,21 @@ export const Range: React.FC<RangeProps> = ({
   }
 
   const sizeClasses = {
-    xs: 'range-xs',
-    sm: 'range-sm',
-    md: 'range-md',
-    lg: 'range-lg',
-    xl: 'range-xl',
+    xs: dRangeXs,
+    sm: dRangeSm,
+    md: dRangeMd,
+    lg: dRangeLg,
+    xl: dRangeXl,
   } as const
 
   const colorClasses = {
-    primary: 'range-primary',
-    secondary: 'range-secondary',
-    accent: 'range-accent',
-    success: 'range-success',
-    warning: 'range-warning',
-    info: 'range-info',
-    error: 'range-error',
+    primary: dRangePrimary,
+    secondary: dRangeSecondary,
+    accent: dRangeAccent,
+    success: dRangeSuccess,
+    warning: dRangeWarning,
+    info: dRangeInfo,
+    error: dRangeError,
   } as const
 
   const sizeClass = sizeClasses[effectiveSize]
@@ -79,7 +94,7 @@ export const Range: React.FC<RangeProps> = ({
         value={currentValue}
         onChange={handleChange}
         disabled={disabled}
-        className={`range ${sizeClass} ${colorClass}`}
+        className={`${dRange} ${sizeClass} ${colorClass}`}
       />
       {showSteps && steps.length > 0 && (
         <div className="w-full flex justify-between text-xs px-2 mt-2">

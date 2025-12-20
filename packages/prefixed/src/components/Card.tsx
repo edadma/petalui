@@ -1,5 +1,24 @@
 import React, { forwardRef } from 'react'
 
+// DaisyUI classes
+const dCard = 'd-card'
+const dCardXs = 'd-card-xs'
+const dCardSm = 'd-card-sm'
+const dCardMd = 'd-card-md'
+const dCardLg = 'd-card-lg'
+const dCardXl = 'd-card-xl'
+const dCardBorder = 'd-card-border'
+const dCardDash = 'd-card-dash'
+const dCardSide = 'd-card-side'
+const dCardBody = 'd-card-body'
+const dCardTitle = 'd-card-title'
+const dCardActions = 'd-card-actions'
+const dSkeleton = 'd-skeleton'
+const dTab = 'd-tab'
+const dTabActive = 'd-tab-active'
+const dTabDisabled = 'd-tab-disabled'
+const dTabs = 'd-tabs'
+
 export type CardSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type CardVariant = 'default' | 'border' | 'dash' | 'borderless'
 
@@ -59,17 +78,17 @@ export interface CardGridProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const sizeClasses: Record<CardSize, string> = {
-  xs: 'd-card-xs',
-  sm: 'd-card-sm',
-  md: 'd-card-md',
-  lg: 'd-card-lg',
-  xl: 'd-card-xl',
+  xs: dCardXs,
+  sm: dCardSm,
+  md: dCardMd,
+  lg: dCardLg,
+  xl: dCardXl,
 }
 
 const variantClasses: Record<CardVariant, string> = {
   default: 'shadow-sm',
-  border: 'd-card-border',
-  dash: 'd-card-dash',
+  border: dCardBorder,
+  dash: dCardDash,
   borderless: '',
 }
 
@@ -165,13 +184,13 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
     const resolvedVariant = variant ?? (bordered === false ? 'borderless' : 'default')
 
     const classes = [
-      'd-card',
+      dCard,
       'bg-base-100',
       size && sizeClasses[size],
       // Don't add variant styling when imageFull is used (it breaks the overlay effect)
       !imageFull && variantClasses[resolvedVariant],
-      side && 'd-card-side',
-      imageFull && 'd-image-full shadow-sm',
+      side && dCardSide,
+      imageFull && 'image-full shadow-sm',
       hoverable && 'transition-shadow hover:shadow-lg cursor-pointer',
       type === 'inner' && 'bg-base-200',
       className,
@@ -191,33 +210,33 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
         >
           {cover && (
             <figure>
-              <div className="d-skeleton h-48 w-full rounded-none" />
+              <div className={`${dSkeleton} h-48 w-full rounded-none`} />
             </figure>
           )}
-          <div className="d-card-body">
+          <div className={dCardBody}>
             {(avatar || title) && (
               <div className="flex gap-4 mb-4">
-                {avatar && <div className="d-skeleton w-12 h-12 rounded-full flex-shrink-0" />}
+                {avatar && <div className={`${dSkeleton} w-12 h-12 rounded-full flex-shrink-0`} />}
                 <div className="flex-1 space-y-2">
-                  <div className="d-skeleton h-6 w-2/3" />
-                  {description && <div className="d-skeleton h-4 w-full" />}
+                  <div className={`${dSkeleton} h-6 w-2/3`} />
+                  {description && <div className={`${dSkeleton} h-4 w-full`} />}
                 </div>
               </div>
             )}
             {!avatar && !title && (
               <>
-                <div className="d-skeleton h-6 w-2/3 mb-4" />
+                <div className={`${dSkeleton} h-6 w-2/3 mb-4`} />
                 <div className="space-y-2">
-                  <div className="d-skeleton h-4 w-full" />
-                  <div className="d-skeleton h-4 w-5/6" />
-                  <div className="d-skeleton h-4 w-4/6" />
+                  <div className={`${dSkeleton} h-4 w-full`} />
+                  <div className={`${dSkeleton} h-4 w-5/6`} />
+                  <div className={`${dSkeleton} h-4 w-4/6`} />
                 </div>
               </>
             )}
             {actions && (
-              <div className={`d-card-actions ${justifyClasses[actionsJustify]} mt-4`}>
-                <div className="d-skeleton h-10 w-20" />
-                <div className="d-skeleton h-10 w-20" />
+              <div className={`${dCardActions} ${justifyClasses[actionsJustify]} mt-4`}>
+                <div className={`${dSkeleton} h-10 w-20`} />
+                <div className={`${dSkeleton} h-10 w-20`} />
               </div>
             )}
           </div>
@@ -238,7 +257,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
             className="flex justify-between items-start gap-4"
             data-testid={`${baseTestId}-header`}
           >
-            {title && <h2 className="d-card-title">{title}</h2>}
+            {title && <h2 className={dCardTitle}>{title}</h2>}
             <div className="flex-shrink-0" data-testid={`${baseTestId}-extra`}>
               {extra}
             </div>
@@ -246,7 +265,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
         )
       }
 
-      return title ? <h2 className="d-card-title">{title}</h2> : null
+      return title ? <h2 className={dCardTitle}>{title}</h2> : null
     }
 
     // Render tabs
@@ -259,15 +278,15 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
           data-testid={`${baseTestId}-tabs`}
         >
           <div className="flex items-center justify-between">
-            <div role="tablist" className="d-tabs">
+            <div role="tablist" className={dTabs}>
               {tabList.map((tab) => (
                 <button
                   key={tab.key}
                   role="tab"
                   className={[
-                    'd-tab',
-                    currentTabKey === tab.key && 'd-tab-active',
-                    tab.disabled && 'd-tab-disabled',
+                    dTab,
+                    currentTabKey === tab.key && dTabActive,
+                    tab.disabled && dTabDisabled,
                   ]
                     .filter(Boolean)
                     .join(' ')}
@@ -299,7 +318,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
           <figure data-testid={`${baseTestId}-cover`}>{cover}</figure>
         )}
         {renderTabs()}
-        <div className={`d-card-body ${bodyClassName || ''}`} data-testid={`${baseTestId}-body`}>
+        <div className={`${dCardBody} ${bodyClassName || ''}`} data-testid={`${baseTestId}-body`}>
           {hasMetaLayout ? (
             <>
               <div className="flex gap-4">
@@ -319,7 +338,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
           )}
           {actions && (
             <div
-              className={`d-card-actions ${justifyClasses[actionsJustify]}`}
+              className={`${dCardActions} ${justifyClasses[actionsJustify]}`}
               data-testid={`${baseTestId}-actions`}
             >
               {actions}

@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useCallback, createContext, useContext, useRef } from 'react'
 
+// DaisyUI classes
+const dTextPrimary = 'text-primary'
+const dBorderPrimary = 'border-primary'
+const dTextBaseContent = 'text-base-content'
+const dHoverTextBaseContent = 'hover:text-base-content'
+const dHoverBorderBaseContent = 'hover:border-base-content'
+const dBgBase100 = 'bg-base-100'
+
 export interface AnchorLinkItem {
   /** Target element id (without #) */
   href: string
@@ -95,8 +103,8 @@ const AnchorLink: React.FC<AnchorLinkProps> = ({
           block text-sm transition-colors
           ${isVertical ? 'py-1 pl-3 border-l-2' : 'px-3 py-1 border-b-2'}
           ${isActive
-            ? 'text-primary border-primary font-medium'
-            : 'text-base-content/70 border-transparent hover:text-base-content hover:border-base-content/30'
+            ? `${dTextPrimary} ${dBorderPrimary} font-medium`
+            : `${dTextBaseContent}/70 border-transparent ${dHoverTextBaseContent} ${dHoverBorderBaseContent}/30`
           }
           ${className}
         `.trim()}
@@ -296,7 +304,7 @@ const AnchorComponent: React.FC<AnchorProps> = ({
       ref={anchorRef}
       className={`
         ${direction === 'horizontal' ? 'flex items-center' : 'flex flex-col'}
-        ${isAffixed ? 'fixed bg-base-100 shadow-sm z-10' : ''}
+        ${isAffixed ? `fixed ${dBgBase100} shadow-sm z-10` : ''}
         ${className}
       `.trim()}
       style={isAffixed ? { top: affixOffsetTop } : undefined}

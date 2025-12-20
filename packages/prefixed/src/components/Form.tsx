@@ -2,6 +2,20 @@ import React, { createContext, useContext, cloneElement, isValidElement, useId, 
 import { useForm, UseFormReturn, FieldValues, SubmitHandler, UseFormProps, Controller, useFieldArray, FieldArrayPath, FieldArray, useWatch } from 'react-hook-form'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dInput = 'd-input'
+const dInputXs = 'd-input-xs'
+const dInputSm = 'd-input-sm'
+const dInputMd = 'd-input-md'
+const dInputLg = 'd-input-lg'
+const dInputXl = 'd-input-xl'
+const dFloatingLabel = 'd-floating-label'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingXs = 'd-loading-xs'
+const dTooltip = 'd-tooltip'
+const dTooltipTop = 'd-tooltip-top'
+
 interface FormContextValue {
   form: UseFormReturn<any>
   layout?: 'vertical' | 'horizontal' | 'inline'
@@ -373,7 +387,7 @@ function FormItem({
   const FeedbackIcon = ({ hasError, isValidating }: { hasError: boolean; isValidating: boolean }) => {
     if (isValidating) {
       return (
-        <span className="d-loading d-loading-spinner d-loading-xs text-base-content/50" />
+        <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs} text-base-content/50`} />
       )
     }
     if (hasError) {
@@ -392,7 +406,7 @@ function FormItem({
 
   // Tooltip icon
   const TooltipIcon = () => (
-    <div className="d-tooltip d-tooltip-top ml-1" data-tip={tooltip}>
+    <div className={`${dTooltip} ${dTooltipTop} ml-1`} data-tip={tooltip}>
       <svg className="w-4 h-4 text-base-content/50 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
@@ -483,11 +497,11 @@ function FormItem({
 
         // Size class for floating label
         const floatingSizeClasses: Record<string, string> = {
-          xs: 'd-input-xs',
-          sm: 'd-input-sm',
-          md: 'd-input-md',
-          lg: 'd-input-lg',
-          xl: 'd-input-xl',
+          xs: dInputXs,
+          sm: dInputSm,
+          md: dInputMd,
+          lg: dInputLg,
+          xl: dInputXl,
         }
 
         // Build the input element with optional floating label wrapper
@@ -506,7 +520,7 @@ function FormItem({
           // Floating label variant
           if (floatingLabel) {
             const floatingClasses = [
-              'd-floating-label',
+              dFloatingLabel,
               size && floatingSizeClasses[size],
             ].filter(Boolean).join(' ')
 
@@ -526,7 +540,7 @@ function FormItem({
           if (!addonBefore && !addonAfter) return input
 
           const addonClasses = [
-            'd-input',
+            dInput,
             'flex',
             'items-center',
             'gap-2',
@@ -561,12 +575,12 @@ function FormItem({
               {renderWithAddons(renderInputElement())}
             </div>
             {!isHorizontal && !inline && (
-              <p id={errorId} className={`d-validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
+              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
                 {errorMessage || (help && <span className="text-base-content/70">{help}</span>) || '\u00A0'}
               </p>
             )}
             {isHorizontal && (errorMessage || help) && (
-              <p id={errorId} className={`d-validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
+              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
                 {errorMessage || (help && <span className="text-base-content/70">{help}</span>)}
               </p>
             )}

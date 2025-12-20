@@ -1,6 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dCountdown = 'countdown'
+const dCssValue = '--value'
+const dCssDigits = '--digits'
+
 export interface CountdownProps {
   /** Target timestamp in milliseconds or Date object */
   value: number | Date
@@ -65,9 +70,9 @@ const CountdownUnit: React.FC<{
   }
 
   const content = (
-    <span className={`countdown font-mono ${sizeClasses[size || 'md']}`}>
+    <span className={`${dCountdown} font-mono ${sizeClasses[size || 'md']}`}>
       <span
-        style={{ '--value': value, '--digits': 2 } as React.CSSProperties}
+        style={{ [dCssValue]: value, [dCssDigits]: 2 } as React.CSSProperties}
         aria-live="polite"
         aria-label={String(value)}
       >

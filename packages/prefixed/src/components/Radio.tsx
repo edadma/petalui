@@ -1,6 +1,22 @@
 import React, { forwardRef, createContext, useContext } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dRadio = 'd-radio'
+const dRadioXs = 'd-radio-xs'
+const dRadioSm = 'd-radio-sm'
+const dRadioMd = 'd-radio-md'
+const dRadioLg = 'd-radio-lg'
+const dRadioXl = 'd-radio-xl'
+const dRadioNeutral = 'd-radio-neutral'
+const dRadioPrimary = 'd-radio-primary'
+const dRadioSecondary = 'd-radio-secondary'
+const dRadioAccent = 'd-radio-accent'
+const dRadioInfo = 'd-radio-info'
+const dRadioSuccess = 'd-radio-success'
+const dRadioWarning = 'd-radio-warning'
+const dRadioError = 'd-radio-error'
+
 export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
@@ -57,25 +73,25 @@ const RadioRoot = forwardRef<HTMLInputElement, RadioProps>(
     const groupContext = useContext(RadioGroupContext)
 
     const sizeClasses = {
-      xs: 'd-radio-xs',
-      sm: 'd-radio-sm',
-      md: 'd-radio-md',
-      lg: 'd-radio-lg',
-      xl: 'd-radio-xl',
+      xs: dRadioXs,
+      sm: dRadioSm,
+      md: dRadioMd,
+      lg: dRadioLg,
+      xl: dRadioXl,
     }
 
     const colorClasses = {
-      neutral: 'd-radio-neutral',
-      primary: 'd-radio-primary',
-      secondary: 'd-radio-secondary',
-      accent: 'd-radio-accent',
-      info: 'd-radio-info',
-      success: 'd-radio-success',
-      warning: 'd-radio-warning',
-      error: 'd-radio-error',
+      neutral: dRadioNeutral,
+      primary: dRadioPrimary,
+      secondary: dRadioSecondary,
+      accent: dRadioAccent,
+      info: dRadioInfo,
+      success: dRadioSuccess,
+      warning: dRadioWarning,
+      error: dRadioError,
     }
 
-    const radioClasses = ['d-radio', effectiveSize && sizeClasses[effectiveSize], color && colorClasses[color]]
+    const radioClasses = [dRadio, effectiveSize && sizeClasses[effectiveSize], color && colorClasses[color]]
       .filter(Boolean)
       .join(' ')
 

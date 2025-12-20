@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, forwardRef } from 'react'
 
+// DaisyUI classes
+const dBgBase100 = 'd-bg-base-100'
+const dBgBase200 = 'd-bg-base-200'
+const dBgBase300 = 'd-bg-base-300'
+
 export type SiderTheme = 'light' | 'dark'
 export type SiderCollapsedType = 'clickTrigger' | 'responsive'
 
@@ -126,7 +131,7 @@ const LayoutHeader = forwardRef<HTMLElement, LayoutHeaderProps>(
       'items-center',
       'px-6',
       'h-16',
-      'bg-base-300',
+      dBgBase300,
       'flex-shrink-0',
       className,
     ]
@@ -149,7 +154,7 @@ const LayoutFooter = forwardRef<HTMLElement, LayoutFooterProps>(
       'px-6',
       'py-4',
       'text-center',
-      'bg-base-300',
+      dBgBase300,
       'flex-shrink-0',
       className,
     ]
@@ -257,8 +262,8 @@ const LayoutSider = forwardRef<HTMLElement, LayoutSiderProps>(
     const isZeroWidth = currentWidth === 0 || currentWidth === '0' || currentWidth === '0px'
 
     const themeClasses: Record<SiderTheme, string> = {
-      light: 'bg-base-100',
-      dark: 'bg-base-200',
+      light: dBgBase100,
+      dark: dBgBase200,
     }
 
     const siderClasses = [
@@ -285,7 +290,7 @@ const LayoutSider = forwardRef<HTMLElement, LayoutSiderProps>(
     const defaultTrigger = collapsible && trigger !== null && (
       <button
         onClick={handleCollapse}
-        className="flex items-center justify-center h-10 w-full bg-base-300 hover:bg-base-content/10 transition-colors"
+        className={`flex items-center justify-center h-10 w-full ${dBgBase300} hover:bg-base-content/10 transition-colors`}
         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         data-testid={testId ? `${testId}-trigger` : undefined}
       >
@@ -304,7 +309,7 @@ const LayoutSider = forwardRef<HTMLElement, LayoutSiderProps>(
     const zeroWidthTrigger = collapsible && isZeroWidth && collapsed && (
       <button
         onClick={handleCollapse}
-        className="absolute top-1/2 -translate-y-1/2 right-0 translate-x-full w-6 h-12 flex items-center justify-center bg-base-300 hover:bg-base-content/10 transition-colors rounded-r z-10"
+        className={`absolute top-1/2 -translate-y-1/2 right-0 translate-x-full w-6 h-12 flex items-center justify-center ${dBgBase300} hover:bg-base-content/10 transition-colors rounded-r z-10`}
         aria-label="Expand sidebar"
         style={zeroWidthTriggerStyle}
         data-testid={testId ? `${testId}-zero-trigger` : undefined}

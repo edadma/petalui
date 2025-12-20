@@ -1,5 +1,19 @@
 import React from 'react'
 
+// DaisyUI classes
+const dDivider = 'divider'
+const dDividerHorizontal = 'divider-horizontal'
+const dDividerStart = 'divider-start'
+const dDividerEnd = 'divider-end'
+const dDividerNeutral = 'divider-neutral'
+const dDividerPrimary = 'divider-primary'
+const dDividerSecondary = 'divider-secondary'
+const dDividerAccent = 'divider-accent'
+const dDividerSuccess = 'divider-success'
+const dDividerWarning = 'divider-warning'
+const dDividerInfo = 'divider-info'
+const dDividerError = 'divider-error'
+
 export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode
   orientation?: 'horizontal' | 'vertical'
@@ -16,25 +30,25 @@ export function Divider({
   ...rest
 }: DividerProps) {
   const positionClasses: Record<string, string> = {
-    start: 'divider-start',
+    start: dDividerStart,
     center: '',
-    end: 'divider-end',
+    end: dDividerEnd,
   }
 
   const typeClasses: Record<string, string> = {
-    neutral: 'divider-neutral',
-    primary: 'divider-primary',
-    secondary: 'divider-secondary',
-    accent: 'divider-accent',
-    success: 'divider-success',
-    warning: 'divider-warning',
-    info: 'divider-info',
-    error: 'divider-error',
+    neutral: dDividerNeutral,
+    primary: dDividerPrimary,
+    secondary: dDividerSecondary,
+    accent: dDividerAccent,
+    success: dDividerSuccess,
+    warning: dDividerWarning,
+    info: dDividerInfo,
+    error: dDividerError,
   }
 
   const classes = [
-    'divider',
-    orientation === 'vertical' && 'divider-horizontal',
+    dDivider,
+    orientation === 'vertical' && dDividerHorizontal,
     positionClasses[position],
     type && typeClasses[type],
     className,

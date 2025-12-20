@@ -1,6 +1,14 @@
 import React, { useEffect, useRef } from 'react'
 import QRCodeLib from 'qrcode'
 
+// DaisyUI classes
+const dLoading = 'loading'
+const dLoadingSpinner = 'loading-spinner'
+const dLoadingLg = 'loading-lg'
+const dBtn = 'btn'
+const dBtnSm = 'btn-sm'
+const dBtnPrimary = 'btn-primary'
+
 export type QRCodeErrorLevel = 'L' | 'M' | 'Q' | 'H'
 export type QRCodeType = 'canvas' | 'svg'
 export type QRCodeStatus = 'active' | 'loading' | 'expired'
@@ -93,7 +101,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
     return (
       <div className={containerClasses} style={{ width: size + (bordered ? 24 : 0), height: size + (bordered ? 24 : 0) }} data-state="loading" {...rest}>
         <div className="flex flex-col items-center justify-center gap-2">
-          <span className="loading loading-spinner loading-lg"></span>
+          <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingLg}`}></span>
           <span className="text-sm text-base-content/70">Loading...</span>
         </div>
       </div>
@@ -113,7 +121,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
           </svg>
           <span className="text-sm text-base-content/70">QR Code Expired</span>
           {onRefresh && (
-            <button className="btn btn-sm btn-primary" onClick={onRefresh}>
+            <button className={`${dBtn} ${dBtnSm} ${dBtnPrimary}`} onClick={onRefresh}>
               Refresh
             </button>
           )}

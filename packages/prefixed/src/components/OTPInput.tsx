@@ -1,6 +1,14 @@
 import React, { useRef, useState, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dInput = 'd-input'
+const dInputXs = 'd-input-xs'
+const dInputSm = 'd-input-sm'
+const dInputLg = 'd-input-lg'
+const dInputError = 'd-input-error'
+const dInputDisabled = 'd-input-disabled'
+
 export interface OTPInputProps {
   /** Number of input fields */
   length?: number
@@ -61,10 +69,10 @@ export const OTPInput = forwardRef<OTPInputRef, OTPInputProps>(
     const inputRefs = useRef<(HTMLInputElement | null)[]>([])
 
     const sizeClasses = {
-      xs: 'd-input-xs w-8 h-8 text-sm',
-      sm: 'd-input-sm w-10 h-10 text-base',
+      xs: `${dInputXs} w-8 h-8 text-sm`,
+      sm: `${dInputSm} w-10 h-10 text-base`,
       md: 'w-12 h-12 text-lg',
-      lg: 'd-input-lg w-14 h-14 text-xl',
+      lg: `${dInputLg} w-14 h-14 text-xl`,
       xl: 'w-16 h-16 text-2xl',
     }
 
@@ -213,10 +221,10 @@ export const OTPInput = forwardRef<OTPInputRef, OTPInputProps>(
             onPaste={handlePaste}
             onFocus={handleFocus}
             className={`
-              d-input text-center font-mono
+              ${dInput} text-center font-mono
               ${sizeClasses[effectiveSize]}
-              ${error ? 'd-input-error' : ''}
-              ${disabled ? 'd-input-disabled opacity-50' : ''}
+              ${error ? dInputError : ''}
+              ${disabled ? `${dInputDisabled} opacity-50` : ''}
             `}
             aria-label={`OTP digit ${index + 1}`}
           />

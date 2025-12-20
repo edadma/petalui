@@ -1,6 +1,25 @@
 import React, { useEffect, useRef, useId } from 'react'
 import { createRoot } from 'react-dom/client'
 
+// DaisyUI classes
+const dModal = 'd-modal'
+const dModalTop = 'd-modal-top'
+const dModalMiddle = 'd-modal-middle'
+const dModalBottom = 'd-modal-bottom'
+const dModalStart = 'd-modal-start'
+const dModalEnd = 'd-modal-end'
+const dModalBox = 'd-modal-box'
+const dModalAction = 'd-modal-action'
+const dModalBackdrop = 'd-modal-backdrop'
+const dBtn = 'd-btn'
+const dBtnPrimary = 'd-btn-primary'
+const dBtnError = 'd-btn-error'
+const dAlert = 'd-alert'
+const dAlertInfo = 'd-alert-info'
+const dAlertSuccess = 'd-alert-success'
+const dAlertWarning = 'd-alert-warning'
+const dAlertError = 'd-alert-error'
+
 export type ModalPosition = 'top' | 'middle' | 'bottom'
 export type ModalAlign = 'start' | 'end'
 export type Breakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl' | '2xl'
@@ -128,48 +147,48 @@ export function Modal({
 
   // Static class mappings for positions (no interpolation per qa.md)
   const positionClasses: Record<ModalPosition, string> = {
-    top: 'd-modal-top',
-    middle: 'd-modal-middle',
-    bottom: 'd-modal-bottom',
+    top: dModalTop,
+    middle: dModalMiddle,
+    bottom: dModalBottom,
   }
 
   // Responsive position class mappings for each breakpoint
   const responsivePositionClasses: Record<Breakpoint, Record<ModalPosition, string>> = {
     base: {
-      top: 'd-modal-top',
-      middle: 'd-modal-middle',
-      bottom: 'd-modal-bottom',
+      top: dModalTop,
+      middle: dModalMiddle,
+      bottom: dModalBottom,
     },
     sm: {
-      top: 'sm:d-modal-top',
-      middle: 'sm:d-modal-middle',
-      bottom: 'sm:d-modal-bottom',
+      top: 'sm:modal-top',
+      middle: 'sm:modal-middle',
+      bottom: 'sm:modal-bottom',
     },
     md: {
-      top: 'md:d-modal-top',
-      middle: 'md:d-modal-middle',
-      bottom: 'md:d-modal-bottom',
+      top: 'md:modal-top',
+      middle: 'md:modal-middle',
+      bottom: 'md:modal-bottom',
     },
     lg: {
-      top: 'lg:d-modal-top',
-      middle: 'lg:d-modal-middle',
-      bottom: 'lg:d-modal-bottom',
+      top: 'lg:modal-top',
+      middle: 'lg:modal-middle',
+      bottom: 'lg:modal-bottom',
     },
     xl: {
-      top: 'xl:d-modal-top',
-      middle: 'xl:d-modal-middle',
-      bottom: 'xl:d-modal-bottom',
+      top: 'xl:modal-top',
+      middle: 'xl:modal-middle',
+      bottom: 'xl:modal-bottom',
     },
     '2xl': {
-      top: '2xl:d-modal-top',
-      middle: '2xl:d-modal-middle',
-      bottom: '2xl:d-modal-bottom',
+      top: '2xl:modal-top',
+      middle: '2xl:modal-middle',
+      bottom: '2xl:modal-bottom',
     },
   }
 
   const alignClasses: Record<ModalAlign, string> = {
-    start: 'd-modal-start',
-    end: 'd-modal-end',
+    start: dModalStart,
+    end: dModalEnd,
   }
 
   // Build position classes - handle both simple and responsive values
@@ -199,7 +218,7 @@ export function Modal({
   }
 
   const classes = [
-    'd-modal',
+    dModal,
     ...getPositionClasses(),
     align && alignClasses[align],
     className,
@@ -246,7 +265,7 @@ export function Modal({
       aria-describedby={contentId}
       {...rest}
     >
-      <div className="d-modal-box" style={modalBoxStyle}>
+      <div className={dModalBox} style={modalBoxStyle}>
         {title && (
           <h3 id={titleId} className="text-lg font-bold mb-4">
             {title}
@@ -256,16 +275,16 @@ export function Modal({
           {children}
         </div>
         {shouldRenderDefaultFooter && (
-          <div className="d-modal-action">
+          <div className={dModalAction}>
             {onCancel && (
-              <button ref={cancelButtonRef} className="d-btn" onClick={onCancel}>
+              <button ref={cancelButtonRef} className={dBtn} onClick={onCancel}>
                 {cancelText}
               </button>
             )}
             {onOk && (
               <button
                 ref={okButtonRef}
-                className={`d-btn d-btn-primary ${loading ? 'd-loading' : ''}`}
+                className={`${dBtn} ${dBtnPrimary} ${loading ? 'loading' : ''}`}
                 onClick={handleOk}
                 disabled={loading}
                 aria-busy={loading || undefined}
@@ -275,10 +294,10 @@ export function Modal({
             )}
           </div>
         )}
-        {shouldRenderCustomFooter && <div className="d-modal-action">{footer}</div>}
+        {shouldRenderCustomFooter && <div className={dModalAction}>{footer}</div>}
       </div>
       {closable && maskClosable && (
-        <form method="dialog" className="d-modal-backdrop">
+        <form method="dialog" className={dModalBackdrop}>
           <button ref={closeButtonRef} onClick={handleBackdropClick}>
             <span className="sr-only">Close modal</span>
           </button>
@@ -331,14 +350,14 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
     const getAlertClass = () => {
       switch (config.type) {
         case 'success':
-          return 'd-alert-success'
+          return dAlertSuccess
         case 'warning':
-          return 'd-alert-warning'
+          return dAlertWarning
         case 'error':
-          return 'd-alert-error'
+          return dAlertError
         case 'info':
         default:
-          return 'd-alert-info'
+          return dAlertInfo
       }
     }
 
@@ -427,7 +446,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
         alertDialog={isAlert}
         title={
           config.type ? (
-            <div className={`alert ${getAlertClass()}`}>
+            <div className={`${dAlert} ${getAlertClass()}`}>
               {getIcon()}
               <div>
                 {config.title && <h3 className="font-bold">{config.title}</h3>}
@@ -442,11 +461,11 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
         footer={
           config.showCancel ? (
             <>
-              <button className="d-btn" onClick={handleCancel}>
+              <button className={dBtn} onClick={handleCancel}>
                 {config.cancelText || 'Cancel'}
               </button>
               <button
-                className={`d-btn ${config.type === 'error' ? 'd-btn-error' : 'd-btn-primary'} ${loading ? 'd-loading' : ''}`}
+                className={`${dBtn} ${config.type === 'error' ? dBtnError : dBtnPrimary} ${loading ? 'loading' : ''}`}
                 onClick={handleOk}
                 disabled={loading}
               >
@@ -455,7 +474,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
             </>
           ) : (
             <button
-              className={`d-btn ${config.type === 'error' ? 'd-btn-error' : 'd-btn-primary'} ${loading ? 'd-loading' : ''}`}
+              className={`${dBtn} ${config.type === 'error' ? dBtnError : dBtnPrimary} ${loading ? 'loading' : ''}`}
               onClick={handleOk}
               disabled={loading}
             >

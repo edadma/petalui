@@ -1,5 +1,8 @@
 import React from 'react'
 
+// DaisyUI classes
+const dMockupWindow = 'd-mockup-window'
+
 export interface WindowProps {
   children: React.ReactNode
   className?: string
@@ -12,7 +15,7 @@ export const Window: React.FC<WindowProps> = ({
   contentClassName = '',
 }) => {
   return (
-    <div className={`d-mockup-window border border-base-300 ${className}`}>
+    <div className={`${dMockupWindow} border border-base-300 ${className}`}>
       <div className={`border-t border-base-300 ${contentClassName}`}>
         {children}
       </div>

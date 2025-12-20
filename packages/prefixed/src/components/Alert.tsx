@@ -1,5 +1,16 @@
 import React from 'react'
 
+// DaisyUI classes
+const dAlert = 'd-alert'
+const dAlertInfo = 'd-alert-info'
+const dAlertSuccess = 'd-alert-success'
+const dAlertWarning = 'd-alert-warning'
+const dAlertError = 'd-alert-error'
+const dAlertOutline = 'd-alert-outline'
+const dAlertDash = 'd-alert-dash'
+const dAlertSoft = 'd-alert-soft'
+const dAlertVertical = 'd-alert-vertical'
+
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   type?: 'info' | 'success' | 'warning' | 'error'
@@ -20,19 +31,19 @@ export const Alert: React.FC<AlertProps> = ({
   ...rest
 }) => {
   const typeClasses = {
-    info: 'd-alert-info',
-    success: 'd-alert-success',
-    warning: 'd-alert-warning',
-    error: 'd-alert-error',
+    info: dAlertInfo,
+    success: dAlertSuccess,
+    warning: dAlertWarning,
+    error: dAlertError,
   }
 
   const classes = [
-    'd-alert',
+    dAlert,
     type && typeClasses[type],
-    outline && 'd-alert-outline',
-    dash && 'd-alert-dash',
-    soft && 'd-alert-soft',
-    vertical && 'd-alert-vertical',
+    outline && dAlertOutline,
+    dash && dAlertDash,
+    soft && dAlertSoft,
+    vertical && dAlertVertical,
     className,
   ]
     .filter(Boolean)

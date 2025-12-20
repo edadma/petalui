@@ -1,6 +1,16 @@
 import React, { forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dDock = 'd-dock'
+const dDockXs = 'd-dock-xs'
+const dDockSm = 'd-dock-sm'
+const dDockMd = 'd-dock-md'
+const dDockLg = 'd-dock-lg'
+const dDockXl = 'd-dock-xl'
+const dDockActive = 'd-dock-active'
+const dDockLabel = 'd-dock-label'
+
 export interface DockItemConfig {
   /** Icon element */
   icon: React.ReactNode
@@ -40,7 +50,7 @@ export interface DockItemProps extends React.ButtonHTMLAttributes<HTMLButtonElem
 
 const DockItem = forwardRef<HTMLButtonElement, DockItemProps>(
   ({ active, children, className = '', ...props }, ref) => {
-    const classes = [active && 'd-dock-active', className].filter(Boolean).join(' ')
+    const classes = [active && dDockActive, className].filter(Boolean).join(' ')
 
     return (
       <button ref={ref} className={classes || undefined} {...props}>
@@ -58,14 +68,14 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const sizeClasses = {
-      xs: 'd-dock-xs',
-      sm: 'd-dock-sm',
-      md: 'd-dock-md',
-      lg: 'd-dock-lg',
-      xl: 'd-dock-xl',
+      xs: dDockXs,
+      sm: dDockSm,
+      md: dDockMd,
+      lg: dDockLg,
+      xl: dDockXl,
     }
 
-    const classes = ['d-dock', sizeClasses[effectiveSize], className].filter(Boolean).join(' ')
+    const classes = [dDock, sizeClasses[effectiveSize], className].filter(Boolean).join(' ')
 
     // If items array is provided, render from config
     if (items) {
@@ -77,7 +87,7 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
             return (
               <button
                 key={index}
-                className={isActive ? 'd-dock-active' : undefined}
+                className={isActive ? dDockActive : undefined}
                 disabled={item.disabled}
                 onClick={() => {
                   item.onClick?.()
@@ -85,7 +95,7 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
                 }}
               >
                 {item.icon}
-                {item.label && <span className="d-dock-label">{item.label}</span>}
+                {item.label && <span className={dDockLabel}>{item.label}</span>}
               </button>
             )
           })}

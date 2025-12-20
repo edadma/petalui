@@ -1,6 +1,17 @@
 import React, { forwardRef, useMemo } from 'react'
 import { Loading } from './Loading'
 
+// DaisyUI classes
+const dTimeline = 'd-timeline'
+const dTimelineVertical = 'd-timeline-vertical'
+const dTimelineHorizontal = 'd-timeline-horizontal'
+const dTimelineCompact = 'd-timeline-compact'
+const dTimelineSnapIcon = 'd-timeline-snap-icon'
+const dTimelineStart = 'd-timeline-start'
+const dTimelineEnd = 'd-timeline-end'
+const dTimelineMiddle = 'd-timeline-middle'
+const dTimelineBox = 'd-timeline-box'
+
 export type TimelineMode = 'start' | 'alternate' | 'end'
 export type TimelineColor = 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'neutral'
 
@@ -128,9 +139,9 @@ const TimelineItem = forwardRef<HTMLLIElement, TimelineItemInternalProps>(
   ) => {
     const itemTestId = testId ?? (_baseTestId ? `${_baseTestId}-item-${_index}` : undefined)
 
-    const startClasses = ['d-timeline-start', startBox && 'd-timeline-box'].filter(Boolean).join(' ')
-    const endClasses = ['d-timeline-end', endBox && 'd-timeline-box'].filter(Boolean).join(' ')
-    const middleClasses = ['d-timeline-middle', color && colorClasses[color]].filter(Boolean).join(' ')
+    const startClasses = [dTimelineStart, startBox && dTimelineBox].filter(Boolean).join(' ')
+    const endClasses = [dTimelineEnd, endBox && dTimelineBox].filter(Boolean).join(' ')
+    const middleClasses = [dTimelineMiddle, color && colorClasses[color]].filter(Boolean).join(' ')
     const hrClasses = color ? hrColorClasses[color] : undefined
 
     const isFirst = _index === 0
@@ -223,11 +234,11 @@ const TimelineRoot = forwardRef<HTMLUListElement, TimelineProps>(
     ref
   ) => {
     const classes = [
-      'd-timeline',
-      vertical && 'd-timeline-vertical',
-      horizontal && 'd-timeline-horizontal',
-      compact && 'd-timeline-compact',
-      snapIcon && 'd-timeline-snap-icon',
+      dTimeline,
+      vertical && dTimelineVertical,
+      horizontal && dTimelineHorizontal,
+      compact && dTimelineCompact,
+      snapIcon && dTimelineSnapIcon,
       className,
     ]
       .filter(Boolean)

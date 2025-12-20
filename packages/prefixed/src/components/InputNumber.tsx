@@ -1,6 +1,19 @@
 import React, { useState, useRef, forwardRef, useImperativeHandle } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dInput = 'd-input'
+const dInputXs = 'd-input-xs'
+const dInputSm = 'd-input-sm'
+const dInputMd = 'd-input-md'
+const dInputLg = 'd-input-lg'
+const dInputXl = 'd-input-xl'
+const dInputDisabled = 'd-input-disabled'
+const dBtn = 'd-btn'
+const dBtnXs = 'd-btn-xs'
+const dBtnSm = 'd-btn-sm'
+const dBtnGhost = 'd-btn-ghost'
+
 export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange' | 'value' | 'defaultValue'> {
   value?: number
   defaultValue?: number
@@ -130,24 +143,24 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     }
 
     const sizeClasses = {
-      xs: 'd-input-xs',
-      sm: 'd-input-sm',
-      md: 'd-input-md',
-      lg: 'd-input-lg',
-      xl: 'd-input-xl',
+      xs: dInputXs,
+      sm: dInputSm,
+      md: dInputMd,
+      lg: dInputLg,
+      xl: dInputXl,
     }
 
     const inputClasses = [
-      'd-input',
+      dInput,
       'w-full',
       effectiveSize && sizeClasses[effectiveSize],
-      disabled && 'd-input-disabled',
+      disabled && dInputDisabled,
       controls && 'pr-8',
     ]
       .filter(Boolean)
       .join(' ')
 
-    const buttonSize = effectiveSize === 'xs' || effectiveSize === 'sm' ? 'd-btn-xs' : 'd-btn-sm'
+    const buttonSize = effectiveSize === 'xs' || effectiveSize === 'sm' ? dBtnXs : dBtnSm
 
     return (
       <div className={`relative ${block ? 'w-full' : 'inline-block'} group ${className}`}>
@@ -172,7 +185,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             <button
               type="button"
               aria-label="Increase value"
-              className={`d-btn ${buttonSize} d-btn-ghost px-1 min-h-0 h-3.5`}
+              className={`${dBtn} ${buttonSize} ${dBtnGhost} px-1 min-h-0 h-3.5`}
               onClick={handleIncrement}
               disabled={disabled || (value !== null && value >= max)}
               tabIndex={-1}
@@ -195,7 +208,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
             <button
               type="button"
               aria-label="Decrease value"
-              className={`d-btn ${buttonSize} d-btn-ghost px-1 min-h-0 h-3.5`}
+              className={`${dBtn} ${buttonSize} ${dBtnGhost} px-1 min-h-0 h-3.5`}
               onClick={handleDecrement}
               disabled={disabled || (value !== null && value <= min)}
               tabIndex={-1}

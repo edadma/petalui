@@ -1,5 +1,43 @@
 import React, { useState, forwardRef, useMemo, useCallback, useId } from 'react'
 
+// DaisyUI classes
+const dTable = 'd-table'
+const dTableXs = 'd-table-xs'
+const dTableSm = 'd-table-sm'
+const dTableLg = 'd-table-lg'
+const dTableXl = 'd-table-xl'
+const dTableZebra = 'd-table-zebra'
+const dTablePinRows = 'd-table-pin-rows'
+const dTablePinCols = 'd-table-pin-cols'
+const dDropdown = 'd-dropdown'
+const dDropdownEnd = 'd-dropdown-end'
+const dDropdownContent = 'd-dropdown-content'
+const dBtn = 'd-btn'
+const dBtnGhost = 'd-btn-ghost'
+const dBtnXs = 'd-btn-xs'
+const dBtnSm = 'd-btn-sm'
+const dBtnSquare = 'd-btn-square'
+const dBtnActive = 'd-btn-active'
+const dMenu = 'd-menu'
+const dCheckbox = 'd-checkbox'
+const dCheckboxXs = 'd-checkbox-xs'
+const dCheckboxPrimary = 'd-checkbox-primary'
+const dRadio = 'd-radio'
+const dRadioSm = 'd-radio-sm'
+const dRadioPrimary = 'd-radio-primary'
+const dDivider = 'd-divider'
+const dLoading = 'd-loading'
+const dLoadingSpinner = 'd-loading-spinner'
+const dLoadingLg = 'd-loading-lg'
+const dJoin = 'd-join'
+const dJoinItem = 'd-join-item'
+const dSelect = 'd-select'
+const dSelectSm = 'd-select-sm'
+const dSelectBordered = 'd-select-bordered'
+const dInput = 'd-input'
+const dInputSm = 'd-input-sm'
+const dInputBordered = 'd-input-bordered'
+
 export interface FilterConfig {
   text: string
   value: string | number | boolean
@@ -110,11 +148,11 @@ export interface TableProps<T> {
 }
 
 const sizeClasses: Record<TableSize, string> = {
-  xs: 'd-table-xs',
-  sm: 'd-table-sm',
+  xs: dTableXs,
+  sm: dTableSm,
   md: '',
-  lg: 'd-table-lg',
-  xl: 'd-table-xl',
+  lg: dTableLg,
+  xl: dTableXl,
 }
 
 function FilterDropdown({
@@ -152,10 +190,10 @@ function FilterDropdown({
   }
 
   return (
-    <div className="d-dropdown d-dropdown-end" onKeyDown={handleKeyDown}>
+    <div className={`${dDropdown} ${dDropdownEnd}`} onKeyDown={handleKeyDown}>
       <button
         type="button"
-        className={`d-btn d-btn-ghost d-btn-xs ${selectedValues.length > 0 ? 'text-primary' : ''}`}
+        className={`${dBtn} ${dBtnGhost} ${dBtnXs} ${selectedValues.length > 0 ? 'text-primary' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
         aria-label="Filter column"
         aria-expanded={isOpen}
@@ -172,7 +210,7 @@ function FilterDropdown({
           id={dropdownId}
           role="listbox"
           aria-multiselectable="true"
-          className="d-dropdown-content z-[1] d-menu p-2 shadow bg-base-100 d-rounded-box w-52 border border-base-content/10"
+          className={`${dDropdownContent} z-[1] ${dMenu} p-2 shadow bg-base-100 rounded-box w-52 border border-base-content/10`}
           data-testid={`${testId}-filter-dropdown`}
         >
           <div className="space-y-2">
@@ -185,7 +223,7 @@ function FilterDropdown({
               >
                 <input
                   type="checkbox"
-                  className="d-checkbox d-checkbox-xs d-checkbox-primary"
+                  className={`${dCheckbox} ${dCheckboxXs} ${dCheckboxPrimary}`}
                   checked={selectedValues.includes(filter.value)}
                   onChange={() => handleToggle(filter.value)}
                   data-testid={`${testId}-filter-${String(filter.value)}`}
@@ -194,10 +232,10 @@ function FilterDropdown({
               </label>
             ))}
           </div>
-          <div className="d-divider my-1"></div>
+          <div className={`${dDivider} my-1`}></div>
           <button
             type="button"
-            className="d-btn d-btn-ghost d-btn-xs w-full"
+            className={`${dBtn} ${dBtnGhost} ${dBtnXs} w-full`}
             onClick={handleClear}
             data-testid={`${testId}-filter-reset`}
           >
@@ -213,7 +251,7 @@ function DefaultExpandIcon({ expanded, onExpand }: { expanded: boolean; onExpand
   return (
     <button
       type="button"
-      className="d-btn d-btn-ghost d-btn-xs d-btn-square"
+      className={`${dBtn} ${dBtnGhost} ${dBtnXs} ${dBtnSquare}`}
       onClick={(e) => {
         e.stopPropagation()
         onExpand()
@@ -650,12 +688,12 @@ function TableInner<T extends Record<string, unknown>>(
   }, [visibleColumns])
 
   const tableClasses = [
-    'd-table',
+    dTable,
     'bg-base-100',
     sizeClasses[size],
-    striped && 'd-table-zebra',
-    pinRows && 'd-table-pin-rows',
-    pinCols && 'd-table-pin-cols',
+    striped && dTableZebra,
+    pinRows && dTablePinRows,
+    pinCols && dTablePinCols,
     className,
   ]
     .filter(Boolean)
@@ -676,7 +714,7 @@ function TableInner<T extends Record<string, unknown>>(
 
   const wrapperClasses = [
     (!pinRows || hasFixedColumns || scroll?.x) && 'overflow-x-auto',
-    bordered && 'd-rounded-box border border-base-content/5 bg-base-100',
+    bordered && 'rounded-box border border-base-content/5 bg-base-100',
   ]
     .filter(Boolean)
     .join(' ')
@@ -684,7 +722,7 @@ function TableInner<T extends Record<string, unknown>>(
   if (loading) {
     return (
       <div className="flex justify-center items-center p-8" data-testid={`${baseTestId}-loading`}>
-        <span className="d-loading d-loading-spinner d-loading-lg" aria-label="Loading"></span>
+        <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingLg}`} aria-label="Loading"></span>
       </div>
     )
   }
@@ -721,7 +759,7 @@ function TableInner<T extends Record<string, unknown>>(
 
         {showSizeChanger && (
           <select
-            className="d-select d-select-sm d-select-bordered"
+            className={`${dSelect} ${dSelectSm} ${dSelectBordered}`}
             value={pageSize}
             onChange={(e) => handlePageSizeChange(Number(e.target.value))}
             aria-label="Page size"
@@ -733,10 +771,10 @@ function TableInner<T extends Record<string, unknown>>(
           </select>
         )}
 
-        <div className="d-join">
+        <div className={dJoin}>
           <button
             type="button"
-            className="d-join-item d-btn d-btn-sm"
+            className={`${dJoinItem} ${dBtn} ${dBtnSm}`}
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
             aria-label="Previous page"
@@ -759,7 +797,7 @@ function TableInner<T extends Record<string, unknown>>(
               <button
                 key={page}
                 type="button"
-                className={`d-join-item d-btn d-btn-sm ${currentPage === page ? 'd-btn-active' : ''}`}
+                className={`${dJoinItem} ${dBtn} ${dBtnSm} ${currentPage === page ? dBtnActive : ''}`}
                 onClick={() => handlePageChange(page)}
                 aria-label={`Page ${page}`}
                 aria-current={currentPage === page ? 'page' : undefined}
@@ -771,7 +809,7 @@ function TableInner<T extends Record<string, unknown>>(
           })}
           <button
             type="button"
-            className="d-join-item d-btn d-btn-sm"
+            className={`${dJoinItem} ${dBtn} ${dBtnSm}`}
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
             aria-label="Next page"
@@ -786,7 +824,7 @@ function TableInner<T extends Record<string, unknown>>(
             <span className="text-sm">Go to</span>
             <input
               type="number"
-              className="d-input d-input-sm d-input-bordered w-16"
+              className={`${dInput} ${dInputSm} ${dInputBordered} w-16`}
               min={1}
               max={totalPages}
               onKeyDown={(e) => {
@@ -842,7 +880,7 @@ function TableInner<T extends Record<string, unknown>>(
                   {rowSelection.type !== 'radio' && (
                     <input
                       type="checkbox"
-                      className="d-checkbox d-checkbox-sm d-checkbox-primary"
+                      className={`${dCheckbox} checkbox-sm ${dCheckboxPrimary}`}
                       checked={isAllSelected}
                       ref={(el) => {
                         if (el) el.indeterminate = isSomeSelected && !isAllSelected
@@ -991,7 +1029,7 @@ function TableInner<T extends Record<string, unknown>>(
                         >
                           <input
                             type={rowSelection.type === 'radio' ? 'radio' : 'checkbox'}
-                            className={rowSelection.type === 'radio' ? 'd-radio d-radio-sm d-radio-primary' : 'd-checkbox d-checkbox-sm d-checkbox-primary'}
+                            className={rowSelection.type === 'radio' ? `${dRadio} ${dRadioSm} ${dRadioPrimary}` : `${dCheckbox} checkbox-sm ${dCheckboxPrimary}`}
                             checked={isSelected}
                             onChange={(e) => handleSelectRow(record, index, e.target.checked)}
                             aria-label={`Select row ${index + 1}`}

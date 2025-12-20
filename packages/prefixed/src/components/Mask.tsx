@@ -1,5 +1,25 @@
 import React, { forwardRef } from 'react'
 
+// DaisyUI classes
+const dMask = 'd-mask'
+const dMaskSquircle = 'd-mask-squircle'
+const dMaskHeart = 'd-mask-heart'
+const dMaskHexagon = 'd-mask-hexagon'
+const dMaskHexagon2 = 'd-mask-hexagon-2'
+const dMaskDecagon = 'd-mask-decagon'
+const dMaskPentagon = 'd-mask-pentagon'
+const dMaskDiamond = 'd-mask-diamond'
+const dMaskSquare = 'd-mask-square'
+const dMaskCircle = 'd-mask-circle'
+const dMaskStar = 'd-mask-star'
+const dMaskStar2 = 'd-mask-star-2'
+const dMaskTriangle = 'd-mask-triangle'
+const dMaskTriangle2 = 'd-mask-triangle-2'
+const dMaskTriangle3 = 'd-mask-triangle-3'
+const dMaskTriangle4 = 'd-mask-triangle-4'
+const dMaskHalf1 = 'd-mask-half-1'
+const dMaskHalf2 = 'd-mask-half-2'
+
 export type MaskShape =
   | 'squircle'
   | 'heart'
@@ -31,32 +51,32 @@ export interface MaskProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const shapeClasses: Record<MaskShape, string> = {
-  squircle: 'd-mask-squircle',
-  heart: 'd-mask-heart',
-  hexagon: 'd-mask-hexagon',
-  'hexagon-2': 'd-mask-hexagon-2',
-  decagon: 'd-mask-decagon',
-  pentagon: 'd-mask-pentagon',
-  diamond: 'd-mask-diamond',
-  square: 'mask-square',
-  circle: 'd-mask-circle',
-  star: 'd-mask-star',
-  'star-2': 'd-mask-star-2',
-  triangle: 'd-mask-triangle',
-  'triangle-2': 'd-mask-triangle-2',
-  'triangle-3': 'd-mask-triangle-3',
-  'triangle-4': 'd-mask-triangle-4',
+  squircle: dMaskSquircle,
+  heart: dMaskHeart,
+  hexagon: dMaskHexagon,
+  'hexagon-2': dMaskHexagon2,
+  decagon: dMaskDecagon,
+  pentagon: dMaskPentagon,
+  diamond: dMaskDiamond,
+  square: dMaskSquare,
+  circle: dMaskCircle,
+  star: dMaskStar,
+  'star-2': dMaskStar2,
+  triangle: dMaskTriangle,
+  'triangle-2': dMaskTriangle2,
+  'triangle-3': dMaskTriangle3,
+  'triangle-4': dMaskTriangle4,
 }
 
 const halfClasses: Record<MaskHalf, string> = {
-  'half-1': 'd-mask-half-1',
-  'half-2': 'd-mask-half-2',
+  'half-1': dMaskHalf1,
+  'half-2': dMaskHalf2,
 }
 
 export const Mask = forwardRef<HTMLDivElement, MaskProps>(
   ({ shape, half, children, className = '', ...props }, ref) => {
     const classes = [
-      'd-mask',
+      dMask,
       shapeClasses[shape],
       half ? halfClasses[half] : '',
       className,

@@ -1,6 +1,25 @@
 import React, { useState, useEffect, useId } from 'react'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dSwap = 'swap'
+const dSwapRotate = 'swap-rotate'
+const dSwapOff = 'swap-off'
+const dSwapOn = 'swap-on'
+const dDropdown = 'dropdown'
+const dDropdownEnd = 'dropdown-end'
+const dDropdownContent = 'dropdown-content'
+const dBtn = 'btn'
+const dBtnSm = 'btn-sm'
+const dBtnBlock = 'btn-block'
+const dBtnGhost = 'btn-ghost'
+const dToggle = 'toggle'
+const dToggleXs = 'toggle-xs'
+const dToggleSm = 'toggle-sm'
+const dToggleMd = 'toggle-md'
+const dToggleLg = 'toggle-lg'
+const dToggleXl = 'toggle-xl'
+
 export interface ThemeControllerSwapProps {
   lightTheme?: string
   darkTheme?: string
@@ -62,7 +81,7 @@ function ThemeControllerSwap({
   }
 
   return (
-    <label className={`swap swap-rotate ${className}`}>
+    <label className={`${dSwap} ${dSwapRotate} ${className}`}>
       <input
         type="checkbox"
         checked={isDark}
@@ -70,7 +89,7 @@ function ThemeControllerSwap({
       />
       {/* sun icon */}
       <svg
-        className="swap-off h-8 w-8 fill-current"
+        className={`${dSwapOff} h-8 w-8 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -78,7 +97,7 @@ function ThemeControllerSwap({
       </svg>
       {/* moon icon */}
       <svg
-        className="swap-on h-8 w-8 fill-current"
+        className={`${dSwapOn} h-8 w-8 fill-current`}
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >
@@ -120,8 +139,8 @@ function ThemeControllerDropdown({
   }
 
   return (
-    <div className={`dropdown dropdown-end ${className}`}>
-      <div tabIndex={0} role="button" className="btn">
+    <div className={`${dDropdown} ${dDropdownEnd} ${className}`}>
+      <div tabIndex={0} role="button" className={dBtn}>
         Theme
         <svg
           width="12px"
@@ -135,14 +154,14 @@ function ThemeControllerDropdown({
       </div>
       <ul
         tabIndex={0}
-        className="dropdown-content bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl max-h-96 overflow-y-auto"
+        className={`${dDropdownContent} bg-base-300 rounded-box z-[1] w-52 p-2 shadow-2xl max-h-96 overflow-y-auto`}
       >
         {themes.map((theme) => (
           <li key={theme}>
             <input
               type="radio"
               name={radioName}
-              className="btn btn-sm btn-block btn-ghost justify-start"
+              className={`${dBtn} ${dBtnSm} ${dBtnBlock} ${dBtnGhost} justify-start`}
               aria-label={theme}
               value={theme}
               checked={selectedTheme === theme}
@@ -156,11 +175,11 @@ function ThemeControllerDropdown({
 }
 
 const sizeClasses: Record<string, string> = {
-  xs: 'toggle-xs',
-  sm: 'toggle-sm',
-  md: 'toggle-md',
-  lg: 'toggle-lg',
-  xl: 'toggle-xl',
+  xs: dToggleXs,
+  sm: dToggleSm,
+  md: dToggleMd,
+  lg: dToggleLg,
+  xl: dToggleXl,
 }
 
 function ThemeControllerToggle({
@@ -198,7 +217,7 @@ function ThemeControllerToggle({
   return (
     <input
       type="checkbox"
-      className={`toggle ${sizeClasses[effectiveSize]} ${className}`}
+      className={`${dToggle} ${sizeClasses[effectiveSize]} ${className}`}
       checked={isDark}
       onChange={handleChange}
       aria-label="Toggle theme"

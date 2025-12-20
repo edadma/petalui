@@ -1,5 +1,11 @@
 import React from 'react'
 
+// DaisyUI classes
+const dRadialProgress = 'd-radial-progress'
+const dCssValue = '--d-value'
+const dCssSize = '--d-size'
+const dCssThickness = '--d-thickness'
+
 export interface RadialProgressProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   value: number
   size?: string | number
@@ -32,7 +38,7 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
   ...rest
 }) => {
   const getClasses = () => {
-    const classes = ['d-radial-progress']
+    const classes = [dRadialProgress]
 
     if (color) {
       classes.push(colorClasses[color])
@@ -47,15 +53,15 @@ export const RadialProgress: React.FC<RadialProgressProps> = ({
 
   const getStyle = (): React.CSSProperties => {
     const style: Record<string, string | number> = {
-      '--d-value': value,
+      [dCssValue]: value,
     }
 
     if (size !== undefined) {
-      style['--d-size'] = typeof size === 'number' ? `${size}rem` : size
+      style[dCssSize] = typeof size === 'number' ? `${size}rem` : size
     }
 
     if (thickness !== undefined) {
-      style['--d-thickness'] = typeof thickness === 'number' ? `${thickness}px` : thickness
+      style[dCssThickness] = typeof thickness === 'number' ? `${thickness}px` : thickness
     }
 
     return style as React.CSSProperties

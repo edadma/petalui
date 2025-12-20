@@ -1,5 +1,15 @@
 import React, { useState, useCallback, useMemo } from 'react'
 
+// DaisyUI classes
+const dCheckbox = 'checkbox'
+const dCheckboxSm = 'checkbox-sm'
+const dCheckboxPrimary = 'checkbox-primary'
+const dInput = 'input'
+const dInputSm = 'input-sm'
+const dBtn = 'btn'
+const dBtnSm = 'btn-sm'
+const dBtnOutline = 'btn-outline'
+
 export interface TransferItem {
   key: string
   title: React.ReactNode
@@ -93,7 +103,7 @@ function TransferList({
         {showSelectAll && (
           <input
             type="checkbox"
-            className="checkbox checkbox-sm checkbox-primary"
+            className={`${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
             checked={allSelected}
             ref={(el) => {
               if (el) el.indeterminate = someSelected && !allSelected
@@ -114,7 +124,7 @@ function TransferList({
         <div className="px-2 py-2 border-b border-base-300">
           <input
             type="text"
-            className="input input-sm w-full"
+            className={`${dInput} ${dInputSm} w-full`}
             placeholder="Search..."
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
@@ -140,7 +150,7 @@ function TransferList({
             >
               <input
                 type="checkbox"
-                className="checkbox checkbox-sm checkbox-primary"
+                className={`${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
                 checked={selectedKeys.includes(item.key)}
                 disabled={disabled || item.disabled}
                 onChange={() => {}}
@@ -283,7 +293,7 @@ export function Transfer({
       <div className="flex flex-col gap-2">
         <button
           type="button"
-          className="btn btn-sm btn-outline"
+          className={`${dBtn} ${dBtnSm} ${dBtnOutline}`}
           onClick={moveToTarget}
           disabled={disabled || !canMoveToTarget}
           aria-label="Move to target"
@@ -294,7 +304,7 @@ export function Transfer({
         </button>
         <button
           type="button"
-          className="btn btn-sm btn-outline"
+          className={`${dBtn} ${dBtnSm} ${dBtnOutline}`}
           onClick={moveToSource}
           disabled={disabled || !canMoveToSource}
           aria-label="Move to source"

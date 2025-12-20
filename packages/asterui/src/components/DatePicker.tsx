@@ -2,6 +2,12 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Input } from './Input'
 import { useConfig } from './ConfigProvider'
 
+// DaisyUI classes
+const dBtn = 'btn'
+const dBtnGhost = 'btn-ghost'
+const dBtnSm = 'btn-sm'
+const dBtnSquare = 'btn-square'
+
 export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange' | 'defaultValue'> {
   value?: Date | null
   defaultValue?: Date | null
@@ -168,7 +174,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             <button
               type="button"
               onClick={handlePrevMonth}
-              className="btn btn-ghost btn-sm btn-square"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm} ${dBtnSquare}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -191,7 +197,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             <button
               type="button"
               onClick={handleNextMonth}
-              className="btn btn-ghost btn-sm btn-square"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm} ${dBtnSquare}`}
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -253,7 +259,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
                 onChange?.(today)
                 setIsOpen(false)
               }}
-              className="btn btn-ghost btn-sm"
+              className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
             >
               Today
             </button>

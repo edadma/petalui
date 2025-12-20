@@ -9,6 +9,17 @@ import React, {
 } from 'react'
 import type { TreeDataNode } from './Tree'
 
+// DaisyUI classes
+const dCheckbox = 'checkbox'
+const dCheckboxSm = 'checkbox-sm'
+const dCheckboxPrimary = 'checkbox-primary'
+const dLoading = 'loading'
+const dLoadingSpinner = 'loading-spinner'
+const dLoadingXs = 'loading-xs'
+const dInput = 'input'
+const dInputSm = 'input-sm'
+const dInputDisabled = 'input-disabled'
+
 export type TreeSelectSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 export type TreeSelectColor =
   | 'primary'
@@ -296,7 +307,7 @@ function TreeSelectNode({
   const renderSwitcherIcon = () => {
     if (loading) {
       return (
-        <span className="loading loading-spinner loading-xs" />
+        <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`} />
       )
     }
 
@@ -365,7 +376,7 @@ function TreeSelectNode({
           <span className="mr-2 flex-shrink-0" onClick={handleCheck}>
             <input
               type="checkbox"
-              className="checkbox checkbox-sm checkbox-primary"
+              className={`${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
               checked={checked}
               ref={(el) => {
                 if (el) el.indeterminate = indeterminate
@@ -1194,11 +1205,12 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
           aria-disabled={disabled}
           tabIndex={disabled ? -1 : 0}
           className={[
-            'input flex items-center gap-2 cursor-pointer flex-wrap',
+            dInput,
+            'flex items-center gap-2 cursor-pointer flex-wrap',
             sizeClasses[size],
             variantClass,
             borderClass,
-            disabled && 'input-disabled opacity-50 cursor-not-allowed',
+            disabled && `${dInputDisabled} opacity-50 cursor-not-allowed`,
             open && !borderClass && 'border-primary',
           ]
             .filter(Boolean)
@@ -1268,7 +1280,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
                 <input
                   ref={inputRef}
                   type="text"
-                  className="input input-sm w-full"
+                  className={`${dInput} ${dInputSm} w-full`}
                   placeholder="Search..."
                   value={searchValue}
                   onChange={handleSearchChange}

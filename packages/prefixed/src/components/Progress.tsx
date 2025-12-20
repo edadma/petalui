@@ -1,23 +1,34 @@
 import React from 'react'
 
+// DaisyUI classes
+const dProgress = 'd-progress'
+const dProgressNeutral = 'd-progress-neutral'
+const dProgressPrimary = 'd-progress-primary'
+const dProgressSecondary = 'd-progress-secondary'
+const dProgressAccent = 'd-progress-accent'
+const dProgressInfo = 'd-progress-info'
+const dProgressSuccess = 'd-progress-success'
+const dProgressWarning = 'd-progress-warning'
+const dProgressError = 'd-progress-error'
+
 export interface ProgressProps extends React.ProgressHTMLAttributes<HTMLProgressElement> {
   type?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
 }
 
 const typeClasses = {
-  neutral: 'd-progress-neutral',
-  primary: 'd-progress-primary',
-  secondary: 'd-progress-secondary',
-  accent: 'd-progress-accent',
-  info: 'd-progress-info',
-  success: 'd-progress-success',
-  warning: 'd-progress-warning',
-  error: 'd-progress-error',
+  neutral: dProgressNeutral,
+  primary: dProgressPrimary,
+  secondary: dProgressSecondary,
+  accent: dProgressAccent,
+  info: dProgressInfo,
+  success: dProgressSuccess,
+  warning: dProgressWarning,
+  error: dProgressError,
 } as const
 
 export function Progress({ value, max = 100, type, className = '', ...rest }: ProgressProps) {
   const classes = [
-    'd-progress',
+    dProgress,
     type && typeClasses[type],
     className,
   ]
