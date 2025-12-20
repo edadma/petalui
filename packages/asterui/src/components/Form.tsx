@@ -57,6 +57,8 @@ export interface FormProps<TFieldValues extends FieldValues = FieldValues>
   /** Disable all form fields */
   disabled?: boolean
   children: React.ReactNode
+  /** Test ID for the form element */
+  'data-testid'?: string
 }
 
 export interface FormRule {
@@ -101,6 +103,8 @@ export interface FormItemProps {
   addonBefore?: React.ReactNode
   /** Text/element after input (outside, using DaisyUI label) */
   addonAfter?: React.ReactNode
+  /** Test ID for the form item (used as prefix for child elements) */
+  'data-testid'?: string
 }
 
 export interface FormListProps<TFieldValues extends FieldValues = FieldValues> {
@@ -214,6 +218,7 @@ function FormItem({
   hidden = false,
   addonBefore,
   addonAfter,
+  'data-testid': testId,
 }: FormItemProps) {
   const { form, size, listName, layout, labelWidth, disabled: formDisabled } = useFormContext()
   const inputId = useId()
@@ -428,6 +433,7 @@ function FormItem({
           ref,
           'aria-invalid': error ? true : undefined,
           'aria-describedby': error ? errorId : undefined,
+          'data-testid': testId ? `${testId}-input` : undefined,
         }
 
         // Handle onBlur based on validateTrigger
@@ -557,13 +563,14 @@ function FormItem({
         }
 
         return (
-          <div className={`${inline ? 'w-auto' : 'w-full'} ${isHorizontal ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined}>
+          <div className={`${inline ? 'w-auto' : 'w-full'} ${isHorizontal ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined} data-testid={testId}>
             <div className={isHorizontal ? 'flex items-center gap-4' : ''}>
               {label && !floatingLabel && (
                 <label
                   htmlFor={inputId}
                   className={`block text-sm font-medium ${isHorizontal ? 'flex-shrink-0 text-right' : ''} ${!isHorizontal && !isInline ? 'mb-1' : ''}`}
                   style={isHorizontal ? { width: labelWidth } : undefined}
+                  data-testid={testId ? `${testId}-label` : undefined}
                 >
                   <span className="flex items-center">
                     {label}
@@ -575,17 +582,17 @@ function FormItem({
               {renderWithAddons(renderInputElement())}
             </div>
             {!isHorizontal && !inline && (
-              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
+              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined} data-testid={testId ? `${testId}-error` : undefined}>
                 {errorMessage || (help && <span className="text-base-content/70">{help}</span>) || '\u00A0'}
               </p>
             )}
             {isHorizontal && (errorMessage || help) && (
-              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined}>
+              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined} data-testid={testId ? `${testId}-error` : undefined}>
                 {errorMessage || (help && <span className="text-base-content/70">{help}</span>)}
               </p>
             )}
             {extra && (
-              <div className="text-sm text-base-content/60 mt-1">{extra}</div>
+              <div className="text-sm text-base-content/60 mt-1" data-testid={testId ? `${testId}-extra` : undefined}>{extra}</div>
             )}
           </div>
         )
@@ -666,9 +673,11 @@ export interface FormErrorListProps {
   fields?: string[]
   /** Custom className */
   className?: string
+  /** Test ID for the error list */
+  'data-testid'?: string
 }
 
-function FormErrorList({ fields, className = '' }: FormErrorListProps) {
+function FormErrorList({ fields, className = '', 'data-testid': testId }: FormErrorListProps) {
   const { form } = useFormContext()
   const { errors } = form.formState
 
@@ -700,9 +709,9 @@ function FormErrorList({ fields, className = '' }: FormErrorListProps) {
   }
 
   return (
-    <ul className={`text-error text-sm space-y-1 ${className}`} role="alert">
+    <ul className={`text-error text-sm space-y-1 ${className}`} role="alert" data-testid={testId}>
       {filteredErrors.map((error, index) => (
-        <li key={`${error.field}-${index}`} className="flex items-start gap-2">
+        <li key={`${error.field}-${index}`} className="flex items-start gap-2" data-testid={testId ? `${testId}-${error.field}` : undefined}>
           <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>

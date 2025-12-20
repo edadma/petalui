@@ -244,3 +244,61 @@ export function AddonsDemo() {
     </Demo>
   )
 }
+
+// @example-imports: { Form, Input, Button, Space } from 'asterui'
+export function FormListDemo() {
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Form
+        initialValues={{ guests: [{ name: '', email: '' }] }}
+        onFinish={(values) => alert(JSON.stringify(values, null, 2))}
+      >
+        <Form.List name="guests">
+          {(fields, { add, remove }) => (
+            <Space direction="vertical" className="w-full">
+              {fields.map((field, index) => (
+                <Space key={field.id} className="w-full items-end">
+                  <Form.Item
+                    name={[field.name, 'name']}
+                    label={index === 0 ? 'Name' : undefined}
+                    rules={[{ required: true, message: 'Name required' }]}
+                  >
+                    <Input placeholder="Guest name" />
+                  </Form.Item>
+                  <Form.Item
+                    name={[field.name, 'email']}
+                    label={index === 0 ? 'Email' : undefined}
+                    rules={[{ required: true }, { type: 'email' }]}
+                  >
+                    <Input placeholder="Email" />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      color="error"
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => remove(index)}
+                      disabled={fields.length === 1}
+                    >
+                      Remove
+                    </Button>
+                  </Form.Item>
+                </Space>
+              ))}
+              <Button variant="outline" onClick={() => add({ name: '', email: '' })}>
+                + Add Guest
+              </Button>
+            </Space>
+          )}
+        </Form.List>
+        <Form.Item className="mt-4">
+          <Button color="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      {/* @example-return-end */}
+    </Demo>
+  )
+}

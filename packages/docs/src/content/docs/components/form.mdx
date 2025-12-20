@@ -13,6 +13,7 @@ import {
   InitialValuesDemo,
   FloatingLabelDemo,
   AddonsDemo,
+  FormListDemo,
 } from '../../../components/FormDemo'
 import FormDemoSource from '../../../components/FormDemo.tsx?raw'
 import Example from '../../../components/Example.astro'
@@ -61,6 +62,10 @@ import { Form } from 'asterui'
   <AddonsDemo client:load slot="demo" />
 </Example>
 
+<Example title="Dynamic Fields (Form.List)" description="Add and remove form fields dynamically with Form.List." source={FormDemoSource} fn="FormListDemo">
+  <FormListDemo client:load slot="demo" />
+</Example>
+
 </div>
 
 ## API
@@ -74,6 +79,7 @@ import { Form } from 'asterui'
 | `initialValues` | Initial form field values | `Record<string, any>` | - |
 | `layout` | Form layout orientation | `'horizontal' \| 'vertical' \| 'inline'` | `'vertical'` |
 | `labelWidth` | Label width in pixels for horizontal layout | `number` | `60` |
+| `size` | Size of form controls | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
 | `disabled` | Disable all form fields | `boolean` | `false` |
 | `children` | Form content (Form.Item elements) | `React.ReactNode` | - |
 | `className` | Additional CSS classes | `string` | - |
@@ -107,6 +113,24 @@ import { Form } from 'asterui'
 |----------|-------------|------|---------|
 | `fields` | Specific field names to show errors for (shows all if not specified) | `string[]` | - |
 | `className` | Additional CSS classes | `string` | - |
+
+### `Form.List`
+
+Manages dynamic arrays of form fields.
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `name` | Name of the array field | `string` | - |
+| `children` | Render function | `(fields, operations) => ReactNode` | - |
+
+**Fields array item:**
+- `id` - Unique identifier for the field
+- `name` - Index of the field (use in `Form.Item` name as `[field.name, 'fieldKey']`)
+
+**Operations:**
+- `add(value?)` - Add a new field with optional initial value
+- `remove(index)` - Remove field at index
+- `move(from, to)` - Move field from one index to another
 
 ## Validation Rules
 
