@@ -91,7 +91,7 @@ export default defineConfig({
                 { label: 'Chart', link: '/components/chart' },
                 { label: 'Chat', slug: 'components/chat' },
                 { label: 'Collapse', slug: 'components/collapse' },
-                { label: 'Countdown', link: '/components/countdown' },
+                { label: 'Countdown', slug: 'components/countdown' },
                 { label: 'Descriptions', slug: 'components/descriptions' },
                 { label: 'Diff', slug: 'components/diff' },
                 { label: 'Empty', slug: 'components/empty' },
