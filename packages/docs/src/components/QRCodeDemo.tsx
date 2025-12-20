@@ -7,7 +7,7 @@ export function BasicDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <QRCode value="https://github.com" />
+      <QRCode value="https://asterui.com" />
       {/* @example-return-end */}
     </Demo>
   );
@@ -19,10 +19,10 @@ export function SizesDemo() {
     <Demo>
       {/* @example-return */}
       <div className="flex gap-4 items-center flex-wrap">
-        <QRCode value="https://example.com" size={80} />
-        <QRCode value="https://example.com" size={120} />
-        <QRCode value="https://example.com" size={160} />
-        <QRCode value="https://example.com" size={200} />
+        <QRCode value="https://asterui.com" size={80} />
+        <QRCode value="https://asterui.com" size={120} />
+        <QRCode value="https://asterui.com" size={160} />
+        <QRCode value="https://asterui.com" size={200} />
       </div>
       {/* @example-return-end */}
     </Demo>
@@ -35,9 +35,9 @@ export function ColorsDemo() {
     <Demo>
       {/* @example-return */}
       <div className="flex gap-4 flex-wrap">
-        <QRCode value="https://example.com" color="#1890ff" bgColor="#f0f0f0" />
-        <QRCode value="https://example.com" color="#52c41a" bgColor="#f6ffed" />
-        <QRCode value="https://example.com" color="#722ed1" bgColor="#f9f0ff" />
+        <QRCode value="https://asterui.com" color="#3b82f6" />
+        <QRCode value="https://asterui.com" color="#22c55e" />
+        <QRCode value="https://asterui.com" color="#a855f7" />
       </div>
       {/* @example-return-end */}
     </Demo>
@@ -50,9 +50,10 @@ export function IconDemo() {
     <Demo>
       {/* @example-return */}
       <QRCode
-        value="https://github.com"
-        icon="https://avatars.githubusercontent.com/u/142286421"
-        iconSize={40}
+        value="https://asterui.com"
+        icon="/logo.png"
+        iconSize={34}
+        errorLevel="H"
       />
       {/* @example-return-end */}
     </Demo>
@@ -66,15 +67,15 @@ export function ErrorLevelDemo() {
       {/* @example-return */}
       <div className="flex gap-4 flex-wrap">
         <div className="text-center">
-          <QRCode value="https://example.com/data" errorLevel="L" />
+          <QRCode value="https://asterui.com/data" errorLevel="L" />
           <div className="text-sm mt-2">Level L (7%)</div>
         </div>
         <div className="text-center">
-          <QRCode value="https://example.com/data" errorLevel="M" />
+          <QRCode value="https://asterui.com/data" errorLevel="M" />
           <div className="text-sm mt-2">Level M (15%)</div>
         </div>
         <div className="text-center">
-          <QRCode value="https://example.com/data" errorLevel="H" />
+          <QRCode value="https://asterui.com/data" errorLevel="H" />
           <div className="text-sm mt-2">Level H (30%)</div>
         </div>
       </div>
@@ -89,8 +90,8 @@ export function BorderDemo() {
     <Demo>
       {/* @example-return */}
       <div className="flex gap-4 flex-wrap">
-        <QRCode value="https://example.com" bordered />
-        <QRCode value="https://example.com" bordered={false} />
+        <QRCode value="https://asterui.com" bordered />
+        <QRCode value="https://asterui.com" bordered={false} />
       </div>
       {/* @example-return-end */}
     </Demo>
@@ -102,7 +103,7 @@ export function LoadingDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <QRCode value="https://example.com" status="loading" />
+      <QRCode value="https://asterui.com" status="loading" />
       {/* @example-return-end */}
     </Demo>
   );
@@ -124,7 +125,7 @@ export function ExpiredDemo() {
     <Demo>
       {/* @example-return */}
       <QRCode
-        value="https://example.com"
+        value="https://asterui.com"
         status={status}
         onRefresh={handleRefresh}
       />
@@ -137,7 +138,7 @@ export function ExpiredDemo() {
 // @example-imports: { useState } from 'react'
 export function DynamicDemo() {
   // @example-include
-  const [text, setText] = useState('https://github.com');
+  const [text, setText] = useState('https://asterui.com');
   // @example-include-end
 
   return (

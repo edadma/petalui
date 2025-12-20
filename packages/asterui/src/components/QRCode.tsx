@@ -1,5 +1,41 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import QRCodeLib from 'qrcode'
+
+// Hook to detect current theme
+function useTheme() {
+  const [isDark, setIsDark] = useState(false)
+
+  useEffect(() => {
+    const checkTheme = () => {
+      const html = document.documentElement
+      const theme = html.getAttribute('data-theme')
+      // Check for explicit dark theme or system preference
+      const isDarkTheme = theme === 'dark' ||
+        (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+      setIsDark(isDarkTheme)
+    }
+
+    checkTheme()
+
+    // Watch for theme changes via attribute mutation
+    const observer = new MutationObserver(checkTheme)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme']
+    })
+
+    // Also watch for system preference changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    mediaQuery.addEventListener('change', checkTheme)
+
+    return () => {
+      observer.disconnect()
+      mediaQuery.removeEventListener('change', checkTheme)
+    }
+  }, [])
+
+  return isDark
+}
 
 // DaisyUI classes
 const dLoading = 'loading'
@@ -34,8 +70,8 @@ export const QRCode: React.FC<QRCodeProps> = ({
   icon,
   iconSize = 40,
   type = 'canvas',
-  color = '#000000',
-  bgColor = '#FFFFFF',
+  color,
+  bgColor,
   bordered = true,
   status = 'active',
   onRefresh,
@@ -43,6 +79,11 @@ export const QRCode: React.FC<QRCodeProps> = ({
   ...rest
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const isDark = useTheme()
+
+  // Theme-aware default colors
+  const effectiveColor = color ?? (isDark ? '#FFFFFF' : '#000000')
+  const effectiveBgColor = bgColor ?? (isDark ? '#1f2937' : '#FFFFFF')
 
   useEffect(() => {
     if (status !== 'active' || !value || type !== 'canvas') return
@@ -55,8 +96,8 @@ export const QRCode: React.FC<QRCodeProps> = ({
           width: size,
           margin: 1,
           color: {
-            dark: color,
-            light: bgColor,
+            dark: effectiveColor,
+            light: effectiveBgColor,
           },
           errorCorrectionLevel: errorLevel,
         })
@@ -70,7 +111,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
             img.onload = () => {
               const iconX = (size - iconSize) / 2
               const iconY = (size - iconSize) / 2
-              ctx.fillStyle = bgColor
+              ctx.fillStyle = effectiveBgColor
               ctx.fillRect(iconX - 4, iconY - 4, iconSize + 8, iconSize + 8)
               ctx.drawImage(img, iconX, iconY, iconSize, iconSize)
             }
@@ -83,7 +124,7 @@ export const QRCode: React.FC<QRCodeProps> = ({
     }
 
     generateQRCode()
-  }, [value, size, errorLevel, icon, iconSize, type, color, bgColor, status])
+  }, [value, size, errorLevel, icon, iconSize, type, effectiveColor, effectiveBgColor, status])
 
   // Download functionality can be implemented by consumers
   // by accessing the canvas ref and converting to data URL

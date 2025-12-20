@@ -18,7 +18,7 @@ import {
 import QRCodeDemoSource from '../../../components/QRCodeDemo.tsx?raw'
 import Example from '../../../components/Example.astro'
 
-Generate QR codes with customizable appearance, icons, and status states.
+Generate QR codes with customizable appearance, icons, and status states. Colors automatically adapt to light/dark themes.
 
 ## Installation
 
@@ -46,7 +46,7 @@ import { QRCode } from 'asterui/qrcode'
   <SizesDemo client:only="react" slot="demo" />
 </Example>
 
-<Example title="Custom Colors" description="Customize foreground and background colors." source={QRCodeDemoSource} fn="ColorsDemo">
+<Example title="Custom Colors" description="Customize foreground color. Background adapts to theme by default." source={QRCodeDemoSource} fn="ColorsDemo">
   <ColorsDemo client:only="react" slot="demo" />
 </Example>
 
@@ -88,8 +88,8 @@ import { QRCode } from 'asterui/qrcode'
 | `icon` | URL of icon/logo to display in center | `string` | - |
 | `iconSize` | Size of the center icon in pixels | `number` | `40` |
 | `type` | Render type | `'canvas' \| 'svg'` | `'canvas'` |
-| `color` | Foreground color (QR code color) | `string` | `'#000000'` |
-| `bgColor` | Background color | `string` | `'#FFFFFF'` |
+| `color` | Foreground color (QR code color) | `string` | Theme-aware |
+| `bgColor` | Background color | `string` | Theme-aware |
 | `bordered` | Show border around QR code | `boolean` | `true` |
 | `status` | QR code status state | `'active' \| 'loading' \| 'expired'` | `'active'` |
 | `onRefresh` | Callback when refresh button is clicked (expired status) | `() => void` | - |
