@@ -1,0 +1,73 @@
+---
+title: useTheme
+description: Hook to detect the current theme and get computed colors.
+---
+
+Detects the current theme and provides computed color values from DaisyUI CSS variables. Useful for canvas-based components that can't use CSS variables directly.
+
+## Import
+
+```tsx
+import { useTheme } from 'asterui'
+```
+
+## Usage
+
+```tsx
+function ThemeAwareComponent() {
+  const { isDark, colors } = useTheme()
+
+  return (
+    <div style={{
+      background: colors.background,
+      color: colors.foreground
+    }}>
+      Current theme: {isDark ? 'Dark' : 'Light'}
+    </div>
+  )
+}
+```
+
+### Canvas Example
+
+```tsx
+function CanvasComponent() {
+  const { colors } = useTheme()
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    const ctx = canvasRef.current?.getContext('2d')
+    if (!ctx) return
+    ctx.fillStyle = colors.background
+    ctx.fillRect(0, 0, 100, 100)
+    ctx.fillStyle = colors.foreground
+    ctx.fillText('Hello', 10, 50)
+  }, [colors])
+
+  return <canvas ref={canvasRef} />
+}
+```
+
+## Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `isDark` | `boolean` | `true` if dark mode is active |
+| `colors` | `ThemeColors` | Computed theme colors as hex values |
+
+### ThemeColors
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `background` | `string` | Base background color (DaisyUI `base-100`) |
+| `foreground` | `string` | Base text color (DaisyUI `base-content`) |
+| `primary` | `string` | Primary color |
+| `primaryContent` | `string` | Primary content color |
+
+## How It Works
+
+1. Checks the `data-theme` attribute on `<html>` element (DaisyUI convention)
+2. Falls back to `prefers-color-scheme: dark` media query if no attribute is set
+3. Reads DaisyUI CSS variables and converts oklch colors to hex
+4. Uses MutationObserver to react to theme changes
+5. Automatically updates colors when theme changes

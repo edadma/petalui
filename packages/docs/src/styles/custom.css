@@ -27,11 +27,13 @@
 }
 
 /* Wider content for component pages */
-body.component-page .sl-markdown-content {
+body.component-page .sl-markdown-content,
+body.components-overview .sl-markdown-content {
   max-width: none;
 }
 
-body.component-page .content-panel {
+body.component-page .content-panel,
+body.components-overview .content-panel {
   --sl-content-width: 100%;
   max-width: none;
 }

@@ -1,41 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import QRCodeLib from 'qrcode'
-
-// Hook to detect current theme
-function useTheme() {
-  const [isDark, setIsDark] = useState(false)
-
-  useEffect(() => {
-    const checkTheme = () => {
-      const html = document.documentElement
-      const theme = html.getAttribute('data-theme')
-      // Check for explicit dark theme or system preference
-      const isDarkTheme = theme === 'dark' ||
-        (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
-      setIsDark(isDarkTheme)
-    }
-
-    checkTheme()
-
-    // Watch for theme changes via attribute mutation
-    const observer = new MutationObserver(checkTheme)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    })
-
-    // Also watch for system preference changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', checkTheme)
-
-    return () => {
-      observer.disconnect()
-      mediaQuery.removeEventListener('change', checkTheme)
-    }
-  }, [])
-
-  return isDark
-}
+import { useTheme } from '../hooks/useTheme'
 
 // DaisyUI classes
 const dLoading = 'd-loading'
@@ -79,11 +44,11 @@ export const QRCode: React.FC<QRCodeProps> = ({
   ...rest
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const isDark = useTheme()
+  const { colors } = useTheme()
 
-  // Theme-aware default colors
-  const effectiveColor = color ?? (isDark ? '#FFFFFF' : '#000000')
-  const effectiveBgColor = bgColor ?? (isDark ? '#1f2937' : '#FFFFFF')
+  // Theme-aware default colors from DaisyUI CSS variables
+  const effectiveColor = color ?? colors.foreground
+  const effectiveBgColor = bgColor ?? colors.background
 
   useEffect(() => {
     if (status !== 'active' || !value || type !== 'canvas') return

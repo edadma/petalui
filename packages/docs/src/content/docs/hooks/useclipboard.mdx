@@ -1,0 +1,41 @@
+---
+title: useClipboard
+description: Hook for copying text to clipboard with success/error state.
+---
+
+Copies text to clipboard and tracks success/error state.
+
+## Import
+
+```tsx
+import { useClipboard } from 'asterui'
+```
+
+## Usage
+
+```tsx
+function CopyExample() {
+  const { copy, copied } = useClipboard()
+
+  return (
+    <Button onClick={() => copy('Hello, World!')}>
+      {copied ? 'Copied!' : 'Copy to Clipboard'}
+    </Button>
+  )
+}
+```
+
+## Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `timeout` | `number` | `2000` | Duration in ms to show copied state |
+
+## Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `copy` | `(text: string) => Promise<boolean>` | Copies text, returns success status |
+| `copied` | `boolean` | True if recently copied successfully |
+| `error` | `Error \| null` | Error if copy failed |
+| `reset` | `() => void` | Resets copied and error state |

@@ -1,0 +1,39 @@
+---
+title: useWindowSize
+description: Hook that tracks window dimensions.
+---
+
+Tracks current window width and height, updating on resize.
+
+## Import
+
+```tsx
+import { useWindowSize } from 'asterui'
+```
+
+## Usage
+
+```tsx
+function WindowSizeExample() {
+  const { width, height } = useWindowSize()
+
+  return (
+    <div>
+      <p>Window: {width} x {height}</p>
+      {width < 768 && <MobileLayout />}
+      {width >= 768 && <DesktopLayout />}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `width` | `number` | Current window width in pixels |
+| `height` | `number` | Current window height in pixels |
+
+## Note
+
+For breakpoint-based responsive logic, consider using [useBreakpoint](/hooks/usebreakpoint) instead, which provides helper methods like `isAbove()` and `isBelow()`.

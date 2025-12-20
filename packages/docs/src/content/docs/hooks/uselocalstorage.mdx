@@ -1,0 +1,54 @@
+---
+title: useLocalStorage
+description: Hook for persisting state to localStorage.
+---
+
+Persists state to localStorage with automatic sync across tabs.
+
+## Import
+
+```tsx
+import { useLocalStorage } from 'asterui'
+```
+
+## Usage
+
+```tsx
+function SettingsExample() {
+  const [theme, setTheme] = useLocalStorage('theme', 'light')
+  const [user, setUser, removeUser] = useLocalStorage('user', null)
+
+  return (
+    <>
+      <Select value={theme} onChange={setTheme}>
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+      </Select>
+      <Button onClick={removeUser}>Logout</Button>
+    </>
+  )
+}
+```
+
+## Parameters
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `key` | `string` | localStorage key |
+| `initialValue` | `T` | Initial value if key doesn't exist |
+
+## Return Value
+
+Returns a tuple `[value, setValue, removeValue]`:
+
+| Index | Type | Description |
+|-------|------|-------------|
+| `0` | `T` | Current stored value |
+| `1` | `(value: T \| (prev: T) => T) => void` | Update the value |
+| `2` | `() => void` | Remove from localStorage and reset to initial |
+
+## Features
+
+- Syncs across tabs/windows via `storage` event
+- SSR-safe (handles `window` being undefined)
+- Supports functional updates like `useState`

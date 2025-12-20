@@ -151,7 +151,8 @@ npm install asterui
   - `useHover` - Track element hover state
   - `useKeyPress` / `useKeyPressCallback` - Detect key presses
   - `useWindowSize` - Track window dimensions
-  - `useBreakpoint` - Responsive breakpoint detection (see Responsive)
+  - `useBreakpoint` - Responsive breakpoint detection
+  - `useTheme` - Detect theme and get computed colors from DaisyUI CSS variables
 
 ## Quick Start
 

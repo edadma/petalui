@@ -1,0 +1,50 @@
+---
+title: useBreakpoint
+description: Hook to detect the current responsive breakpoint.
+---
+
+Tracks the current Tailwind CSS breakpoint based on window width.
+
+## Import
+
+```tsx
+import { useBreakpoint } from 'asterui'
+```
+
+## Usage
+
+```tsx
+function ResponsiveComponent() {
+  const { breakpoint, isAbove, isBelow } = useBreakpoint()
+
+  return (
+    <div>
+      <p>Current breakpoint: {breakpoint}</p>
+      {isBelow('md') && <MobileNav />}
+      {isAbove('md') && <DesktopNav />}
+    </div>
+  )
+}
+```
+
+## Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `breakpoint` | `Breakpoint` | Current breakpoint: `'xs'` \| `'sm'` \| `'md'` \| `'lg'` \| `'xl'` \| `'2xl'` |
+| `width` | `number` | Current window width in pixels |
+| `isAbove(bp)` | `(bp: Breakpoint) => boolean` | True if current breakpoint is at or above `bp` |
+| `isBelow(bp)` | `(bp: Breakpoint) => boolean` | True if current breakpoint is below `bp` |
+| `isAt(bp)` | `(bp: Breakpoint) => boolean` | True if current breakpoint equals `bp` |
+| `isBetween(min, max)` | `(min: Breakpoint, max: Breakpoint) => boolean` | True if current breakpoint is between `min` and `max` |
+
+## Breakpoints
+
+| Name | Min Width |
+|------|-----------|
+| `xs` | 0px |
+| `sm` | 640px |
+| `md` | 768px |
+| `lg` | 1024px |
+| `xl` | 1280px |
+| `2xl` | 1536px |

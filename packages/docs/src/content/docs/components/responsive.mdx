@@ -1,6 +1,6 @@
 ---
 title: Responsive
-description: Components and hooks for building responsive layouts based on screen size
+description: Components for building responsive layouts based on screen size
 tableOfContents: false
 ---
 
@@ -10,31 +10,30 @@ import {
   ShowAtDemo,
   ShowBetweenDemo,
   ResponsiveLayoutDemo,
-  UseBreakpointDemo,
 } from '../../../components/ResponsiveDemo'
 import ResponsiveDemoSource from '../../../components/ResponsiveDemo.tsx?raw'
 import Example from '../../../components/Example.astro'
 
-Components and hooks for building responsive layouts based on screen size.
+Components for showing/hiding content based on screen size.
 
 ## Import
 
 ```tsx
-import { Show, Hide, useBreakpoint } from 'asterui'
+import { Show, Hide } from 'asterui'
 ```
 
 ## Breakpoints
 
-AsterUI uses the same breakpoints as Tailwind CSS:
+Uses the same breakpoints as Tailwind CSS:
 
-| Breakpoint | Min Width | Description |
-|------------|-----------|-------------|
-| `xs` | 0px | Extra small screens |
-| `sm` | 640px | Small screens |
-| `md` | 768px | Medium screens |
-| `lg` | 1024px | Large screens |
-| `xl` | 1280px | Extra large screens |
-| `2xl` | 1536px | Double extra large screens |
+| Breakpoint | Min Width |
+|------------|-----------|
+| `xs` | 0px |
+| `sm` | 640px |
+| `md` | 768px |
+| `lg` | 1024px |
+| `xl` | 1280px |
+| `2xl` | 1536px |
 
 ## Examples
 
@@ -60,10 +59,6 @@ AsterUI uses the same breakpoints as Tailwind CSS:
   <ResponsiveLayoutDemo client:load slot="demo" />
 </Example>
 
-<Example title="useBreakpoint Hook" description="Access breakpoint info programmatically." source={ResponsiveDemoSource} fn="UseBreakpointDemo">
-  <UseBreakpointDemo client:load slot="demo" />
-</Example>
-
 </div>
 
 ## API
@@ -78,22 +73,10 @@ AsterUI uses the same breakpoints as Tailwind CSS:
 | `at` | Show/hide at exactly this breakpoint (or array of breakpoints) | `Breakpoint \| Breakpoint[]` | - |
 | `between` | Show/hide between two breakpoints (inclusive) | `[Breakpoint, Breakpoint]` | - |
 
-### `useBreakpoint`
-
-Returns an object with the following properties:
-
-| Property | Description | Type |
-|----------|-------------|------|
-| `breakpoint` | Current active breakpoint | `Breakpoint` |
-| `width` | Current window width in pixels | `number` |
-| `isAbove(bp)` | Returns true if current breakpoint >= bp | `(bp: Breakpoint) => boolean` |
-| `isBelow(bp)` | Returns true if current breakpoint < bp | `(bp: Breakpoint) => boolean` |
-| `isAt(bp)` | Returns true if current breakpoint === bp | `(bp: Breakpoint) => boolean` |
-| `isBetween(min, max)` | Returns true if current breakpoint is between min and max (inclusive) | `(min: Breakpoint, max: Breakpoint) => boolean` |
-
 ## Notes
 
-- `Show` and `Hide` use JavaScript to detect the breakpoint, not CSS media queries
+- Uses JavaScript to detect breakpoint, not CSS media queries
 - Only one condition prop (`above`, `below`, `at`, or `between`) should be used at a time
-- The hook updates on window resize to track the current breakpoint
 - Server-side rendering defaults to 1024px width (lg breakpoint)
+
+See also: [useBreakpoint](/hooks/usebreakpoint) hook for programmatic access to breakpoint info.

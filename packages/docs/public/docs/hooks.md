@@ -292,4 +292,59 @@ const App: React.FC = () => {
 
 ## useBreakpoint
 
-See [Responsive Utilities](./responsive.md) for the useBreakpoint hook documentation.
+Detects current responsive breakpoint based on window width.
+
+```tsx
+import { useBreakpoint } from 'asterui'
+
+const App: React.FC = () => {
+  const { breakpoint, isAbove, isBelow } = useBreakpoint()
+
+  return (
+    <div>
+      <p>Current breakpoint: {breakpoint}</p>
+      {isBelow('md') && <MobileNav />}
+      {isAbove('md') && <DesktopNav />}
+    </div>
+  )
+}
+```
+
+### useBreakpoint Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `breakpoint` | `Breakpoint` | Current breakpoint: `xs`, `sm`, `md`, `lg`, `xl`, `2xl` |
+| `width` | `number` | Current window width in pixels |
+| `isAbove(bp)` | `(bp: Breakpoint) => boolean` | True if at or above breakpoint |
+| `isBelow(bp)` | `(bp: Breakpoint) => boolean` | True if below breakpoint |
+| `isAt(bp)` | `(bp: Breakpoint) => boolean` | True if exactly at breakpoint |
+| `isBetween(min, max)` | `(min, max) => boolean` | True if between breakpoints |
+
+## useTheme
+
+Detects current theme and provides computed color values from DaisyUI CSS variables. Useful for canvas-based components that can't use CSS variables directly.
+
+```tsx
+import { useTheme } from 'asterui'
+
+const App: React.FC = () => {
+  const { isDark, colors } = useTheme()
+
+  return (
+    <div style={{ background: colors.background, color: colors.foreground }}>
+      Current theme: {isDark ? 'Dark' : 'Light'}
+    </div>
+  )
+}
+```
+
+### useTheme Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `isDark` | `boolean` | True if dark mode is active |
+| `colors.background` | `string` | Base background color as hex (DaisyUI base-100) |
+| `colors.foreground` | `string` | Base text color as hex (DaisyUI base-content) |
+| `colors.primary` | `string` | Primary color as hex |
+| `colors.primaryContent` | `string` | Primary content color as hex |

@@ -132,6 +132,7 @@ export default defineConfig({
         {
           label: 'Components',
           items: [
+            { label: 'Overview', link: '/components' },
             {
               label: 'Actions',
               items: [
@@ -143,6 +144,7 @@ export default defineConfig({
             },
             {
               label: 'Data Display',
+              collapsed: true,
               items: [
                 { label: 'Avatar', slug: 'components/avatar' },
                 { label: 'Badge', slug: 'components/badge' },
@@ -174,6 +176,7 @@ export default defineConfig({
             },
             {
               label: 'Data Entry',
+              collapsed: true,
               items: [
                 { label: 'Autocomplete', slug: 'components/autocomplete' },
                 { label: 'Cascader', slug: 'components/cascader' },
@@ -204,6 +207,7 @@ export default defineConfig({
             },
             {
               label: 'Feedback',
+              collapsed: true,
               items: [
                 { label: 'Alert', slug: 'components/alert' },
                 { label: 'Drawer', slug: 'components/drawer' },
@@ -220,6 +224,7 @@ export default defineConfig({
             },
             {
               label: 'Navigation',
+              collapsed: true,
               items: [
                 { label: 'Anchor', slug: 'components/anchor' },
                 { label: 'Breadcrumb', slug: 'components/breadcrumb' },
@@ -236,6 +241,7 @@ export default defineConfig({
             },
             {
               label: 'Layout',
+              collapsed: true,
               items: [
                 { label: 'Container', slug: 'components/container' },
                 { label: 'Divider', slug: 'components/divider' },
@@ -253,6 +259,7 @@ export default defineConfig({
             },
             {
               label: 'Other',
+              collapsed: true,
               items: [
                 { label: 'Affix', slug: 'components/affix' },
                 { label: 'ConfigProvider', slug: 'components/configprovider' },
@@ -269,6 +276,22 @@ export default defineConfig({
                 { label: 'Window', slug: 'components/window' },
               ],
             },
+          ],
+        },
+        {
+          label: 'Hooks',
+          items: [
+            { label: 'useBreakpoint', slug: 'hooks/usebreakpoint' },
+            { label: 'useClickOutside', slug: 'hooks/useclickoutside' },
+            { label: 'useClipboard', slug: 'hooks/useclipboard' },
+            { label: 'useDebounce', slug: 'hooks/usedebounce' },
+            { label: 'useDisclosure', slug: 'hooks/usedisclosure' },
+            { label: 'useHover', slug: 'hooks/usehover' },
+            { label: 'useKeyPress', slug: 'hooks/usekeypress' },
+            { label: 'useLocalStorage', slug: 'hooks/uselocalstorage' },
+            { label: 'usePrevious', slug: 'hooks/useprevious' },
+            { label: 'useTheme', slug: 'hooks/usetheme' },
+            { label: 'useWindowSize', slug: 'hooks/usewindowsize' },
           ],
         },
       ],
