@@ -8,7 +8,7 @@ export function BasicDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar
-        src="/avatar-1.png"
+        src="/avatar-1.webp"
         alt="User avatar"
       />
       {/* @example-return-end */}
@@ -22,11 +22,11 @@ export function SizesDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm" align="center">
-        <Avatar size="xs" src="/avatar-1.png" />
-        <Avatar size="sm" src="/avatar-1.png" />
-        <Avatar size="md" src="/avatar-1.png" />
-        <Avatar size="lg" src="/avatar-1.png" />
-        <Avatar size="xl" src="/avatar-1.png" />
+        <Avatar size="xs" src="/avatar-1.webp" />
+        <Avatar size="sm" src="/avatar-1.webp" />
+        <Avatar size="md" src="/avatar-1.webp" />
+        <Avatar size="lg" src="/avatar-1.webp" />
+        <Avatar size="xl" src="/avatar-1.webp" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -39,8 +39,8 @@ export function ShapesDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm">
-        <Avatar shape="circle" src="/avatar-1.png" />
-        <Avatar shape="square" src="/avatar-1.png" />
+        <Avatar shape="circle" src="/avatar-1.webp" />
+        <Avatar shape="square" src="/avatar-1.webp" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -53,8 +53,8 @@ export function StatusDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm">
-        <Avatar status="online" src="/avatar-1.png" />
-        <Avatar status="offline" src="/avatar-1.png" />
+        <Avatar status="online" src="/avatar-1.webp" />
+        <Avatar status="offline" src="/avatar-1.webp" />
       </Space>
       {/* @example-return-end */}
     </Demo>
@@ -103,10 +103,10 @@ export function GroupDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar.Group>
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
       </Avatar.Group>
       {/* @example-return-end */}
     </Demo>
@@ -119,12 +119,12 @@ export function GroupMaxDemo() {
     <Demo>
       {/* @example-return */}
       <Avatar.Group max={3}>
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
-        <Avatar src="/avatar-1.png" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
+        <Avatar src="/avatar-1.webp" />
       </Avatar.Group>
       {/* @example-return-end */}
     </Demo>
