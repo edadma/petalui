@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Form, Input, Button, Textarea, Radio, Space } from '@aster-ui/prefixed'
+import { Form, Input, Button, Textarea, Radio, Space, Modal } from '@aster-ui/prefixed'
 import { Demo } from './Demo'
 
 // @example-imports: { Form, Input, Button } from 'asterui'
@@ -245,14 +245,14 @@ export function AddonsDemo() {
   )
 }
 
-// @example-imports: { Form, Input, Button, Space } from 'asterui'
+// @example-imports: { Form, Input, Button, Space, Modal } from 'asterui'
 export function FormListDemo() {
   return (
     <Demo>
       {/* @example-return */}
       <Form
         initialValues={{ guests: [{ name: '', email: '' }] }}
-        onFinish={(values) => alert(JSON.stringify(values, null, 2))}
+        onFinish={(values) => Modal.info({ title: 'Form Data', content: JSON.stringify(values, null, 2) })}
       >
         <Form.List name="guests">
           {(fields, { add, remove }) => (
@@ -275,6 +275,7 @@ export function FormListDemo() {
                   </Form.Item>
                   <Form.Item>
                     <Button
+                      type="button"
                       color="error"
                       variant="ghost"
                       size="sm"
@@ -286,14 +287,14 @@ export function FormListDemo() {
                   </Form.Item>
                 </Space>
               ))}
-              <Button variant="outline" onClick={() => add({ name: '', email: '' })}>
+              <Button type="button" variant="outline" onClick={() => add({ name: '', email: '' })}>
                 + Add Guest
               </Button>
             </Space>
           )}
         </Form.List>
-        <Form.Item className="mt-4">
-          <Button color="primary" htmlType="submit">
+        <Form.Item>
+          <Button color="primary" htmlType="submit" style={{ marginTop: 16 }}>
             Submit
           </Button>
         </Form.Item>

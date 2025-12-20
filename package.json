@@ -5,9 +5,7 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm --filter site dev",
-    "dev:docs-slclone": "pnpm --filter docs-slclone dev",
-    "dev:docs": "pnpm --filter docs dev",
+    "dev": "pnpm --filter docs dev",
     "test": "pnpm -r test",
     "publish": "pnpm --filter asterui publish --access public",
     "publish:create": "pnpm --filter create-asterui publish --access public",
