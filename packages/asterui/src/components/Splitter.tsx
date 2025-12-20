@@ -1,16 +1,5 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react'
 
-// DaisyUI classes
-const dBgBase300 = 'bg-base-300'
-const dBgPrimary = 'bg-primary'
-const dTextBaseContent = 'text-base-content'
-const dHoverBgPrimary = 'hover:bg-primary'
-const dHoverTextBaseContent = 'hover:text-base-content'
-const dGroupHoverBgPrimary = 'group-hover:bg-primary'
-const dHoverBgBaseContent = 'hover:bg-base-content'
-const dRounded = 'rounded'
-const dRoundedFull = 'rounded-full'
-
 export interface SplitterPanelProps {
   children: React.ReactNode
   defaultSize?: number
@@ -400,8 +389,8 @@ export const Splitter: React.FC<SplitterProps> & { Panel: typeof Panel } = ({
                 aria-valuenow={Math.round(currentSizes[index])}
                 tabIndex={canResize ? 0 : -1}
                 className={`
-                  flex-shrink-0 ${dBgBase300} transition-colors duration-150 relative group
-                  ${canResize ? `${dHoverBgPrimary}/30 active:${dBgPrimary}/50` : ''}
+                  flex-shrink-0 bg-base-300 transition-colors duration-150 relative group
+                  ${canResize ? 'hover:bg-primary/30 active:bg-primary/50' : ''}
                   ${canResize ? (isHorizontal ? 'cursor-col-resize' : 'cursor-row-resize') : 'cursor-default'}
                 `}
                 style={{
@@ -423,9 +412,9 @@ export const Splitter: React.FC<SplitterProps> & { Panel: typeof Panel } = ({
                           ${isHorizontal ? 'flex-col gap-0.5' : 'flex-row gap-0.5'}
                         `}
                       >
-                        <div className={`w-1 h-1 ${dRoundedFull} ${dTextBaseContent}/30 ${dGroupHoverBgPrimary}/60`} />
-                        <div className={`w-1 h-1 ${dRoundedFull} ${dTextBaseContent}/30 ${dGroupHoverBgPrimary}/60`} />
-                        <div className={`w-1 h-1 ${dRoundedFull} ${dTextBaseContent}/30 ${dGroupHoverBgPrimary}/60`} />
+                        <div className="w-1 h-1 rounded-full bg-base-content/30 group-hover:bg-primary/60" />
+                        <div className="w-1 h-1 rounded-full bg-base-content/30 group-hover:bg-primary/60" />
+                        <div className="w-1 h-1 rounded-full bg-base-content/30 group-hover:bg-primary/60" />
                       </div>
                     )
                   }
@@ -445,13 +434,13 @@ export const Splitter: React.FC<SplitterProps> & { Panel: typeof Panel } = ({
                             toggleCollapse(index)
                           }}
                           className={`
-                            p-0.5 ${dRounded} ${dHoverBgBaseContent}/20 transition-colors
+                            p-0.5 rounded hover:bg-base-content/20 transition-colors
                             ${isHorizontal ? '' : ''}
                           `}
                           aria-label={panel1Collapsed ? 'Expand panel' : 'Collapse panel'}
                         >
                           <svg
-                            className={`w-3 h-3 ${dTextBaseContent}/50 ${dHoverTextBaseContent} transition-transform ${
+                            className={`w-3 h-3 text-base-content/50 hover:text-base-content transition-transform ${
                               panel1Collapsed
                                 ? isHorizontal ? 'rotate-180' : '-rotate-90'
                                 : isHorizontal ? 'rotate-0' : 'rotate-90'
@@ -471,13 +460,11 @@ export const Splitter: React.FC<SplitterProps> & { Panel: typeof Panel } = ({
                             e.stopPropagation()
                             toggleCollapse(index + 1)
                           }}
-                          className={`
-                            p-0.5 ${dRounded} ${dHoverBgBaseContent}/20 transition-colors
-                          `}
+                          className="p-0.5 rounded hover:bg-base-content/20 transition-colors"
                           aria-label={panel2Collapsed ? 'Expand panel' : 'Collapse panel'}
                         >
                           <svg
-                            className={`w-3 h-3 ${dTextBaseContent}/50 ${dHoverTextBaseContent} transition-transform ${
+                            className={`w-3 h-3 text-base-content/50 hover:text-base-content transition-transform ${
                               panel2Collapsed
                                 ? isHorizontal ? 'rotate-0' : 'rotate-90'
                                 : isHorizontal ? 'rotate-180' : '-rotate-90'

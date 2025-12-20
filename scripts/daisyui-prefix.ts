@@ -67,8 +67,17 @@ function transformFile(filePath: string, options: Options): TransformResult | nu
             newLine = `${before}'${prefixedVar}'${after}`;
           }
         } else {
-          // Class name: alert → d-alert
-          if (!value.startsWith(options.prefix)) {
+          // Class name: alert → d-alert, hover:bg-primary → hover:d-bg-primary
+          // Handle pseudo-class prefixes (hover:, focus:, group-hover:, etc.)
+          const colonIndex = value.lastIndexOf(':');
+          if (colonIndex !== -1) {
+            const pseudoPrefix = value.slice(0, colonIndex + 1);
+            const utility = value.slice(colonIndex + 1);
+            if (!utility.startsWith(options.prefix.replace(/-$/, ''))) {
+              const prefixedClass = pseudoPrefix + options.prefix + utility;
+              newLine = `${before}'${prefixedClass}'${after}`;
+            }
+          } else if (!value.startsWith(options.prefix)) {
             const prefixedClass = options.prefix + value;
             newLine = `${before}'${prefixedClass}'${after}`;
           }
@@ -83,8 +92,16 @@ function transformFile(filePath: string, options: Options): TransformResult | nu
             newLine = `${before}'${unprefixedVar}'${after}`;
           }
         } else {
-          // Class name: d-alert → alert
-          if (value.startsWith(options.prefix)) {
+          // Class name: d-alert → alert, hover:d-bg-primary → hover:bg-primary
+          const colonIndex = value.lastIndexOf(':');
+          if (colonIndex !== -1) {
+            const pseudoPrefix = value.slice(0, colonIndex + 1);
+            const utility = value.slice(colonIndex + 1);
+            if (utility.startsWith(options.prefix)) {
+              const unprefixedClass = pseudoPrefix + utility.slice(options.prefix.length);
+              newLine = `${before}'${unprefixedClass}'${after}`;
+            }
+          } else if (value.startsWith(options.prefix)) {
             const unprefixedClass = value.slice(options.prefix.length);
             newLine = `${before}'${unprefixedClass}'${after}`;
           }
