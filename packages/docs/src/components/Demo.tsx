@@ -19,11 +19,11 @@ export function Demo({ children, contained, height = '5rem' }: DemoProps) {
       {children}
       <style>{`
         .demo-area {
-          background-color: oklch(91% 0 0);
+          background-color: oklch(96% 0 0);
           background-image: repeating-linear-gradient(
             -45deg,
-            rgba(0, 0, 0, 0.02),
-            rgba(0, 0, 0, 0.02) 1px,
+            rgba(0, 0, 0, 0.06),
+            rgba(0, 0, 0, 0.06) 1px,
             transparent 1px,
             transparent 6px
           );
@@ -32,8 +32,8 @@ export function Demo({ children, contained, height = '5rem' }: DemoProps) {
           background-color: oklch(25% 0.01 260);
           background-image: repeating-linear-gradient(
             -45deg,
-            rgba(255, 255, 255, 0.03),
-            rgba(255, 255, 255, 0.03) 1px,
+            rgba(255, 255, 255, 0.05),
+            rgba(255, 255, 255, 0.05) 1px,
             transparent 1px,
             transparent 6px
           );
