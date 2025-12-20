@@ -216,7 +216,7 @@ export const OTPInput = forwardRef<OTPInputRef, OTPInputProps>(
               d-input text-center font-mono
               ${sizeClasses[effectiveSize]}
               ${error ? 'd-input-error' : ''}
-              ${disabled ? 'input-disabled opacity-50' : ''}
+              ${disabled ? 'd-input-disabled opacity-50' : ''}
             `}
             aria-label={`OTP digit ${index + 1}`}
           />

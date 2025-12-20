@@ -166,7 +166,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       {/* Page Size Changer */}
       {showSizeChanger && (
         <select
-          className={`d-select select-bordered ${sizeClass}`}
+          className={`d-select d-select-bordered ${sizeClass}`}
           value={pageSize}
           onChange={(e) => handlePageSizeChange(Number(e.target.value))}
           disabled={disabled}

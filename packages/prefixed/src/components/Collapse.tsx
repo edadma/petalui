@@ -81,7 +81,7 @@ const CollapsePanel = forwardRef<
     !ghost && 'bg-base-200',
     ghost && 'bg-transparent',
     bordered && 'border border-base-300',
-    expandIconPlacement === 'end' && icon !== 'none' && 'collapse-arrow-end',
+    expandIconPlacement === 'end' && icon !== 'none' && 'd-collapse-arrow-end',
     sizeClasses[size],
     isDisabled && 'opacity-50 cursor-not-allowed',
     item.className,

@@ -153,6 +153,7 @@ const DAISYUI_BASE_CLASSES = new Set([
   // Collapse
   "collapse",
   "collapse-arrow",
+  "collapse-arrow-end",
   "collapse-close",
   "collapse-content",
   "collapse-open",
@@ -284,6 +285,8 @@ const DAISYUI_BASE_CLASSES = new Set([
   // Input
   "input",
   "input-accent",
+  "input-bordered",
+  "input-disabled",
   "input-error",
   "input-ghost",
   "input-info",
@@ -499,6 +502,8 @@ const DAISYUI_BASE_CLASSES = new Set([
   // Select
   "select",
   "select-accent",
+  "select-bordered",
+  "select-disabled",
   "select-error",
   "select-ghost",
   "select-info",
@@ -606,6 +611,7 @@ const DAISYUI_BASE_CLASSES = new Set([
   // Textarea
   "textarea",
   "textarea-accent",
+  "textarea-bordered",
   "textarea-error",
   "textarea-ghost",
   "textarea-info",
@@ -667,6 +673,7 @@ const DAISYUI_BASE_CLASSES = new Set([
   "tooltip-error",
   "tooltip-info",
   "tooltip-left",
+  "tooltip-neutral",
   "tooltip-open",
   "tooltip-primary",
   "tooltip-right",
@@ -1018,6 +1025,129 @@ function transformStringContent(str: string, options: TransformOptions): string 
 }
 
 /**
+ * Find the end of a template literal, handling nested template literals in ${...}
+ * Returns the index of the closing backtick, or -1 if not found
+ */
+function findTemplateLiteralEnd(content: string, startIndex: number): number {
+  let i = startIndex + 1; // Skip opening backtick
+
+  while (i < content.length) {
+    const char = content[i];
+
+    if (char === '\\') {
+      // Escape sequence - skip next char
+      i += 2;
+      continue;
+    }
+
+    if (char === '`') {
+      // Found closing backtick
+      return i;
+    }
+
+    if (char === '$' && content[i + 1] === '{') {
+      // Template expression - need to find matching }
+      // Handle nested template literals inside the expression
+      i += 2; // Skip ${
+      let braceDepth = 1;
+
+      while (i < content.length && braceDepth > 0) {
+        const exprChar = content[i];
+
+        if (exprChar === '\\') {
+          i += 2;
+          continue;
+        }
+
+        if (exprChar === '{') {
+          braceDepth++;
+        } else if (exprChar === '}') {
+          braceDepth--;
+        } else if (exprChar === '`') {
+          // Nested template literal - recursively find its end
+          const nestedEnd = findTemplateLiteralEnd(content, i);
+          if (nestedEnd === -1) return -1;
+          i = nestedEnd;
+        } else if (exprChar === "'" || exprChar === '"') {
+          // String inside expression - skip it
+          const quote = exprChar;
+          i++;
+          while (i < content.length && content[i] !== quote) {
+            if (content[i] === '\\') i++;
+            i++;
+          }
+        }
+
+        i++;
+      }
+      continue;
+    }
+
+    i++;
+  }
+
+  return -1; // Unclosed template literal
+}
+
+/**
+ * Find all string literals in content (single, double, and template)
+ * Returns array of [startIndex, endIndex, stringContent] tuples
+ */
+function findAllStrings(content: string): Array<[number, number, string]> {
+  const strings: Array<[number, number, string]> = [];
+  let i = 0;
+
+  while (i < content.length) {
+    const char = content[i];
+
+    // Skip line comments
+    if (char === '/' && content[i + 1] === '/') {
+      while (i < content.length && content[i] !== '\n') i++;
+      continue;
+    }
+
+    // Skip block comments
+    if (char === '/' && content[i + 1] === '*') {
+      i += 2;
+      while (i < content.length - 1 && !(content[i] === '*' && content[i + 1] === '/')) i++;
+      i += 2;
+      continue;
+    }
+
+    // Single or double quoted string
+    if (char === "'" || char === '"') {
+      const quote = char;
+      const start = i;
+      i++;
+      while (i < content.length && content[i] !== quote && content[i] !== '\n') {
+        if (content[i] === '\\') i++;
+        i++;
+      }
+      if (content[i] === quote) {
+        strings.push([start, i, content.slice(start, i + 1)]);
+      }
+      i++;
+      continue;
+    }
+
+    // Template literal
+    if (char === '`') {
+      const start = i;
+      const end = findTemplateLiteralEnd(content, i);
+      if (end !== -1) {
+        strings.push([start, end, content.slice(start, end + 1)]);
+        i = end + 1;
+        continue;
+      }
+    }
+
+    i++;
+  }
+
+  return strings;
+}
+
+/**
  * Check if a string looks like prose/text (not CSS classes)
  * Heuristic: contains capitalized words (other than at start after space)
  */
@@ -1029,13 +1159,113 @@ function looksLikeProseText(str: string): boolean {
 }
 
 /**
+ * Process a template literal's inner content, handling ${...} expressions recursively
+ */
+function processTemplateLiteralInner(inner: string, options: TransformOptions): string {
+  let result = '';
+  let i = 0;
+
+  while (i < inner.length) {
+    if (inner[i] === '\\') {
+      // Escape sequence - preserve as-is
+      result += inner[i] + (inner[i + 1] || '');
+      i += 2;
+      continue;
+    }
+
+    if (inner[i] === '$' && inner[i + 1] === '{') {
+      // Find matching closing brace, handling nested braces and template literals
+      let braceCount = 1;
+      let j = i + 2;
+
+      while (j < inner.length && braceCount > 0) {
+        if (inner[j] === '\\') {
+          j += 2;
+          continue;
+        }
+        if (inner[j] === '{') {
+          braceCount++;
+        } else if (inner[j] === '}') {
+          braceCount--;
+        } else if (inner[j] === '`') {
+          // Nested template literal - find its end
+          j++;
+          let nestedDepth = 1;
+          while (j < inner.length && nestedDepth > 0) {
+            if (inner[j] === '\\') {
+              j += 2;
+              continue;
+            }
+            if (inner[j] === '`') {
+              nestedDepth--;
+            } else if (inner[j] === '$' && inner[j + 1] === '{') {
+              // Nested expression in nested template - track braces
+              let nestedBraces = 1;
+              j += 2;
+              while (j < inner.length && nestedBraces > 0) {
+                if (inner[j] === '\\') j += 2;
+                else if (inner[j] === '{') nestedBraces++;
+                else if (inner[j] === '}') nestedBraces--;
+                else if (inner[j] === '`') {
+                  // Recurse for deeply nested templates - just skip to end for now
+                  j++;
+                  let depth = 1;
+                  while (j < inner.length && depth > 0) {
+                    if (inner[j] === '\\') j++;
+                    else if (inner[j] === '`') depth--;
+                    j++;
+                  }
+                  continue;
+                }
+                else j++;
+              }
+              continue;
+            }
+            j++;
+          }
+          continue;
+        } else if (inner[j] === "'" || inner[j] === '"') {
+          // String in expression - skip it
+          const quote = inner[j];
+          j++;
+          while (j < inner.length && inner[j] !== quote) {
+            if (inner[j] === '\\') j++;
+            j++;
+          }
+        }
+        j++;
+      }
+
+      // Extract and recursively process expression content
+      const exprContent = inner.slice(i + 2, j - 1);
+      const processedExpr = transformFileContentRobust(exprContent, options);
+      result += '${' + processedExpr + '}';
+      i = j;
+    } else {
+      // Static part - collect until next ${ or end
+      let j = i;
+      while (j < inner.length && !(inner[j] === '$' && inner[j + 1] === '{')) {
+        if (inner[j] === '\\') j++; // Skip escaped char
+        j++;
+      }
+      const staticPart = inner.slice(i, j);
+      if (!looksLikeProseText(staticPart)) {
+        result += transformStringContent(staticPart, options);
+      } else {
+        result += staticPart;
+      }
+      i = j;
+    }
+  }
+
+  return result;
+}
+
+/**
  * Transform file content - processes single, double, and template strings
  */
 function transformFileContentRobust(content: string, options: TransformOptions): string {
   // First pass: identify HTML/JSX attributes to skip (role=, aria-*, etc.)
-  // HTML attributes have no space before = : attr="value"
-  // JS parameter defaults have space: alt = "value"
-  // Match both patterns: attr="value" and attr = "value"
   const skipAttrPattern = /(?:role|type|id|name|placeholder|title|alt|href|src|for|htmlFor|aria-\w+|data-\w+)\s*=\s*(?:(['"])[^'"]*\1|\{[^}]*\})/g;
   const skipRanges: Array<[number, number]> = [];
 
@@ -1048,115 +1278,119 @@ function transformFileContentRobust(content: string, options: TransformOptions):
     return skipRanges.some(([start, end]) => index >= start && index < end);
   };
 
-  // Match all strings: single, double, and template literals
-  // Note: single/double quotes can't span newlines in JS, so exclude \n
-  const stringPattern = /'([^'\\\n]|\\.)*'|"([^"\\\n]|\\.)*"|`(?:[^`\\$]|\\.|\$(?!\{)|\$\{[^}]*\})*`/g;
+  // Use the robust string finder instead of regex
+  const strings = findAllStrings(content);
 
-  return content.replace(stringPattern, (match, ...args) => {
-    const index = args[args.length - 2]; // Second to last arg is the index
+  // Process strings in reverse order to maintain correct indices
+  let result = content;
+  for (let idx = strings.length - 1; idx >= 0; idx--) {
+    const [start, end, match] = strings[idx];
 
     // Skip if this string is part of a skipped attribute
-    if (isInSkipRange(index)) {
-      return match;
+    if (isInSkipRange(start)) {
+      continue;
     }
 
     // Skip if on a line starting with 'export' (type definitions)
-    const lineStart = content.lastIndexOf('\n', index) + 1;
-    const linePrefix = content.slice(lineStart, index).trimStart();
+    const lineStart = content.lastIndexOf('\n', start) + 1;
+    const lineEnd = content.indexOf('\n', start);
+    const fullLine = content.slice(lineStart, lineEnd === -1 ? content.length : lineEnd);
+    const linePrefix = content.slice(lineStart, start).trimStart();
     if (linePrefix.startsWith('export')) {
-      return match;
+      continue;
     }
 
     // Skip if preceded by patterns that indicate non-CSS contexts
-    const beforeMatch = content.slice(Math.max(0, index - 30), index);
-    // Type unions: | 'value'
-    // Nullish coalescing: ?? 'value'
-    // testId assignments: testId = 'value' or testId: 'value'
-    // aria/data object keys: 'aria-*': 'value' or 'data-*': 'value'
-    // type property: type: 'value' or type === 'value' or .type === 'value'
-    // Comparisons: === 'value' or !== 'value'
-    // action property: action: 'value'
-    // Template expression start: ${ (variable names, not CSS classes)
+    // Use 1000 chars to capture enough context for multi-line objects with many properties
+    const beforeMatch = content.slice(Math.max(0, start - 1000), start);
     if (/(\|\s*|\?\?\s*|testId\s*[=:]\s*|'aria-[^']+'\s*:\s*|'data-[^']+'\s*:\s*|\.?type\??\s*[=:]+\s*|[!=]==?\s*|action\s*:\s*|\$\{\s*)$/.test(beforeMatch)) {
-      return match;
+      continue;
+    }
+
+    // Skip if followed by | (part of a union type)
+    const afterMatch = content.slice(end + 1, Math.min(content.length, end + 10));
+    if (/^\s*\|/.test(afterMatch)) {
+      continue;
+    }
+
+    // Skip if this is a TypeScript type definition line
+    // Matches: type X = 'foo' | 'bar', interface { x: 'foo' }, etc.
+    if (/^\s*(export\s+)?(type|interface)\s+\w+/.test(fullLine)) {
+      continue;
+    }
+
+    // Skip if in a type annotation context (after : before = or end)
+    // e.g., const x: 'alert' = ..., function(x: 'alert' | 'modal')
+    // But NOT ternary operators like: condition ? 'foo' : 'bar'
+    // And NOT object literals like: { key: 'value' }
+    // className: is special - always followed by class names, always transform
+    const isAfterClassName = /className\s*:\s*$/.test(beforeMatch);
+    if (!isAfterClassName) {
+      const colonBeforeString = beforeMatch.lastIndexOf(':');
+      const equalsBeforeString = beforeMatch.lastIndexOf('=');
+      const openBraceAfterEquals = equalsBeforeString !== -1 ? beforeMatch.indexOf('{', equalsBeforeString) : -1;
+      // Also check for object literals in ternary expressions (? {) or function returns (=> {)
+      // Use regex to handle whitespace/newlines between tokens
+      const ternaryMatch = beforeMatch.match(/\?\s*\{/g);
+      const ternaryBrace = ternaryMatch ? beforeMatch.lastIndexOf(ternaryMatch[ternaryMatch.length - 1]) : -1;
+      const arrowMatch = beforeMatch.match(/=>\s*\{/g);
+      const arrowBrace = arrowMatch ? beforeMatch.lastIndexOf(arrowMatch[arrowMatch.length - 1]) : -1;
+      const returnMatch = beforeMatch.match(/return\s*\{/g);
+      const returnBrace = returnMatch ? beforeMatch.lastIndexOf(returnMatch[returnMatch.length - 1]) : -1;
+      const latestObjectStart = Math.max(openBraceAfterEquals, ternaryBrace, arrowBrace, returnBrace);
+      // If there's a { that starts an object literal before the colon, we're in an object
+      const isInObjectLiteral = latestObjectStart !== -1 && latestObjectStart < colonBeforeString;
+      if (!isInObjectLiteral && colonBeforeString > equalsBeforeString && colonBeforeString !== -1) {
+        // Check if this is a type annotation (no space before colon) vs ternary (space before colon)
+        const charBeforeColon = colonBeforeString > 0 ? beforeMatch[colonBeforeString - 1] : '';
+        const isTernary = charBeforeColon === ' ' || charBeforeColon === '\t';
+        if (!isTernary) {
+          continue;
+        }
+      }
     }
 
     const quote = match[0];
     const inner = match.slice(1, -1);
 
-    // Skip single-word DaisyUI classes on lines with aria-* object keys (handles ternary values)
-    const lineEnd = content.indexOf('\n', index);
-    const currentLine = content.slice(lineStart, lineEnd === -1 ? content.length : lineEnd);
-    if (DAISYUI_BASE_CLASSES.has(inner) && /'aria-[^']+'\s*:/.test(currentLine)) {
-      return match;
+    // Skip single-word DaisyUI classes on lines with aria-* object keys
+    if (DAISYUI_BASE_CLASSES.has(inner) && /'aria-[^']+'\s*:/.test(fullLine)) {
+      continue;
     }
 
-    // Skip single-word strings that look like function arguments (not className contexts)
-    // DaisyUI classes in this library are used in arrays, template literals, or className props
-    // not as standalone function arguments
+    // Skip single-word strings that look like function arguments
     if (DAISYUI_BASE_CLASSES.has(inner)) {
-      // Check if preceded by ( or , (function argument context)
-      const beforeMatch = content.slice(Math.max(0, index - 10), index);
-      if (/[,(]\s*$/.test(beforeMatch)) {
-        // Check if NOT in an array context (preceded by [ somewhere close)
-        const contextBefore = content.slice(Math.max(0, index - 50), index);
+      const beforeStr = content.slice(Math.max(0, start - 10), start);
+      if (/[,(]\s*$/.test(beforeStr)) {
+        const contextBefore = content.slice(Math.max(0, start - 50), start);
         const lastBracket = Math.max(contextBefore.lastIndexOf('['), contextBefore.lastIndexOf(']'));
         const lastParen = Math.max(contextBefore.lastIndexOf('('), contextBefore.lastIndexOf(')'));
-        // If the closest bracket is [ (array open) and closer than (, it's an array context - allow transform
-        // Otherwise if preceded by ( or ,, it's a function argument - skip
         if (!(lastBracket > lastParen && contextBefore[lastBracket] === '[')) {
-          return match;
+          continue;
         }
       }
     }
 
     // Skip if looks like prose text
     if (looksLikeProseText(inner)) {
-      return match;
+      continue;
     }
 
+    let transformed: string;
     if (quote === '`') {
-      // Template literal - transform static parts and recurse into ${...} expressions
-      let result = '';
-      let i = 0;
-      while (i < inner.length) {
-        if (inner[i] === '$' && inner[i + 1] === '{') {
-          // Find matching closing brace (handle nested braces)
-          let braceCount = 1;
-          let j = i + 2;
-          while (j < inner.length && braceCount > 0) {
-            if (inner[j] === '{') braceCount++;
-            else if (inner[j] === '}') braceCount--;
-            j++;
-          }
-          // Extract expression content and recursively process for string literals
-          const exprContent = inner.slice(i + 2, j - 1);
-          const processedExpr = transformFileContentRobust(exprContent, options);
-          result += '${' + processedExpr + '}';
-          i = j;
-        } else {
-          // Static part - collect until next ${ or end
-          let j = i;
-          while (j < inner.length && !(inner[j] === '$' && inner[j + 1] === '{')) {
-            if (inner[j] === '\\') j++; // Skip escaped char
-            j++;
-          }
-          const staticPart = inner.slice(i, j);
-          if (!looksLikeProseText(staticPart)) {
-            result += transformStringContent(staticPart, options);
-          } else {
-            result += staticPart;
-          }
-          i = j;
-        }
-      }
-      return '`' + result + '`';
+      // Template literal - use recursive processor
+      transformed = '`' + processTemplateLiteralInner(inner, options) + '`';
+    } else {
+      transformed = quote + transformStringContent(inner, options) + quote;
     }
 
-    const transformed = transformStringContent(inner, options);
-    return quote + transformed + quote;
-  });
+    // Replace in result
+    result = result.slice(0, start) + transformed + result.slice(end + 1);
+  }
+
+  return result;
 }
+
 
 /**
  * Process a single file

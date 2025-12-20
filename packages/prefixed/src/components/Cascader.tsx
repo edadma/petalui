@@ -723,7 +723,7 @@ export const Cascader = forwardRef<HTMLDivElement, CascaderProps>(({
         aria-disabled={disabled}
         tabIndex={disabled ? -1 : 0}
         className={`d-input w-full flex items-center justify-between cursor-pointer gap-1 ${sizeClasses[size]} ${
-          disabled ? 'input-disabled cursor-not-allowed' : ''
+          disabled ? 'd-input-disabled cursor-not-allowed' : ''
         } ${getColorClass()}`}
         onClick={() => {
           if (!disabled) {

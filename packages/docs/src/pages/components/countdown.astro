@@ -7,6 +7,7 @@ import {
   SizesDemo,
   WithLabelsDemo,
   BoxedDemo,
+  CallbackDemo,
 } from '../../components/CountdownDemo'
 import CountdownDemoSource from '../../components/CountdownDemo.tsx?raw'
 ---
@@ -45,6 +46,10 @@ import CountdownDemoSource from '../../components/CountdownDemo.tsx?raw'
 
     <Example title="Boxed Style" description="Each unit in a styled box." source={CountdownDemoSource} fn="BoxedDemo">
       <BoxedDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="With Callback" description="Execute callback when countdown finishes." source={CountdownDemoSource} fn="CallbackDemo">
+      <CallbackDemo client:only="react" slot="demo" />
     </Example>
   </div>
 

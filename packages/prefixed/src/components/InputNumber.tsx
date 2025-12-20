@@ -141,7 +141,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       'd-input',
       'w-full',
       effectiveSize && sizeClasses[effectiveSize],
-      disabled && 'input-disabled',
+      disabled && 'd-input-disabled',
       controls && 'pr-8',
     ]
       .filter(Boolean)

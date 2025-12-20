@@ -349,7 +349,7 @@ export const Mention: React.FC<MentionProps> = ({
         disabled={disabled}
         readOnly={readOnly}
         rows={typeof autoSize === 'object' ? autoSize.minRows || rows : autoSize ? 1 : rows}
-        className="d-textarea textarea-bordered w-full resize-none"
+        className="d-textarea d-textarea-bordered w-full resize-none"
       />
 
       {createPortal(dropdown, document.body)}

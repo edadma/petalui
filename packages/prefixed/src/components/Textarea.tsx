@@ -46,7 +46,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     const textareaClasses = [
       'd-textarea',
       'w-full',
-      bordered && 'textarea-bordered',
+      bordered && 'd-textarea-bordered',
       ghost && 'd-textarea-ghost',
       effectiveSize && sizeClasses[effectiveSize],
       color && colorClasses[color],

@@ -1198,7 +1198,7 @@ export const TreeSelect = forwardRef<HTMLDivElement, TreeSelectProps>(
             sizeClasses[size],
             variantClass,
             borderClass,
-            disabled && 'input-disabled opacity-50 cursor-not-allowed',
+            disabled && 'd-input-disabled opacity-50 cursor-not-allowed',
             open && !borderClass && 'border-primary',
           ]
             .filter(Boolean)

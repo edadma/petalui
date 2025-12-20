@@ -76,7 +76,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       : [
           'd-select',
           'w-full',
-          bordered && 'select-bordered',
+          bordered && 'd-select-bordered',
           ghost && 'd-select-ghost',
           effectiveSize && sizeClasses[effectiveSize],
           effectiveColorClass,
@@ -99,7 +99,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
 
       return (
         <label className={floatingClasses}>
-          <select ref={selectRef} className="d-select select-bordered w-full" {...props}>
+          <select ref={selectRef} className="d-select d-select-bordered w-full" {...props}>
             {children}
           </select>
           <span>{floatingLabel}</span>
@@ -111,7 +111,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     if (hasExternalAddons) {
       const addonClasses = [
         'd-select',
-        'select-bordered',
+        'd-select-bordered',
         'flex',
         'items-center',
         'gap-2',

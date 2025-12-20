@@ -26,7 +26,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
 
   const colorClasses = color
     ? {
-        neutral: 'tooltip-neutral',
+        neutral: 'd-tooltip-neutral',
         primary: 'd-tooltip-primary',
         secondary: 'd-tooltip-secondary',
         accent: 'd-tooltip-accent',

@@ -235,7 +235,7 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
 
   return (
     <div
-      className={`alert ${alertTypeClasses[notification.type!]} shadow-lg cursor-pointer min-w-[300px] max-w-[400px] relative${notification.className ? ` ${notification.className}` : ''}`}
+      className={`d-alert ${alertTypeClasses[notification.type!]} shadow-lg cursor-pointer min-w-[300px] max-w-[400px] relative${notification.className ? ` ${notification.className}` : ''}`}
       style={notification.style}
       data-testid={notification['data-testid']}
       onClick={handleClick}

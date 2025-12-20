@@ -721,7 +721,7 @@ function TableInner<T extends Record<string, unknown>>(
 
         {showSizeChanger && (
           <select
-            className="d-select d-select-sm select-bordered"
+            className="d-select d-select-sm d-select-bordered"
             value={pageSize}
             onChange={(e) => handlePageSizeChange(Number(e.target.value))}
             aria-label="Page size"
@@ -786,7 +786,7 @@ function TableInner<T extends Record<string, unknown>>(
             <span className="text-sm">Go to</span>
             <input
               type="number"
-              className="d-input d-input-sm input-bordered w-16"
+              className="d-input d-input-sm d-input-bordered w-16"
               min={1}
               max={totalPages}
               onKeyDown={(e) => {
