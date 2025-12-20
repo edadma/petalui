@@ -35,6 +35,7 @@ interface CliArgs {
   language?: 'ts' | 'js'
   themes?: string
   pm?: PackageManager
+  prefixed?: boolean
   help?: boolean
 }
 
@@ -50,6 +51,8 @@ function parseArgs(): CliArgs {
       result.language = 'js'
     } else if (arg === '--ts') {
       result.language = 'ts'
+    } else if (arg === '--prefixed') {
+      result.prefixed = true
     } else if (arg === '--themes' && args[i + 1]) {
       result.themes = args[++i]
     } else if (arg === '--pm' && args[i + 1]) {
@@ -75,6 +78,7 @@ ${pc.bold('Usage:')}
 ${pc.bold('Options:')}
   --js              Use JavaScript instead of TypeScript
   --ts              Use TypeScript (default)
+  --prefixed        Use @aster-ui/prefixed with d- prefix for daisyUI
   --themes <preset> Theme preset: light-dark, business, all
   --pm <manager>    Package manager: npm, pnpm, yarn
   -h, --help        Show this help message
@@ -137,6 +141,14 @@ async function main() {
                 { value: 'ts', label: 'TypeScript', hint: 'recommended' },
                 { value: 'js', label: 'JavaScript' },
               ],
+            }),
+
+      prefixed: () =>
+        cliArgs.prefixed !== undefined
+          ? Promise.resolve(cliArgs.prefixed)
+          : p.confirm({
+              message: 'Use prefixed daisyUI classes?',
+              initialValue: false,
             }),
 
       themePreset: () =>
@@ -216,17 +228,19 @@ async function main() {
   copyDir(templateDir, projectDir)
 
   // Generate package.json
+  const prefixed = options.prefixed as boolean
   const packageJson = generatePackageJson(
     options.projectName,
     options.language as string,
     options.optionalDeps as string[],
-    options.iconLibrary as string
+    options.iconLibrary as string,
+    prefixed
   )
   fs.writeFileSync(path.join(projectDir, 'package.json'), JSON.stringify(packageJson, null, 2))
 
   // Generate index.css with theme config
   const themes = getThemes(options.themePreset as string, options.customThemes as string[])
-  const cssContent = generateCss(themes)
+  const cssContent = generateCss(themes, prefixed)
   fs.writeFileSync(path.join(projectDir, 'src', 'index.css'), cssContent)
 
   s.stop('Project created!')
@@ -273,8 +287,9 @@ function copyDir(src: string, dest: string) {
   }
 }
 
-function generatePackageJson(name: string, language: string, optionalDeps: string[] = [], iconLibrary: string = 'none') {
+function generatePackageJson(name: string, language: string, optionalDeps: string[] = [], iconLibrary: string = 'none', prefixed: boolean = false) {
   const isTs = language === 'ts'
+  const uiPackage = prefixed ? '@aster-ui/prefixed' : 'asterui'
 
   const pkg: Record<string, unknown> = {
     name,
@@ -287,7 +302,7 @@ function generatePackageJson(name: string, language: string, optionalDeps: strin
       preview: 'vite preview',
     },
     dependencies: {
-      asterui: '^0.12.0',
+      [uiPackage]: '^0.12.0',
       react: '^19.0.0',
       'react-dom': '^19.0.0',
       'react-hook-form': '^7.0.0',
@@ -304,9 +319,14 @@ function generatePackageJson(name: string, language: string, optionalDeps: strin
   // Add icon library
   const deps = pkg.dependencies as Record<string, string>
   if (iconLibrary !== 'none') {
+    // Use prefixed icon package if using prefixed UI and selecting @aster-ui/icons
+    let iconPkg = iconLibrary
+    if (prefixed && iconLibrary === '@aster-ui/icons') {
+      iconPkg = '@aster-ui/icons-prefixed'
+    }
     const iconLib = ICON_LIBRARIES.find(lib => lib.value === iconLibrary)
     if (iconLib && iconLib.version) {
-      deps[iconLibrary] = iconLib.version
+      deps[iconPkg] = iconLib.version
     }
   }
 
@@ -315,7 +335,7 @@ function generatePackageJson(name: string, language: string, optionalDeps: strin
     deps['apexcharts'] = '^5.0.0'
   }
   if (optionalDeps.includes('editor')) {
-    deps['@aster-ui/icons'] = '^0.1.0'
+    deps[prefixed ? '@aster-ui/icons-prefixed' : '@aster-ui/icons'] = '^0.1.0'
     deps['@tiptap/react'] = '^2.0.0'
     deps['@tiptap/starter-kit'] = '^2.0.0'
     deps['@tiptap/extension-link'] = '^2.0.0'
@@ -357,29 +377,34 @@ function getThemes(preset: string, customThemes: string[]): string[] {
   }
 }
 
-function generateCss(themes: string[]): string {
+function generateCss(themes: string[], prefixed: boolean = false): string {
+  const uiPackage = prefixed ? '@aster-ui/prefixed' : 'asterui'
+  const prefixConfig = prefixed ? '\n  prefix: "d-";' : ''
+
   let daisyPlugin: string
   if (themes.length === 0) {
     // All themes
-    daisyPlugin = '@plugin "daisyui";'
+    daisyPlugin = prefixed
+      ? '@plugin "daisyui" {\n  prefix: "d-";\n}'
+      : '@plugin "daisyui";'
   } else if (themes.length === 2 && (
     (themes[0] === 'light' && themes[1] === 'dark') ||
     (themes[0] === 'corporate' && themes[1] === 'business')
   )) {
     // Light/dark pair with prefersDark
-    daisyPlugin = `@plugin "daisyui" {
+    daisyPlugin = `@plugin "daisyui" {${prefixConfig}
   themes: ${themes[0]} --default, ${themes[1]} --prefersDark;
 }`
   } else {
     // Custom selection
-    daisyPlugin = `@plugin "daisyui" {
+    daisyPlugin = `@plugin "daisyui" {${prefixConfig}
   themes: ${themes.join(', ')};
 }`
   }
 
   return `@import "tailwindcss";
 ${daisyPlugin}
-@source "../node_modules/asterui";
+@source "../node_modules/${uiPackage}";
 `
 }
 
