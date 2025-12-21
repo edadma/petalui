@@ -1,0 +1,133 @@
+---
+title: ThemeProvider
+description: 用于主题管理的上下文提供者，支持系统偏好检测和持久化。
+---
+
+用于主题管理的上下文提供者。支持程序化主题控制、系统偏好检测、localStorage 持久化和跨标签页同步。
+
+## 导入
+
+```tsx
+import { ThemeProvider, useTheme } from 'asterui'
+```
+
+## 使用方法
+
+### 基本设置
+
+用 `ThemeProvider` 包裹你的应用以启用主题控制：
+
+```tsx
+// main.tsx
+import { ThemeProvider } from 'asterui'
+
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultTheme="system">
+    <App />
+  </ThemeProvider>
+)
+```
+
+### 切换主题
+
+使用 `useTheme` hook 控制主题：
+
+```tsx
+function ThemeSwitcher() {
+  const { theme, setTheme, resolvedTheme, isDark } = useTheme()
+
+  return (
+    <div>
+      <p>已选择: {theme}</p>
+      <p>已应用: {resolvedTheme}</p>
+      <p>模式: {isDark ? '深色' : '浅色'}</p>
+
+      <button onClick={() => setTheme('light')}>浅色</button>
+      <button onClick={() => setTheme('dark')}>深色</button>
+      <button onClick={() => setTheme('system')}>系统</button>
+    </div>
+  )
+}
+```
+
+### 自定义 DaisyUI 主题
+
+直接设置使用任何 DaisyUI 主题：
+
+```tsx
+function ThemeSelector() {
+  const { setTheme, resolvedTheme } = useTheme()
+
+  const themes = ['light', 'dark', 'cupcake', 'cyberpunk', 'retro', 'valentine']
+
+  return (
+    <select value={resolvedTheme} onChange={(e) => setTheme(e.target.value)}>
+      {themes.map(t => <option key={t} value={t}>{t}</option>)}
+    </select>
+  )
+}
+```
+
+### 禁用持久化
+
+将 `storageKey` 设置为 `false` 以禁用 localStorage 持久化：
+
+```tsx
+<ThemeProvider defaultTheme="dark" storageKey={false}>
+  <App />
+</ThemeProvider>
+```
+
+### 自定义深色主题检测
+
+对于自定义主题，提供 `isDarkTheme` 函数：
+
+```tsx
+<ThemeProvider
+  defaultTheme="system"
+  isDarkTheme={(theme) => ['dark', 'night', 'dracula', 'synthwave'].includes(theme)}
+>
+  <App />
+</ThemeProvider>
+```
+
+## API
+
+### ThemeProvider 属性
+
+| 属性 | 类型 | 默认值 | 描述 |
+|------|------|--------|------|
+| `defaultTheme` | `string` | `'system'` | 初始主题。使用 `'system'` 跟随浏览器偏好。 |
+| `storageKey` | `string \| false` | `'asterui-theme'` | 用于持久化的 localStorage 键名。设置为 `false` 禁用。 |
+| `lightTheme` | `string` | `'light'` | 系统偏好为浅色时使用的主题。 |
+| `darkTheme` | `string` | `'dark'` | 系统偏好为深色时使用的主题。 |
+| `isDarkTheme` | `(theme: string) => boolean` | - | 自定义函数判断主题是否为深色。 |
+| `children` | `React.ReactNode` | - | 子组件。 |
+
+### useTheme 返回值
+
+| 属性 | 类型 | 描述 |
+|------|------|------|
+| `theme` | `string \| undefined` | 选择的主题（如 `'system'`、`'light'`、`'dark'`）。 |
+| `resolvedTheme` | `string \| undefined` | 解析 `'system'` 后实际应用的主题。 |
+| `isDark` | `boolean` | 深色模式是否激活。 |
+| `setTheme` | `(theme: string) => void` | 更改主题的函数。 |
+| `colors` | `ThemeColors` | 计算后的主题颜色（十六进制值）。 |
+| `systemTheme` | `'light' \| 'dark' \| undefined` | 检测到的系统偏好设置。 |
+
+查看 [useTheme](/zh/hooks/usetheme) 获取完整的 hook 文档，包括独立使用方法和 ThemeColors。
+
+## 特性
+
+- **系统偏好检测**：自动检测 `prefers-color-scheme: dark`
+- **持久化**：将用户偏好保存到 localStorage（可配置）
+- **跨标签页同步**：主题更改在浏览器标签页之间同步
+- **支持所有 DaisyUI 主题**：与所有 30+ 内置主题兼容
+- **响应式更新**：当主题或系统偏好更改时自动更新
+- **Canvas 支持**：通过 `colors` 属性为 canvas/WebGL 上下文提供十六进制颜色值
+
+## 无障碍
+
+- 当 `defaultTheme="system"` 时尊重用户的系统偏好
+- 主题偏好在会话之间持久保存
+- 与减少动效偏好兼容（默认无主题过渡动画）

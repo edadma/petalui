@@ -12,6 +12,7 @@
     "publish:icons": "pnpm --filter @aster-ui/icons publish --access public",
     "publish:icons-prefixed": "pnpm --filter @aster-ui/icons-prefixed publish --access public",
     "publish:prefixed": "pnpm --filter @aster-ui/prefixed publish --access public",
-    "sync-prefixed": "rm -rf packages/prefixed/src && cp -r packages/asterui/src packages/prefixed/ && npx tsx scripts/daisyui-prefix.ts --prefix d- --dir packages/prefixed/src && jq --arg v $(jq -r .version packages/asterui/package.json) '.version = $v' packages/prefixed/package.json > tmp.json && mv tmp.json packages/prefixed/package.json"
+    "sync-prefixed": "rm -rf packages/prefixed/src && cp -r packages/asterui/src packages/prefixed/ && npx tsx scripts/daisyui-prefix.ts --prefix d- --dir packages/prefixed/src && jq --arg v $(jq -r .version packages/asterui/package.json) '.version = $v' packages/prefixed/package.json > tmp.json && mv tmp.json packages/prefixed/package.json",
+    "sync-icons-prefixed": "rm -rf packages/icons-prefixed/src packages/icons-prefixed/scripts && cp -r packages/icons/src packages/icons/scripts packages/icons-prefixed/ && sed -i \"s/'asterui'/'@aster-ui\\/prefixed'/g\" packages/icons-prefixed/src/context.tsx packages/icons-prefixed/scripts/generate.ts && jq --arg v $(jq -r .version packages/icons/package.json) '.version = $v' packages/icons-prefixed/package.json > tmp.json && mv tmp.json packages/icons-prefixed/package.json"
   }
 }

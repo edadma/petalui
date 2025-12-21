@@ -323,7 +323,57 @@ const App: React.FC = () => {
 
 ## useTheme
 
-Detects current theme and provides computed color values from DaisyUI CSS variables. Useful for canvas-based components that can't use CSS variables directly.
+Detects and controls the current theme with system preference support. Provides computed color values for canvas-based components.
+
+### With ThemeProvider (Recommended)
+
+Wrap your app with `ThemeProvider` to enable full theme control including system preference detection and localStorage persistence:
+
+```tsx
+// main.tsx
+import { ThemeProvider } from 'asterui'
+
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultTheme="system">
+    <App />
+  </ThemeProvider>
+)
+```
+
+```tsx
+// App.tsx
+import { useTheme } from 'asterui'
+
+const App: React.FC = () => {
+  const { theme, setTheme, resolvedTheme, isDark, colors } = useTheme()
+
+  return (
+    <div>
+      <p>Selected: {theme}</p>
+      <p>Applied: {resolvedTheme}</p>
+      <p>Mode: {isDark ? 'Dark' : 'Light'}</p>
+
+      <button onClick={() => setTheme('light')}>Light</button>
+      <button onClick={() => setTheme('dark')}>Dark</button>
+      <button onClick={() => setTheme('system')}>System</button>
+    </div>
+  )
+}
+```
+
+### ThemeProvider Props
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `defaultTheme` | `string` | `'system'` | Initial theme. Use `'system'` to follow browser preference. |
+| `storageKey` | `string \| false` | `'asterui-theme'` | localStorage key for persistence. Set to `false` to disable. |
+| `lightTheme` | `string` | `'light'` | Theme to use when system preference is light. |
+| `darkTheme` | `string` | `'dark'` | Theme to use when system preference is dark. |
+| `isDarkTheme` | `(theme: string) => boolean` | - | Custom function to determine if a theme is dark. |
+
+### Standalone (Without ThemeProvider)
+
+When used without a provider, `useTheme` provides read-only access to theme state:
 
 ```tsx
 import { useTheme } from 'asterui'
@@ -343,8 +393,24 @@ const App: React.FC = () => {
 
 | Property | Type | Description |
 |----------|------|-------------|
+| `theme` | `string \| undefined` | Selected theme (e.g., `'system'`, `'light'`, `'dark'`). Only with ThemeProvider. |
+| `resolvedTheme` | `string \| undefined` | Actual applied theme after resolving `'system'`. Only with ThemeProvider. |
 | `isDark` | `boolean` | True if dark mode is active |
-| `colors.background` | `string` | Base background color as hex (DaisyUI base-100) |
-| `colors.foreground` | `string` | Base text color as hex (DaisyUI base-content) |
-| `colors.primary` | `string` | Primary color as hex |
-| `colors.primaryContent` | `string` | Primary content color as hex |
+| `setTheme` | `(theme: string) => void \| undefined` | Function to change theme. Only with ThemeProvider. |
+| `colors` | `ThemeColors` | Computed theme colors as hex values |
+| `systemTheme` | `'light' \| 'dark' \| undefined` | System preference. Only with ThemeProvider. |
+
+### ThemeColors
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `background` | `string` | Base background color as hex (DaisyUI base-100) |
+| `foreground` | `string` | Base text color as hex (DaisyUI base-content) |
+| `primary` | `string` | Primary color as hex |
+| `primaryContent` | `string` | Primary content color as hex |
+| `secondary` | `string` | Secondary color as hex |
+| `accent` | `string` | Accent color as hex |
+| `info` | `string` | Info color as hex |
+| `success` | `string` | Success color as hex |
+| `warning` | `string` | Warning color as hex |
+| `error` | `string` | Error color as hex |

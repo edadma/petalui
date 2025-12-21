@@ -1,0 +1,133 @@
+---
+title: ThemeProvider
+description: Fournisseur de contexte pour la gestion des thèmes avec détection des préférences système et persistance.
+---
+
+Fournisseur de contexte pour la gestion des thèmes. Permet le contrôle programmatique du thème, la détection des préférences système, la persistance localStorage et la synchronisation entre onglets.
+
+## Import
+
+```tsx
+import { ThemeProvider, useTheme } from 'asterui'
+```
+
+## Utilisation
+
+### Configuration de Base
+
+Enveloppez votre application avec `ThemeProvider` pour activer le contrôle du thème :
+
+```tsx
+// main.tsx
+import { ThemeProvider } from 'asterui'
+
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultTheme="system">
+    <App />
+  </ThemeProvider>
+)
+```
+
+### Changement de Thème
+
+Utilisez le hook `useTheme` pour contrôler le thème :
+
+```tsx
+function ThemeSwitcher() {
+  const { theme, setTheme, resolvedTheme, isDark } = useTheme()
+
+  return (
+    <div>
+      <p>Sélectionné : {theme}</p>
+      <p>Appliqué : {resolvedTheme}</p>
+      <p>Mode : {isDark ? 'Sombre' : 'Clair'}</p>
+
+      <button onClick={() => setTheme('light')}>Clair</button>
+      <button onClick={() => setTheme('dark')}>Sombre</button>
+      <button onClick={() => setTheme('system')}>Système</button>
+    </div>
+  )
+}
+```
+
+### Thèmes DaisyUI Personnalisés
+
+Utilisez n'importe quel thème DaisyUI en le définissant directement :
+
+```tsx
+function ThemeSelector() {
+  const { setTheme, resolvedTheme } = useTheme()
+
+  const themes = ['light', 'dark', 'cupcake', 'cyberpunk', 'retro', 'valentine']
+
+  return (
+    <select value={resolvedTheme} onChange={(e) => setTheme(e.target.value)}>
+      {themes.map(t => <option key={t} value={t}>{t}</option>)}
+    </select>
+  )
+}
+```
+
+### Désactiver la Persistance
+
+Définissez `storageKey` à `false` pour désactiver la persistance localStorage :
+
+```tsx
+<ThemeProvider defaultTheme="dark" storageKey={false}>
+  <App />
+</ThemeProvider>
+```
+
+### Détection Personnalisée de Thème Sombre
+
+Pour les thèmes personnalisés, fournissez une fonction `isDarkTheme` :
+
+```tsx
+<ThemeProvider
+  defaultTheme="system"
+  isDarkTheme={(theme) => ['dark', 'night', 'dracula', 'synthwave'].includes(theme)}
+>
+  <App />
+</ThemeProvider>
+```
+
+## API
+
+### Props de ThemeProvider
+
+| Propriété | Type | Défaut | Description |
+|-----------|------|--------|-------------|
+| `defaultTheme` | `string` | `'system'` | Thème initial. Utilisez `'system'` pour suivre la préférence du navigateur. |
+| `storageKey` | `string \| false` | `'asterui-theme'` | Clé localStorage pour la persistance. Définir à `false` pour désactiver. |
+| `lightTheme` | `string` | `'light'` | Thème à utiliser quand la préférence système est claire. |
+| `darkTheme` | `string` | `'dark'` | Thème à utiliser quand la préférence système est sombre. |
+| `isDarkTheme` | `(theme: string) => boolean` | - | Fonction personnalisée pour déterminer si un thème est sombre. |
+| `children` | `React.ReactNode` | - | Composants enfants. |
+
+### Valeur de Retour de useTheme
+
+| Propriété | Type | Description |
+|-----------|------|-------------|
+| `theme` | `string \| undefined` | Le thème sélectionné (ex., `'system'`, `'light'`, `'dark'`). |
+| `resolvedTheme` | `string \| undefined` | Le thème appliqué réel après résolution de `'system'`. |
+| `isDark` | `boolean` | `true` si le mode sombre est actif. |
+| `setTheme` | `(theme: string) => void` | Fonction pour changer le thème. |
+| `colors` | `ThemeColors` | Couleurs du thème calculées en valeurs hex. |
+| `systemTheme` | `'light' \| 'dark' \| undefined` | La préférence système détectée. |
+
+Voir [useTheme](/fr/hooks/usetheme) pour la documentation complète du hook incluant l'usage autonome et ThemeColors.
+
+## Fonctionnalités
+
+- **Détection des Préférences Système** : Détecte automatiquement `prefers-color-scheme: dark`
+- **Persistance** : Sauvegarde la préférence utilisateur dans localStorage (configurable)
+- **Synchronisation Inter-Onglets** : Les changements de thème se synchronisent entre les onglets du navigateur
+- **Tous les Thèmes DaisyUI** : Fonctionne avec les 30+ thèmes intégrés de DaisyUI
+- **Mises à Jour Réactives** : Se met à jour automatiquement quand le thème ou la préférence système change
+- **Support Canvas** : Fournit des couleurs hex pour les contextes canvas/WebGL via la propriété `colors`
+
+## Accessibilité
+
+- Respecte la préférence système de l'utilisateur quand `defaultTheme="system"`
+- La préférence de thème persiste entre les sessions
+- Fonctionne avec les préférences de mouvement réduit (pas d'animations de transition de thème par défaut)

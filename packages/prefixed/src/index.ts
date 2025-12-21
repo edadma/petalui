@@ -22,8 +22,8 @@ export type { BreadcrumbProps, BreadcrumbItemProps } from './components/Breadcru
 export { Button } from './components/Button'
 export type { ButtonProps } from './components/Button'
 
-export { IconSizeContext } from './contexts/IconSizeContext'
-export type { IconSize } from './contexts/IconSizeContext'
+export { SizeContext, SizeProvider, useSize } from './contexts/SizeContext'
+export type { Size } from './contexts/SizeContext'
 
 export { CopyButton } from './components/CopyButton'
 export type { CopyButtonProps, CopyButtonPosition } from './components/CopyButton'
@@ -285,6 +285,9 @@ export type { TagProps, CheckableTagProps, TagSize, TagColor, TagVariant } from 
 
 export { ThemeController } from './components/ThemeController'
 export type { ThemeControllerSwapProps, ThemeControllerDropdownProps, ThemeControllerToggleProps } from './components/ThemeController'
+
+export { ThemeProvider, useThemeContext, useHasThemeProvider } from './components/ThemeProvider'
+export type { ThemeProviderProps, ThemeContextValue } from './components/ThemeProvider'
 
 export { TimePicker } from './components/TimePicker'
 export type { TimePickerProps } from './components/TimePicker'

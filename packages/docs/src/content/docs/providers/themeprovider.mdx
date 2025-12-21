@@ -1,0 +1,133 @@
+---
+title: ThemeProvider
+description: Context provider for theme management with system preference detection and persistence.
+---
+
+Context provider for theme management. Enables programmatic theme control, system preference detection, localStorage persistence, and cross-tab synchronization.
+
+## Import
+
+```tsx
+import { ThemeProvider, useTheme } from 'asterui'
+```
+
+## Usage
+
+### Basic Setup
+
+Wrap your app with `ThemeProvider` to enable theme control:
+
+```tsx
+// main.tsx
+import { ThemeProvider } from 'asterui'
+
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultTheme="system">
+    <App />
+  </ThemeProvider>
+)
+```
+
+### Theme Switching
+
+Use the `useTheme` hook to control the theme:
+
+```tsx
+function ThemeSwitcher() {
+  const { theme, setTheme, resolvedTheme, isDark } = useTheme()
+
+  return (
+    <div>
+      <p>Selected: {theme}</p>
+      <p>Applied: {resolvedTheme}</p>
+      <p>Mode: {isDark ? 'Dark' : 'Light'}</p>
+
+      <button onClick={() => setTheme('light')}>Light</button>
+      <button onClick={() => setTheme('dark')}>Dark</button>
+      <button onClick={() => setTheme('system')}>System</button>
+    </div>
+  )
+}
+```
+
+### Custom DaisyUI Themes
+
+Use any DaisyUI theme by setting it directly:
+
+```tsx
+function ThemeSelector() {
+  const { setTheme, resolvedTheme } = useTheme()
+
+  const themes = ['light', 'dark', 'cupcake', 'cyberpunk', 'retro', 'valentine']
+
+  return (
+    <select value={resolvedTheme} onChange={(e) => setTheme(e.target.value)}>
+      {themes.map(t => <option key={t} value={t}>{t}</option>)}
+    </select>
+  )
+}
+```
+
+### Disable Persistence
+
+Set `storageKey` to `false` to disable localStorage persistence:
+
+```tsx
+<ThemeProvider defaultTheme="dark" storageKey={false}>
+  <App />
+</ThemeProvider>
+```
+
+### Custom Dark Theme Detection
+
+For custom themes, provide an `isDarkTheme` function:
+
+```tsx
+<ThemeProvider
+  defaultTheme="system"
+  isDarkTheme={(theme) => ['dark', 'night', 'dracula', 'synthwave'].includes(theme)}
+>
+  <App />
+</ThemeProvider>
+```
+
+## API
+
+### ThemeProvider Props
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `defaultTheme` | `string` | `'system'` | Initial theme. Use `'system'` to follow browser preference. |
+| `storageKey` | `string \| false` | `'asterui-theme'` | localStorage key for persistence. Set to `false` to disable. |
+| `lightTheme` | `string` | `'light'` | Theme to use when system preference is light. |
+| `darkTheme` | `string` | `'dark'` | Theme to use when system preference is dark. |
+| `isDarkTheme` | `(theme: string) => boolean` | - | Custom function to determine if a theme is dark. |
+| `children` | `React.ReactNode` | - | Child components. |
+
+### useTheme Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `theme` | `string \| undefined` | The selected theme (e.g., `'system'`, `'light'`, `'dark'`). |
+| `resolvedTheme` | `string \| undefined` | The actual applied theme after resolving `'system'`. |
+| `isDark` | `boolean` | `true` if dark mode is active. |
+| `setTheme` | `(theme: string) => void` | Function to change theme. |
+| `colors` | `ThemeColors` | Computed theme colors as hex values. |
+| `systemTheme` | `'light' \| 'dark' \| undefined` | The detected system preference. |
+
+See [useTheme](/hooks/usetheme) for complete hook documentation including standalone usage and ThemeColors.
+
+## Features
+
+- **System Preference Detection**: Automatically detects `prefers-color-scheme: dark`
+- **Persistence**: Saves user preference to localStorage (configurable)
+- **Cross-Tab Sync**: Theme changes sync across browser tabs via storage events
+- **Any DaisyUI Theme**: Works with all 30+ built-in DaisyUI themes
+- **Reactive Updates**: Automatically updates when theme or system preference changes
+- **Canvas Support**: Provides hex colors for canvas/WebGL contexts via `colors` property
+
+## Accessibility
+
+- Respects user's system preference when `defaultTheme="system"`
+- Theme preference persists across sessions
+- Works with reduced-motion preferences (no theme transition animations by default)

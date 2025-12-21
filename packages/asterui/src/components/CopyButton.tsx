@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useClipboard } from '../hooks/useClipboard'
-import { IconSizeContext } from '../contexts/IconSizeContext'
+import { SizeProvider, useSize } from '../contexts/SizeContext'
 import { useConfig } from './ConfigProvider'
 
 // DaisyUI classes
@@ -72,7 +72,7 @@ export interface CopyButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBut
 }
 
 const CopyIcon: React.FC = () => {
-  const size = useContext(IconSizeContext) ?? 'md'
+  const size = useSize() ?? 'md'
   return (
     <svg
       className={iconSizeClasses[size]}
@@ -86,7 +86,7 @@ const CopyIcon: React.FC = () => {
 }
 
 const CheckIcon: React.FC = () => {
-  const size = useContext(IconSizeContext) ?? 'md'
+  const size = useSize() ?? 'md'
   return (
     <svg
       className={iconSizeClasses[size]}
@@ -207,9 +207,9 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
       aria-label={copied ? copiedTooltipText : tooltipText}
       {...rest}
     >
-      <IconSizeContext.Provider value={effectiveSize}>
+      <SizeProvider size={effectiveSize}>
         {content}
-      </IconSizeContext.Provider>
+      </SizeProvider>
     </button>
   )
 

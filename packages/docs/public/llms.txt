@@ -152,7 +152,7 @@ npm install asterui
   - `useKeyPress` / `useKeyPressCallback` - Detect key presses
   - `useWindowSize` - Track window dimensions
   - `useBreakpoint` - Responsive breakpoint detection
-  - `useTheme` - Detect theme and get computed colors from DaisyUI CSS variables
+  - `useTheme` + `ThemeProvider` - Theme detection, system preference support, and computed colors
 
 ## Quick Start
 

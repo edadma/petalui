@@ -1,7 +1,7 @@
 import { Button, useTheme } from 'asterui'
 
 function Logo() {
-  const { isDark } = useTheme()
+  const { colors } = useTheme()
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" className="h-12 w-auto">
       <text
@@ -11,8 +11,8 @@ function Logo() {
         fontSize="28"
         fontWeight="700"
       >
-        <tspan fill={isDark ? '#818cf8' : '#6366f1'}>Aster</tspan>
-        <tspan fill={isDark ? '#f9fafb' : '#1f2937'}>UI</tspan>
+        <tspan fill={colors.primary}>Aster</tspan>
+        <tspan fill={colors.foreground}>UI</tspan>
       </text>
     </svg>
   )

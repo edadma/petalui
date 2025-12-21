@@ -387,7 +387,6 @@ export default defineConfig({
               },
               items: [
                 { label: 'Affix', slug: 'components/affix' },
-                { label: 'ConfigProvider', slug: 'components/configprovider' },
                 { label: 'Browser', slug: 'components/browser' },
                 { label: 'Code', slug: 'components/code' },
                 { label: 'Kbd', slug: 'components/kbd' },
@@ -401,6 +400,22 @@ export default defineConfig({
                 { label: 'Window', slug: 'components/window' },
               ],
             },
+          ],
+        },
+        {
+          label: 'Providers',
+          translations: {
+            es: 'Proveedores',
+            pt: 'Provedores',
+            'pt-BR': 'Provedores',
+            zh: '提供者',
+            'zh-CN': '提供者',
+            fr: 'Fournisseurs',
+          },
+          items: [
+            { label: 'ConfigProvider', slug: 'providers/configprovider' },
+            { label: 'ThemeProvider', slug: 'providers/themeprovider' },
+            { label: 'SizeProvider', slug: 'providers/sizeprovider' },
           ],
         },
         {

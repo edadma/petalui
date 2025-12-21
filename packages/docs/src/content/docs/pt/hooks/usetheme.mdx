@@ -1,28 +1,63 @@
 ---
 title: useTheme
-description: Hook para detectar o tema atual e obter cores computadas.
+description: Hook para detectar e controlar o tema atual com suporte a preferência do sistema.
 ---
 
-Detecta o tema atual e fornece valores de cores computadas das variáveis CSS do DaisyUI. Útil para componentes baseados em canvas que não podem usar variáveis CSS diretamente.
+Hook para detectar e controlar o tema atual. Suporta detecção de preferência do sistema, persistência de tema e fornece cores calculadas para componentes baseados em canvas.
 
 ## Importação
 
 ```tsx
-import { useTheme } from 'asterui'
+import { useTheme, ThemeProvider } from 'asterui'
 ```
 
 ## Uso
+
+### Com ThemeProvider (Recomendado)
+
+Envolva sua aplicação com `ThemeProvider` para habilitar controle completo do tema:
+
+```tsx
+// main.tsx
+import { ThemeProvider } from 'asterui'
+
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultTheme="system">
+    <App />
+  </ThemeProvider>
+)
+```
+
+```tsx
+// App.tsx
+function App() {
+  const { theme, setTheme, resolvedTheme, isDark, colors } = useTheme()
+
+  return (
+    <div>
+      <p>Selecionado: {theme}</p>
+      <p>Aplicado: {resolvedTheme}</p>
+      <p>Modo: {isDark ? 'Escuro' : 'Claro'}</p>
+
+      <button onClick={() => setTheme('light')}>Claro</button>
+      <button onClick={() => setTheme('dark')}>Escuro</button>
+      <button onClick={() => setTheme('system')}>Sistema</button>
+    </div>
+  )
+}
+```
+
+### Independente (Sem ThemeProvider)
+
+Quando usado sem um provider, `useTheme` fornece acesso somente leitura ao estado do tema:
 
 ```tsx
 function ThemeAwareComponent() {
   const { isDark, colors } = useTheme()
 
   return (
-    <div style={{
-      background: colors.background,
-      color: colors.foreground
-    }}>
-      Current theme: {isDark ? 'Dark' : 'Light'}
+    <div style={{ background: colors.background, color: colors.foreground }}>
+      Modo atual: {isDark ? 'Escuro' : 'Claro'}
     </div>
   )
 }
@@ -40,34 +75,47 @@ function CanvasComponent() {
     if (!ctx) return
     ctx.fillStyle = colors.background
     ctx.fillRect(0, 0, 100, 100)
-    ctx.fillStyle = colors.foreground
-    ctx.fillText('Hello', 10, 50)
+    ctx.fillStyle = colors.primary
+    ctx.fillText('Olá', 10, 50)
   }, [colors])
 
   return <canvas ref={canvasRef} />
 }
 ```
 
-## Valor de Retorno
+Veja [ThemeProvider](/pt/providers/themeprovider) para as props do provedor e opções de configuração.
+
+## Valor de Retorno do useTheme
 
 | Propriedade | Tipo | Descrição |
-|----------|------|-------------|
-| `isDark` | `boolean` | `true` se o modo escuro está ativo |
-| `colors` | `ThemeColors` | Cores do tema computadas como valores hex |
+|-------------|------|-----------|
+| `theme` | `string \| undefined` | O tema selecionado (ex., `'system'`, `'light'`, `'dark'`). Apenas com ThemeProvider. |
+| `resolvedTheme` | `string \| undefined` | O tema aplicado após resolver `'system'`. Apenas com ThemeProvider. |
+| `isDark` | `boolean` | `true` se o modo escuro está ativo. |
+| `setTheme` | `(theme: string) => void \| undefined` | Função para mudar o tema. Apenas com ThemeProvider. |
+| `colors` | `ThemeColors` | Cores do tema calculadas como valores hex. |
+| `systemTheme` | `'light' \| 'dark' \| undefined` | A preferência do sistema. Apenas com ThemeProvider. |
 
 ### ThemeColors
 
 | Propriedade | Tipo | Descrição |
-|----------|------|-------------|
+|-------------|------|-----------|
 | `background` | `string` | Cor de fundo base (DaisyUI `base-100`) |
 | `foreground` | `string` | Cor de texto base (DaisyUI `base-content`) |
 | `primary` | `string` | Cor primária |
 | `primaryContent` | `string` | Cor de conteúdo primário |
+| `secondary` | `string` | Cor secundária |
+| `accent` | `string` | Cor de destaque |
+| `info` | `string` | Cor de informação |
+| `success` | `string` | Cor de sucesso |
+| `warning` | `string` | Cor de aviso |
+| `error` | `string` | Cor de erro |
 
-## Como Funciona
+## Recursos
 
-1. Verifica o atributo `data-theme` no elemento `<html>` (convenção DaisyUI)
-2. Recorre à media query `prefers-color-scheme: dark` se nenhum atributo estiver definido
-3. Lê variáveis CSS do DaisyUI e converte cores oklch para hex
-4. Usa MutationObserver para reagir a mudanças de tema
-5. Atualiza automaticamente as cores quando o tema muda
+- **Detecção de Preferência do Sistema**: Detecta automaticamente `prefers-color-scheme: dark`
+- **Persistência**: Salva a preferência do usuário no localStorage (configurável)
+- **Sincronização entre Abas**: Mudanças de tema sincronizam entre abas do navegador
+- **Qualquer Tema DaisyUI**: Funciona com todos os 30+ temas integrados
+- **Atualizações Reativas**: Atualiza automaticamente quando o tema ou preferência do sistema muda
+- **Suporte para Canvas**: Fornece cores hex para contextos canvas/WebGL

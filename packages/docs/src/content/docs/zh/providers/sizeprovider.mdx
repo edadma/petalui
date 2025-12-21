@@ -1,0 +1,131 @@
+---
+title: SizeProvider
+description: 用于向子组件传递组件尺寸的上下文提供者。
+---
+
+向子组件传递组件尺寸的上下文提供者。被 Button 等组件内部使用，用于将其尺寸传递给嵌套的图标。
+
+## 导入
+
+```tsx
+import { SizeProvider, useSize } from 'asterui'
+```
+
+## 使用方法
+
+### 自动尺寸传递
+
+当使用带有 `icon` 属性的 `Button` 等组件时，尺寸会自动传递给图标：
+
+```tsx
+import { Button } from 'asterui'
+import { StarIcon } from '@aster-ui/icons'
+
+function App() {
+  return (
+    <Button size="lg" icon={<StarIcon />}>
+      大按钮
+    </Button>
+  )
+}
+```
+
+`StarIcon` 将自动从 Button 接收 `lg` 尺寸。
+
+### 自定义组件
+
+使用 `SizeProvider` 创建可以将尺寸传递给子组件的自定义组件：
+
+```tsx
+import { SizeProvider, useSize } from 'asterui'
+
+function CustomIconButton({ size = 'md', icon, children }) {
+  return (
+    <SizeProvider size={size}>
+      <button className="custom-button">
+        {icon}
+        {children}
+      </button>
+    </SizeProvider>
+  )
+}
+```
+
+### 消费尺寸上下文
+
+使用 `useSize` hook 访问当前的尺寸上下文：
+
+```tsx
+import { useSize } from 'asterui'
+
+const sizeMap = {
+  xs: 12,
+  sm: 16,
+  md: 20,
+  lg: 24,
+  xl: 28,
+}
+
+function CustomIcon() {
+  const size = useSize() ?? 'md'
+  const pixels = sizeMap[size]
+
+  return (
+    <svg width={pixels} height={pixels} viewBox="0 0 24 24">
+      {/* ... */}
+    </svg>
+  )
+}
+```
+
+## API
+
+### SizeProvider 属性
+
+| 属性 | 类型 | 描述 |
+|------|------|------|
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | 提供给子组件的尺寸。 |
+| `children` | `React.ReactNode` | 可以消费尺寸上下文的子组件。 |
+
+### useSize 返回值
+
+| 返回 | 类型 | 描述 |
+|------|------|------|
+| `size` | `Size \| undefined` | 最近 `SizeProvider` 的当前尺寸，如果不在提供者内则为 `undefined`。 |
+
+## 尺寸值
+
+| 尺寸 | 典型像素值 |
+|------|-----------|
+| `xs` | 12px |
+| `sm` | 16px |
+| `md` | 20px |
+| `lg` | 24px |
+| `xl` | 28px |
+
+## 使用 SizeProvider 的组件
+
+以下组件在内部使用 `SizeProvider` 来传递其尺寸：
+
+- **Button**：将尺寸传递给 `icon` 属性
+- **CopyButton**：将尺寸传递给内置图标
+
+## 与 @aster-ui/icons 集成
+
+`@aster-ui/icons` 包设计为与 `SizeProvider` 无缝配合：
+
+```tsx
+import { Button } from 'asterui'
+import { HeartIcon, StarIcon } from '@aster-ui/icons'
+
+function App() {
+  return (
+    <>
+      <Button size="sm" icon={<HeartIcon />}>小</Button>
+      <Button size="lg" icon={<StarIcon />}>大</Button>
+    </>
+  )
+}
+```
+
+图标会根据父组件的尺寸自动调整大小，无需显式配置。

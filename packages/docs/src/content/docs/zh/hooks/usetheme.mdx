@@ -1,28 +1,63 @@
 ---
 title: useTheme
-description: 检测当前主题并获取计算颜色的 Hook。
+description: 用于检测和控制当前主题的钩子，支持系统偏好设置。
 ---
 
-检测当前主题并从 DaisyUI CSS 变量提供计算的颜色值。适用于无法直接使用 CSS 变量的基于 Canvas 的组件。
+用于检测和控制当前主题的钩子。支持系统偏好检测、主题持久化，并为基于canvas的组件提供计算后的颜色值。
 
 ## 导入
 
 ```tsx
-import { useTheme } from 'asterui'
+import { useTheme, ThemeProvider } from 'asterui'
 ```
 
-## 用法
+## 使用方法
+
+### 使用 ThemeProvider（推荐）
+
+用 `ThemeProvider` 包裹你的应用以启用完整的主题控制：
+
+```tsx
+// main.tsx
+import { ThemeProvider } from 'asterui'
+
+createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultTheme="system">
+    <App />
+  </ThemeProvider>
+)
+```
+
+```tsx
+// App.tsx
+function App() {
+  const { theme, setTheme, resolvedTheme, isDark, colors } = useTheme()
+
+  return (
+    <div>
+      <p>已选择: {theme}</p>
+      <p>已应用: {resolvedTheme}</p>
+      <p>模式: {isDark ? '深色' : '浅色'}</p>
+
+      <button onClick={() => setTheme('light')}>浅色</button>
+      <button onClick={() => setTheme('dark')}>深色</button>
+      <button onClick={() => setTheme('system')}>系统</button>
+    </div>
+  )
+}
+```
+
+### 独立使用（不使用 ThemeProvider）
+
+不使用 provider 时，`useTheme` 提供对主题状态的只读访问：
 
 ```tsx
 function ThemeAwareComponent() {
   const { isDark, colors } = useTheme()
 
   return (
-    <div style={{
-      background: colors.background,
-      color: colors.foreground
-    }}>
-      Current theme: {isDark ? 'Dark' : 'Light'}
+    <div style={{ background: colors.background, color: colors.foreground }}>
+      当前模式: {isDark ? '深色' : '浅色'}
     </div>
   )
 }
@@ -40,34 +75,47 @@ function CanvasComponent() {
     if (!ctx) return
     ctx.fillStyle = colors.background
     ctx.fillRect(0, 0, 100, 100)
-    ctx.fillStyle = colors.foreground
-    ctx.fillText('Hello', 10, 50)
+    ctx.fillStyle = colors.primary
+    ctx.fillText('你好', 10, 50)
   }, [colors])
 
   return <canvas ref={canvasRef} />
 }
 ```
 
-## 返回值
+查看 [ThemeProvider](/zh/providers/themeprovider) 了解提供者属性和配置选项。
+
+## useTheme 返回值
 
 | 属性 | 类型 | 描述 |
-|----------|------|-------------|
-| `isDark` | `boolean` | 如果启用深色模式则为 `true` |
-| `colors` | `ThemeColors` | 计算的主题颜色（十六进制值） |
+|------|------|------|
+| `theme` | `string \| undefined` | 选择的主题（如 `'system'`、`'light'`、`'dark'`）。仅在使用 ThemeProvider 时可用。 |
+| `resolvedTheme` | `string \| undefined` | 解析 `'system'` 后实际应用的主题。仅在使用 ThemeProvider 时可用。 |
+| `isDark` | `boolean` | 深色模式是否激活。 |
+| `setTheme` | `(theme: string) => void \| undefined` | 更改主题的函数。仅在使用 ThemeProvider 时可用。 |
+| `colors` | `ThemeColors` | 计算后的主题颜色（十六进制值）。 |
+| `systemTheme` | `'light' \| 'dark' \| undefined` | 系统偏好设置。仅在使用 ThemeProvider 时可用。 |
 
 ### ThemeColors
 
 | 属性 | 类型 | 描述 |
-|----------|------|-------------|
+|------|------|------|
 | `background` | `string` | 基础背景色（DaisyUI `base-100`） |
 | `foreground` | `string` | 基础文本色（DaisyUI `base-content`） |
-| `primary` | `string` | 主色 |
-| `primaryContent` | `string` | 主色内容色 |
+| `primary` | `string` | 主要颜色 |
+| `primaryContent` | `string` | 主要内容颜色 |
+| `secondary` | `string` | 次要颜色 |
+| `accent` | `string` | 强调颜色 |
+| `info` | `string` | 信息颜色 |
+| `success` | `string` | 成功颜色 |
+| `warning` | `string` | 警告颜色 |
+| `error` | `string` | 错误颜色 |
 
-## 工作原理
+## 特性
 
-1. 检查 `<html>` 元素的 `data-theme` 属性（DaisyUI 约定）
-2. 如果未设置属性，则回退到 `prefers-color-scheme: dark` 媒体查询
-3. 读取 DaisyUI CSS 变量并将 oklch 颜色转换为十六进制
-4. 使用 MutationObserver 响应主题更改
-5. 主题更改时自动更新颜色
+- **系统偏好检测**：自动检测 `prefers-color-scheme: dark`
+- **持久化**：将用户偏好保存到 localStorage（可配置）
+- **跨标签页同步**：主题更改在浏览器标签页之间同步
+- **支持所有 DaisyUI 主题**：与所有 30+ 内置主题兼容
+- **响应式更新**：当主题或系统偏好更改时自动更新
+- **Canvas 支持**：为 canvas/WebGL 上下文提供十六进制颜色值

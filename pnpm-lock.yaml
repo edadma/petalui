@@ -375,8 +375,8 @@ importers:
   packages/examples/starter:
     dependencies:
       asterui:
-        specifier: ^0.12.0
-        version: 0.12.54(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react-hook-form@7.66.1(react@19.2.0))(react@19.2.0)
+        specifier: workspace:*
+        version: link:../../asterui
       react:
         specifier: ^19.0.0
         version: 19.2.0
@@ -2024,38 +2024,6 @@ packages:
 
   array-iterate@2.0.1:
     resolution: {integrity: sha512-I1jXZMjAgCMmxT4qxXfPXa6SthSoE8h6gkSI9BGGNv8mP8G/v0blc+qFnZu6K42vTOiuME596QaLO0TP3Lk0xg==}
-
-  asterui@0.12.54:
-    resolution: {integrity: sha512-XlmrU+XjpUuezfKbgyMwVtl2H6zdR39PYYETXspcQxvqLRdKgOILBpat3QPVxuwQK6HK9vLJX8CA2GRDEiIFrQ==}
-    peerDependencies:
-      '@tanstack/react-virtual': ^3.0.0
-      '@tiptap/extension-link': ^2.0.0
-      '@tiptap/extension-placeholder': ^2.0.0
-      '@tiptap/extension-underline': ^2.0.0
-      '@tiptap/react': ^2.0.0
-      '@tiptap/starter-kit': ^2.0.0
-      apexcharts: ^5.3.6
-      qrcode: ^1.5.4
-      react: ^18.0.0 || ^19.0.0
-      react-dom: ^18.0.0 || ^19.0.0
-      react-hook-form: ^7.0.0
-    peerDependenciesMeta:
-      '@tanstack/react-virtual':
-        optional: true
-      '@tiptap/extension-link':
-        optional: true
-      '@tiptap/extension-placeholder':
-        optional: true
-      '@tiptap/extension-underline':
-        optional: true
-      '@tiptap/react':
-        optional: true
-      '@tiptap/starter-kit':
-        optional: true
-      apexcharts:
-        optional: true
-      qrcode:
-        optional: true
 
   astring@1.9.0:
     resolution: {integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==}
@@ -5225,21 +5193,6 @@ snapshots:
   aria-query@5.3.2: {}
 
   array-iterate@2.0.1: {}
-
-  asterui@0.12.54(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react-hook-form@7.66.1(react@19.2.0))(react@19.2.0):
-    dependencies:
-      react: 19.2.0
-      react-dom: 19.2.0(react@19.2.0)
-      react-hook-form: 7.66.1(react@19.2.0)
-    optionalDependencies:
-      '@tanstack/react-virtual': 3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@tiptap/extension-link': 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)
-      '@tiptap/extension-placeholder': 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)
-      '@tiptap/extension-underline': 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))
-      '@tiptap/react': 2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
-      '@tiptap/starter-kit': 2.27.1
-      apexcharts: 5.3.6
-      qrcode: 1.5.4
 
   astring@1.9.0: {}
 

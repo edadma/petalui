@@ -1,0 +1,131 @@
+---
+title: SizeProvider
+description: Proveedor de contexto para transmitir el tamaño del componente a los componentes hijos.
+---
+
+Proveedor de contexto que transmite el tamaño del componente a los componentes hijos. Usado internamente por componentes como Button para pasar su tamaño a iconos anidados.
+
+## Importar
+
+```tsx
+import { SizeProvider, useSize } from 'asterui'
+```
+
+## Uso
+
+### Propagación Automática de Tamaño
+
+Al usar componentes como `Button` con la prop `icon`, el tamaño se propaga automáticamente al icono:
+
+```tsx
+import { Button } from 'asterui'
+import { StarIcon } from '@aster-ui/icons'
+
+function App() {
+  return (
+    <Button size="lg" icon={<StarIcon />}>
+      Botón Grande
+    </Button>
+  )
+}
+```
+
+El `StarIcon` recibirá automáticamente el tamaño `lg` del Button.
+
+### Componentes Personalizados
+
+Usa `SizeProvider` para crear componentes personalizados que propaguen el tamaño a los hijos:
+
+```tsx
+import { SizeProvider, useSize } from 'asterui'
+
+function CustomIconButton({ size = 'md', icon, children }) {
+  return (
+    <SizeProvider size={size}>
+      <button className="custom-button">
+        {icon}
+        {children}
+      </button>
+    </SizeProvider>
+  )
+}
+```
+
+### Consumir el Contexto de Tamaño
+
+Usa el hook `useSize` para acceder al contexto de tamaño actual:
+
+```tsx
+import { useSize } from 'asterui'
+
+const sizeMap = {
+  xs: 12,
+  sm: 16,
+  md: 20,
+  lg: 24,
+  xl: 28,
+}
+
+function CustomIcon() {
+  const size = useSize() ?? 'md'
+  const pixels = sizeMap[size]
+
+  return (
+    <svg width={pixels} height={pixels} viewBox="0 0 24 24">
+      {/* ... */}
+    </svg>
+  )
+}
+```
+
+## API
+
+### Props de SizeProvider
+
+| Propiedad | Tipo | Descripción |
+|-----------|------|-------------|
+| `size` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | Tamaño a proporcionar a los componentes hijos. |
+| `children` | `React.ReactNode` | Componentes hijos que pueden consumir el contexto de tamaño. |
+
+### Valor de Retorno de useSize
+
+| Retorno | Tipo | Descripción |
+|---------|------|-------------|
+| `size` | `Size \| undefined` | El tamaño actual del `SizeProvider` más cercano, o `undefined` si no está dentro de un proveedor. |
+
+## Valores de Tamaño
+
+| Tamaño | Valor Típico en Píxeles |
+|--------|-------------------------|
+| `xs` | 12px |
+| `sm` | 16px |
+| `md` | 20px |
+| `lg` | 24px |
+| `xl` | 28px |
+
+## Componentes que Usan SizeProvider
+
+Los siguientes componentes usan `SizeProvider` internamente para propagar su tamaño:
+
+- **Button**: Pasa el tamaño a la prop `icon`
+- **CopyButton**: Pasa el tamaño a los iconos integrados
+
+## Integración con @aster-ui/icons
+
+El paquete `@aster-ui/icons` está diseñado para funcionar perfectamente con `SizeProvider`:
+
+```tsx
+import { Button } from 'asterui'
+import { HeartIcon, StarIcon } from '@aster-ui/icons'
+
+function App() {
+  return (
+    <>
+      <Button size="sm" icon={<HeartIcon />}>Pequeño</Button>
+      <Button size="lg" icon={<StarIcon />}>Grande</Button>
+    </>
+  )
+}
+```
+
+Los iconos ajustan automáticamente su tamaño según el tamaño del componente padre sin configuración explícita.

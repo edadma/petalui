@@ -1,37 +1,32 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
+import { useHasThemeProvider, useThemeContext, type ThemeColors } from '../components/ThemeProvider'
 
-export interface ThemeColors {
-  /** Base background color (--color-base-100) */
-  background: string
-  /** Base content/text color (--color-base-content) */
-  foreground: string
-  /** Primary color (--color-primary) */
-  primary: string
-  /** Primary content color (--color-primary-content) */
-  primaryContent: string
-  /** Secondary color (--color-secondary) */
-  secondary: string
-  /** Accent color (--color-accent) */
-  accent: string
-  /** Info color (--color-info) */
-  info: string
-  /** Success color (--color-success) */
-  success: string
-  /** Warning color (--color-warning) */
-  warning: string
-  /** Error color (--color-error) */
-  error: string
-}
+export type { ThemeColors }
+
+// Common dark themes in DaisyUI
+const DARK_THEMES = new Set([
+  'dark', 'synthwave', 'halloween', 'forest', 'black', 'luxury', 'dracula',
+  'business', 'night', 'coffee', 'dim', 'sunset'
+])
 
 export interface UseThemeReturn {
+  /** The theme setting (what user selected). Only available with ThemeProvider. */
+  theme: string | undefined
+  /** The actual applied theme. Only available with ThemeProvider. */
+  resolvedTheme: string | undefined
   /** Whether dark mode is active */
   isDark: boolean
+  /** Set the theme. Only available with ThemeProvider. */
+  setTheme: ((theme: string) => void) | undefined
   /** Computed theme colors as hex values */
   colors: ThemeColors
+  /** The system preference. Only available with ThemeProvider. */
+  systemTheme: 'light' | 'dark' | undefined
 }
 
 // Convert any CSS color to hex
 function colorToHex(color: string): string {
+  if (typeof document === 'undefined') return '#000000'
   const canvas = document.createElement('canvas')
   canvas.width = canvas.height = 1
   const ctx = canvas.getContext('2d')
@@ -43,14 +38,27 @@ function colorToHex(color: string): string {
 }
 
 function getThemeColors(): ThemeColors {
-  const style = getComputedStyle(document.documentElement)
+  if (typeof document === 'undefined') {
+    return {
+      background: '#ffffff',
+      foreground: '#000000',
+      primary: '#6366f1',
+      primaryContent: '#ffffff',
+      secondary: '#f000b8',
+      accent: '#37cdbe',
+      info: '#3abff8',
+      success: '#36d399',
+      warning: '#fbbd23',
+      error: '#f87272',
+    }
+  }
 
+  const style = getComputedStyle(document.documentElement)
   const getColor = (varName: string, fallback: string): string => {
     const value = style.getPropertyValue(varName).trim()
     return value ? colorToHex(value) : fallback
   }
 
-  // DaisyUI v5 uses --color-* variables with full oklch() values
   return {
     background: getColor('--color-base-100', '#ffffff'),
     foreground: getColor('--color-base-content', '#000000'),
@@ -65,71 +73,118 @@ function getThemeColors(): ThemeColors {
   }
 }
 
+function getSystemTheme(): 'light' | 'dark' {
+  if (typeof window === 'undefined') return 'light'
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function getCurrentTheme(): string | null {
+  if (typeof document === 'undefined') return null
+  return document.documentElement.getAttribute('data-theme')
+}
+
 /**
- * Hook to detect current theme and get computed colors
+ * Hook to detect current theme and get computed colors.
  *
- * Checks the `data-theme` attribute on the document root (for DaisyUI themes)
- * and falls back to system preference via `prefers-color-scheme`.
+ * When used within a ThemeProvider, returns full theme control including
+ * setTheme, theme selection, and resolved theme.
  *
- * Returns both the dark mode state and computed theme colors as hex values,
- * useful for canvas-based components that can't use CSS variables directly.
+ * When used standalone (without ThemeProvider), provides read-only access
+ * to isDark and colors based on the current data-theme attribute and
+ * system preference.
  *
- * Automatically updates when theme changes.
+ * @example
+ * // With ThemeProvider (full control)
+ * const { theme, setTheme, resolvedTheme, isDark, colors } = useTheme()
+ * setTheme('dark')
+ * setTheme('system')
+ *
+ * @example
+ * // Without ThemeProvider (read-only)
+ * const { isDark, colors } = useTheme()
+ * // colors.primary, colors.foreground, etc.
  */
 export function useTheme(): UseThemeReturn {
-  const [state, setState] = useState<UseThemeReturn>({
-    isDark: false,
-    colors: {
-      background: '#ffffff',
-      foreground: '#000000',
-      primary: '#6366f1',
-      primaryContent: '#ffffff',
-      secondary: '#f000b8',
-      accent: '#37cdbe',
-      info: '#3abff8',
-      success: '#36d399',
-      warning: '#fbbd23',
-      error: '#f87272',
+  const hasProvider = useHasThemeProvider()
+
+  // If we have a provider, use its context
+  if (hasProvider) {
+    // This is safe because hasProvider is stable after initial render
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const context = useThemeContext()
+    return {
+      theme: context.theme,
+      resolvedTheme: context.resolvedTheme,
+      isDark: context.isDark,
+      setTheme: context.setTheme,
+      colors: context.colors,
+      systemTheme: context.systemTheme,
     }
-  })
+  }
+
+  // Standalone mode - no provider
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  return useThemeStandalone()
+}
+
+/**
+ * Standalone theme detection (no ThemeProvider)
+ */
+function useThemeStandalone(): UseThemeReturn {
+  const [state, setState] = useState<{ isDark: boolean; colors: ThemeColors }>(() => ({
+    isDark: false,
+    colors: getThemeColors(),
+  }))
 
   useEffect(() => {
-    const checkTheme = () => {
-      const html = document.documentElement
-      const theme = html.getAttribute('data-theme')
-      // Check for explicit dark theme or system preference
-      const isDark = theme === 'dark' ||
-        (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    const updateTheme = () => {
+      const currentTheme = getCurrentTheme()
+      const systemTheme = getSystemTheme()
 
-      // Small delay to ensure CSS variables are updated
+      // Determine if dark based on data-theme or system preference
+      let isDark = false
+      if (currentTheme) {
+        isDark = DARK_THEMES.has(currentTheme)
+      } else {
+        isDark = systemTheme === 'dark'
+      }
+
+      // Update colors after a frame
       requestAnimationFrame(() => {
         setState({
           isDark,
-          colors: getThemeColors()
+          colors: getThemeColors(),
         })
       })
     }
 
-    checkTheme()
+    updateTheme()
 
     // Watch for theme changes via attribute mutation
-    const observer = new MutationObserver(checkTheme)
+    const observer = new MutationObserver(updateTheme)
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme', 'class']
     })
 
-    // Also watch for system preference changes
+    // Watch for system preference changes
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    mediaQuery.addEventListener('change', checkTheme)
+    mediaQuery.addEventListener('change', updateTheme)
 
     return () => {
       observer.disconnect()
-      mediaQuery.removeEventListener('change', checkTheme)
+      mediaQuery.removeEventListener('change', updateTheme)
     }
   }, [])
 
-  return state
+  return useMemo(() => ({
+    theme: undefined,
+    resolvedTheme: undefined,
+    isDark: state.isDark,
+    setTheme: undefined,
+    colors: state.colors,
+    systemTheme: undefined,
+  }), [state.isDark, state.colors])
 }
 
 export default useTheme

@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconSizeContext } from '../contexts/IconSizeContext'
+import { SizeProvider } from '../contexts/SizeContext'
 import { useConfig } from './ConfigProvider'
 
 // DaisyUI classes
@@ -152,11 +152,11 @@ export const Button: React.FC<ButtonProps> = ({
   const iconSpacing = hasChildren ? spacingBySize[effectiveSize] : ''
 
   const iconElement = icon && (
-    <IconSizeContext.Provider value={effectiveSize}>
+    <SizeProvider size={effectiveSize}>
       <span className={`inline-flex items-center ${iconSpacing}`} aria-hidden="true">
         {icon}
       </span>
-    </IconSizeContext.Provider>
+    </SizeProvider>
   )
 
   const content = (

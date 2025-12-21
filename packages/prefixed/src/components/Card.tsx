@@ -20,7 +20,7 @@ const dTabDisabled = 'd-tab-disabled'
 const dTabs = 'd-tabs'
 
 export type CardSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-export type CardVariant = 'default' | 'border' | 'dash' | 'borderless'
+export type CardVariant = 'shadow' | 'border' | 'dash' | 'borderless'
 
 export interface CardTabItem {
   key: string
@@ -36,8 +36,6 @@ export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
   cover?: React.ReactNode
   actions?: React.ReactNode
   size?: CardSize
-  /** @deprecated Use variant instead */
-  bordered?: boolean
   /** Card style variant */
   variant?: CardVariant
   /** Inner card style (nested cards) */
@@ -86,7 +84,7 @@ const sizeClasses: Record<CardSize, string> = {
 }
 
 const variantClasses: Record<CardVariant, string> = {
-  default: 'shadow-sm',
+  shadow: 'shadow-sm',
   border: dCardBorder,
   dash: dCardDash,
   borderless: '',
@@ -144,8 +142,7 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
       actions,
       className = '',
       size,
-      bordered,
-      variant,
+      variant = 'shadow',
       type,
       side = false,
       imageFull = false,
@@ -180,15 +177,12 @@ const CardRoot = forwardRef<HTMLDivElement, CardProps>(
       onTabChange?.(key)
     }
 
-    // Resolve variant from bordered prop for backwards compatibility
-    const resolvedVariant = variant ?? (bordered === false ? 'borderless' : 'default')
-
     const classes = [
       dCard,
       'bg-base-100',
       size && sizeClasses[size],
       // Don't add variant styling when imageFull is used (it breaks the overlay effect)
-      !imageFull && variantClasses[resolvedVariant],
+      !imageFull && variantClasses[variant],
       side && dCardSide,
       imageFull && 'image-full shadow-sm',
       hoverable && 'transition-shadow hover:shadow-lg cursor-pointer',

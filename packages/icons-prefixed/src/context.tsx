@@ -1,9 +1,5 @@
-import { useContext } from 'react'
-import { IconSizeContext } from '@aster-ui/prefixed'
-import type { IconSize } from './types'
+import { useSize, SizeContext } from '@aster-ui/prefixed'
+import type { Size } from '@aster-ui/prefixed'
 
-export { IconSizeContext }
-
-export function useIconSize(): IconSize | undefined {
-  return useContext(IconSizeContext)
-}
+export { SizeContext, useSize }
+export type { Size }
