@@ -27,21 +27,15 @@ export function AutoplayDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Carousel autoplay autoplaySpeed={2000} className="w-full max-w-md h-40">
+      <Carousel autoplay autoplaySpeed={2000} className="w-full max-w-md h-48">
         <Carousel.Item>
-          <div className="bg-primary text-primary-content h-full flex items-center justify-center">
-            <span className="text-2xl">Slide 1</span>
-          </div>
+          <img src="https://picsum.photos/seed/1/400/200" alt="Slide 1" className="w-full h-full object-cover" />
         </Carousel.Item>
         <Carousel.Item>
-          <div className="bg-secondary text-secondary-content h-full flex items-center justify-center">
-            <span className="text-2xl">Slide 2</span>
-          </div>
+          <img src="https://picsum.photos/seed/2/400/200" alt="Slide 2" className="w-full h-full object-cover" />
         </Carousel.Item>
         <Carousel.Item>
-          <div className="bg-accent text-accent-content h-full flex items-center justify-center">
-            <span className="text-2xl">Slide 3</span>
-          </div>
+          <img src="https://picsum.photos/seed/3/400/200" alt="Slide 3" className="w-full h-full object-cover" />
         </Carousel.Item>
       </Carousel>
       {/* @example-return-end */}

@@ -18,13 +18,24 @@ import { execSync } from 'child_process'
 const BASE_URL = process.env.BASE_URL || 'https://asterui.com'
 const OUTPUT_DIR = join(import.meta.dirname, '../public/components')
 
-// Components that need GIF capture (animated)
-const ANIMATED_COMPONENTS = new Set([
-  'carousel',
-  'countdown',
-  'loading',
-  'textrotate',
-])
+// Animation config: duration in ms, frames, and playback fps
+// The key is to match real animation speed - capture at real-time, play back at real-time
+interface AnimationConfig {
+  duration: number   // Total capture duration in ms
+  frames: number     // Number of frames to capture
+  fps: number        // Playback framerate (frames / (duration/1000) for 1:1 speed)
+}
+
+const ANIMATED_COMPONENTS: Record<string, AnimationConfig> = {
+  // Carousel: autoplaySpeed=2000 (2s per slide), capture 3 slides
+  'carousel': { duration: 6000, frames: 30, fps: 5 },
+  // Countdown: 1 second per digit, 10fps for smooth + real-time
+  'countdown': { duration: 5000, frames: 50, fps: 10 },
+  // Loading: continuous spin, 10fps
+  'loading': { duration: 2000, frames: 20, fps: 10 },
+  // Text rotate: ~2 seconds per text, capture 2 rotations
+  'textrotate': { duration: 4000, frames: 20, fps: 5 },
+}
 
 // Configure which demo to capture and any setup actions
 interface DemoConfig {
@@ -37,6 +48,7 @@ interface DemoConfig {
 
 const DEMO_CONFIG: Record<string, DemoConfig> = {
   'card': { demo: 2 },
+  'carousel': { demo: 2 },  // AutoplayDemo with autoplaySpeed={2000}
   'collapse': { click: '.collapse-title' },
   // These components have floating elements that are hard to capture cleanly
   // Just show them in their closed/default state
@@ -143,8 +155,9 @@ async function captureComponent(page: any, slug: string, theme: 'light' | 'dark'
   }
 }
 
-async function captureAnimatedComponent(page: any, slug: string, theme: 'light' | 'dark', frames = 20, duration = 2000) {
+async function captureAnimatedComponent(page: any, slug: string, theme: 'light' | 'dark', config: AnimationConfig) {
   const url = `${BASE_URL}/components/${slug}`
+  const { duration, frames, fps } = config
 
   try {
     await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 30000 })
@@ -168,6 +181,7 @@ async function captureAnimatedComponent(page: any, slug: string, theme: 'light' 
     }
 
     const interval = duration / frames
+    const startTime = Date.now()
     for (let i = 0; i < frames; i++) {
       await component.screenshot({
         path: join(frameDir, `frame-${String(i).padStart(3, '0')}.png`),
@@ -176,12 +190,16 @@ async function captureAnimatedComponent(page: any, slug: string, theme: 'light' 
       })
       await page.waitForTimeout(interval)
     }
+    const actualDuration = Date.now() - startTime
 
-    // Convert to GIF
+    // Calculate fps based on actual elapsed time for 1:1 real-time playback
+    const realFps = Math.round(frames / (actualDuration / 1000) * 100) / 100
+
+    // Convert to GIF with calculated fps for real-time playback
     const gifPath = join(OUTPUT_DIR, `${slug}${suffix}.gif`)
     try {
-      execSync(`ffmpeg -y -framerate 10 -i "${frameDir}/frame-%03d.png" -vf "palettegen" "${frameDir}/palette.png"`, { stdio: 'pipe' })
-      execSync(`ffmpeg -y -framerate 10 -i "${frameDir}/frame-%03d.png" -i "${frameDir}/palette.png" -lavfi "paletteuse" "${gifPath}"`, { stdio: 'pipe' })
+      execSync(`ffmpeg -y -framerate ${realFps} -i "${frameDir}/frame-%03d.png" -vf "palettegen" "${frameDir}/palette.png"`, { stdio: 'pipe' })
+      execSync(`ffmpeg -y -framerate ${realFps} -i "${frameDir}/frame-%03d.png" -i "${frameDir}/palette.png" -lavfi "paletteuse" "${gifPath}"`, { stdio: 'pipe' })
       // Clean up frames
       execSync(`rm -rf "${frameDir}"`, { stdio: 'pipe' })
     } catch {
@@ -208,7 +226,7 @@ async function main() {
 
   const browser = await chromium.launch()
   const context = await browser.newContext({
-    viewport: { width: 800, height: 600 },
+    viewport: { width: 1400, height: 800 },
   })
   const page = await context.newPage()
 
@@ -220,13 +238,13 @@ async function main() {
   let failed = 0
 
   for (const slug of componentsToCapture) {
-    const isAnimated = ANIMATED_COMPONENTS.has(slug)
+    const animConfig = ANIMATED_COMPONENTS[slug]
 
     for (const theme of themes) {
       process.stdout.write(`Capturing ${slug} (${theme})... `)
 
-      const result = isAnimated
-        ? await captureAnimatedComponent(page, slug, theme)
+      const result = animConfig
+        ? await captureAnimatedComponent(page, slug, theme, animConfig)
         : await captureComponent(page, slug, theme)
 
       if (result) {
