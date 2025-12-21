@@ -33,8 +33,8 @@ const ANIMATED_COMPONENTS: Record<string, AnimationConfig> = {
   'countdown': { duration: 5000, frames: 50, fps: 10 },
   // Loading: continuous spin, 10fps
   'loading': { duration: 2000, frames: 20, fps: 10 },
-  // Text rotate: ~2 seconds per text, capture 2 rotations
-  'textrotate': { duration: 4000, frames: 20, fps: 5 },
+  // Text rotate: ~2 seconds per text, capture 2 rotations at 30fps
+  'textrotate': { duration: 4000, frames: 120, fps: 30 },
 }
 
 // Configure which demo to capture and any setup actions
@@ -44,12 +44,16 @@ interface DemoConfig {
   click?: string          // Selector to click before capturing
   wait?: number           // Extra wait time after click (ms)
   captureArea?: boolean   // Capture the whole demo area (for dropdowns, popovers, etc.)
+  padding?: string        // Add padding to demo area (for overflow elements like badges)
+  center?: boolean        // Center content in demo area
 }
 
 const DEMO_CONFIG: Record<string, DemoConfig> = {
+  'badge': { demo: 1, captureArea: true, padding: '1.5rem 0.5rem 0.5rem 0.5rem' },  // BasicDemo with padding for overflow
   'card': { demo: 2 },
   'carousel': { demo: 2 },  // AutoplayDemo with autoplaySpeed={2000}
   'collapse': { click: '.collapse-title' },
+  'countdown': { captureArea: true, padding: '0.5rem', center: true },
   // These components have floating elements that are hard to capture cleanly
   // Just show them in their closed/default state
 }
@@ -79,13 +83,16 @@ const COMPONENTS = [
 async function getComponentElement(page: any, slug: string) {
   const config = DEMO_CONFIG[slug] || {}
 
-  // Hide demo area backgrounds
+  // Hide demo area backgrounds, apply custom padding/centering if configured
+  const padding = config.padding || '0'
+  const centerStyles = config.center ? 'display: flex !important; justify-content: center !important; align-items: center !important;' : ''
   await page.addStyleTag({
     content: `
       .demo-area {
         background: transparent !important;
         background-image: none !important;
-        padding: 0 !important;
+        padding: ${padding} !important;
+        ${centerStyles}
       }
     `
   })
