@@ -16,6 +16,19 @@ export function BasicDemo() {
 }
 
 // @example-imports: { Card } from 'asterui'
+export function BorderedDemo() {
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Card variant="border" title="Card Title" style={{ width: '20rem' }}>
+        <p>A card with a solid border instead of a shadow.</p>
+      </Card>
+      {/* @example-return-end */}
+    </Demo>
+  )
+}
+
+// @example-imports: { Card } from 'asterui'
 export function WithCoverDemo() {
   return (
     <Demo>

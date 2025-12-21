@@ -1,0 +1,27 @@
+---
+import { createHighlighter, type Highlighter } from 'shiki'
+
+interface Props {
+  code: string
+  lang?: string
+}
+
+const { code, lang = 'typescript' } = Astro.props
+
+// Common languages used in docs
+const defaultLangs = ['typescript', 'tsx', 'javascript', 'jsx', 'bash', 'json', 'css', 'html']
+
+// Cache highlighter at module level
+const cache = (globalThis as any).__shikiLightCache ??= { highlighter: null as Highlighter | null, langs: new Set<string>() }
+
+if (!cache.highlighter) {
+  cache.highlighter = await createHighlighter({ themes: ['github-light'], langs: defaultLangs })
+  defaultLangs.forEach(l => cache.langs.add(l))
+} else if (!cache.langs.has(lang)) {
+  await cache.highlighter.loadLanguage(lang as any)
+  cache.langs.add(lang)
+}
+
+const html = cache.highlighter.codeToHtml(code, { lang, theme: 'github-light' })
+---
+<Fragment set:html={html} />

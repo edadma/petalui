@@ -1,8 +1,7 @@
 ---
 import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
-import { Code } from 'astro:components'
-import githubLight from '@shikijs/themes/github-light'
-import githubDark from '@shikijs/themes/github-dark'
+import CodeLight from '../../components/CodeLight.astro'
+import CodeDark from '../../components/CodeDark.astro'
 import Example from '../../components/Example.astro'
 import {
   LineDemo,
@@ -30,12 +29,12 @@ import ChartDemoSource from '../../components/ChartDemo.tsx?raw'
 
   <h2>Installation</h2>
   <p>This component requires <code>apexcharts</code> as a peer dependency:</p>
-  <div class="theme-code light-only"><Code code="npm install apexcharts" lang="bash" theme={githubLight} /></div>
-  <div class="theme-code dark-only"><Code code="npm install apexcharts" lang="bash" theme={githubDark} /></div>
+  <div class="theme-code light-only"><CodeLight code="npm install apexcharts" lang="bash" /></div>
+  <div class="theme-code dark-only"><CodeDark code="npm install apexcharts" lang="bash" /></div>
 
   <h2>Import</h2>
-  <div class="theme-code light-only"><Code code="import { Chart } from 'asterui/chart'" lang="tsx" theme={githubLight} /></div>
-  <div class="theme-code dark-only"><Code code="import { Chart } from 'asterui/chart'" lang="tsx" theme={githubDark} /></div>
+  <div class="theme-code light-only"><CodeLight code="import { Chart } from 'asterui/chart'" lang="tsx" /></div>
+  <div class="theme-code dark-only"><CodeDark code="import { Chart } from 'asterui/chart'" lang="tsx" /></div>
 
   <h2>Examples</h2>
 

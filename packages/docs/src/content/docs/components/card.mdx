@@ -6,6 +6,7 @@ tableOfContents: false
 
 import {
   BasicDemo,
+  BorderedDemo,
   WithCoverDemo,
   WithActionsDemo,
   VariantsDemo,
@@ -38,6 +39,10 @@ import { Card } from 'asterui'
 
 <Example title="Basic Card" description="Simple card with title and content." source={CardDemoSource} fn="BasicDemo">
   <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Bordered" description="Card with a solid border instead of shadow." source={CardDemoSource} fn="BorderedDemo">
+  <BorderedDemo client:load slot="demo" />
 </Example>
 
 <Example title="With Cover Image" description="Card with a cover image above the content." source={CardDemoSource} fn="WithCoverDemo">
