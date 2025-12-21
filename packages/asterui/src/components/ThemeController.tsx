@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useId } from 'react'
 import { useConfig } from './ConfigProvider'
+import { useTheme } from '../hooks/useTheme'
 
 // DaisyUI classes
 const dSwap = 'swap'
@@ -47,8 +48,8 @@ function getCurrentTheme(): string | null {
   return document.documentElement.getAttribute('data-theme')
 }
 
-// Set theme on document
-function setTheme(theme: string) {
+// Set theme directly on document (fallback when no ThemeProvider)
+function setThemeDirectly(theme: string) {
   document.documentElement.setAttribute('data-theme', theme)
 }
 
@@ -58,20 +59,28 @@ function ThemeControllerSwap({
   onChange,
   className = '',
 }: ThemeControllerSwapProps) {
+  const { setTheme: contextSetTheme, isDark: contextIsDark } = useTheme()
+  const setTheme = contextSetTheme ?? setThemeDirectly
+
   const [isDark, setIsDark] = useState(() => {
+    if (contextIsDark !== undefined) return contextIsDark
     const current = getCurrentTheme()
     return current === darkTheme
   })
 
-  // Sync with external theme changes
+  // Sync with context or external theme changes
   useEffect(() => {
+    if (contextIsDark !== undefined) {
+      setIsDark(contextIsDark)
+      return
+    }
     const observer = new MutationObserver(() => {
       const current = getCurrentTheme()
       setIsDark(current === darkTheme)
     })
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     return () => observer.disconnect()
-  }, [darkTheme])
+  }, [darkTheme, contextIsDark])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked
@@ -113,15 +122,23 @@ function ThemeControllerDropdown({
   onChange,
   className = '',
 }: ThemeControllerDropdownProps) {
+  const { setTheme: contextSetTheme, resolvedTheme } = useTheme()
+  const setTheme = contextSetTheme ?? setThemeDirectly
   const radioName = useId()
+
   const [selectedTheme, setSelectedTheme] = useState(() => {
+    if (resolvedTheme && themes.includes(resolvedTheme)) return resolvedTheme
     const current = getCurrentTheme()
     if (current && themes.includes(current)) return current
     return defaultTheme || themes[0] || 'light'
   })
 
-  // Sync with external theme changes
+  // Sync with context or external theme changes
   useEffect(() => {
+    if (resolvedTheme && themes.includes(resolvedTheme)) {
+      setSelectedTheme(resolvedTheme)
+      return
+    }
     const observer = new MutationObserver(() => {
       const current = getCurrentTheme()
       if (current && themes.includes(current)) {
@@ -130,7 +147,7 @@ function ThemeControllerDropdown({
     })
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     return () => observer.disconnect()
-  }, [themes])
+  }, [themes, resolvedTheme])
 
   const handleChange = (theme: string) => {
     setSelectedTheme(theme)
@@ -190,22 +207,29 @@ function ThemeControllerToggle({
   className = '',
 }: ThemeControllerToggleProps) {
   const { componentSize } = useConfig()
+  const { setTheme: contextSetTheme, isDark: contextIsDark } = useTheme()
+  const setTheme = contextSetTheme ?? setThemeDirectly
   const effectiveSize = size ?? componentSize ?? 'md'
 
   const [isDark, setIsDark] = useState(() => {
+    if (contextIsDark !== undefined) return contextIsDark
     const current = getCurrentTheme()
     return current === darkTheme
   })
 
-  // Sync with external theme changes
+  // Sync with context or external theme changes
   useEffect(() => {
+    if (contextIsDark !== undefined) {
+      setIsDark(contextIsDark)
+      return
+    }
     const observer = new MutationObserver(() => {
       const current = getCurrentTheme()
       setIsDark(current === darkTheme)
     })
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] })
     return () => observer.disconnect()
-  }, [darkTheme])
+  }, [darkTheme, contextIsDark])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked

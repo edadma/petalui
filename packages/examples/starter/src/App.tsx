@@ -1,4 +1,4 @@
-import { Button, useTheme } from 'asterui'
+import { Button, useTheme, ThemeController } from 'asterui'
 
 function Logo() {
   const { colors } = useTheme()
@@ -20,7 +20,10 @@ function Logo() {
 
 function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-base-200">
+    <div className="min-h-screen flex items-center justify-center bg-base-200 relative">
+      <div className="absolute top-4 right-4">
+        <ThemeController.Swap />
+      </div>
       <div className="text-center space-y-6">
         <Logo />
         <p className="text-base-content/70">
