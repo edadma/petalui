@@ -1,6 +1,6 @@
 {
   "name": "@aster-ui/icons-prefixed",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Heroicons wrapper with AsterUI size tokens (prefixed version)",
   "type": "module",
   "main": "./dist/index.js",
