@@ -167,9 +167,11 @@ export function ThemeProvider({
     if (typeof document === 'undefined') return
     document.documentElement.setAttribute('data-theme', resolvedTheme)
 
-    // Update colors after a frame to ensure CSS has applied
+    // Double RAF ensures CSS has fully recalculated after attribute change
     requestAnimationFrame(() => {
-      setColors(getThemeColors())
+      requestAnimationFrame(() => {
+        setColors(getThemeColors())
+      })
     })
   }, [resolvedTheme])
 

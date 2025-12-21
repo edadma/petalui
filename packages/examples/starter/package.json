@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "asterui": "^0.12.0",
+    "asterui": "workspace:*",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.0.0"

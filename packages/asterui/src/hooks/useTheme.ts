@@ -149,11 +149,13 @@ function useThemeStandalone(): UseThemeReturn {
         isDark = systemTheme === 'dark'
       }
 
-      // Update colors after a frame
+      // Double RAF ensures CSS has fully recalculated
       requestAnimationFrame(() => {
-        setState({
-          isDark,
-          colors: getThemeColors(),
+        requestAnimationFrame(() => {
+          setState({
+            isDark,
+            colors: getThemeColors(),
+          })
         })
       })
     }
