@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersDark;
+}
+@source "../node_modules/asterui";

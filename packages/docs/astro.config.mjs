@@ -132,7 +132,7 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Changelog',
-          slug: 'changelog',
+          link: '/changelog/',
           translations: {
             es: 'Registro de Cambios',
             pt: 'Registro de Alterações',
