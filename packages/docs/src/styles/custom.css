@@ -10,6 +10,15 @@
 @source "../blocks/*Demo.tsx";
 @source "../../node_modules/@aster-ui/prefixed/dist";
 
+/* Undo Starlight's margin reset inside demos by reverting within the same layer */
+@layer starlight.reset {
+  .demo-area *,
+  .demo-area *::before,
+  .demo-area *::after {
+    margin: revert-layer;
+  }
+}
+
 /* Starlight overrides */
 :root {
   --sl-color-accent-low: #1e1b4b;
