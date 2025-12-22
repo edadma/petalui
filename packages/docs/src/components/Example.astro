@@ -46,9 +46,11 @@ function dedent(code: string): string {
 
 let extractedCode = ''
 if (source && fn) {
-  // Find the function in source
-  const fnRegex = new RegExp(`((?:\\/\\/ @example-imports:[^\\n]*\\n)*)export function ${fn}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\n\\}(?=\\s*(?:export|$))`, 'm')
-  const fnMatch = source.match(fnRegex)
+  // Find the function in source - supports both `export function` and `export const ... = () =>` syntax
+  const fnDeclRegex = new RegExp(`((?:\\/\\/ @example-imports:[^\\n]*\\n)*)export function ${fn}\\s*\\([^)]*\\)\\s*\\{([\\s\\S]*?)\\n\\}(?=\\s*(?:export|$))`, 'm')
+  const arrowFnRegex = new RegExp(`((?:\\/\\/ @example-imports:[^\\n]*\\n)*)export const ${fn}[^=]*=\\s*\\([^)]*\\)\\s*(?:=>\\s*)?[({]([\\s\\S]*?)\\n[)}];?(?=\\s*(?:\\/\\/|export|$))`, 'm')
+
+  const fnMatch = source.match(fnDeclRegex) || source.match(arrowFnRegex)
 
   if (fnMatch) {
     const importsBlock = fnMatch[1] || ''
