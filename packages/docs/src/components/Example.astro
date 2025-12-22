@@ -132,7 +132,7 @@ export default App`
       <h3>{title}</h3>
       {description && <p class="example-description">{description}</p>}
     </div>
-    <button class="toggle-code" aria-label="Toggle code">
+    <button class="toggle-code" aria-label="Show code" data-tooltip="Show code">
       <span>&lt;/&gt;</span>
     </button>
   </div>
@@ -200,6 +200,7 @@ export default App`
   }
 
   .toggle-code {
+    position: relative;
     background: none;
     border: none;
     cursor: pointer;
@@ -212,6 +213,30 @@ export default App`
 
   .toggle-code:hover {
     background: var(--sl-color-gray-5);
+  }
+
+  .toggle-code::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.25rem 0.5rem;
+    background: var(--sl-color-gray-6);
+    color: var(--sl-color-text);
+    font-size: 0.75rem;
+    font-family: var(--sl-font);
+    white-space: nowrap;
+    border-radius: 0.25rem;
+    border: 1px solid var(--sl-color-gray-5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    margin-bottom: 0.25rem;
+  }
+
+  .toggle-code:hover::after {
+    opacity: 1;
   }
 
   .example-code {
@@ -317,6 +342,10 @@ export default App`
     btn.addEventListener('click', () => {
       const card = btn.closest('.example-card')
       card?.classList.toggle('open')
+      const isOpen = card?.classList.contains('open')
+      const label = isOpen ? 'Hide code' : 'Show code'
+      btn.setAttribute('aria-label', label)
+      btn.setAttribute('data-tooltip', label)
     })
   })
 
