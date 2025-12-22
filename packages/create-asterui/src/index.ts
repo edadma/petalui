@@ -36,6 +36,9 @@ interface CliArgs {
   themes?: string
   pm?: PackageManager
   prefixed?: boolean
+  icons?: string
+  optional?: string[]
+  yes?: boolean
   help?: boolean
 }
 
@@ -47,6 +50,8 @@ function parseArgs(): CliArgs {
     const arg = args[i]
     if (arg === '--help' || arg === '-h') {
       result.help = true
+    } else if (arg === '--yes' || arg === '-y') {
+      result.yes = true
     } else if (arg === '--js') {
       result.language = 'js'
     } else if (arg === '--ts') {
@@ -60,6 +65,10 @@ function parseArgs(): CliArgs {
       if (pm === 'npm' || pm === 'pnpm' || pm === 'yarn') {
         result.pm = pm
       }
+    } else if (arg === '--icons' && args[i + 1]) {
+      result.icons = args[++i]
+    } else if (arg === '--optional' && args[i + 1]) {
+      result.optional = args[++i].split(',').map(s => s.trim())
     } else if (!arg.startsWith('-') && !result.projectName) {
       result.projectName = arg
     }
@@ -76,16 +85,20 @@ ${pc.bold('Usage:')}
   npm create asterui [project-name] [options]
 
 ${pc.bold('Options:')}
-  --js              Use JavaScript instead of TypeScript
-  --ts              Use TypeScript (default)
-  --prefixed        Use @aster-ui/prefixed with d- prefix for daisyUI
-  --themes <preset> Theme preset: light-dark, business, all
-  --pm <manager>    Package manager: npm, pnpm, yarn
-  -h, --help        Show this help message
+  -y, --yes           Accept defaults for unprovided options (non-interactive)
+  --js                Use JavaScript instead of TypeScript
+  --ts                Use TypeScript (default)
+  --prefixed          Use @aster-ui/prefixed with d- prefix for daisyUI
+  --themes <preset>   Theme preset: light-dark, business, all
+  --pm <manager>      Package manager: npm, pnpm, yarn
+  --icons <library>   Icon library: @aster-ui/icons, lucide-react, etc.
+  --optional <deps>   Optional deps: chart,editor,qrcode,virtuallist
+  -h, --help          Show this help message
 
 ${pc.bold('Examples:')}
   npm create asterui
   npm create asterui my-app
+  npm create asterui my-app -y
   npm create asterui my-app --js
   npm create asterui my-app --themes business
   npm create asterui my-app --js --themes all --pm pnpm
@@ -135,34 +148,40 @@ async function main() {
       language: () =>
         cliArgs.language
           ? Promise.resolve(cliArgs.language)
-          : p.select({
-              message: 'Language',
-              options: [
-                { value: 'ts', label: 'TypeScript', hint: 'recommended' },
-                { value: 'js', label: 'JavaScript' },
-              ],
-            }),
+          : cliArgs.yes
+            ? Promise.resolve('ts')
+            : p.select({
+                message: 'Language',
+                options: [
+                  { value: 'ts', label: 'TypeScript', hint: 'recommended' },
+                  { value: 'js', label: 'JavaScript' },
+                ],
+              }),
 
       prefixed: () =>
         cliArgs.prefixed !== undefined
           ? Promise.resolve(cliArgs.prefixed)
-          : p.confirm({
-              message: 'Use prefixed daisyUI classes?',
-              initialValue: false,
-            }),
+          : cliArgs.yes
+            ? Promise.resolve(false)
+            : p.confirm({
+                message: 'Use prefixed daisyUI classes?',
+                initialValue: false,
+              }),
 
       themePreset: () =>
         cliArgs.themes && THEME_PRESETS.includes(cliArgs.themes)
           ? Promise.resolve(cliArgs.themes)
-          : p.select({
-              message: 'Themes',
-              options: [
-                { value: 'light-dark', label: 'Light/Dark', hint: 'recommended' },
-                { value: 'business', label: 'Business/Corporate' },
-                { value: 'all', label: 'All themes' },
-                { value: 'custom', label: 'Choose specific...' },
-              ],
-            }),
+          : cliArgs.yes
+            ? Promise.resolve('light-dark')
+            : p.select({
+                message: 'Themes',
+                options: [
+                  { value: 'light-dark', label: 'Light/Dark', hint: 'recommended' },
+                  { value: 'business', label: 'Business/Corporate' },
+                  { value: 'all', label: 'All themes' },
+                  { value: 'custom', label: 'Choose specific...' },
+                ],
+              }),
 
       customThemes: ({ results }) =>
         results.themePreset === 'custom'
@@ -177,34 +196,44 @@ async function main() {
       packageManager: () =>
         cliArgs.pm
           ? Promise.resolve(cliArgs.pm)
-          : p.select({
-              message: 'Package manager',
-              options: [
-                { value: detectedPm, label: detectedPm, hint: 'detected' },
-                ...(['npm', 'pnpm', 'yarn'] as const)
-                  .filter((pm) => pm !== detectedPm)
-                  .map((pm) => ({ value: pm, label: pm })),
-              ],
-            }),
+          : cliArgs.yes
+            ? Promise.resolve(detectedPm)
+            : p.select({
+                message: 'Package manager',
+                options: [
+                  { value: detectedPm, label: detectedPm, hint: 'detected' },
+                  ...(['npm', 'pnpm', 'yarn'] as const)
+                    .filter((pm) => pm !== detectedPm)
+                    .map((pm) => ({ value: pm, label: pm })),
+                ],
+              }),
 
       optionalDeps: () =>
-        p.multiselect({
-          message: 'Optional components (require extra dependencies)',
-          options: [
-            { value: 'chart', label: 'Chart', hint: 'apexcharts' },
-            { value: 'editor', label: 'RichTextEditor', hint: '@aster-ui/icons + @tiptap/react' },
-            { value: 'qrcode', label: 'QRCode', hint: 'qrcode' },
-            { value: 'virtuallist', label: 'VirtualList', hint: '@tanstack/react-virtual' },
-          ],
-          required: false,
-        }),
+        cliArgs.optional !== undefined
+          ? Promise.resolve(cliArgs.optional)
+          : cliArgs.yes
+            ? Promise.resolve([])
+            : p.multiselect({
+                message: 'Optional components (require extra dependencies)',
+                options: [
+                  { value: 'chart', label: 'Chart', hint: 'apexcharts' },
+                  { value: 'editor', label: 'RichTextEditor', hint: '@aster-ui/icons + @tiptap/react' },
+                  { value: 'qrcode', label: 'QRCode', hint: 'qrcode' },
+                  { value: 'virtuallist', label: 'VirtualList', hint: '@tanstack/react-virtual' },
+                ],
+                required: false,
+              }),
 
       iconLibrary: () =>
-        p.select({
-          message: 'Icon library',
-          initialValue: '@aster-ui/icons',
-          options: ICON_LIBRARIES,
-        }),
+        cliArgs.icons
+          ? Promise.resolve(cliArgs.icons)
+          : cliArgs.yes
+            ? Promise.resolve('@aster-ui/icons')
+            : p.select({
+                message: 'Icon library',
+                initialValue: '@aster-ui/icons',
+                options: ICON_LIBRARIES,
+              }),
     },
     {
       onCancel: () => {
