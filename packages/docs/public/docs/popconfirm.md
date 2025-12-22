@@ -182,3 +182,24 @@ const App: React.FC = () => (
 
 export default App
 ```
+
+## API
+
+### Popconfirm
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `children` | Trigger element | `React.ReactElement` | - |
+| `title` | Title of the confirmation | `React.ReactNode` | - |
+| `description` | Description text | `React.ReactNode` | - |
+| `onConfirm` | Callback when confirmed (supports async) | `() => void \| Promise<void>` | - |
+| `onCancel` | Callback when cancelled | `() => void` | - |
+| `okText` | Text for confirm button | `string` | `'OK'` |
+| `cancelText` | Text for cancel button | `string` | `'Cancel'` |
+| `okType` | Button type for confirm button | `'primary' \| 'secondary' \| 'accent' \| 'success' \| 'warning' \| 'error' \| 'info'` | `'primary'` |
+| `cancelType` | Button type for cancel button | `'primary' \| 'secondary' \| 'accent' \| 'success' \| 'warning' \| 'error' \| 'info' \| 'ghost'` | `'ghost'` |
+| `placement` | Placement of the confirmation popup | `'top' \| 'bottom' \| 'left' \| 'right'` | `'top'` |
+| `disabled` | Whether the popconfirm is disabled | `boolean` | `false` |
+| `icon` | Custom icon (null to hide default) | `React.ReactNode` | - |
+| `showCancel` | Show cancel button | `boolean` | `true` |
+| `data-testid` | Test ID prefix for child elements | `string` | - |

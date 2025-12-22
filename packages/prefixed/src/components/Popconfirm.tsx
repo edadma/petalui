@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, forwardRef } from 'react'
+import { useConfig } from './ConfigProvider'
 
 // DaisyUI classes
 const dBtn = 'd-btn'
@@ -29,28 +30,42 @@ export interface PopconfirmProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   disabled?: boolean
   icon?: React.ReactNode
   showCancel?: boolean
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
-export const Popconfirm: React.FC<PopconfirmProps> = ({
-  children,
-  title,
-  description,
-  onConfirm,
-  onCancel,
-  okText = 'OK',
-  cancelText = 'Cancel',
-  okType = 'primary',
-  cancelType = 'ghost',
-  placement = 'top',
-  disabled = false,
-  icon,
-  showCancel = true,
-  className,
-  ...rest
-}) => {
+export const Popconfirm = forwardRef<HTMLDivElement, PopconfirmProps>(function Popconfirm(
+  {
+    children,
+    title,
+    description,
+    onConfirm,
+    onCancel,
+    okText,
+    cancelText,
+    okType = 'primary',
+    cancelType = 'ghost',
+    placement = 'top',
+    disabled = false,
+    icon,
+    showCancel = true,
+    'data-testid': testId,
+    className,
+    ...rest
+  },
+  ref
+) {
+  const { locale } = useConfig()
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+
+  // Resolve locale strings
+  const resolvedOkText = okText ?? locale.Popconfirm?.okText ?? 'OK'
+  const resolvedCancelText = cancelText ?? locale.Popconfirm?.cancelText ?? 'Cancel'
+
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
   const popupRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -156,7 +171,7 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
   )
 
   return (
-    <div ref={containerRef} className={`relative inline-block ${className || ''}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
+    <div ref={ref || containerRef} className={`relative inline-block ${className || ''}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
       {React.cloneElement(children, {
         onClick: (e: React.MouseEvent) => {
           handleTriggerClick(e)
@@ -168,16 +183,16 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
       } as any)}
 
       {isOpen && (
-        <div className={getPopupContainerClasses()}>
+        <div className={getPopupContainerClasses()} data-testid={getTestId('popup')}>
           <div ref={popupRef} className={getPopupClasses()}>
             <div className="flex gap-3 relative z-10">
               <div className="flex-shrink-0 mt-0.5">
                 {icon !== undefined ? icon : defaultIcon}
               </div>
               <div className="flex-1">
-                <div className="font-semibold text-base-content mb-1">{title}</div>
+                <div className="font-semibold text-base-content mb-1" data-testid={getTestId('title')}>{title}</div>
                 {description && (
-                  <div className="text-sm text-base-content/70 mb-3">{description}</div>
+                  <div className="text-sm text-base-content/70 mb-3" data-testid={getTestId('description')}>{description}</div>
                 )}
                 <div className="flex justify-end gap-2 mt-3">
                   {showCancel && (
@@ -185,17 +200,19 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
                       className={`${dBtn} ${dBtnSm} ${getButtonClass(cancelType)}`}
                       onClick={handleCancel}
                       disabled={loading}
+                      data-testid={getTestId('cancel-button')}
                     >
-                      {cancelText}
+                      {resolvedCancelText}
                     </button>
                   )}
                   <button
                     className={`${dBtn} ${dBtnSm} ${getButtonClass(okType)}`}
                     onClick={handleConfirm}
                     disabled={loading}
+                    data-testid={getTestId('ok-button')}
                   >
                     {loading && <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`}></span>}
-                    {okText}
+                    {resolvedOkText}
                   </button>
                 </div>
               </div>
@@ -206,4 +223,4 @@ export const Popconfirm: React.FC<PopconfirmProps> = ({
       )}
     </div>
   )
-}
+})

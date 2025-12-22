@@ -262,6 +262,8 @@ export default App
 | `mouseEnterDelay` | Delay before showing on hover (seconds) | `number` | `0.15` |
 | `mouseLeaveDelay` | Delay before hiding on mouse leave (seconds) | `number` | `0.1` |
 | `destroyOnHidden` | Destroy dropdown when hidden | `boolean` | `false` |
+| `popupRender` | Customize popup content | `(menu: ReactNode) => ReactNode` | - |
+| `data-testid` | Test ID prefix for child elements | `string` | - |
 | `className` | Additional CSS classes | `string` | - |
 
 ### Dropdown.Item

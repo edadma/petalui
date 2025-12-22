@@ -231,6 +231,7 @@ export default App
 | `variant` | Visual style variant | `'box' \| 'border' \| 'lift'` | `-` |
 | `size` | Tab size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
 | `position` | Tab position relative to content | `'top' \| 'bottom'` | `'top'` |
+| `data-testid` | Test ID prefix for child elements | `string` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
 
 ### TabItem (for items prop)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { forwardRef } from 'react'
 import { useConfig } from './ConfigProvider'
 
 // DaisyUI classes
@@ -31,28 +31,42 @@ export interface PaginationProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   simple?: boolean
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   disabled?: boolean
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
-export const Pagination: React.FC<PaginationProps> = ({
-  current: controlledCurrent,
-  defaultCurrent = 1,
-  total,
-  pageSize: controlledPageSize,
-  defaultPageSize = 10,
-  pageSizeOptions = [10, 20, 50, 100],
-  onChange,
-  onShowSizeChange,
-  showSizeChanger = false,
-  showQuickJumper = false,
-  showTotal = false,
-  simple = false,
-  size,
-  disabled = false,
-  className = '',
-  ...rest
-}) => {
-  const { componentSize } = useConfig()
+export const Pagination = forwardRef<HTMLDivElement, PaginationProps>(function Pagination(
+  {
+    current: controlledCurrent,
+    defaultCurrent = 1,
+    total,
+    pageSize: controlledPageSize,
+    defaultPageSize = 10,
+    pageSizeOptions = [10, 20, 50, 100],
+    onChange,
+    onShowSizeChange,
+    showSizeChanger = false,
+    showQuickJumper = false,
+    showTotal = false,
+    simple = false,
+    size,
+    disabled = false,
+    'data-testid': testId,
+    className = '',
+    ...rest
+  },
+  ref
+) {
+  const { componentSize, locale } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
+
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
+
+  // Locale strings with fallbacks
+  const l = locale.Pagination ?? {}
+  const itemsPerPageText = l.itemsPerPage ?? '/ page'
+  const goToText = l.goTo ?? 'Go to'
   const [internalCurrent, setInternalCurrent] = React.useState(defaultCurrent)
   const [internalPageSize, setInternalPageSize] = React.useState(defaultPageSize)
   const [jumpPage, setJumpPage] = React.useState('')
@@ -145,11 +159,13 @@ export const Pagination: React.FC<PaginationProps> = ({
 
   if (simple) {
     return (
-      <div className={`flex items-center gap-2 ${className}`} {...rest}>
+      <div ref={ref} className={`flex items-center gap-2 ${className}`} data-testid={testId} {...rest}>
         <button
           className={`${dBtn} ${dBtnGhost} ${sizeClass}`}
           onClick={() => handlePageChange(current - 1)}
           disabled={disabled || current === 1}
+          data-testid={getTestId('prev')}
+          aria-label={l.prev ?? 'Previous'}
         >
           ‹
         </button>
@@ -160,6 +176,8 @@ export const Pagination: React.FC<PaginationProps> = ({
           className={`${dBtn} ${dBtnGhost} ${sizeClass}`}
           onClick={() => handlePageChange(current + 1)}
           disabled={disabled || current === totalPages}
+          data-testid={getTestId('next')}
+          aria-label={l.next ?? 'Next'}
         >
           ›
         </button>
@@ -168,13 +186,13 @@ export const Pagination: React.FC<PaginationProps> = ({
   }
 
   return (
-    <div className={`flex flex-wrap items-center gap-4 ${className}`} {...rest}>
+    <div ref={ref} className={`flex flex-wrap items-center gap-4 ${className}`} data-testid={testId} {...rest}>
       {/* Total */}
       {showTotal && (
-        <div className="text-sm text-base-content/70">
+        <div className="text-sm text-base-content/70" data-testid={getTestId('total')}>
           {typeof showTotal === 'function'
             ? showTotal(total, range)
-            : `Total ${total} items`}
+            : `Total ${total} ${l.items ?? 'items'}`}
         </div>
       )}
 
@@ -185,23 +203,25 @@ export const Pagination: React.FC<PaginationProps> = ({
           value={pageSize}
           onChange={(e) => handlePageSizeChange(Number(e.target.value))}
           disabled={disabled}
+          data-testid={getTestId('size-changer')}
         >
-          {pageSizeOptions.map((size) => (
-            <option key={size} value={size}>
-              {size} / page
+          {pageSizeOptions.map((sz) => (
+            <option key={sz} value={sz}>
+              {sz} {itemsPerPageText}
             </option>
           ))}
         </select>
       )}
 
       {/* Pagination Controls */}
-      <div className={dJoin}>
+      <div className={dJoin} data-testid={getTestId('controls')}>
         {/* First */}
         <button
           className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(1)}
           disabled={disabled || current === 1}
-          title="First page"
+          aria-label="First page"
+          data-testid={getTestId('first')}
         >
           «
         </button>
@@ -211,7 +231,8 @@ export const Pagination: React.FC<PaginationProps> = ({
           className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(current - 1)}
           disabled={disabled || current === 1}
-          title="Previous page"
+          aria-label={l.prev ?? 'Previous'}
+          data-testid={getTestId('prev')}
         >
           ‹
         </button>
@@ -232,6 +253,8 @@ export const Pagination: React.FC<PaginationProps> = ({
               className={`${dJoinItem} ${dBtn} ${sizeClass} ${current === page ? dBtnActive : ''}`}
               onClick={() => handlePageChange(page)}
               disabled={disabled}
+              data-testid={getTestId(`page-${page}`)}
+              aria-current={current === page ? 'page' : undefined}
             >
               {page}
             </button>
@@ -243,7 +266,8 @@ export const Pagination: React.FC<PaginationProps> = ({
           className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(current + 1)}
           disabled={disabled || current === totalPages}
-          title="Next page"
+          aria-label={l.next ?? 'Next'}
+          data-testid={getTestId('next')}
         >
           ›
         </button>
@@ -253,7 +277,8 @@ export const Pagination: React.FC<PaginationProps> = ({
           className={`${dJoinItem} ${dBtn} ${sizeClass}`}
           onClick={() => handlePageChange(totalPages)}
           disabled={disabled || current === totalPages}
-          title="Last page"
+          aria-label="Last page"
+          data-testid={getTestId('last')}
         >
           »
         </button>
@@ -262,7 +287,7 @@ export const Pagination: React.FC<PaginationProps> = ({
       {/* Quick Jumper */}
       {showQuickJumper && (
         <div className="flex items-center gap-2">
-          <span className="text-sm">Go to</span>
+          <span className="text-sm">{goToText}</span>
           <input
             type="number"
             className={`${dInput} w-16 ${sizeClass}`}
@@ -273,9 +298,10 @@ export const Pagination: React.FC<PaginationProps> = ({
             onKeyDown={handleJumpPage}
             disabled={disabled}
             placeholder={String(current)}
+            data-testid={getTestId('jumper')}
           />
         </div>
       )}
     </div>
   )
-}
+})

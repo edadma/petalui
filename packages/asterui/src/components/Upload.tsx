@@ -1,4 +1,4 @@
-import React, { useState, useRef, DragEvent, ChangeEvent } from 'react'
+import React, { useState, useRef, DragEvent, ChangeEvent, forwardRef } from 'react'
 
 // DaisyUI classes
 const dLoading = 'loading'
@@ -42,28 +42,37 @@ export interface UploadProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 
   showUploadList?: boolean
   disabled?: boolean
   children?: React.ReactNode
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
-export const Upload: React.FC<UploadProps> = ({
-  action,
-  accept,
-  multiple = false,
-  maxCount,
-  maxSize,
-  listType = 'text',
-  fileList: controlledFileList,
-  defaultFileList = [],
-  beforeUpload,
-  onChange,
-  onRemove,
-  customRequest,
-  showUploadList = true,
-  disabled = false,
-  children,
-  className = '',
-  ...rest
-}) => {
+export const Upload = forwardRef<HTMLDivElement, UploadProps>(function Upload(
+  {
+    action,
+    accept,
+    multiple = false,
+    maxCount,
+    maxSize,
+    listType = 'text',
+    fileList: controlledFileList,
+    defaultFileList = [],
+    beforeUpload,
+    onChange,
+    onRemove,
+    customRequest,
+    showUploadList = true,
+    disabled = false,
+    children,
+    'data-testid': testId,
+    className = '',
+    ...rest
+  },
+  ref
+) {
   const [internalFileList, setInternalFileList] = useState<UploadFile[]>(defaultFileList)
+
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
   const [isDragging, setIsDragging] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const uidCounter = useRef(0)
@@ -357,7 +366,7 @@ export const Upload: React.FC<UploadProps> = ({
   }
 
   return (
-    <div className={className} data-state={isDragging ? 'dragging' : 'idle'} {...rest}>
+    <div ref={ref} className={className} data-state={isDragging ? 'dragging' : 'idle'} data-testid={testId} {...rest}>
       <div
         onDragEnter={handleDragEnter}
         onDragOver={handleDragOver}
@@ -369,6 +378,7 @@ export const Upload: React.FC<UploadProps> = ({
           ${isDragging ? 'border-primary bg-primary/5' : 'border-base-content/20'}
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:border-primary'}
         `}
+        data-testid={getTestId('dropzone')}
       >
         {children || (
           <div className="flex flex-col items-center gap-2 py-4">
@@ -401,13 +411,12 @@ export const Upload: React.FC<UploadProps> = ({
         onChange={handleChange}
         disabled={disabled}
         className="hidden"
+        data-testid={getTestId('input')}
       />
 
       {renderFileList()}
     </div>
   )
-}
-
-Upload.displayName = 'Upload'
+})
 
 export default Upload

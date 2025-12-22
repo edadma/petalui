@@ -167,3 +167,26 @@ const App: React.FC = () => (
 
 export default App
 ```
+
+## API
+
+### Pagination
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `current` | Current page number (controlled) | `number` | - |
+| `defaultCurrent` | Default initial page number | `number` | `1` |
+| `total` | Total number of items | `number` | - |
+| `pageSize` | Number of items per page (controlled) | `number` | - |
+| `defaultPageSize` | Default number of items per page | `number` | `10` |
+| `pageSizeOptions` | Options for page size selector | `number[]` | `[10, 20, 50, 100]` |
+| `onChange` | Callback when page or pageSize changes | `(page: number, pageSize: number) => void` | - |
+| `onShowSizeChange` | Callback when pageSize changes | `(current: number, size: number) => void` | - |
+| `showSizeChanger` | Show page size selector | `boolean` | `false` |
+| `showQuickJumper` | Show quick jump to page input | `boolean` | `false` |
+| `showTotal` | Show total count or custom render function | `boolean \| ((total: number, range: [number, number]) => ReactNode)` | `false` |
+| `simple` | Simple mode with minimal controls | `boolean` | `false` |
+| `size` | Size of pagination buttons | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `disabled` | Disable all pagination controls | `boolean` | `false` |
+| `data-testid` | Test ID prefix for child elements | `string` | - |
+| `className` | Additional CSS classes | `string` | - |

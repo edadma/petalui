@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, forwardRef } from 'react'
+import { useConfig } from './ConfigProvider'
 
 // DaisyUI classes
 const dTabs = 'd-tabs'
@@ -43,6 +44,8 @@ export interface TabsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   size?: TabsSize
   /** Tab position relative to content */
   position?: TabsPosition
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
 export interface TabPanelProps {
@@ -74,18 +77,27 @@ interface InternalPanelProps extends TabPanelProps {
   _key: string
 }
 
-function TabsRoot({
-  children,
-  items,
-  activeKey,
-  defaultActiveKey,
-  onChange,
-  variant,
-  size,
-  position = 'top',
-  className = '',
-  ...rest
-}: TabsProps) {
+const TabsRoot = forwardRef<HTMLDivElement, TabsProps>(function TabsRoot(
+  {
+    children,
+    items,
+    activeKey,
+    defaultActiveKey,
+    onChange,
+    variant,
+    size,
+    position = 'top',
+    'data-testid': testId,
+    className = '',
+    ...rest
+  },
+  ref
+) {
+  const { componentSize } = useConfig()
+  const effectiveSize = size ?? (componentSize as TabsSize | undefined)
+
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
   // Get panels from children (compound pattern), extracting key from React element
   const panels = React.Children.toArray(children)
     .filter((child): child is React.ReactElement<TabPanelProps> =>
@@ -122,7 +134,7 @@ function TabsRoot({
   const classes = [
     dTabs,
     variant && variantClasses[variant],
-    size && sizeClasses[size],
+    effectiveSize && sizeClasses[effectiveSize],
     className,
   ]
     .filter(Boolean)
@@ -131,7 +143,7 @@ function TabsRoot({
   const activePanel = effectivePanels.find((panel) => panel._key === currentActiveKey)
 
   const tabList = (
-    <div role="tablist" className={classes}>
+    <div role="tablist" className={classes} data-testid={getTestId('tablist')}>
       {effectivePanels.map((panel) => {
         const isActive = currentActiveKey === panel._key
         const tabClasses = [
@@ -150,6 +162,7 @@ function TabsRoot({
             onClick={() => !panel.disabled && handleTabClick(panel._key)}
             disabled={panel.disabled}
             data-state={isActive ? 'active' : 'inactive'}
+            data-testid={getTestId(`tab-${panel._key}`)}
             aria-selected={isActive}
           >
             {panel.icon && <span className="mr-1">{panel.icon}</span>}
@@ -161,13 +174,13 @@ function TabsRoot({
   )
 
   const content = activePanel && (
-    <div className={position === 'top' ? 'mt-4' : 'mb-4'} role="tabpanel">
+    <div className={position === 'top' ? 'mt-4' : 'mb-4'} role="tabpanel" data-testid={getTestId('tabpanel')}>
       {activePanel.children}
     </div>
   )
 
   return (
-    <div {...rest}>
+    <div ref={ref} data-testid={testId} {...rest}>
       {position === 'top' ? (
         <>
           {tabList}
@@ -181,7 +194,7 @@ function TabsRoot({
       )}
     </div>
   )
-}
+})
 
 function TabPanel({ children }: TabPanelProps) {
   // This component is only used for type checking and is not rendered directly

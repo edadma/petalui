@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useId } from 'react'
+import React, { useEffect, useRef, useId, forwardRef, useImperativeHandle } from 'react'
 import { createRoot } from 'react-dom/client'
+import { useConfig } from './ConfigProvider'
 
 // DaisyUI classes
 const dModal = 'd-modal'
@@ -46,10 +47,26 @@ export interface ModalProps extends Omit<React.HTMLAttributes<HTMLDialogElement>
   centered?: boolean
   /** Callback when modal is closed */
   onClose?: () => void
+  /** Callback after modal close animation completes */
+  afterClose?: () => void
   /** Where to place initial focus: 'ok', 'cancel', or 'close' button */
   initialFocus?: 'ok' | 'cancel' | 'close'
   /** Use alertdialog role for urgent messages */
   alertDialog?: boolean
+  /** Show loading spinner on OK button */
+  confirmLoading?: boolean
+  /** Props for the OK button */
+  okButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
+  /** Props for the Cancel button */
+  cancelButtonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>
+  /** Custom close icon */
+  closeIcon?: React.ReactNode
+  /** CSS z-index for the modal */
+  zIndex?: number
+  /** Destroy child components when modal is closed */
+  destroyOnClose?: boolean
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
 export interface ModalFuncProps {
@@ -62,35 +79,59 @@ export interface ModalFuncProps {
   type?: 'info' | 'success' | 'warning' | 'error'
 }
 
-export function Modal({
-  children,
-  title,
-  footer,
-  open = false,
-  onOk,
-  onCancel,
-  okText = 'OK',
-  cancelText = 'Cancel',
-  maskClosable = true,
-  closable = true,
-  position,
-  align,
-  width,
-  centered,
-  onClose,
-  initialFocus,
-  alertDialog = false,
-  className = '',
-  ...rest
-}: ModalProps) {
+const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
+  {
+    children,
+    title,
+    footer,
+    open = false,
+    onOk,
+    onCancel,
+    okText,
+    cancelText,
+    maskClosable = true,
+    closable = true,
+    position,
+    align,
+    width,
+    centered,
+    onClose,
+    afterClose,
+    initialFocus,
+    alertDialog = false,
+    confirmLoading,
+    okButtonProps,
+    cancelButtonProps,
+    closeIcon,
+    zIndex,
+    destroyOnClose = false,
+    'data-testid': testId,
+    className = '',
+    style,
+    ...rest
+  },
+  ref
+) {
+  const { locale } = useConfig()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const okButtonRef = useRef<HTMLButtonElement>(null)
   const cancelButtonRef = useRef<HTMLButtonElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const previousActiveElement = useRef<HTMLElement | null>(null)
-  const [loading, setLoading] = React.useState(false)
+  const [internalLoading, setInternalLoading] = React.useState(false)
+  const [shouldRender, setShouldRender] = React.useState(open || !destroyOnClose)
   const titleId = useId()
   const contentId = useId()
+
+  // Use external confirmLoading if provided, otherwise internal state
+  const loading = confirmLoading ?? internalLoading
+
+  // Resolve locale strings
+  const resolvedOkText = okText ?? locale.Modal?.okText ?? 'OK'
+  const resolvedCancelText = cancelText ?? locale.Modal?.cancelText ?? 'Cancel'
+
+  // Forward ref
+  useImperativeHandle(ref, () => dialogRef.current!, [])
 
   // Handle close - use onClose if provided, otherwise onCancel
   const closeHandler = onClose || onCancel
@@ -100,6 +141,7 @@ export function Modal({
     if (!dialog) return
 
     if (open) {
+      setShouldRender(true)
       if (!dialog.open) {
         // Save currently focused element for restoration
         previousActiveElement.current = document.activeElement as HTMLElement
@@ -127,9 +169,17 @@ export function Modal({
         dialog.close()
         // Restore focus to previously focused element
         previousActiveElement.current?.focus()
+        // Call afterClose after animation
+        if (afterClose) {
+          setTimeout(afterClose, 300)
+        }
+        // Handle destroyOnClose
+        if (destroyOnClose) {
+          setTimeout(() => setShouldRender(false), 300)
+        }
       }
     }
-  }, [open, initialFocus])
+  }, [open, initialFocus, afterClose, destroyOnClose])
 
   useEffect(() => {
     const dialog = dialogRef.current
@@ -217,23 +267,24 @@ export function Modal({
     return classes
   }
 
-  const classes = [
-    dModal,
-    ...getPositionClasses(),
-    align && alignClasses[align],
-    className,
-  ]
+  const classes = [dModal, ...getPositionClasses(), align && alignClasses[align], className]
     .filter(Boolean)
     .join(' ')
 
   const handleOk = async () => {
     if (onOk) {
-      setLoading(true)
+      if (confirmLoading === undefined) {
+        setInternalLoading(true)
+      }
       try {
         await onOk()
-        setLoading(false)
+        if (confirmLoading === undefined) {
+          setInternalLoading(false)
+        }
       } catch (error) {
-        setLoading(false)
+        if (confirmLoading === undefined) {
+          setInternalLoading(false)
+        }
         throw error
       }
     }
@@ -250,9 +301,22 @@ export function Modal({
     ? { width: typeof width === 'number' ? `${width}px` : width, maxWidth: '90vw' }
     : {}
 
+  // Calculate dialog style for zIndex
+  const dialogStyle: React.CSSProperties = {
+    ...style,
+    ...(zIndex !== undefined ? { zIndex } : {}),
+  }
+
   // Render default footer if no custom footer provided and either onOk or onCancel exists
   const shouldRenderDefaultFooter = !footer && (onOk || onCancel)
   const shouldRenderCustomFooter = footer !== null && footer !== undefined
+
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
+
+  if (!shouldRender) {
+    return null
+  }
 
   return (
     <dialog
@@ -260,25 +324,33 @@ export function Modal({
       role={alertDialog ? 'alertdialog' : 'dialog'}
       aria-modal="true"
       className={classes}
+      style={dialogStyle}
       data-state={open ? 'open' : 'closed'}
+      data-testid={testId}
       aria-labelledby={title ? titleId : undefined}
       aria-describedby={contentId}
       {...rest}
     >
       <div className={dModalBox} style={modalBoxStyle}>
         {title && (
-          <h3 id={titleId} className="text-lg font-bold mb-4">
+          <h3 id={titleId} className="text-lg font-bold mb-4" data-testid={getTestId('title')}>
             {title}
           </h3>
         )}
-        <div id={contentId} className="py-4">
+        <div id={contentId} className="py-4" data-testid={getTestId('content')}>
           {children}
         </div>
         {shouldRenderDefaultFooter && (
           <div className={dModalAction}>
             {onCancel && (
-              <button ref={cancelButtonRef} className={dBtn} onClick={onCancel}>
-                {cancelText}
+              <button
+                ref={cancelButtonRef}
+                className={dBtn}
+                onClick={onCancel}
+                data-testid={getTestId('cancel-button')}
+                {...cancelButtonProps}
+              >
+                {resolvedCancelText}
               </button>
             )}
             {onOk && (
@@ -286,10 +358,12 @@ export function Modal({
                 ref={okButtonRef}
                 className={`${dBtn} ${dBtnPrimary} ${loading ? 'loading' : ''}`}
                 onClick={handleOk}
-                disabled={loading}
+                disabled={loading || okButtonProps?.disabled}
                 aria-busy={loading || undefined}
+                data-testid={getTestId('ok-button')}
+                {...okButtonProps}
               >
-                {okText}
+                {resolvedOkText}
               </button>
             )}
           </div>
@@ -297,15 +371,15 @@ export function Modal({
         {shouldRenderCustomFooter && <div className={dModalAction}>{footer}</div>}
       </div>
       {closable && maskClosable && (
-        <form method="dialog" className={dModalBackdrop}>
-          <button ref={closeButtonRef} onClick={handleBackdropClick}>
-            <span className="sr-only">Close modal</span>
+        <form method="dialog" className={dModalBackdrop} data-testid={getTestId('backdrop')}>
+          <button ref={closeButtonRef} onClick={handleBackdropClick} data-testid={getTestId('close-button')}>
+            {closeIcon || <span className="sr-only">Close modal</span>}
           </button>
         </form>
       )}
     </dialog>
   )
-}
+})
 
 function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
   const div = document.createElement('div')
@@ -320,6 +394,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
   }
 
   const ModalContent = () => {
+    const { locale } = useConfig()
     const [open, setOpen] = React.useState(true)
     const [loading, setLoading] = React.useState(false)
 
@@ -438,6 +513,10 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
     // Use alertdialog role for warning/error types
     const isAlert = config.type === 'warning' || config.type === 'error'
 
+    // Resolve locale strings
+    const resolvedOkText = config.okText ?? locale.Modal?.okText ?? 'OK'
+    const resolvedCancelText = config.cancelText ?? locale.Modal?.cancelText ?? 'Cancel'
+
     return (
       <Modal
         open={open}
@@ -448,28 +527,26 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
           config.type ? (
             <div className={`${dAlert} ${getAlertClass()}`}>
               {getIcon()}
-              <div>
-                {config.title && <h3 className="font-bold">{config.title}</h3>}
-              </div>
+              <div>{config.title && <h3 className="font-bold">{config.title}</h3>}</div>
             </div>
           ) : (
             config.title
           )
         }
-        okText={config.okText}
-        cancelText={config.cancelText}
+        okText={resolvedOkText}
+        cancelText={resolvedCancelText}
         footer={
           config.showCancel ? (
             <>
               <button className={dBtn} onClick={handleCancel}>
-                {config.cancelText || 'Cancel'}
+                {resolvedCancelText}
               </button>
               <button
                 className={`${dBtn} ${config.type === 'error' ? dBtnError : dBtnPrimary} ${loading ? 'loading' : ''}`}
                 onClick={handleOk}
                 disabled={loading}
               >
-                {config.okText || 'OK'}
+                {resolvedOkText}
               </button>
             </>
           ) : (
@@ -478,7 +555,7 @@ function createModal(config: ModalFuncProps & { showCancel?: boolean }) {
               onClick={handleOk}
               disabled={loading}
             >
-              {config.okText || 'OK'}
+              {resolvedOkText}
             </button>
           )
         }
@@ -516,8 +593,18 @@ function error(config: ModalFuncProps) {
   return createModal({ ...config, type: 'error', showCancel: false })
 }
 
-Modal.confirm = confirm
-Modal.info = info
-Modal.success = success
-Modal.warning = warning
-Modal.error = error
+const ModalWithStatics = Modal as typeof Modal & {
+  confirm: typeof confirm
+  info: typeof info
+  success: typeof success
+  warning: typeof warning
+  error: typeof error
+}
+
+ModalWithStatics.confirm = confirm
+ModalWithStatics.info = info
+ModalWithStatics.success = success
+ModalWithStatics.warning = warning
+ModalWithStatics.error = error
+
+export { ModalWithStatics as Modal }

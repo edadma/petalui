@@ -76,14 +76,24 @@ import { Modal } from 'asterui'
 | `onOk` | OK button click handler (shows default footer) | `() => void \| Promise<void>` | - |
 | `onCancel` | Cancel button click handler | `() => void` | - |
 | `onClose` | Close handler (alias for onCancel) | `() => void` | - |
+| `afterClose` | Callback after modal close animation completes | `() => void` | - |
 | `okText` | OK button text | `string` | `'OK'` |
 | `cancelText` | Cancel button text | `string` | `'Cancel'` |
+| `confirmLoading` | Show loading spinner on OK button | `boolean` | - |
+| `okButtonProps` | Props for the OK button | `React.ButtonHTMLAttributes` | - |
+| `cancelButtonProps` | Props for the Cancel button | `React.ButtonHTMLAttributes` | - |
+| `closeIcon` | Custom close icon | `React.ReactNode` | - |
 | `width` | Modal width | `number \| string` | - |
 | `centered` | Vertically center modal | `boolean` | `false` |
 | `position` | Modal position (supports responsive object) | `'top' \| 'middle' \| 'bottom' \| { base?, sm?, md?, lg?, xl?, '2xl'? }` | - |
 | `align` | Modal alignment | `'start' \| 'end'` | - |
 | `maskClosable` | Close on backdrop click | `boolean` | `true` |
 | `closable` | Show close backdrop | `boolean` | `true` |
+| `zIndex` | CSS z-index for the modal | `number` | - |
+| `destroyOnClose` | Destroy child components when modal is closed | `boolean` | `false` |
+| `initialFocus` | Where to place initial focus | `'ok' \| 'cancel' \| 'close'` | - |
+| `alertDialog` | Use alertdialog role for urgent messages | `boolean` | `false` |
+| `data-testid` | Test ID prefix for child elements | `string` | - |
 | `className` | Additional CSS classes | `string` | - |
 
 ### `Modal.info/success/warning/error/confirm`

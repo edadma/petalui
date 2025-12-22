@@ -168,6 +168,7 @@ export default App
 | `accept` | Accepted file types | `string` | `-` |
 | `disabled` | Disable the upload | `boolean` | `false` |
 | `children` | Upload trigger element | `React.ReactNode` | `-` |
+| `data-testid` | Test ID prefix for child elements | `string` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
 
 ### Upload File
