@@ -1,9 +1,11 @@
 import React, { useState, forwardRef, useMemo, useCallback, useId } from 'react'
+import { useConfig } from '../providers/ConfigProvider'
 
 // DaisyUI classes
 const dTable = 'd-table'
 const dTableXs = 'd-table-xs'
 const dTableSm = 'd-table-sm'
+const dTableMd = 'd-table-md'
 const dTableLg = 'd-table-lg'
 const dTableXl = 'd-table-xl'
 const dTableZebra = 'd-table-zebra'
@@ -22,9 +24,14 @@ const dMenu = 'd-menu'
 const dCheckbox = 'd-checkbox'
 const dCheckboxXs = 'd-checkbox-xs'
 const dCheckboxSm = 'd-checkbox-sm'
+const dCheckboxMd = 'd-checkbox-md'
+const dCheckboxLg = 'd-checkbox-lg'
 const dCheckboxPrimary = 'd-checkbox-primary'
 const dRadio = 'd-radio'
+const dRadioXs = 'd-radio-xs'
 const dRadioSm = 'd-radio-sm'
+const dRadioMd = 'd-radio-md'
+const dRadioLg = 'd-radio-lg'
 const dRadioPrimary = 'd-radio-primary'
 const dDivider = 'd-divider'
 const dLoading = 'd-loading'
@@ -63,24 +70,37 @@ export interface ColumnType<T> {
   defaultFilteredValue?: (string | number | boolean)[]
   ellipsis?: boolean
   hidden?: boolean
+  className?: string
+  onCell?: (record: T, index: number) => React.TdHTMLAttributes<HTMLTableCellElement>
+  onHeaderCell?: (column: ColumnType<T>) => React.ThHTMLAttributes<HTMLTableCellElement>
 }
 
 export interface RowSelection<T> {
   type?: 'checkbox' | 'radio'
   selectedRowKeys?: React.Key[]
   onChange?: (selectedRowKeys: React.Key[], selectedRows: T[]) => void
+  onSelect?: (record: T, selected: boolean, selectedRows: T[], nativeEvent: Event) => void
   getCheckboxProps?: (record: T) => { disabled?: boolean; name?: string }
+  columnTitle?: React.ReactNode
+  columnWidth?: string | number
+  fixed?: boolean
+  hideSelectAll?: boolean
 }
 
 export interface ExpandableConfig<T> {
   expandedRowKeys?: React.Key[]
   defaultExpandedRowKeys?: React.Key[]
+  defaultExpandAllRows?: boolean
   expandedRowRender: (record: T, index: number, expanded: boolean) => React.ReactNode
   rowExpandable?: (record: T) => boolean
   onExpand?: (expanded: boolean, record: T) => void
   onExpandedRowsChange?: (expandedKeys: React.Key[]) => void
   expandRowByClick?: boolean
   expandIcon?: (props: { expanded: boolean; onExpand: () => void; record: T }) => React.ReactNode
+  columnTitle?: React.ReactNode
+  columnWidth?: string | number
+  expandedRowClassName?: string | ((record: T, index: number, expanded: boolean) => string)
+  showExpandColumn?: boolean
 }
 
 export interface PaginationConfig {
@@ -128,7 +148,10 @@ export interface TableProps<T> {
   expandable?: ExpandableConfig<T>
   scroll?: ScrollConfig
   className?: string
+  showHeader?: boolean
+  rowClassName?: string | ((record: T, index: number) => string)
   onRow?: (record: T, index: number) => React.HTMLAttributes<HTMLTableRowElement>
+  onHeaderRow?: (columns: ColumnType<T>[]) => React.HTMLAttributes<HTMLTableRowElement>
   onChange?: (
     pagination: PaginationConfig,
     filters: Record<string, (string | number | boolean)[] | null>,
@@ -144,6 +167,9 @@ export interface TableProps<T> {
     selectAll?: string
     selectInvert?: string
   }
+  title?: (currentPageData: T[]) => React.ReactNode
+  footer?: (currentPageData: T[]) => React.ReactNode
+  summary?: (currentPageData: T[]) => React.ReactNode
   'data-testid'?: string
   'aria-label'?: string
 }
@@ -151,9 +177,25 @@ export interface TableProps<T> {
 const sizeClasses: Record<TableSize, string> = {
   xs: dTableXs,
   sm: dTableSm,
-  md: '',
+  md: dTableMd,
   lg: dTableLg,
   xl: dTableXl,
+}
+
+const checkboxSizeClasses: Record<TableSize, string> = {
+  xs: dCheckboxXs,
+  sm: dCheckboxSm,
+  md: dCheckboxMd,
+  lg: dCheckboxLg,
+  xl: dCheckboxLg, // DaisyUI max is lg
+}
+
+const radioSizeClasses: Record<TableSize, string> = {
+  xs: dRadioXs,
+  sm: dRadioSm,
+  md: dRadioMd,
+  lg: dRadioLg,
+  xl: dRadioLg, // DaisyUI max is lg
 }
 
 function FilterDropdown({
@@ -279,7 +321,7 @@ function TableInner<T extends Record<string, unknown>>(
     dataSource,
     rowKey = 'id' as keyof T & string,
     loading = false,
-    size = 'md',
+    size,
     bordered = false,
     hoverable = true,
     striped = false,
@@ -290,17 +332,32 @@ function TableInner<T extends Record<string, unknown>>(
     expandable,
     scroll,
     className = '',
+    showHeader = true,
+    rowClassName,
     onRow,
+    onHeaderRow,
     onChange,
     onSortChange,
     onFilterChange,
-    locale,
+    locale: localeProp,
+    title,
+    footer,
+    summary,
     'data-testid': testId,
     'aria-label': ariaLabel,
     ...rest
   }: TableProps<T>,
   ref: React.ForwardedRef<HTMLTableElement>
 ) {
+  const { componentSize, locale: globalLocale } = useConfig()
+  const effectiveSize = size ?? componentSize ?? 'md'
+  const locale = {
+    emptyText: localeProp?.emptyText ?? globalLocale?.Table?.emptyText ?? 'No data',
+    filterConfirm: localeProp?.filterConfirm ?? globalLocale?.Table?.filterConfirm ?? 'OK',
+    filterReset: localeProp?.filterReset ?? globalLocale?.Table?.filterReset ?? 'Reset',
+    selectAll: localeProp?.selectAll ?? globalLocale?.Table?.selectAll ?? 'Select all',
+    selectInvert: localeProp?.selectInvert ?? globalLocale?.Table?.selectInvert ?? 'Invert selection',
+  }
   const baseTestId = testId ?? 'table'
   const defaultPageSize = 10
 
@@ -354,9 +411,18 @@ function TableInner<T extends Record<string, unknown>>(
   )
 
   // Expandable state
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>(
-    expandable?.expandedRowKeys ?? expandable?.defaultExpandedRowKeys ?? []
-  )
+  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>(() => {
+    if (expandable?.expandedRowKeys) return expandable.expandedRowKeys
+    if (expandable?.defaultExpandedRowKeys) return expandable.defaultExpandedRowKeys
+    if (expandable?.defaultExpandAllRows) {
+      return dataSource.map((record, index) => {
+        if (typeof rowKey === 'function') return rowKey(record)
+        const keyValue = record[rowKey]
+        return keyValue !== undefined ? String(keyValue) : String(index)
+      })
+    }
+    return []
+  })
 
   // Sync controlled states
   const isControlledSort = columns.some((col) => col.sortOrder !== undefined)
@@ -559,17 +625,17 @@ function TableInner<T extends Record<string, unknown>>(
     }
   }, [paginatedData, getRowKey, isControlledSelection, rowSelection])
 
-  const handleSelectRow = useCallback((record: T, index: number, checked: boolean) => {
+  const handleSelectRow = useCallback((record: T, index: number, checked: boolean, nativeEvent?: Event) => {
     const key = getRowKey(record, index)
 
     if (rowSelection?.type === 'radio') {
       const newSelectedKeys = checked ? [key] : []
+      const selectedRecords = checked ? [record] : []
       if (!isControlledSelection) {
         setSelectedKeys(newSelectedKeys)
       }
-      if (rowSelection?.onChange) {
-        rowSelection.onChange(newSelectedKeys, checked ? [record] : [])
-      }
+      rowSelection?.onSelect?.(record, checked, selectedRecords, nativeEvent!)
+      rowSelection?.onChange?.(newSelectedKeys, selectedRecords)
       return
     }
 
@@ -580,12 +646,11 @@ function TableInner<T extends Record<string, unknown>>(
     if (!isControlledSelection) {
       setSelectedKeys(newSelectedKeys)
     }
-    if (rowSelection?.onChange) {
-      const selectedRecords = sortedData.filter((r, i) =>
-        newSelectedKeys.includes(getRowKey(r, i))
-      )
-      rowSelection.onChange(newSelectedKeys, selectedRecords)
-    }
+    const selectedRecords = sortedData.filter((r, i) =>
+      newSelectedKeys.includes(getRowKey(r, i))
+    )
+    rowSelection?.onSelect?.(record, checked, selectedRecords, nativeEvent!)
+    rowSelection?.onChange?.(newSelectedKeys, selectedRecords)
   }, [getRowKey, rowSelection, isControlledSelection, effectiveSelectedKeys, sortedData])
 
   const handleExpand = useCallback((record: T, index: number) => {
@@ -691,7 +756,7 @@ function TableInner<T extends Record<string, unknown>>(
   const tableClasses = [
     dTable,
     'bg-base-100',
-    sizeClasses[size],
+    sizeClasses[effectiveSize],
     striped && dTableZebra,
     pinRows && dTablePinRows,
     pinCols && dTablePinCols,
@@ -702,6 +767,7 @@ function TableInner<T extends Record<string, unknown>>(
 
   const hasFixedColumns = visibleColumns.some((col) => col.fixed)
   const hasExpandable = expandable !== undefined
+  const showExpandColumn = hasExpandable && (expandable?.showExpandColumn !== false)
 
   const wrapperStyle: React.CSSProperties = {}
   if (scroll?.x) {
@@ -735,7 +801,7 @@ function TableInner<T extends Record<string, unknown>>(
   const emptyText = locale?.emptyText ?? 'No data'
 
   // Calculate extra columns count (selection + expand)
-  const extraColsCount = (rowSelection ? 1 : 0) + (hasExpandable ? 1 : 0)
+  const extraColsCount = (rowSelection ? 1 : 0) + (showExpandColumn ? 1 : 0)
 
   const renderPagination = () => {
     if (!isPaginationEnabled || totalPages <= 1) return null
@@ -853,6 +919,12 @@ function TableInner<T extends Record<string, unknown>>(
 
   return (
     <div className="space-y-4" data-testid={baseTestId} {...rest}>
+      {title && (
+        <div className="text-lg font-semibold" data-testid={`${baseTestId}-title`}>
+          {title(paginatedData)}
+        </div>
+      )}
+
       {topPagination}
 
       <div className={wrapperClasses} style={wrapperStyle}>
@@ -865,23 +937,26 @@ function TableInner<T extends Record<string, unknown>>(
           aria-rowcount={sortedData.length}
           data-testid={`${baseTestId}-table`}
         >
+          {showHeader && (
           <thead>
-            <tr role="row">
-              {hasExpandable && (
-                <th style={{ width: 50 }} className="sticky left-0 z-20 bg-base-100" role="columnheader">
-                  <span className="sr-only">Expand</span>
+            <tr role="row" {...(onHeaderRow?.(visibleColumns) || {})}>
+              {showExpandColumn && (
+                <th style={{ width: expandable?.columnWidth ?? 50 }} className="sticky left-0 z-20 bg-base-100" role="columnheader">
+                  {expandable?.columnTitle ?? <span className="sr-only">Expand</span>}
                 </th>
               )}
               {rowSelection && (
                 <th
-                  style={{ width: 50 }}
-                  className={`sticky ${hasExpandable ? '' : 'left-0'} z-20 bg-base-100`}
+                  style={{ width: rowSelection.columnWidth ?? 50 }}
+                  className={`${rowSelection.fixed !== false ? 'sticky' : ''} ${rowSelection.fixed !== false && !showExpandColumn ? 'left-0' : ''} z-20 bg-base-100`}
                   role="columnheader"
                 >
-                  {rowSelection.type !== 'radio' && (
+                  {rowSelection.columnTitle !== undefined ? (
+                    rowSelection.columnTitle
+                  ) : rowSelection.type !== 'radio' && !rowSelection.hideSelectAll ? (
                     <input
                       type="checkbox"
-                      className={`${dCheckbox} checkbox-sm ${dCheckboxPrimary}`}
+                      className={`${dCheckbox} ${checkboxSizeClasses[effectiveSize]} ${dCheckboxPrimary}`}
                       checked={isAllSelected}
                       ref={(el) => {
                         if (el) el.indeterminate = isSomeSelected && !isAllSelected
@@ -890,7 +965,7 @@ function TableInner<T extends Record<string, unknown>>(
                       aria-label={locale?.selectAll ?? 'Select all rows'}
                       data-testid={`${baseTestId}-select-all`}
                     />
-                  )}
+                  ) : null}
                 </th>
               )}
               {visibleColumns.map((column, columnIndex) => {
@@ -898,13 +973,16 @@ function TableInner<T extends Record<string, unknown>>(
                 const isSorted = effectiveSortState.columnKey === column.key
                 const sortOrder = isSorted ? effectiveSortState.order : null
 
+                const headerCellProps = column.onHeaderCell?.(column) || {}
                 return (
                   <th
                     key={column.key}
-                    className={`${getAlignClass(column.align)} ${fixedStyle.className}`}
+                    {...headerCellProps}
+                    className={[getAlignClass(column.align), fixedStyle.className, column.className, headerCellProps.className].filter(Boolean).join(' ')}
                     style={{
                       ...(column.width ? { width: column.width } : {}),
                       ...fixedStyle.style,
+                      ...headerCellProps.style,
                     }}
                     role="columnheader"
                     aria-sort={sortOrder === 'ascend' ? 'ascending' : sortOrder === 'descend' ? 'descending' : undefined}
@@ -959,6 +1037,7 @@ function TableInner<T extends Record<string, unknown>>(
               })}
             </tr>
           </thead>
+          )}
           <tbody>
             {paginatedData.length === 0 ? (
               <tr role="row">
@@ -978,9 +1057,11 @@ function TableInner<T extends Record<string, unknown>>(
                 const isSelected = effectiveSelectedKeys.includes(key)
                 const isExpanded = effectiveExpandedKeys.includes(key)
                 const isExpandable = expandable?.rowExpandable ? expandable.rowExpandable(record) : true
+                const customRowClassName = typeof rowClassName === 'function' ? rowClassName(record, index) : rowClassName
                 const rowClasses = [
                   hoverable && 'hover:bg-base-200',
                   isSelected && 'bg-primary/10',
+                  customRowClassName,
                 ]
                   .filter(Boolean)
                   .join(' ')
@@ -1005,11 +1086,11 @@ function TableInner<T extends Record<string, unknown>>(
                       {...rowProps}
                       onClick={handleRowClick}
                     >
-                      {hasExpandable && (
+                      {showExpandColumn && (
                         <td className="sticky left-0 z-10 bg-base-100" role="gridcell">
                           {isExpandable && (
-                            expandable.expandIcon ? (
-                              expandable.expandIcon({
+                            expandable!.expandIcon ? (
+                              expandable!.expandIcon({
                                 expanded: isExpanded,
                                 onExpand: () => handleExpand(record, index),
                                 record,
@@ -1025,14 +1106,14 @@ function TableInner<T extends Record<string, unknown>>(
                       )}
                       {rowSelection && (
                         <td
-                          className={`sticky ${hasExpandable ? '' : 'left-0'} z-10 bg-base-100`}
+                          className={`${rowSelection.fixed !== false ? 'sticky' : ''} ${rowSelection.fixed !== false && !showExpandColumn ? 'left-0' : ''} z-10 bg-base-100`}
                           role="gridcell"
                         >
                           <input
                             type={rowSelection.type === 'radio' ? 'radio' : 'checkbox'}
-                            className={rowSelection.type === 'radio' ? `${dRadio} ${dRadioSm} ${dRadioPrimary}` : `${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
+                            className={rowSelection.type === 'radio' ? `${dRadio} ${radioSizeClasses[effectiveSize]} ${dRadioPrimary}` : `${dCheckbox} ${checkboxSizeClasses[effectiveSize]} ${dCheckboxPrimary}`}
                             checked={isSelected}
-                            onChange={(e) => handleSelectRow(record, index, e.target.checked)}
+                            onChange={(e) => handleSelectRow(record, index, e.target.checked, e.nativeEvent)}
                             aria-label={`Select row ${index + 1}`}
                             data-testid={`${baseTestId}-row-${index}-select`}
                             {...checkboxProps}
@@ -1042,12 +1123,14 @@ function TableInner<T extends Record<string, unknown>>(
                       {visibleColumns.map((column, columnIndex) => {
                         const fixedStyle = getFixedColumnStyle(columnIndex, false)
                         const cellContent = getCellValue(column, record, index)
+                        const cellProps = column.onCell?.(record, index) || {}
 
                         return (
                           <td
                             key={column.key}
-                            className={`${getAlignClass(column.align)} ${fixedStyle.className} ${column.ellipsis ? 'truncate max-w-0' : ''}`}
-                            style={fixedStyle.style}
+                            {...cellProps}
+                            className={[getAlignClass(column.align), fixedStyle.className, column.ellipsis ? 'truncate max-w-0' : '', column.className, cellProps.className].filter(Boolean).join(' ')}
+                            style={{ ...fixedStyle.style, ...cellProps.style }}
                             role="gridcell"
                             title={column.ellipsis && typeof cellContent === 'string' ? cellContent : undefined}
                             data-testid={`${baseTestId}-row-${index}-${column.key}`}
@@ -1059,7 +1142,12 @@ function TableInner<T extends Record<string, unknown>>(
                     </tr>
                     {hasExpandable && isExpanded && (
                       <tr
-                        className="bg-base-200/50"
+                        className={[
+                          'bg-base-200/50',
+                          typeof expandable!.expandedRowClassName === 'function'
+                            ? expandable!.expandedRowClassName(record, index, isExpanded)
+                            : expandable!.expandedRowClassName
+                        ].filter(Boolean).join(' ')}
                         role="row"
                         data-testid={`${baseTestId}-row-${index}-expanded`}
                       >
@@ -1068,7 +1156,7 @@ function TableInner<T extends Record<string, unknown>>(
                           className="p-4"
                           role="gridcell"
                         >
-                          {expandable.expandedRowRender(record, index, isExpanded)}
+                          {expandable!.expandedRowRender(record, index, isExpanded)}
                         </td>
                       </tr>
                     )}
@@ -1077,10 +1165,21 @@ function TableInner<T extends Record<string, unknown>>(
               })
             )}
           </tbody>
+          {summary && (
+            <tfoot data-testid={`${baseTestId}-summary`}>
+              {summary(paginatedData)}
+            </tfoot>
+          )}
         </table>
       </div>
 
       {bottomPagination}
+
+      {footer && (
+        <div className="text-sm text-base-content/70" data-testid={`${baseTestId}-footer`}>
+          {footer(paginatedData)}
+        </div>
+      )}
     </div>
   )
 }

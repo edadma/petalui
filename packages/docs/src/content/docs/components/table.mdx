@@ -21,9 +21,13 @@ import {
   FilteringDemo,
   SelectionDemo,
   RadioSelectionDemo,
+  CustomSelectionDemo,
   ExpandableDemo,
   EllipsisDemo,
   ScrollDemo,
+  TitleFooterDemo,
+  SummaryDemo,
+  RowClassNameDemo,
   CompleteDemo,
 } from '../../../components/TableDemo'
 import TableDemoSource from '../../../components/TableDemo.tsx?raw'
@@ -106,6 +110,10 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
   <RadioSelectionDemo client:load slot="demo" />
 </Example>
 
+<Example title="Custom Selection" description="Selection with custom column title and hidden select-all." source={TableDemoSource} fn="CustomSelectionDemo">
+  <CustomSelectionDemo client:load slot="demo" />
+</Example>
+
 <Example title="Expandable Rows" description="Expand rows to show additional content." source={TableDemoSource} fn="ExpandableDemo">
   <ExpandableDemo client:load slot="demo" />
 </Example>
@@ -116,6 +124,18 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
 
 <Example title="Scroll Configuration" description="Set max width and height with scrolling." source={TableDemoSource} fn="ScrollDemo">
   <ScrollDemo client:load slot="demo" />
+</Example>
+
+<Example title="Title and Footer" description="Add title and footer sections to the table." source={TableDemoSource} fn="TitleFooterDemo">
+  <TitleFooterDemo client:load slot="demo" />
+</Example>
+
+<Example title="Summary Row" description="Add a summary row (tfoot) for totals or aggregations." source={TableDemoSource} fn="SummaryDemo">
+  <SummaryDemo client:load slot="demo" />
+</Example>
+
+<Example title="Row Class Name" description="Apply conditional styling to rows based on data." source={TableDemoSource} fn="RowClassNameDemo">
+  <RowClassNameDemo client:load slot="demo" />
 </Example>
 
 <Example title="Complete Example" description="Table with multiple features combined." source={TableDemoSource} fn="CompleteDemo">
@@ -145,7 +165,13 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
 | `expandable` | Expandable row configuration | `ExpandableConfig<T>` | `-` |
 | `scroll` | Scroll configuration for fixed dimensions | `ScrollConfig` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
+| `showHeader` | Whether to show the table header | `boolean` | `true` |
+| `rowClassName` | Custom class name for each row | `string \| ((record: T, index: number) => string)` | `-` |
+| `title` | Table title renderer | `(currentPageData: T[]) => ReactNode` | `-` |
+| `footer` | Table footer renderer | `(currentPageData: T[]) => ReactNode` | `-` |
+| `summary` | Table summary (tfoot) renderer | `(currentPageData: T[]) => ReactNode` | `-` |
 | `onRow` | Row event handlers | `(record: T, index: number) => HTMLAttributes` | `-` |
+| `onHeaderRow` | Header row event handlers | `(columns: ColumnType<T>[]) => HTMLAttributes` | `-` |
 | `onChange` | Unified callback for pagination, sorting, and filtering | `(pagination, filters, sorter, extra) => void` | `-` |
 | `onSortChange` | Callback when sort changes | `(sorter: SorterResult<T>) => void` | `-` |
 | `onFilterChange` | Callback when filter changes | `(filters: Record<string, ...>) => void` | `-` |
@@ -173,6 +199,9 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
 | `onFilter` | Filter function | `(value, record) => boolean` | `-` |
 | `ellipsis` | Truncate text with ellipsis | `boolean` | `false` |
 | `hidden` | Hide column | `boolean` | `false` |
+| `className` | Custom class name for column cells | `string` | `-` |
+| `onCell` | Custom cell attributes | `(record: T, index: number) => TdHTMLAttributes` | `-` |
+| `onHeaderCell` | Custom header cell attributes | `(column: ColumnType<T>) => ThHTMLAttributes` | `-` |
 
 ### `RowSelection`
 
@@ -181,7 +210,12 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
 | `type` | Selection type | `'checkbox' \| 'radio'` | `'checkbox'` |
 | `selectedRowKeys` | Controlled selected row keys | `React.Key[]` | `-` |
 | `onChange` | Callback when selection changes | `(selectedRowKeys, selectedRows) => void` | `-` |
+| `onSelect` | Callback when a row is selected | `(record, selected, selectedRows, nativeEvent) => void` | `-` |
 | `getCheckboxProps` | Function to customize checkbox props | `(record) => { disabled?, name? }` | `-` |
+| `columnTitle` | Custom title for selection column | `ReactNode` | `-` |
+| `columnWidth` | Width of selection column | `string \| number` | `50` |
+| `fixed` | Fix selection column to left | `boolean` | `true` |
+| `hideSelectAll` | Hide select all checkbox | `boolean` | `false` |
 
 ### `ExpandableConfig`
 
@@ -190,11 +224,16 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
 | `expandedRowRender` | Render function for expanded content | `(record, index, expanded) => ReactNode` | `-` |
 | `expandedRowKeys` | Controlled expanded row keys | `React.Key[]` | `-` |
 | `defaultExpandedRowKeys` | Default expanded row keys | `React.Key[]` | `-` |
+| `defaultExpandAllRows` | Expand all rows by default | `boolean` | `false` |
 | `rowExpandable` | Function to determine if row is expandable | `(record) => boolean` | `-` |
 | `onExpand` | Callback when expand state changes | `(expanded, record) => void` | `-` |
 | `onExpandedRowsChange` | Callback when expanded keys change | `(expandedKeys) => void` | `-` |
 | `expandRowByClick` | Expand row on row click | `boolean` | `false` |
 | `expandIcon` | Custom expand icon | `(props) => ReactNode` | `-` |
+| `columnTitle` | Custom title for expand column | `ReactNode` | `-` |
+| `columnWidth` | Width of expand column | `string \| number` | `50` |
+| `expandedRowClassName` | Custom class for expanded row | `string \| ((record, index, expanded) => string)` | `-` |
+| `showExpandColumn` | Whether to show expand column | `boolean` | `true` |
 
 ### `PaginationConfig`
 
@@ -227,6 +266,9 @@ import type { ColumnType, RowSelection, ExpandableConfig, PaginationConfig } fro
 The component exposes `data-testid` attributes:
 - `{baseTestId}` - Root wrapper
 - `{baseTestId}-table` - Table element
+- `{baseTestId}-title` - Table title
+- `{baseTestId}-footer` - Table footer
+- `{baseTestId}-summary` - Table summary (tfoot)
 - `{baseTestId}-header-{columnKey}` - Column headers
 - `{baseTestId}-row-{index}` - Table rows
 - `{baseTestId}-row-{index}-{columnKey}` - Table cells

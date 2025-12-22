@@ -595,6 +595,154 @@ export function ScrollDemo() {
   );
 }
 
+// @example-imports: { Table } from 'asterui'
+export function TitleFooterDemo() {
+  // @example-include
+  const columns = [
+    { key: 'name', title: 'Name', dataIndex: 'name' },
+    { key: 'email', title: 'Email', dataIndex: 'email' },
+    { key: 'role', title: 'Role', dataIndex: 'role' },
+  ];
+
+  const userData = [
+    { id: '1', name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+    { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
+    { id: '3', name: 'Bob Johnson', email: 'bob@example.com', role: 'User' },
+  ];
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Table
+        columns={columns}
+        dataSource={userData}
+        title={() => <span className="font-semibold">User List</span>}
+        footer={(data) => <span>Total: {data.length} users</span>}
+        pagination={false}
+        bordered
+      />
+      {/* @example-return-end */}
+    </Demo>
+  );
+}
+
+// @example-imports: { Table } from 'asterui'
+export function SummaryDemo() {
+  // @example-include
+  const columns = [
+    { key: 'product', title: 'Product', dataIndex: 'product' },
+    { key: 'quantity', title: 'Quantity', dataIndex: 'quantity', align: 'right' },
+    { key: 'price', title: 'Price', dataIndex: 'price', align: 'right', render: (v) => `$${v}` },
+    { key: 'total', title: 'Total', dataIndex: 'total', align: 'right', render: (v) => `$${v}` },
+  ];
+
+  const orderData = [
+    { id: '1', product: 'Widget A', quantity: 10, price: 25, total: 250 },
+    { id: '2', product: 'Widget B', quantity: 5, price: 50, total: 250 },
+    { id: '3', product: 'Widget C', quantity: 8, price: 30, total: 240 },
+  ];
+
+  const grandTotal = orderData.reduce((sum, item) => sum + item.total, 0);
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Table
+        columns={columns}
+        dataSource={orderData}
+        pagination={false}
+        bordered
+        summary={() => (
+          <tr className="font-semibold bg-base-200">
+            <td colSpan={3} className="text-right p-3">Grand Total:</td>
+            <td className="text-right p-3">${grandTotal}</td>
+          </tr>
+        )}
+      />
+      {/* @example-return-end */}
+    </Demo>
+  );
+}
+
+// @example-imports: { Table } from 'asterui'
+export function RowClassNameDemo() {
+  // @example-include
+  const columns = [
+    { key: 'name', title: 'Name', dataIndex: 'name' },
+    { key: 'email', title: 'Email', dataIndex: 'email' },
+    { key: 'status', title: 'Status', dataIndex: 'status' },
+  ];
+
+  const userData = [
+    { id: '1', name: 'John Doe', email: 'john@example.com', status: 'active' },
+    { id: '2', name: 'Jane Smith', email: 'jane@example.com', status: 'active' },
+    { id: '3', name: 'Bob Johnson', email: 'bob@example.com', status: 'inactive' },
+    { id: '4', name: 'Alice Williams', email: 'alice@example.com', status: 'active' },
+    { id: '5', name: 'Charlie Brown', email: 'charlie@example.com', status: 'inactive' },
+  ];
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Table
+        columns={columns}
+        dataSource={userData}
+        pagination={false}
+        rowClassName={(record) =>
+          record.status === 'inactive' ? 'opacity-50 bg-error/10' : ''
+        }
+      />
+      {/* @example-return-end */}
+    </Demo>
+  );
+}
+
+// @example-imports: { Table } from 'asterui'
+// @example-imports: { useState } from 'react'
+export function CustomSelectionDemo() {
+  // @example-include
+  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+
+  const columns = [
+    { key: 'name', title: 'Name', dataIndex: 'name' },
+    { key: 'email', title: 'Email', dataIndex: 'email' },
+    { key: 'role', title: 'Role', dataIndex: 'role' },
+  ];
+
+  const userData = [
+    { id: '1', name: 'John Doe', email: 'john@example.com', role: 'Admin' },
+    { id: '2', name: 'Jane Smith', email: 'jane@example.com', role: 'User' },
+    { id: '3', name: 'Bob Johnson', email: 'bob@example.com', role: 'User' },
+    { id: '4', name: 'Alice Williams', email: 'alice@example.com', role: 'Editor' },
+  ];
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <div className="space-y-4">
+        <div className="text-sm">Selected: {selectedKeys.length} items</div>
+        <Table
+          columns={columns}
+          dataSource={userData}
+          rowSelection={{
+            selectedRowKeys: selectedKeys,
+            onChange: (keys) => setSelectedKeys(keys),
+            columnTitle: 'Select',
+            columnWidth: 80,
+            hideSelectAll: true,
+          }}
+          pagination={false}
+        />
+      </div>
+      {/* @example-return-end */}
+    </Demo>
+  );
+}
+
 // @example-imports: { Table, Tag, Button, Space } from 'asterui'
 export function CompleteDemo() {
   return (

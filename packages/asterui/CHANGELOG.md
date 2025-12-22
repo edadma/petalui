@@ -8,6 +8,38 @@ description: All notable changes to AsterUI
 All notable changes to AsterUI are documented here.
 
 
+## v0.12.59 (2025-12-22)
+
+### Table Component QA Fixes
+
+- **ConfigProvider Integration**: Table now respects `componentSize` and global `locale` from ConfigProvider
+- **DaisyUI Classes**: Added missing `table-md` class, fixed checkbox/radio size scaling
+
+### New Table Props
+
+- `showHeader` - Control header visibility
+- `rowClassName` - Custom row styling (string or function)
+- `title` / `footer` / `summary` - Render functions for table sections
+- `onHeaderRow` - Header row event handlers
+
+### New Column Props
+
+- `className` - Custom class for column cells
+- `onCell` / `onHeaderCell` - Custom cell attribute callbacks
+
+### New RowSelection Props
+
+- `columnTitle`, `columnWidth`, `fixed`, `hideSelectAll`, `onSelect`
+
+### New Expandable Props
+
+- `defaultExpandAllRows`, `columnTitle`, `columnWidth`, `expandedRowClassName`, `showExpandColumn`
+
+### Documentation
+
+- Added 4 new Table examples: Title/Footer, Summary Row, Row Class Name, Custom Selection
+- Backfilled changelog entries for v0.12.55, v0.12.56, v0.12.57
+
 ## v0.12.58 (2025-12-22)
 
 ### Bug Fixes
@@ -18,6 +50,60 @@ All notable changes to AsterUI are documented here.
 
 - **Blocks**: Add Signup Form block with password strength meter, password confirmation validation, and terms acceptance
 - **Examples**: Add signup-form example demonstrating Form validation patterns
+
+## v0.12.57 (2025-12-22)
+
+### Component Improvements
+
+Added `data-testid` prefix support to 11 components for easier testing:
+
+- **Modal**: TestIds for overlay, content, header, body, footer, close button
+- **Dropdown**: TestIds for trigger and menu
+- **Pagination**: TestIds for prev/next buttons and page items
+- **Tabs**: TestIds for tab list, individual tabs, and panels
+- **Popconfirm**: TestIds for trigger, popover, confirm/cancel buttons
+- **Upload**: TestIds for dropzone and input
+- **DatePicker**: Added ref forwarding, testIds for input and calendar
+- **InputNumber**: TestIds for input, increment, and decrement buttons
+- **OTPInput**: Indexed testIds for each input field
+- **Menu**: TestId for the main menu element
+- **Transfer**: TestIds for source list, target list, and move buttons
+
+### Documentation
+
+- Updated API tables for all 11 components with `data-testid` prop
+
+## v0.12.56 (2025-12-21)
+
+### Bug Fixes
+
+- Fix theme color timing issue - use double requestAnimationFrame to ensure CSS fully recalculates before reading theme colors
+- ThemeController now properly integrates with ThemeProvider context
+- Starter app improvements: uses Hero and Space components
+
+## v0.12.55 (2025-12-21)
+
+### New Features
+
+- **ThemeProvider**: New component for comprehensive theme management
+  - System preference detection (`prefers-color-scheme: dark`)
+  - localStorage persistence with configurable storage key
+  - Cross-tab synchronization
+  - Support for any DaisyUI theme
+- **SizeProvider**: Renamed `IconSizeContext` to `SizeContext`/`SizeProvider` for clarity
+  - Used by Button, CopyButton to propagate size to child icons
+  - `useSize` hook for consuming size context
+
+### Documentation
+
+- New **Providers** section in documentation sidebar
+- Dedicated pages for ConfigProvider, ThemeProvider, and SizeProvider
+- All provider docs available in 5 languages (EN, ES, PT, ZH, FR)
+
+### Breaking Changes
+
+- `IconSizeContext` renamed to `SizeContext`
+- `useIconSize` renamed to `useSize` (in @aster-ui/icons)
 
 ## v0.12.54 (2025-12-20)
 
