@@ -21,6 +21,7 @@ const dBtnActive = 'd-btn-active'
 const dMenu = 'd-menu'
 const dCheckbox = 'd-checkbox'
 const dCheckboxXs = 'd-checkbox-xs'
+const dCheckboxSm = 'd-checkbox-sm'
 const dCheckboxPrimary = 'd-checkbox-primary'
 const dRadio = 'd-radio'
 const dRadioSm = 'd-radio-sm'
@@ -1029,7 +1030,7 @@ function TableInner<T extends Record<string, unknown>>(
                         >
                           <input
                             type={rowSelection.type === 'radio' ? 'radio' : 'checkbox'}
-                            className={rowSelection.type === 'radio' ? `${dRadio} ${dRadioSm} ${dRadioPrimary}` : `${dCheckbox} checkbox-sm ${dCheckboxPrimary}`}
+                            className={rowSelection.type === 'radio' ? `${dRadio} ${dRadioSm} ${dRadioPrimary}` : `${dCheckbox} ${dCheckboxSm} ${dCheckboxPrimary}`}
                             checked={isSelected}
                             onChange={(e) => handleSelectRow(record, index, e.target.checked)}
                             aria-label={`Select row ${index + 1}`}
