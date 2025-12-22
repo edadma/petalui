@@ -420,6 +420,7 @@ export default defineConfig({
         },
         {
           label: 'Hooks',
+          collapsed: true,
           translations: {
             es: 'Ganchos',
             pt: 'Ganchos',
