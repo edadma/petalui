@@ -42,10 +42,12 @@ interface DemoConfig {
   demo?: number           // Which demo (1-indexed, default 1)
   selector?: string       // Custom selector instead of demo index
   click?: string          // Selector to click before capturing
+  hover?: string          // Selector to hover before capturing (for hover triggers)
   wait?: number           // Extra wait time after click (ms)
   captureArea?: boolean   // Capture the whole demo area (for dropdowns, popovers, etc.)
   padding?: string        // Add padding to demo area (for overflow elements like badges)
   center?: boolean        // Center content in demo area
+  floating?: string       // Selector for floating element to include (rendered via portal)
 }
 
 const DEMO_CONFIG: Record<string, DemoConfig> = {
@@ -55,8 +57,11 @@ const DEMO_CONFIG: Record<string, DemoConfig> = {
   'collapse': { click: '.collapse-title' },
   'countdown': { captureArea: true, padding: '0.5rem', center: true },
   'hero': { demo: 3 },  // WithFigureDemo - Box Office News
-  // These components have floating elements that are hard to capture cleanly
-  // Just show them in their closed/default state
+  // Floating elements - click to open and capture combined area
+  'dropdown': { demo: 5, click: 'button', wait: 300, floating: '.d-menu' },  // WithIconsDemo
+  'autocomplete': { click: 'input', wait: 300, floating: '.d-menu' },
+  'tooltip': { demo: 4, captureArea: true, padding: '2rem 1rem 1rem 1rem' },  // OpenStateDemo - always visible
+  'colorpicker': { click: 'button', wait: 300, floating: '[class*="colorpicker"]' },
 }
 
 // All components
@@ -120,6 +125,41 @@ async function getComponentElement(page: any, slug: string) {
     }
   }
 
+  // Hover to activate if configured
+  if (config.hover) {
+    const hoverTarget = await demoArea.$(config.hover)
+    if (hoverTarget) {
+      await hoverTarget.hover()
+      await page.waitForTimeout(config.wait || 300)
+    }
+  }
+
+  // If floating element configured, find the visible floating element
+  if (config.floating) {
+    // Find the visible floating element (rendered via portal to body)
+    const floating = await page.evaluateHandle((selector: string) => {
+      const elements = document.querySelectorAll(selector)
+      for (const el of elements) {
+        const rect = el.getBoundingClientRect()
+        const style = getComputedStyle(el)
+        // Check if element is visible and positioned on screen
+        if (rect.width > 0 && rect.height > 0 &&
+            style.display !== 'none' &&
+            style.visibility !== 'hidden' &&
+            rect.top > 0 && rect.left > 0) {
+          return el
+        }
+      }
+      return null
+    }, config.floating)
+
+    const floatingEl = floating.asElement()
+    if (floatingEl) {
+      const trigger = await demoArea.$(':scope > *')
+      return { trigger, floating: floatingEl, type: 'combined' }
+    }
+  }
+
   // Return the demo area or its first child based on config
   if (config.captureArea) {
     return demoArea
@@ -150,11 +190,40 @@ async function captureComponent(page: any, slug: string, theme: 'light' | 'dark'
     const suffix = theme === 'dark' ? '-dark' : ''
     const outputPath = join(OUTPUT_DIR, `${slug}${suffix}.png`)
 
-    await component.screenshot({
-      path: outputPath,
-      type: 'png',
-      omitBackground: true,
-    })
+    // Handle combined bounding box for floating elements
+    if (component.type === 'combined') {
+      const triggerBox = await component.trigger.boundingBox()
+      const floatingBox = await component.floating.boundingBox()
+
+      if (!triggerBox || !floatingBox) {
+        return false
+      }
+
+      // Calculate combined bounding box with padding
+      const padding = 8
+      const x = Math.min(triggerBox.x, floatingBox.x) - padding
+      const y = Math.min(triggerBox.y, floatingBox.y) - padding
+      const right = Math.max(triggerBox.x + triggerBox.width, floatingBox.x + floatingBox.width) + padding
+      const bottom = Math.max(triggerBox.y + triggerBox.height, floatingBox.y + floatingBox.height) + padding
+
+      await page.screenshot({
+        path: outputPath,
+        type: 'png',
+        omitBackground: true,
+        clip: {
+          x: Math.max(0, x),
+          y: Math.max(0, y),
+          width: right - x,
+          height: bottom - y,
+        },
+      })
+    } else {
+      await component.screenshot({
+        path: outputPath,
+        type: 'png',
+        omitBackground: true,
+      })
+    }
 
     return true
   } catch (err: any) {
