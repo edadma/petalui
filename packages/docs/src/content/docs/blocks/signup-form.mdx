@@ -1,0 +1,31 @@
+---
+title: Signup Form
+description: A complete registration form with password strength meter, confirmation, and terms acceptance.
+tableOfContents: false
+---
+
+import { SignupFormDemo } from '../../../blocks/SignupFormDemo'
+import SignupFormDemoSource from '../../../blocks/SignupFormDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A polished signup form combining Card, Form, Input, Checkbox, Button, Progress, and Typography components with comprehensive validation and real-time password strength feedback.
+
+<Example title="Create Account Form" description="Complete signup form with password strength meter, confirmation matching, and terms acceptance." source={SignupFormDemoSource} fn="SignupFormDemo">
+  <SignupFormDemo client:load slot="demo" />
+</Example>
+
+## Features
+
+- **Password strength meter** - Real-time visual feedback as user types
+- **Password confirmation** - Dynamic validation ensuring passwords match
+- **Terms acceptance** - Required checkbox with custom validator
+- **Email validation** - Built-in email format checking
+- **Visual feedback** - Progress bar with color-coded strength levels
+
+## Customization Ideas
+
+- Add password visibility toggles
+- Include social signup options (Google, GitHub, etc.)
+- Add loading state during form submission
+- Implement actual registration logic
+- Add CAPTCHA for spam prevention

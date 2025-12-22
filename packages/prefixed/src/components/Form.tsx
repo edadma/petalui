@@ -70,7 +70,18 @@ export interface FormRule {
   pattern?: RegExp | { value: RegExp; message: string }
   message?: string
   validate?: (value: any) => boolean | string | Promise<boolean | string>
+  /** Ant Design style validator (for compatibility) */
+  validator?: (rule: any, value: any) => Promise<void>
 }
+
+/** Form methods passed to rule functions (Ant Design style) */
+export interface FormRuleMethods {
+  getFieldValue: (name: string) => any
+  getFieldsValue: () => any
+}
+
+/** A rule can be an object or a function that returns a rule object */
+export type FormRuleInput = FormRule | ((methods: FormRuleMethods) => FormRule)
 
 export type ValidateTrigger = 'onChange' | 'onBlur' | 'onSubmit' | ('onChange' | 'onBlur' | 'onSubmit')[]
 
@@ -81,7 +92,7 @@ export interface FormItemProps {
   floatingLabel?: string
   help?: string
   required?: boolean
-  rules?: FormRule | FormRule[]
+  rules?: FormRuleInput | FormRuleInput[]
   valuePropName?: string
   inline?: boolean
   className?: string
@@ -276,7 +287,12 @@ function FormItem({
     const currentDeps = JSON.stringify(watchedDeps)
     if (prevDepsRef.current !== currentDeps) {
       prevDepsRef.current = currentDeps
-      formRef.current.trigger(fieldName as any)
+      // Only re-validate if this field has been touched
+      const touchedFields = formRef.current.formState.touchedFields as any
+      const isTouched = fieldName.split('.').reduce((obj, key) => obj?.[key], touchedFields)
+      if (isTouched) {
+        formRef.current.trigger(fieldName as any)
+      }
     }
   }, [watchedDeps, dependencies, fieldName])
 
@@ -295,9 +311,25 @@ function FormItem({
   const errorMessage = error?.message as string | undefined
 
   // Normalize rules to array
-  const rulesArray: FormRule[] = rules
+  const rulesInputArray: FormRuleInput[] = rules
     ? Array.isArray(rules) ? rules : [rules]
     : []
+
+  // Store form ref for use in validators (to get fresh values at validation time)
+  const validatorFormRef = useRef(form)
+  validatorFormRef.current = form
+
+  // Create form methods for rule functions (Ant Design style)
+  // These methods always access current form values via ref
+  const formMethods: FormRuleMethods = {
+    getFieldValue: (name: string) => validatorFormRef.current.getValues(name as any),
+    getFieldsValue: () => validatorFormRef.current.getValues(),
+  }
+
+  // Resolve function rules to rule objects
+  const rulesArray: FormRule[] = rulesInputArray.map(rule =>
+    typeof rule === 'function' ? rule(formMethods) : rule
+  )
 
   // Build validation rules
   const validationRules: any = {}
@@ -353,26 +385,36 @@ function FormItem({
       patternValidators.push({ pattern: patternValue, message: patternMessage })
     }
 
-    // Custom validator
+    // Custom validator (our style)
     if (rule.validate) {
       customValidators.push(rule.validate)
+    }
+
+    // Ant Design style validator
+    if (rule.validator) {
+      const antValidator = rule.validator
+      customValidators.push(async (value: any) => {
+        try {
+          await antValidator(rule, value)
+          return true
+        } catch (err) {
+          return err instanceof Error ? err.message : String(err)
+        }
+      })
     }
   }
 
   // Combine all pattern and custom validators into a single validate function
   if (patternValidators.length > 0 || customValidators.length > 0) {
     validationRules.validate = async (value: any) => {
-      // Skip validation if empty (required rule handles that)
-      if (!value && !validationRules.required) return true
-
-      // Check all patterns
+      // Check all patterns (skip if empty - required rule handles that)
       for (const { pattern, message } of patternValidators) {
         if (value && !pattern.test(value)) {
           return message
         }
       }
 
-      // Run all custom validators
+      // Run all custom validators (always run - they may validate empty/false values)
       for (const validator of customValidators) {
         const result = await validator(value)
         if (result !== true) {
@@ -445,6 +487,9 @@ function FormItem({
           }
         }
 
+        // Get the original onChange from the child element (if any)
+        const originalOnChange = isValidElement(children) ? (children.props as any).onChange : undefined
+
         // Handle different value prop names (e.g., 'checked' for checkboxes)
         if (valuePropName === 'checked') {
           childProps.checked = value
@@ -453,6 +498,8 @@ function FormItem({
             if (shouldValidateOnChange) {
               form.trigger(fieldName as any)
             }
+            // Call original onChange if provided
+            originalOnChange?.(e)
           }
         } else {
           childProps.value = value || ''
@@ -467,6 +514,8 @@ function FormItem({
             if (shouldValidateOnChange) {
               form.trigger(fieldName as any)
             }
+            // Call original onChange if provided
+            originalOnChange?.(eventOrValue)
           }
         }
 

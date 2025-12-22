@@ -454,6 +454,7 @@ export default defineConfig({
           },
           items: [
             { label: 'Login Form', slug: 'blocks/login-form', translations: { es: 'Formulario de Inicio', pt: 'Formulário de Login', 'pt-BR': 'Formulário de Login', zh: '登录表单', 'zh-CN': '登录表单', fr: 'Formulaire de connexion' } },
+            { label: 'Signup Form', slug: 'blocks/signup-form', translations: { es: 'Formulario de Registro', pt: 'Formulário de Cadastro', 'pt-BR': 'Formulário de Cadastro', zh: '注册表单', 'zh-CN': '注册表单', fr: 'Formulaire d\'inscription' } },
           ],
         },
       ],
