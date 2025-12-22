@@ -202,4 +202,5 @@ export default App
 | `disabled` | Disabled state | `boolean` | `false` |
 | `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
 | `block` | Full width input | `boolean` | `false` |
+| `data-testid` | Test ID prefix for child elements | `string` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |

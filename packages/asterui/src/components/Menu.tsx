@@ -46,6 +46,8 @@ export interface MenuProps extends Omit<React.HTMLAttributes<HTMLUListElement>, 
   onSelect?: (key: string) => void
   /** Callback when submenu open state changes */
   onOpenChange?: (openKeys: string[]) => void
+  /** Test ID for the menu element */
+  'data-testid'?: string
 }
 
 export interface MenuItemProps extends Omit<React.HTMLAttributes<HTMLAnchorElement>, 'onClick'> {
@@ -132,6 +134,7 @@ function MenuRoot({
   onSelect,
   onOpenChange,
   className = '',
+  'data-testid': testId,
   ...rest
 }: MenuProps) {
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<string[]>(defaultSelectedKeys)
@@ -208,7 +211,7 @@ function MenuRoot({
 
   return (
     <MenuContext.Provider value={contextValue}>
-      <ul className={menuClasses} {...rest}>{content}</ul>
+      <ul className={menuClasses} data-testid={testId} {...rest}>{content}</ul>
     </MenuContext.Provider>
   )
 }

@@ -135,6 +135,7 @@ export default App
 | `onChange` | Callback when items are transferred | `(targetKeys: string[]) => void` | `-` |
 | `render` | Custom render function for items | `(item: TransferItem) => React.ReactNode` | `-` |
 | `showSearch` | Show search input | `boolean` | `false` |
+| `data-testid` | Test ID prefix for child elements | `string` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
 
 ### Transfer Item

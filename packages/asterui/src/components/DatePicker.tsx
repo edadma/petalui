@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, forwardRef } from 'react'
 import { Input } from './Input'
 import { useConfig } from './ConfigProvider'
 
@@ -16,6 +16,8 @@ export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   placeholder?: string
   disabled?: boolean
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
 const DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
@@ -55,19 +57,26 @@ function getFirstDayOfMonth(year: number, month: number): number {
   return new Date(year, month, 1).getDay()
 }
 
-export const DatePicker: React.FC<DatePickerProps> = ({
-  value,
-  defaultValue,
-  onChange,
-  format,
-  placeholder = 'Select date',
-  disabled = false,
-  className = '',
-  size,
-  ...rest
-}) => {
+export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(function DatePicker(
+  {
+    value,
+    defaultValue,
+    onChange,
+    format,
+    placeholder = 'Select date',
+    disabled = false,
+    size,
+    'data-testid': testId,
+    className = '',
+    ...rest
+  },
+  ref
+) {
   const { componentSize } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
+
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
   const [selectedDate, setSelectedDate] = useState<Date | null>(
     value || defaultValue || null
   )
@@ -156,7 +165,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }
 
   return (
-    <div ref={containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} {...rest}>
+    <div ref={ref || containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
       <Input
         value={formatDate(selectedDate, format)}
         placeholder={placeholder}
@@ -165,10 +174,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
         readOnly
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className="cursor-pointer"
+        data-testid={getTestId('input')}
       />
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-lg p-4 z-50 w-80">
+        <div className="absolute top-full left-0 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-lg p-4 z-50 w-80" data-testid={getTestId('calendar')}>
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <button
@@ -268,4 +278,4 @@ export const DatePicker: React.FC<DatePickerProps> = ({
       )}
     </div>
   )
-}
+})

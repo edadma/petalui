@@ -80,6 +80,7 @@ const [value, setValue] = useState('')
 | disabled | Disable input | `boolean` | `false` |
 | autoFocus | Auto focus first input | `boolean` | `false` |
 | onComplete | Callback when all fields filled | `(value: string) => void` | - |
+| data-testid | Test ID prefix for child elements | `string` | - |
 | className | Additional CSS classes | `string` | - |
 
 ## Accessibility

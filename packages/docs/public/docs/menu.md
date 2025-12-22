@@ -225,6 +225,7 @@ export default App
 | defaultOpenKeys | Default open submenu keys (uncontrolled) | `string[]` | `[]` |
 | onSelect | Callback when item is selected | `(key: string) => void` | - |
 | onOpenChange | Callback when submenu open state changes | `(openKeys: string[]) => void` | - |
+| data-testid | Test ID for the menu element | `string` | - |
 | className | Additional CSS classes | `string` | - |
 
 ### MenuItem (for items prop)

@@ -34,6 +34,8 @@ export interface OTPInputProps {
   placeholder?: string
   /** Additional CSS classes */
   className?: string
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
 export interface OTPInputRef {
@@ -56,10 +58,14 @@ export const OTPInput = forwardRef<OTPInputRef, OTPInputProps>(
       autoFocus = false,
       placeholder = '',
       className = '',
+      'data-testid': testId,
     },
     ref
   ) => {
     const { componentSize } = useConfig()
+
+    // Helper for test IDs
+    const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
     const effectiveSize = size ?? componentSize ?? 'md'
     const [otp, setOtp] = useState<string[]>(() => {
       const initial = value.split('').slice(0, length)
@@ -203,13 +209,14 @@ export const OTPInput = forwardRef<OTPInputRef, OTPInputProps>(
     }, [])
 
     return (
-      <div className={`flex gap-2 ${className}`}>
+      <div className={`flex gap-2 ${className}`} data-testid={testId}>
         {otp.map((digit, index) => (
           <input
             key={index}
             ref={(el) => {
               inputRefs.current[index] = el
             }}
+            data-testid={getTestId(`input-${index}`)}
             type={mask ? 'password' : type === 'number' ? 'tel' : 'text'}
             inputMode={type === 'number' ? 'numeric' : 'text'}
             maxLength={1}

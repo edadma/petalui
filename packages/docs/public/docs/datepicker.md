@@ -120,5 +120,6 @@ export default App
 | `disabledDate` | Function to disable specific dates | `(date: Date) => boolean` | `-` |
 | `placeholder` | Input placeholder | `string` | `-` |
 | `disabled` | Disable the picker | `boolean` | `false` |
-| `size` | Input size | `xs' \| 'sm' \| 'md' \| 'lg` | `md` |
+| `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` |
+| `data-testid` | Test ID prefix for child elements | `string` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |

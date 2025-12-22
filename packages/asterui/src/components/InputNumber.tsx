@@ -29,6 +29,8 @@ export interface InputNumberProps extends Omit<React.InputHTMLAttributes<HTMLInp
   className?: string
   controls?: boolean
   block?: boolean
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
 export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
@@ -48,11 +50,15 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
       className = '',
       controls = true,
       block = false,
+      'data-testid': testId,
       ...props
     },
     ref
   ) => {
     const { componentSize } = useConfig()
+
+    // Helper for test IDs
+    const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
     const effectiveSize = size ?? componentSize ?? 'md'
 
     const [internalValue, setInternalValue] = useState<number | null>(defaultValue ?? null)
@@ -163,9 +169,10 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
     const buttonSize = effectiveSize === 'xs' || effectiveSize === 'sm' ? dBtnXs : dBtnSm
 
     return (
-      <div className={`relative ${block ? 'w-full' : 'inline-block'} group ${className}`}>
+      <div className={`relative ${block ? 'w-full' : 'inline-block'} group ${className}`} data-testid={testId}>
         <input
           ref={inputRef}
+          data-testid={getTestId('input')}
           type="text"
           inputMode="decimal"
           role="spinbutton"
@@ -189,6 +196,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
               onClick={handleIncrement}
               disabled={disabled || (value !== null && value >= max)}
               tabIndex={-1}
+              data-testid={getTestId('increment')}
             >
               <svg
                 className="w-3 h-3"
@@ -212,6 +220,7 @@ export const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(
               onClick={handleDecrement}
               disabled={disabled || (value !== null && value <= min)}
               tabIndex={-1}
+              data-testid={getTestId('decrement')}
             >
               <svg
                 className="w-3 h-3"

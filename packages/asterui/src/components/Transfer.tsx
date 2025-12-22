@@ -30,6 +30,8 @@ export interface TransferProps extends Omit<React.HTMLAttributes<HTMLDivElement>
   showSelectAll?: boolean
   disabled?: boolean
   listStyle?: React.CSSProperties
+  /** Test ID prefix for child elements */
+  'data-testid'?: string
 }
 
 interface TransferListProps {
@@ -44,6 +46,7 @@ interface TransferListProps {
   disabled: boolean
   listStyle?: React.CSSProperties
   direction: 'left' | 'right'
+  testId?: string
 }
 
 function TransferList({
@@ -57,6 +60,7 @@ function TransferList({
   showSelectAll,
   disabled,
   listStyle,
+  testId,
 }: TransferListProps) {
   const [searchValue, setSearchValue] = useState('')
 
@@ -97,6 +101,7 @@ function TransferList({
     <div
       className="flex flex-col border border-base-300 rounded-lg bg-base-100 overflow-hidden"
       style={{ width: 200, height: 300, ...listStyle }}
+      data-testid={testId}
     >
       {/* Header */}
       <div className="flex items-center gap-2 px-3 py-2 border-b border-base-300 bg-base-200">
@@ -185,8 +190,11 @@ export function Transfer({
   disabled = false,
   listStyle,
   className = '',
+  'data-testid': testId,
   ...rest
 }: TransferProps) {
+  // Helper for test IDs
+  const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
   const [internalTargetKeys, setInternalTargetKeys] = useState<string[]>(defaultTargetKeys)
   const [sourceSelectedKeys, setSourceSelectedKeys] = useState<string[]>([])
   const [targetSelectedKeys, setTargetSelectedKeys] = useState<string[]>([])
@@ -273,7 +281,7 @@ export function Transfer({
   })
 
   return (
-    <div className={`flex items-center gap-4 ${className}`} {...rest}>
+    <div className={`flex items-center gap-4 ${className}`} data-testid={testId} {...rest}>
       {/* Source list */}
       <TransferList
         items={sourceItems}
@@ -287,6 +295,7 @@ export function Transfer({
         disabled={disabled}
         listStyle={listStyle}
         direction="left"
+        testId={getTestId('source')}
       />
 
       {/* Actions */}
@@ -297,6 +306,7 @@ export function Transfer({
           onClick={moveToTarget}
           disabled={disabled || !canMoveToTarget}
           aria-label="Move to target"
+          data-testid={getTestId('move-right')}
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -308,6 +318,7 @@ export function Transfer({
           onClick={moveToSource}
           disabled={disabled || !canMoveToSource}
           aria-label="Move to source"
+          data-testid={getTestId('move-left')}
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -328,6 +339,7 @@ export function Transfer({
         disabled={disabled}
         listStyle={listStyle}
         direction="right"
+        testId={getTestId('target')}
       />
     </div>
   )
