@@ -303,11 +303,11 @@ export default defineConfig({
               collapsed: true,
               translations: {
                 es: 'Retroalimentación',
-                pt: 'Feedback',
-                'pt-BR': 'Feedback',
+                pt: 'Retorno',
+                'pt-BR': 'Retorno',
                 zh: '反馈',
                 'zh-CN': '反馈',
-                fr: 'Retour d\'information',
+                fr: 'Retour',
               },
               items: [
                 { label: 'Alert', slug: 'components/alert' },
@@ -353,11 +353,11 @@ export default defineConfig({
               collapsed: true,
               translations: {
                 es: 'Diseño',
-                pt: 'Layout',
-                'pt-BR': 'Layout',
+                pt: 'Disposição',
+                'pt-BR': 'Disposição',
                 zh: '布局',
                 'zh-CN': '布局',
-                fr: 'Mise en page',
+                fr: 'Disposition',
               },
               items: [
                 { label: 'Container', slug: 'components/container' },
@@ -421,12 +421,12 @@ export default defineConfig({
         {
           label: 'Hooks',
           translations: {
-            es: 'Hooks',
-            pt: 'Hooks',
-            'pt-BR': 'Hooks',
-            zh: 'Hooks',
-            'zh-CN': 'Hooks',
-            fr: 'Hooks',
+            es: 'Ganchos',
+            pt: 'Ganchos',
+            'pt-BR': 'Ganchos',
+            zh: '钩子',
+            'zh-CN': '钩子',
+            fr: 'Crochets',
           },
           items: [
             { label: 'useBreakpoint', slug: 'hooks/usebreakpoint' },

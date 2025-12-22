@@ -1,65 +1,165 @@
 ---
 title: ConfigProvider 全局配置
 description: 用于语言环境、组件大小、方向和其他设置的全局配置提供者。
-tableOfContents: false
 ---
 
-import {
-  BasicDemo,
-  SizeDemo,
-  LocaleDemo,
-  DirectionDemo,
-  NestedDemo,
-} from '../../../../components/ConfigProviderDemo'
-import ConfigProviderDemoSource from '../../../../components/ConfigProviderDemo.tsx?raw'
-import Example from '../../../../components/Example.astro'
-
-用于语言环境、组件大小、方向和其他设置的全局配置提供者。
+全局配置的上下文提供者。在整个应用程序中实现一致的组件大小、本地化、RTL 支持和门户容器管理。
 
 ## 引入
 
 ```tsx
-import { ConfigProvider } from 'asterui'
+import { ConfigProvider, useConfig } from 'asterui'
 ```
 
-## 示例
+## 使用
 
-<div class="examples">
+### 基本设置
 
-<Example title="基本用法" description="为所有子组件设置全局组件大小。" source={ConfigProviderDemoSource} fn="BasicDemo">
-  <BasicDemo client:load slot="demo" />
-</Example>
+使用 `ConfigProvider` 包装你的应用以设置全局默认值：
 
-<Example title="组件尺寸" description="在 small、middle 和 large 尺寸之间全局切换。" source={ConfigProviderDemoSource} fn="SizeDemo">
-  <SizeDemo client:load slot="demo" />
-</Example>
+```tsx
+// main.tsx
+import { ConfigProvider } from 'asterui'
 
-<Example title="语言环境" description="自定义国际化的语言环境字符串。" source={ConfigProviderDemoSource} fn="LocaleDemo">
-  <LocaleDemo client:load slot="demo" />
-</Example>
+createRoot(document.getElementById('root')!).render(
+  <ConfigProvider componentSize="sm">
+    <App />
+  </ConfigProvider>
+)
+```
 
-<Example title="方向" description="支持 LTR 和 RTL 布局。" source={ConfigProviderDemoSource} fn="DirectionDemo">
-  <DirectionDemo client:load slot="demo" />
-</Example>
+### 组件尺寸
 
-<Example title="嵌套提供者" description="嵌套的 ConfigProviders 继承并覆盖父设置。" source={ConfigProviderDemoSource} fn="NestedDemo">
-  <NestedDemo client:load slot="demo" />
-</Example>
+为所有组件设置全局尺寸。单个组件仍可以覆盖此设置：
 
-</div>
+```tsx
+function App() {
+  const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md')
+
+  return (
+    <ConfigProvider componentSize={size}>
+      <div className="space-y-4">
+        <select value={size} onChange={(e) => setSize(e.target.value)}>
+          <option value="xs">超小</option>
+          <option value="sm">小</option>
+          <option value="md">中</option>
+          <option value="lg">大</option>
+          <option value="xl">超大</option>
+        </select>
+
+        {/* 所有这些组件都将使用全局尺寸 */}
+        <Button>按钮</Button>
+        <Input placeholder="输入" />
+        <Pagination total={100} />
+      </div>
+    </ConfigProvider>
+  )
+}
+```
+
+### 本地化
+
+自定义国际化的语言环境字符串：
+
+```tsx
+import { ConfigProvider } from 'asterui'
+import { zhCN } from 'asterui/locale'
+
+// 使用内置语言环境
+<ConfigProvider locale={zhCN}>
+  <App />
+</ConfigProvider>
+
+// 或提供自定义字符串
+<ConfigProvider locale={{ Empty: { description: '暂无数据' } }}>
+  <Empty />
+</ConfigProvider>
+```
+
+### RTL 支持
+
+为阿拉伯语和希伯来语等语言启用从右到左布局：
+
+```tsx
+<ConfigProvider direction="rtl">
+  <div dir="rtl">
+    <Button>第一</Button>
+    <Button>第二</Button>
+    <Button>第三</Button>
+  </div>
+</ConfigProvider>
+```
+
+### 嵌套提供者
+
+嵌套的 `ConfigProvider` 组件继承并覆盖父设置：
+
+```tsx
+<ConfigProvider componentSize="lg">
+  <Button>大按钮</Button>
+
+  <ConfigProvider componentSize="sm">
+    {/* 此部分使用小尺寸 */}
+    <Button>小按钮</Button>
+  </ConfigProvider>
+</ConfigProvider>
+```
+
+### 门户容器
+
+指定模态框、下拉框和其他门户的渲染位置：
+
+```tsx
+<ConfigProvider getPopupContainer={() => document.getElementById('modal-root')!}>
+  <Modal open={isOpen}>
+    {/* 渲染在 #modal-root 内而不是 document.body */}
+  </Modal>
+</ConfigProvider>
+```
 
 ## API
 
-### `ConfigProvider`
+### ConfigProvider 属性
 
-| 属性 | 描述 | 类型 | 默认值 |
-|----------|-------------|------|---------|
-| `locale` | 语言环境配置对象 | `Locale` | `enUS` |
-| `componentSize` | 所有组件的默认大小 | `'small' \| 'middle' \| 'large'` | `'middle'` |
-| `direction` | 布局方向 | `'ltr' \| 'rtl'` | `'ltr'` |
-| `prefixCls` | CSS 类的前缀 | `string` | - |
-| `getPopupContainer` | 门户（模态框、下拉框）的默认容器 | `(triggerNode?: HTMLElement) => HTMLElement` | - |
-| `children` | 子组件 | `React.ReactNode` | - |
+| 属性 | 类型 | 默认值 | 描述 |
+|----------|------|---------|-------------|
+| `locale` | `Locale` | `enUS` | 语言环境配置对象。 |
+| `componentSize` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | 所有组件的默认大小。 |
+| `direction` | `'ltr' \| 'rtl'` | `'ltr'` | 布局方向。 |
+| `prefixCls` | `string` | - | CSS 类的前缀。 |
+| `getPopupContainer` | `(triggerNode?: HTMLElement) => HTMLElement` | - | 门户的默认容器。 |
+| `children` | `React.ReactNode` | - | 子组件。 |
+
+### useConfig 返回值
+
+| 属性 | 类型 | 描述 |
+|----------|------|-------------|
+| `locale` | `Locale` | 当前语言环境配置。 |
+| `componentSize` | `string` | 当前全局组件大小。 |
+| `direction` | `'ltr' \| 'rtl'` | 当前布局方向。 |
+| `getPopupContainer` | `function` | 当前门户容器函数。 |
+
+```tsx
+import { useConfig } from 'asterui'
+
+function MyComponent() {
+  const { locale, componentSize, direction } = useConfig()
+  // 使用配置值...
+}
+```
+
+### useLocale
+
+仅访问当前语言环境：
+
+```tsx
+import { useLocale } from 'asterui'
+
+function MyComponent() {
+  const locale = useLocale()
+  // 使用语言环境字符串...
+}
+```
 
 ## 可用的语言环境
 
@@ -71,7 +171,7 @@ import { zhCN, jaJP, koKR, deDE, frFR, esES, ptBR, enGB, enCA } from 'asterui/lo
 
 | 语言环境 | 语言 |
 |--------|----------|
-| `enUS` | 英语（美国） - 默认 |
+| `enUS` | 英语（美国）- 默认 |
 | `enGB` | 英语（英国） |
 | `enCA` | 英语（加拿大） |
 | `zhCN` | 简体中文 |
@@ -81,34 +181,6 @@ import { zhCN, jaJP, koKR, deDE, frFR, esES, ptBR, enGB, enCA } from 'asterui/lo
 | `frFR` | 法语 |
 | `esES` | 西班牙语 |
 | `ptBR` | 葡萄牙语（巴西） |
-
-## Hooks
-
-### `useConfig`
-
-访问当前配置值：
-
-```tsx
-import { useConfig } from 'asterui'
-
-function MyComponent() {
-  const { locale, componentSize, direction } = useConfig()
-  // ...
-}
-```
-
-### `useLocale`
-
-访问当前语言环境：
-
-```tsx
-import { useLocale } from 'asterui'
-
-function MyComponent() {
-  const locale = useLocale()
-  // ...
-}
-```
 
 ## 无障碍
 

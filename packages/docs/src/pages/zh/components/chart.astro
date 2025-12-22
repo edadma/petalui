@@ -1,0 +1,138 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import CodeLight from '../../../components/CodeLight.astro'
+import CodeDark from '../../../components/CodeDark.astro'
+import Example from '../../../components/Example.astro'
+import {
+  LineDemo,
+  MultiLineDemo,
+  BarDemo,
+  StackedBarDemo,
+  PieDemo,
+  DonutDemo,
+  AreaDemo,
+  RadarDemo,
+  RadialBarDemo,
+} from '../../../components/ChartDemo'
+import ChartDemoSource from '../../../components/ChartDemo.tsx?raw'
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Chart 图表',
+    description: '使用 ApexCharts 集成的数据可视化。',
+    tableOfContents: false,
+  }}
+>
+  <div class="sl-markdown-content">
+  <p>使用 ApexCharts 集成的数据可视化。</p>
+
+  <h2>安装</h2>
+  <p>此组件需要 <code>apexcharts</code> 作为依赖项：</p>
+  <div class="theme-code light-only"><CodeLight code="npm install apexcharts" lang="bash" /></div>
+  <div class="theme-code dark-only"><CodeDark code="npm install apexcharts" lang="bash" /></div>
+
+  <h2>引入</h2>
+  <div class="theme-code light-only"><CodeLight code="import { Chart } from 'asterui/chart'" lang="tsx" /></div>
+  <div class="theme-code dark-only"><CodeDark code="import { Chart } from 'asterui/chart'" lang="tsx" /></div>
+
+  <h2>示例</h2>
+
+  <div class="examples">
+    <Example title="折线图" description="用于时间序列数据的简单折线图。" source={ChartDemoSource} fn="LineDemo">
+      <LineDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="多线图" description="比较多个数据系列。" source={ChartDemoSource} fn="MultiLineDemo">
+      <MultiLineDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="柱状图" description="分类数据可视化。" source={ChartDemoSource} fn="BarDemo">
+      <BarDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="堆叠柱状图" description="显示值的组成。" source={ChartDemoSource} fn="StackedBarDemo">
+      <StackedBarDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="饼图" description="显示整体的比例。" source={ChartDemoSource} fn="PieDemo">
+      <PieDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="环形图" description="中心镂空的饼图，用于显示总计。" source={ChartDemoSource} fn="DonutDemo">
+      <DonutDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="面积图" description="带填充区域的折线图。" source={ChartDemoSource} fn="AreaDemo">
+      <AreaDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="雷达图" description="多轴比较图表。" source={ChartDemoSource} fn="RadarDemo">
+      <RadarDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="径向柱状图" description="圆形进度指示器。" source={ChartDemoSource} fn="RadialBarDemo">
+      <RadialBarDemo client:only="react" slot="demo" />
+    </Example>
+  </div>
+
+  <h2>API</h2>
+  <h3><code>Chart</code></h3>
+  <table>
+    <thead>
+      <tr>
+        <th>属性</th>
+        <th>描述</th>
+        <th>类型</th>
+        <th>默认值</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>type</code></td>
+        <td>图表类型</td>
+        <td><code>'line' | 'bar' | 'pie' | 'donut' | 'area' | 'radar' | 'radialBar'</code></td>
+        <td><code>'line'</code></td>
+      </tr>
+      <tr>
+        <td><code>series</code></td>
+        <td>数据系列</td>
+        <td><code>ApexAxisChartSeries | ApexNonAxisChartSeries</code></td>
+        <td><code>[]</code></td>
+      </tr>
+      <tr>
+        <td><code>options</code></td>
+        <td>ApexCharts 选项</td>
+        <td><code>ApexOptions</code></td>
+        <td><code>{'{}'}</code></td>
+      </tr>
+      <tr>
+        <td><code>height</code></td>
+        <td>图表高度</td>
+        <td><code>number | string</code></td>
+        <td><code>350</code></td>
+      </tr>
+      <tr>
+        <td><code>width</code></td>
+        <td>图表宽度</td>
+        <td><code>number | string</code></td>
+        <td><code>'100%'</code></td>
+      </tr>
+      <tr>
+        <td><code>className</code></td>
+        <td>额外的 CSS 类名</td>
+        <td><code>string</code></td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>无障碍访问</h2>
+  <ul>
+    <li>图表包含数据点的 ARIA 标签</li>
+    <li>图例项可通过键盘导航</li>
+    <li>工具提示在悬停/聚焦时提供详细数据</li>
+    <li>选择的颜色具有足够的对比度</li>
+  </ul>
+  </div>
+</StarlightPage>

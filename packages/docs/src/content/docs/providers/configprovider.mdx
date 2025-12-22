@@ -1,65 +1,165 @@
 ---
 title: ConfigProvider
 description: Global configuration provider for locale, component size, direction, and other settings.
-tableOfContents: false
 ---
 
-import {
-  BasicDemo,
-  SizeDemo,
-  LocaleDemo,
-  DirectionDemo,
-  NestedDemo,
-} from '../../../components/ConfigProviderDemo'
-import ConfigProviderDemoSource from '../../../components/ConfigProviderDemo.tsx?raw'
-import Example from '../../../components/Example.astro'
-
-Global configuration provider for locale, component size, direction, and other settings.
+Context provider for global configuration. Enables consistent component sizing, localization, RTL support, and portal container management across your application.
 
 ## Import
 
 ```tsx
-import { ConfigProvider } from 'asterui'
+import { ConfigProvider, useConfig } from 'asterui'
 ```
 
-## Examples
+## Usage
 
-<div class="examples">
+### Basic Setup
 
-<Example title="Basic Usage" description="Set global component size for all child components." source={ConfigProviderDemoSource} fn="BasicDemo">
-  <BasicDemo client:load slot="demo" />
-</Example>
+Wrap your app with `ConfigProvider` to set global defaults:
 
-<Example title="Component Size" description="Switch between small, middle, and large sizes globally." source={ConfigProviderDemoSource} fn="SizeDemo">
-  <SizeDemo client:load slot="demo" />
-</Example>
+```tsx
+// main.tsx
+import { ConfigProvider } from 'asterui'
 
-<Example title="Locale" description="Customize locale strings for internationalization." source={ConfigProviderDemoSource} fn="LocaleDemo">
-  <LocaleDemo client:load slot="demo" />
-</Example>
+createRoot(document.getElementById('root')!).render(
+  <ConfigProvider componentSize="sm">
+    <App />
+  </ConfigProvider>
+)
+```
 
-<Example title="Direction" description="Support for LTR and RTL layouts." source={ConfigProviderDemoSource} fn="DirectionDemo">
-  <DirectionDemo client:load slot="demo" />
-</Example>
+### Component Size
 
-<Example title="Nested Providers" description="Nested ConfigProviders inherit and override parent settings." source={ConfigProviderDemoSource} fn="NestedDemo">
-  <NestedDemo client:load slot="demo" />
-</Example>
+Set a global size for all components. Individual components can still override this:
 
-</div>
+```tsx
+function App() {
+  const [size, setSize] = useState<'xs' | 'sm' | 'md' | 'lg' | 'xl'>('md')
+
+  return (
+    <ConfigProvider componentSize={size}>
+      <div className="space-y-4">
+        <select value={size} onChange={(e) => setSize(e.target.value)}>
+          <option value="xs">Extra Small</option>
+          <option value="sm">Small</option>
+          <option value="md">Medium</option>
+          <option value="lg">Large</option>
+          <option value="xl">Extra Large</option>
+        </select>
+
+        {/* All these components will use the global size */}
+        <Button>Button</Button>
+        <Input placeholder="Input" />
+        <Pagination total={100} />
+      </div>
+    </ConfigProvider>
+  )
+}
+```
+
+### Localization
+
+Customize locale strings for internationalization:
+
+```tsx
+import { ConfigProvider } from 'asterui'
+import { zhCN } from 'asterui/locale'
+
+// Use a built-in locale
+<ConfigProvider locale={zhCN}>
+  <App />
+</ConfigProvider>
+
+// Or provide custom strings
+<ConfigProvider locale={{ Empty: { description: 'Keine Daten' } }}>
+  <Empty />
+</ConfigProvider>
+```
+
+### RTL Support
+
+Enable right-to-left layout for languages like Arabic and Hebrew:
+
+```tsx
+<ConfigProvider direction="rtl">
+  <div dir="rtl">
+    <Button>First</Button>
+    <Button>Second</Button>
+    <Button>Third</Button>
+  </div>
+</ConfigProvider>
+```
+
+### Nested Providers
+
+Nested `ConfigProvider` components inherit and override parent settings:
+
+```tsx
+<ConfigProvider componentSize="lg">
+  <Button>Large Button</Button>
+
+  <ConfigProvider componentSize="sm">
+    {/* This section uses small size */}
+    <Button>Small Button</Button>
+  </ConfigProvider>
+</ConfigProvider>
+```
+
+### Portal Container
+
+Specify where modals, dropdowns, and other portals render:
+
+```tsx
+<ConfigProvider getPopupContainer={() => document.getElementById('modal-root')!}>
+  <Modal open={isOpen}>
+    {/* Renders inside #modal-root instead of document.body */}
+  </Modal>
+</ConfigProvider>
+```
 
 ## API
 
-### `ConfigProvider`
+### ConfigProvider Props
 
-| Property | Description | Type | Default |
-|----------|-------------|------|---------|
-| `locale` | Locale configuration object | `Locale` | `enUS` |
-| `componentSize` | Default size for all components | `'small' \| 'middle' \| 'large'` | `'middle'` |
-| `direction` | Layout direction | `'ltr' \| 'rtl'` | `'ltr'` |
-| `prefixCls` | Prefix for CSS classes | `string` | - |
-| `getPopupContainer` | Default container for portals (modals, dropdowns) | `(triggerNode?: HTMLElement) => HTMLElement` | - |
-| `children` | Child components | `React.ReactNode` | - |
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `locale` | `Locale` | `enUS` | Locale configuration object. |
+| `componentSize` | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `'md'` | Default size for all components. |
+| `direction` | `'ltr' \| 'rtl'` | `'ltr'` | Layout direction. |
+| `prefixCls` | `string` | - | Prefix for CSS classes. |
+| `getPopupContainer` | `(triggerNode?: HTMLElement) => HTMLElement` | - | Default container for portals. |
+| `children` | `React.ReactNode` | - | Child components. |
+
+### useConfig Return Value
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `locale` | `Locale` | Current locale configuration. |
+| `componentSize` | `string` | Current global component size. |
+| `direction` | `'ltr' \| 'rtl'` | Current layout direction. |
+| `getPopupContainer` | `function` | Current portal container function. |
+
+```tsx
+import { useConfig } from 'asterui'
+
+function MyComponent() {
+  const { locale, componentSize, direction } = useConfig()
+  // Use configuration values...
+}
+```
+
+### useLocale
+
+Access just the current locale:
+
+```tsx
+import { useLocale } from 'asterui'
+
+function MyComponent() {
+  const locale = useLocale()
+  // Use locale strings...
+}
+```
 
 ## Available Locales
 
@@ -81,34 +181,6 @@ import { zhCN, jaJP, koKR, deDE, frFR, esES, ptBR, enGB, enCA } from 'asterui/lo
 | `frFR` | French |
 | `esES` | Spanish |
 | `ptBR` | Portuguese (Brazil) |
-
-## Hooks
-
-### `useConfig`
-
-Access the current configuration values:
-
-```tsx
-import { useConfig } from 'asterui'
-
-function MyComponent() {
-  const { locale, componentSize, direction } = useConfig()
-  // ...
-}
-```
-
-### `useLocale`
-
-Access the current locale:
-
-```tsx
-import { useLocale } from 'asterui'
-
-function MyComponent() {
-  const locale = useLocale()
-  // ...
-}
-```
 
 ## Accessibility
 

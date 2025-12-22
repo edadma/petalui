@@ -1,0 +1,138 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro'
+import CodeLight from '../../../components/CodeLight.astro'
+import CodeDark from '../../../components/CodeDark.astro'
+import Example from '../../../components/Example.astro'
+import {
+  LineDemo,
+  MultiLineDemo,
+  BarDemo,
+  StackedBarDemo,
+  PieDemo,
+  DonutDemo,
+  AreaDemo,
+  RadarDemo,
+  RadialBarDemo,
+} from '../../../components/ChartDemo'
+import ChartDemoSource from '../../../components/ChartDemo.tsx?raw'
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Chart',
+    description: 'Visualização de dados com integração ApexCharts.',
+    tableOfContents: false,
+  }}
+>
+  <div class="sl-markdown-content">
+  <p>Visualização de dados com integração ApexCharts.</p>
+
+  <h2>Instalação</h2>
+  <p>Este componente requer <code>apexcharts</code> como dependência:</p>
+  <div class="theme-code light-only"><CodeLight code="npm install apexcharts" lang="bash" /></div>
+  <div class="theme-code dark-only"><CodeDark code="npm install apexcharts" lang="bash" /></div>
+
+  <h2>Importação</h2>
+  <div class="theme-code light-only"><CodeLight code="import { Chart } from 'asterui/chart'" lang="tsx" /></div>
+  <div class="theme-code dark-only"><CodeDark code="import { Chart } from 'asterui/chart'" lang="tsx" /></div>
+
+  <h2>Exemplos</h2>
+
+  <div class="examples">
+    <Example title="Gráfico de linhas" description="Gráfico de linhas simples para séries temporais." source={ChartDemoSource} fn="LineDemo">
+      <LineDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico multilinhas" description="Comparar múltiplas séries de dados." source={ChartDemoSource} fn="MultiLineDemo">
+      <MultiLineDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de barras" description="Visualização de dados categóricos." source={ChartDemoSource} fn="BarDemo">
+      <BarDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de barras empilhadas" description="Mostrar a composição de valores." source={ChartDemoSource} fn="StackedBarDemo">
+      <StackedBarDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de pizza" description="Mostrar proporções de um conjunto." source={ChartDemoSource} fn="PieDemo">
+      <PieDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de rosca" description="Gráfico de pizza com recorte central para totais." source={ChartDemoSource} fn="DonutDemo">
+      <DonutDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de área" description="Gráfico de linhas com área preenchida." source={ChartDemoSource} fn="AreaDemo">
+      <AreaDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de radar" description="Gráfico de comparação multieixo." source={ChartDemoSource} fn="RadarDemo">
+      <RadarDemo client:only="react" slot="demo" />
+    </Example>
+
+    <Example title="Gráfico de barras radiais" description="Indicadores de progresso circulares." source={ChartDemoSource} fn="RadialBarDemo">
+      <RadialBarDemo client:only="react" slot="demo" />
+    </Example>
+  </div>
+
+  <h2>API</h2>
+  <h3><code>Chart</code></h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Propriedade</th>
+        <th>Descrição</th>
+        <th>Tipo</th>
+        <th>Padrão</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>type</code></td>
+        <td>Tipo de gráfico</td>
+        <td><code>'line' | 'bar' | 'pie' | 'donut' | 'area' | 'radar' | 'radialBar'</code></td>
+        <td><code>'line'</code></td>
+      </tr>
+      <tr>
+        <td><code>series</code></td>
+        <td>Séries de dados</td>
+        <td><code>ApexAxisChartSeries | ApexNonAxisChartSeries</code></td>
+        <td><code>[]</code></td>
+      </tr>
+      <tr>
+        <td><code>options</code></td>
+        <td>Opções do ApexCharts</td>
+        <td><code>ApexOptions</code></td>
+        <td><code>{'{}'}</code></td>
+      </tr>
+      <tr>
+        <td><code>height</code></td>
+        <td>Altura do gráfico</td>
+        <td><code>number | string</code></td>
+        <td><code>350</code></td>
+      </tr>
+      <tr>
+        <td><code>width</code></td>
+        <td>Largura do gráfico</td>
+        <td><code>number | string</code></td>
+        <td><code>'100%'</code></td>
+      </tr>
+      <tr>
+        <td><code>className</code></td>
+        <td>Classes CSS adicionais</td>
+        <td><code>string</code></td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Acessibilidade</h2>
+  <ul>
+    <li>Os gráficos incluem rótulos ARIA para pontos de dados</li>
+    <li>Os itens de legenda são navegáveis por teclado</li>
+    <li>As dicas de ferramentas fornecem dados detalhados ao passar o mouse/focar</li>
+    <li>As cores são escolhidas para contraste suficiente</li>
+  </ul>
+  </div>
+</StarlightPage>
