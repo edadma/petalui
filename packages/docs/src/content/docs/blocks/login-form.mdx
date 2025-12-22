@@ -1,0 +1,32 @@
+---
+title: Login Form
+description: A complete sign-in form with email/password validation, remember me, and social login options.
+tableOfContents: false
+---
+
+import { LoginFormDemo } from '../../../blocks/LoginFormDemo'
+import LoginFormDemoSource from '../../../blocks/LoginFormDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A polished login form combining Card, Form, Input, Checkbox, Button, and Typography components with comprehensive validation.
+
+<Example title="Sign In Form" description="Complete login form with email validation, password strength rules, remember me, and links." source={LoginFormDemoSource} fn="LoginFormDemo">
+  <LoginFormDemo client:load slot="demo" />
+</Example>
+
+## Features
+
+- **Email validation** - Built-in email format checking
+- **Password strength** - Multiple validation rules for security
+- **Remember me** - Checkbox with form integration
+- **Forgot password** - Typography Link component
+- **Sign up CTA** - Call-to-action for new users
+- **Visual feedback** - Inline error messages
+
+## Customization Ideas
+
+- Add social login buttons (Google, GitHub, etc.)
+- Include a password visibility toggle
+- Add loading state during form submission
+- Implement actual authentication logic
+- Add OAuth provider buttons with icons

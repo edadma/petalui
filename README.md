@@ -83,7 +83,7 @@ The `@source` directive tells Tailwind to scan the AsterUI package for classes t
 ## Usage
 
 ```tsx
-import { Form, Input, Checkbox, Button, Modal, Card, Space, Flex, Typography } from 'asterui'
+import { Form, Input, Checkbox, Button, Modal, Card, Flex, Space, Divider, Typography } from 'asterui'
 
 const { Link, Paragraph } = Typography
 
@@ -97,10 +97,10 @@ export default function App() {
 
   return (
     <Flex justify="center" align="center" minHeight="screen" className="bg-base-200 p-4">
-      <Card title="Sign In" className="w-full max-w-md">
+      <Card title="Sign In" className="w-full max-w-sm">
         <Form onFinish={handleSubmit} initialValues={{ remember: false }}>
         <Form.Item name="email" label="Email" rules={[{ required: true }, { type: 'email' }]}>
-          <Input placeholder="you@example.com" />
+          <Input className="w-full" placeholder="you@example.com" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -114,7 +114,7 @@ export default function App() {
             { pattern: /[!@#$%^&*.?]/, message: 'Must contain a special character' },
           ]}
         >
-          <Input type="password" placeholder="Enter your password" />
+          <Input className="w-full" type="password" placeholder="Enter your password" />
         </Form.Item>
         <Space justify="between" align="center" className="mb-4">
           <Form.Item name="remember" valuePropName="checked" inline>

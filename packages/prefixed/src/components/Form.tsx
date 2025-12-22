@@ -15,6 +15,7 @@ const dLoadingSpinner = 'd-loading-spinner'
 const dLoadingXs = 'd-loading-xs'
 const dTooltip = 'd-tooltip'
 const dTooltipTop = 'd-tooltip-top'
+const dValidatorHint = 'd-validator-hint'
 
 interface FormContextValue {
   form: UseFormReturn<any>
@@ -582,12 +583,12 @@ function FormItem({
               {renderWithAddons(renderInputElement())}
             </div>
             {!isHorizontal && !inline && (
-              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined} data-testid={testId ? `${testId}-error` : undefined}>
+              <p id={errorId} className={`${dValidatorHint} ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined} data-testid={testId ? `${testId}-error` : undefined}>
                 {errorMessage || (help && <span className="text-base-content/70">{help}</span>) || '\u00A0'}
               </p>
             )}
             {isHorizontal && (errorMessage || help) && (
-              <p id={errorId} className={`validator-hint ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined} data-testid={testId ? `${testId}-error` : undefined}>
+              <p id={errorId} className={`${dValidatorHint} ${errorMessage ? '!visible text-error' : ''} min-h-[1.25rem]`} role={errorMessage ? 'alert' : undefined} data-testid={testId ? `${testId}-error` : undefined}>
                 {errorMessage || (help && <span className="text-base-content/70">{help}</span>)}
               </p>
             )}

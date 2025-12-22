@@ -7,6 +7,7 @@
 
 @source "../components/*Demo.tsx";
 @source "../components/Demo.tsx";
+@source "../blocks/*Demo.tsx";
 @source "../../node_modules/@aster-ui/prefixed/dist";
 
 /* Starlight overrides */

@@ -442,6 +442,20 @@ export default defineConfig({
             { label: 'useWindowSize', slug: 'hooks/usewindowsize' },
           ],
         },
+        {
+          label: 'Blocks',
+          translations: {
+            es: 'Bloques',
+            pt: 'Blocos',
+            'pt-BR': 'Blocos',
+            zh: '区块',
+            'zh-CN': '区块',
+            fr: 'Blocs',
+          },
+          items: [
+            { label: 'Login Form', slug: 'blocks/login-form', translations: { es: 'Formulario de Inicio', pt: 'Formulário de Login', 'pt-BR': 'Formulário de Login', zh: '登录表单', 'zh-CN': '登录表单', fr: 'Formulaire de connexion' } },
+          ],
+        },
       ],
     }),
   ],
