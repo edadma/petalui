@@ -67,11 +67,15 @@ export const Tooltip: React.FC<TooltipProps> = ({
     .filter(Boolean)
     .join(' ')
 
-  // Clone children to add aria-describedby
+  // Clone children to add aria-describedby without clobbering existing values
   const childWithAria = React.isValidElement(children)
-    ? React.cloneElement(children as React.ReactElement<{ 'aria-describedby'?: string }>, {
-        'aria-describedby': tooltipId,
-      })
+    ? (() => {
+        const existingDescribedBy = (children.props as { 'aria-describedby'?: string })['aria-describedby']
+        const mergedDescribedBy = existingDescribedBy ? `${existingDescribedBy} ${tooltipId}` : tooltipId
+        return React.cloneElement(children as React.ReactElement<{ 'aria-describedby'?: string }>, {
+          'aria-describedby': mergedDescribedBy,
+        })
+      })()
     : children
 
   return (

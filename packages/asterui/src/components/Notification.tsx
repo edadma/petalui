@@ -238,6 +238,18 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
     }
   }
 
+  const isClickable = typeof notification.onClick === 'function'
+  const ariaLabel = isClickable
+    ? (typeof notification.message === 'string' ? notification.message : 'Notification')
+    : undefined
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!isClickable) return
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      handleClick()
+    }
+  }
+
   const icon = notification.icon ?? typeIcons[notification.type!]
 
   if (isCompact) {
@@ -247,6 +259,9 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
         style={notification.style}
         data-testid={notification['data-testid']}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        tabIndex={isClickable ? 0 : undefined}
+        aria-label={ariaLabel}
         role="alert"
       >
         <div className="flex items-center gap-2">
@@ -263,6 +278,9 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
       style={notification.style}
       data-testid={notification['data-testid']}
       onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={isClickable ? 0 : undefined}
+      aria-label={ariaLabel}
       role="alert"
     >
       <div className={notification.closable ? 'pr-8' : ''}>

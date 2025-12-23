@@ -62,6 +62,7 @@ function TransferList({
   showSelectAll,
   disabled,
   listStyle,
+  direction,
   testId,
   emptyContent = 'No data',
 }: TransferListProps) {
@@ -75,6 +76,8 @@ function TransferList({
   const enabledItems = filteredItems.filter((item) => !item.disabled)
   const allSelected = enabledItems.length > 0 && enabledItems.every((item) => selectedKeys.includes(item.key))
   const someSelected = enabledItems.some((item) => selectedKeys.includes(item.key))
+  const listLabel = typeof title === 'string' ? `${title} list` : direction === 'left' ? 'Source list' : 'Target list'
+  const searchLabel = typeof title === 'string' ? `${title} search` : 'Search'
 
   const handleSelectAll = () => {
     if (disabled) return
@@ -137,12 +140,13 @@ function TransferList({
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
             disabled={disabled}
+            aria-label={searchLabel}
           />
         </div>
       )}
 
       {/* List */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto" role="listbox" aria-multiselectable="true" aria-label={listLabel}>
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
             <div
@@ -155,6 +159,16 @@ function TransferList({
                 .filter(Boolean)
                 .join(' ')}
               onClick={() => handleSelectItem(item.key, !!item.disabled)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  handleSelectItem(item.key, !!item.disabled)
+                }
+              }}
+              role="option"
+              aria-selected={selectedKeys.includes(item.key)}
+              aria-disabled={disabled || item.disabled}
+              tabIndex={disabled || item.disabled ? -1 : 0}
             >
               <input
                 type="checkbox"

@@ -338,6 +338,7 @@ function TreeSelectNode({
       role="treeitem"
       id={id}
       aria-selected={selected || checked}
+      aria-checked={treeCheckable ? (indeterminate ? 'mixed' : checked) : undefined}
       aria-expanded={hasChildren ? expanded : undefined}
       data-testid={`${baseTestId}-option-${key}`}
       data-state={selected || checked ? 'selected' : 'unselected'}

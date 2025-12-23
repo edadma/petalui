@@ -1,4 +1,4 @@
-import React, { useState, forwardRef } from 'react'
+import React, { useState, forwardRef, useId } from 'react'
 import { useConfig } from '../providers/ConfigProvider'
 
 // DaisyUI classes
@@ -140,12 +140,15 @@ const TabsRoot = forwardRef<HTMLDivElement, TabsProps>(function TabsRoot(
     .filter(Boolean)
     .join(' ')
 
+  const baseId = useId()
   const activePanel = effectivePanels.find((panel) => panel._key === currentActiveKey)
 
   const tabList = (
     <div role="tablist" className={classes} data-testid={getTestId('tablist')}>
       {effectivePanels.map((panel) => {
         const isActive = currentActiveKey === panel._key
+        const tabId = `${baseId}-tab-${panel._key}`
+        const panelId = `${baseId}-panel-${panel._key}`
         const tabClasses = [
           dTab,
           isActive && dTabActive,
@@ -158,12 +161,14 @@ const TabsRoot = forwardRef<HTMLDivElement, TabsProps>(function TabsRoot(
           <button
             key={panel._key}
             role="tab"
+            id={tabId}
             className={tabClasses}
             onClick={() => !panel.disabled && handleTabClick(panel._key)}
             disabled={panel.disabled}
             data-state={isActive ? 'active' : 'inactive'}
             data-testid={getTestId(`tab-${panel._key}`)}
             aria-selected={isActive}
+            aria-controls={panelId}
           >
             {panel.icon && <span className="mr-1">{panel.icon}</span>}
             {panel.tab}
@@ -174,7 +179,13 @@ const TabsRoot = forwardRef<HTMLDivElement, TabsProps>(function TabsRoot(
   )
 
   const content = activePanel && (
-    <div className={position === 'top' ? 'mt-4' : 'mb-4'} role="tabpanel" data-testid={getTestId('tabpanel')}>
+    <div
+      className={position === 'top' ? 'mt-4' : 'mb-4'}
+      role="tabpanel"
+      id={`${baseId}-panel-${activePanel._key}`}
+      aria-labelledby={`${baseId}-tab-${activePanel._key}`}
+      data-testid={getTestId('tabpanel')}
+    >
       {activePanel.children}
     </div>
   )

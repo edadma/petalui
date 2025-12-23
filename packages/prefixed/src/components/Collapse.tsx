@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useState, useId } from 'react'
 
 // DaisyUI classes
 const dCollapse = 'd-collapse'
@@ -105,6 +105,10 @@ const CollapsePanel = forwardRef<
     }
   }
 
+  const panelId = useId()
+  const headerId = `${panelId}-header`
+  const contentId = `${panelId}-content`
+
   return (
     <div
       ref={ref}
@@ -113,6 +117,7 @@ const CollapsePanel = forwardRef<
       data-state={isOpen ? 'open' : 'closed'}
     >
       <div
+        id={headerId}
         className={`${dCollapseTitle} font-medium flex items-center justify-between cursor-pointer`}
         onClick={handleClick}
         role="button"
@@ -125,11 +130,12 @@ const CollapsePanel = forwardRef<
         }}
         aria-expanded={isOpen}
         aria-disabled={isDisabled}
+        aria-controls={contentId}
       >
         <span>{item.label}</span>
         {item.extra && <span className="ml-auto mr-6">{item.extra}</span>}
       </div>
-      <div className={dCollapseContent}>
+      <div id={contentId} className={dCollapseContent} role="region" aria-labelledby={headerId}>
         {item.children}
       </div>
     </div>

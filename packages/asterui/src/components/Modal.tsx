@@ -372,7 +372,12 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
       </div>
       {closable && maskClosable && (
         <form method="dialog" className={dModalBackdrop} data-testid={getTestId('backdrop')}>
-          <button ref={closeButtonRef} onClick={handleBackdropClick} data-testid={getTestId('close-button')}>
+          <button
+            ref={closeButtonRef}
+            onClick={handleBackdropClick}
+            data-testid={getTestId('close-button')}
+            aria-label="Close modal"
+          >
             {closeIcon || <span className="sr-only">Close modal</span>}
           </button>
         </form>

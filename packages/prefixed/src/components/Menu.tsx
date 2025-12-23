@@ -211,7 +211,7 @@ function MenuRoot({
 
   return (
     <MenuContext.Provider value={contextValue}>
-      <ul className={menuClasses} data-testid={testId} {...rest}>{content}</ul>
+      <ul className={menuClasses} data-testid={testId} role="menu" {...rest}>{content}</ul>
     </MenuContext.Provider>
   )
 }
@@ -221,9 +221,11 @@ function MenuItem({
   icon,
   disabled = false,
   onClick,
+  onKeyDown,
   active,
   className = '',
   _key,
+  tabIndex,
   ...rest
 }: MenuItemProps) {
   const context = useContext(MenuContext)
@@ -239,6 +241,15 @@ function MenuItem({
     onClick?.()
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+    onKeyDown?.(event)
+    if (event.defaultPrevented || disabled) return
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault()
+      handleClick()
+    }
+  }
+
   const itemClasses = [
     isSelected && 'active bg-primary text-primary-content',
     disabled && 'disabled',
@@ -252,6 +263,8 @@ function MenuItem({
       <a
         className={itemClasses}
         onClick={handleClick}
+        onKeyDown={handleKeyDown}
+        tabIndex={disabled ? -1 : tabIndex ?? 0}
         aria-disabled={disabled}
         role="menuitem"
         data-state={isSelected ? 'active' : 'inactive'}
