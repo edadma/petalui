@@ -72,6 +72,26 @@ const App: React.FC = () => (
 export default App
 ```
 
+### Disabled Dates
+
+Disable specific dates (e.g., past dates).
+
+```tsx
+import React from 'react'
+import { DatePicker, Space } from 'asterui'
+
+const disablePastDates = (date: Date) => date < new Date(new Date().setHours(0, 0, 0, 0))
+
+const App: React.FC = () => (
+  <Space direction="vertical" size="sm">
+    <DatePicker placeholder="Disable past dates" disabledDate={disablePastDates} />
+    <DatePicker.Range placeholder={['Start date', 'End date']} disabledDate={disablePastDates} />
+  </Space>
+)
+
+export default App
+```
+
 ### Date Range
 
 Select a start and end date.
@@ -134,6 +154,7 @@ export default App
 | `onChange` | Change handler | `(date: Date \| null) => void` | - |
 | `format` | Display format string | `string` | `'MM/DD/YYYY'` |
 | `placeholder` | Input placeholder | `string` | `'Select date'` |
+| `disabledDate` | Disable specific dates | `(date: Date) => boolean` | - |
 | `disabled` | Disable the picker | `boolean` | `false` |
 | `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `componentSize` |
 | `data-testid` | Test ID prefix for child elements | `string` | - |
@@ -148,6 +169,7 @@ export default App
 | `onChange` | Change handler | `(range: [Date \| null, Date \| null]) => void` | - |
 | `format` | Display format string | `string` | `'MM/DD/YYYY'` |
 | `placeholder` | Input placeholder | `[string, string] \| string` | `['Start date', 'End date']` |
+| `disabledDate` | Disable specific dates | `(date: Date) => boolean` | - |
 | `disabled` | Disable the picker | `boolean` | `false` |
 | `size` | Input size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `componentSize` |
 | `data-testid` | Test ID prefix for child elements | `string` | - |

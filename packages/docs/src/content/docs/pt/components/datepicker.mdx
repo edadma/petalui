@@ -9,6 +9,7 @@ import {
   ControlledDemo,
   DefaultValueDemo,
   FormatDemo,
+  DisabledDatesDemo,
   RangeDemo,
   SizesDemo,
   DisabledDemo,
@@ -44,6 +45,10 @@ import { DatePicker } from 'asterui'
   <FormatDemo client:load slot="demo" />
 </Example>
 
+<Example title="Datas Desabilitadas" description="Desabilite datas específicas com um callback." source={DatePickerDemoSource} fn="DisabledDatesDemo">
+  <DisabledDatesDemo client:load slot="demo" />
+</Example>
+
 <Example title="Intervalo de Datas" description="Selecione uma data de início e fim." source={DatePickerDemoSource} fn="RangeDemo">
   <RangeDemo client:load slot="demo" />
 </Example>
@@ -69,6 +74,7 @@ import { DatePicker } from 'asterui'
 | `onChange` | Manipulador de mudança | `(date: Date \| null) => void` | - |
 | `format` | String de formato de exibição | `string` | `'MM/DD/YYYY'` |
 | `placeholder` | Placeholder do campo de entrada | `string` | `'Selecionar data'` |
+| `disabledDate` | Desabilitar datas específicas | `(date: Date) => boolean` | - |
 | `disabled` | Desabilitar o seletor | `boolean` | `false` |
 | `size` | Tamanho do campo de entrada | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `componentSize` |
 | `data-testid` | ID de teste para testes | `string` | - |
@@ -83,6 +89,7 @@ import { DatePicker } from 'asterui'
 | `onChange` | Manipulador de mudança | `(range: [Date \| null, Date \| null]) => void` | - |
 | `format` | String de formato de exibição | `string` | `'MM/DD/YYYY'` |
 | `placeholder` | Placeholders do campo de entrada | `[string, string] \| string` | `['Data de início', 'Data de fim']` |
+| `disabledDate` | Desabilitar datas específicas | `(date: Date) => boolean` | - |
 | `disabled` | Desabilitar o seletor | `boolean` | `false` |
 | `size` | Tamanho do campo de entrada | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `componentSize` |
 | `data-testid` | ID de teste para testes | `string` | - |

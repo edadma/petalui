@@ -14,6 +14,7 @@ export interface DatePickerProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   onChange?: (date: Date | null) => void
   format?: string
   placeholder?: string
+  disabledDate?: (date: Date) => boolean
   disabled?: boolean
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   /** Test ID prefix for child elements */
@@ -28,6 +29,7 @@ export interface DateRangePickerProps extends Omit<React.HTMLAttributes<HTMLDivE
   onChange?: (range: DateRangeValue) => void
   format?: string
   placeholder?: [string, string] | string
+  disabledDate?: (date: Date) => boolean
   disabled?: boolean
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   /** Test ID prefix for child elements */
@@ -89,6 +91,12 @@ function isAfterDay(a: Date, b: Date): boolean {
   return stripTime(a).getTime() > stripTime(b).getTime()
 }
 
+function addDays(date: Date, amount: number): Date {
+  const next = new Date(date)
+  next.setDate(next.getDate() + amount)
+  return next
+}
+
 function formatRange(range: DateRangeValue, format: string = 'MM/DD/YYYY'): string {
   const [start, end] = range
   if (start && end) return `${formatDate(start, format)} - ${formatDate(end, format)}`
@@ -102,7 +110,8 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
     defaultValue,
     onChange,
     format,
-    placeholder = 'Select date',
+    placeholder,
+    disabledDate,
     disabled = false,
     size,
     'data-testid': testId,
@@ -111,8 +120,12 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
   },
   ref
 ) {
-  const { componentSize } = useConfig()
+  const { componentSize, locale } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
+  const resolvedPlaceholder = placeholder ?? locale?.DatePicker?.placeholder ?? 'Select date'
+  const todayLabel = locale?.DatePicker?.today ?? 'Today'
+  const todayDate = new Date()
+  const isTodayDisabled = disabled || disabledDate?.(todayDate)
 
   // Helper for test IDs
   const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
@@ -120,6 +133,7 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
     value || defaultValue || null
   )
   const [isOpen, setIsOpen] = useState(false)
+  const [focusedDate, setFocusedDate] = useState<Date | null>(null)
   const [viewMonth, setViewMonth] = useState(
     selectedDate ? selectedDate.getMonth() : new Date().getMonth()
   )
@@ -128,6 +142,8 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
   )
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const calendarRef = useRef<HTMLDivElement>(null)
+  const calendarId = React.useId()
 
   useEffect(() => {
     if (value !== undefined) {
@@ -144,15 +160,85 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside)
+      setFocusedDate(selectedDate ?? todayDate)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (!isOpen || !calendarRef.current) return
+    const focusTarget = calendarRef.current.querySelector<HTMLButtonElement>('[data-calendar-focus="true"]')
+    focusTarget?.focus()
+  }, [isOpen, viewMonth, viewYear, focusedDate])
+
   const handleDateSelect = (day: number) => {
     const newDate = new Date(viewYear, viewMonth, day)
+    if (disabled || disabledDate?.(newDate)) return
     setSelectedDate(newDate)
     onChange?.(newDate)
     setIsOpen(false)
+  }
+
+  const focusNextEnabledDate = (start: Date, delta: number) => {
+    let candidate = addDays(start, delta)
+    for (let i = 0; i < 31; i++) {
+      if (!disabledDate?.(candidate)) return candidate
+      candidate = addDays(candidate, delta)
+    }
+    return start
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (!focusedDate) return
+    let nextDate = focusedDate
+
+    switch (event.key) {
+      case 'ArrowRight':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, 1)
+        break
+      case 'ArrowLeft':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, -1)
+        break
+      case 'ArrowDown':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, 7)
+        break
+      case 'ArrowUp':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, -7)
+        break
+      case 'Home':
+        event.preventDefault()
+        nextDate = new Date(focusedDate.getFullYear(), focusedDate.getMonth(), 1)
+        if (disabledDate?.(nextDate)) {
+          nextDate = focusNextEnabledDate(nextDate, 1)
+        }
+        break
+      case 'End':
+        event.preventDefault()
+        nextDate = new Date(focusedDate.getFullYear(), focusedDate.getMonth(), getDaysInMonth(focusedDate.getFullYear(), focusedDate.getMonth()))
+        if (disabledDate?.(nextDate)) {
+          nextDate = focusNextEnabledDate(nextDate, -1)
+        }
+        break
+      case 'Enter':
+      case ' ':
+        event.preventDefault()
+        handleDateSelect(focusedDate.getDate())
+        return
+      case 'Escape':
+        event.preventDefault()
+        setIsOpen(false)
+        return
+      default:
+        return
+    }
+
+    setFocusedDate(nextDate)
+    setViewMonth(nextDate.getMonth())
+    setViewYear(nextDate.getFullYear())
   }
 
   const handlePrevMonth = () => {
@@ -207,17 +293,27 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
     <div ref={ref || containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
       <Input
         value={formatDate(selectedDate, format)}
-        placeholder={placeholder}
+        placeholder={resolvedPlaceholder}
         disabled={disabled}
         size={effectiveSize}
         readOnly
         onClick={() => !disabled && setIsOpen(!isOpen)}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-controls={calendarId}
         className="cursor-pointer"
         data-testid={getTestId('input')}
       />
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-lg p-4 z-50 w-80" data-testid={getTestId('calendar')}>
+        <div
+          ref={calendarRef}
+          id={calendarId}
+          role="dialog"
+          aria-label="Date picker calendar"
+          className="absolute top-full left-0 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-lg p-4 z-50 w-80"
+          data-testid={getTestId('calendar')}
+        >
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <button
@@ -264,11 +360,12 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
           </div>
 
           {/* Days of week */}
-          <div className="grid grid-cols-7 gap-1 mb-2">
+          <div className="grid grid-cols-7 gap-1 mb-2" role="row">
             {DAYS.map((day) => (
               <div
                 key={day}
                 className="text-center text-xs font-semibold text-base-content/60 py-2"
+                role="columnheader"
               >
                 {day}
               </div>
@@ -276,24 +373,36 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
           </div>
 
           {/* Calendar grid */}
-          <div className="grid grid-cols-7 gap-1">
-            {calendarDays.map((day, index) => (
-              <button
-                key={index}
-                type="button"
-                disabled={!day}
-                onClick={() => day && handleDateSelect(day)}
-                className={`
-                  aspect-square flex items-center justify-center text-sm rounded-lg
-                  ${!day ? 'invisible' : 'hover:bg-base-200'}
-                  ${isSelectedDay(day) ? 'bg-primary text-primary-content hover:bg-primary/90' : ''}
-                  ${isToday(day) && !isSelectedDay(day) ? 'border border-primary' : ''}
-                  ${day ? 'cursor-pointer' : ''}
-                `}
-              >
-                {day}
-              </button>
-            ))}
+          <div className="grid grid-cols-7 gap-1" role="grid" onKeyDown={handleKeyDown}>
+            {calendarDays.map((day, index) => {
+              const dayDate = day ? new Date(viewYear, viewMonth, day) : null
+              const isDayDisabled = disabled || (!!dayDate && !!disabledDate?.(dayDate))
+              const isFocusedDay = !!dayDate && !!focusedDate && isSameDay(dayDate, focusedDate)
+
+              return (
+                <button
+                  key={index}
+                  type="button"
+                  disabled={!day || isDayDisabled}
+                  aria-disabled={isDayDisabled || undefined}
+                  aria-selected={isSelectedDay(day) || undefined}
+                  role="gridcell"
+                  onClick={() => day && handleDateSelect(day)}
+                  tabIndex={isFocusedDay ? 0 : -1}
+                  data-calendar-focus={isFocusedDay ? 'true' : undefined}
+                  className={`
+                    aspect-square flex items-center justify-center text-sm rounded-lg
+                    ${!day ? 'invisible' : ''}
+                    ${day && !isDayDisabled ? 'hover:bg-base-200 cursor-pointer' : ''}
+                    ${isSelectedDay(day) ? 'bg-primary text-primary-content hover:bg-primary/90' : ''}
+                    ${isToday(day) && !isSelectedDay(day) ? 'border border-primary' : ''}
+                    ${isDayDisabled ? 'text-base-content/30 cursor-not-allowed' : ''}
+                  `}
+                >
+                  {day}
+                </button>
+              )
+            })}
           </div>
 
           {/* Today button */}
@@ -302,6 +411,7 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
               type="button"
               onClick={() => {
                 const today = new Date()
+                if (disabledDate?.(today)) return
                 setSelectedDate(today)
                 setViewMonth(today.getMonth())
                 setViewYear(today.getFullYear())
@@ -309,8 +419,9 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
                 setIsOpen(false)
               }}
               className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
+              disabled={isTodayDisabled}
             >
-              Today
+              {todayLabel}
             </button>
           </div>
         </div>
@@ -326,6 +437,7 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
     onChange,
     format,
     placeholder,
+    disabledDate,
     disabled = false,
     size,
     'data-testid': testId,
@@ -334,15 +446,22 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
   },
   ref
 ) {
-  const { componentSize } = useConfig()
+  const { componentSize, locale } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
 
+  const localeRangePlaceholder = locale?.DatePicker?.rangePlaceholder
   const [startPlaceholder, endPlaceholder] = Array.isArray(placeholder)
     ? placeholder
-    : [placeholder ?? 'Start date', 'End date']
+    : [
+        placeholder ?? localeRangePlaceholder?.[0] ?? 'Start date',
+        localeRangePlaceholder?.[1] ?? 'End date',
+      ]
   const resolvedPlaceholder = Array.isArray(placeholder)
     ? `${startPlaceholder} - ${endPlaceholder}`
-    : placeholder ?? 'Start date - End date'
+    : placeholder ?? `${startPlaceholder} - ${endPlaceholder}`
+  const todayLabel = locale?.DatePicker?.today ?? 'Today'
+  const todayDate = new Date()
+  const isTodayDisabled = disabled || disabledDate?.(todayDate)
 
   // Helper for test IDs
   const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
@@ -350,11 +469,14 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
     value || defaultValue || [null, null]
   )
   const [isOpen, setIsOpen] = useState(false)
+  const [focusedDate, setFocusedDate] = useState<Date | null>(null)
   const initialDate = selectedRange[0] ?? selectedRange[1] ?? new Date()
   const [viewMonth, setViewMonth] = useState(initialDate.getMonth())
   const [viewYear, setViewYear] = useState(initialDate.getFullYear())
 
   const containerRef = useRef<HTMLDivElement>(null)
+  const calendarRef = useRef<HTMLDivElement>(null)
+  const calendarId = React.useId()
 
   useEffect(() => {
     if (value !== undefined) {
@@ -371,12 +493,20 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside)
+      setFocusedDate(selectedRange[0] ?? selectedRange[1] ?? todayDate)
       return () => document.removeEventListener('mousedown', handleClickOutside)
     }
   }, [isOpen])
 
+  useEffect(() => {
+    if (!isOpen || !calendarRef.current) return
+    const focusTarget = calendarRef.current.querySelector<HTMLButtonElement>('[data-calendar-focus="true"]')
+    focusTarget?.focus()
+  }, [isOpen, viewMonth, viewYear, focusedDate])
+
   const handleDateSelect = (day: number) => {
     const newDate = new Date(viewYear, viewMonth, day)
+    if (disabled || disabledDate?.(newDate)) return
     let [start, end] = selectedRange
 
     if (!start || (start && end)) {
@@ -397,6 +527,68 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
     if (start && end) {
       setIsOpen(false)
     }
+  }
+
+  const focusNextEnabledDate = (start: Date, delta: number) => {
+    let candidate = addDays(start, delta)
+    for (let i = 0; i < 31; i++) {
+      if (!disabledDate?.(candidate)) return candidate
+      candidate = addDays(candidate, delta)
+    }
+    return start
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (!focusedDate) return
+    let nextDate = focusedDate
+
+    switch (event.key) {
+      case 'ArrowRight':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, 1)
+        break
+      case 'ArrowLeft':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, -1)
+        break
+      case 'ArrowDown':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, 7)
+        break
+      case 'ArrowUp':
+        event.preventDefault()
+        nextDate = focusNextEnabledDate(focusedDate, -7)
+        break
+      case 'Home':
+        event.preventDefault()
+        nextDate = new Date(focusedDate.getFullYear(), focusedDate.getMonth(), 1)
+        if (disabledDate?.(nextDate)) {
+          nextDate = focusNextEnabledDate(nextDate, 1)
+        }
+        break
+      case 'End':
+        event.preventDefault()
+        nextDate = new Date(focusedDate.getFullYear(), focusedDate.getMonth(), getDaysInMonth(focusedDate.getFullYear(), focusedDate.getMonth()))
+        if (disabledDate?.(nextDate)) {
+          nextDate = focusNextEnabledDate(nextDate, -1)
+        }
+        break
+      case 'Enter':
+      case ' ':
+        event.preventDefault()
+        handleDateSelect(focusedDate.getDate())
+        return
+      case 'Escape':
+        event.preventDefault()
+        setIsOpen(false)
+        return
+      default:
+        return
+    }
+
+    setFocusedDate(nextDate)
+    setViewMonth(nextDate.getMonth())
+    setViewYear(nextDate.getFullYear())
   }
 
   const handlePrevMonth = () => {
@@ -449,12 +641,22 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
         size={effectiveSize}
         readOnly
         onClick={() => !disabled && setIsOpen(!isOpen)}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-controls={calendarId}
         className="cursor-pointer"
         data-testid={getTestId('input')}
       />
 
       {isOpen && (
-        <div className="absolute top-full left-0 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-lg p-4 z-50 w-80" data-testid={getTestId('calendar')}>
+        <div
+          ref={calendarRef}
+          id={calendarId}
+          role="dialog"
+          aria-label="Date range picker calendar"
+          className="absolute top-full left-0 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-lg p-4 z-50 w-80"
+          data-testid={getTestId('calendar')}
+        >
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
             <button
@@ -501,11 +703,12 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
           </div>
 
           {/* Days of week */}
-          <div className="grid grid-cols-7 gap-1 mb-2">
+          <div className="grid grid-cols-7 gap-1 mb-2" role="row">
             {DAYS.map((day) => (
               <div
                 key={day}
                 className="text-center text-xs font-semibold text-base-content/60 py-2"
+                role="columnheader"
               >
                 {day}
               </div>
@@ -513,28 +716,36 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
           </div>
 
           {/* Calendar grid */}
-          <div className="grid grid-cols-7 gap-1">
+          <div className="grid grid-cols-7 gap-1" role="grid" onKeyDown={handleKeyDown}>
             {calendarDays.map((day, index) => {
               const dayDate = day ? new Date(viewYear, viewMonth, day) : null
+              const isDayDisabled = disabled || (!!dayDate && !!disabledDate?.(dayDate))
               const isStart = !!dayDate && !!rangeStart && isSameDay(dayDate, rangeStart)
               const isEnd = !!dayDate && !!rangeEnd && isSameDay(dayDate, rangeEnd)
               const isInRange = !!dayDate && !!rangeStart && !!rangeEnd
                 && isAfterDay(dayDate, rangeStart)
                 && isBeforeDay(dayDate, rangeEnd)
+              const isFocusedDay = !!dayDate && !!focusedDate && isSameDay(dayDate, focusedDate)
 
               return (
                 <button
                   key={index}
                   type="button"
-                  disabled={!day}
+                  disabled={!day || isDayDisabled}
+                  aria-disabled={isDayDisabled || undefined}
+                  aria-selected={isStart || isEnd || isInRange || undefined}
+                  role="gridcell"
                   onClick={() => day && handleDateSelect(day)}
+                  tabIndex={isFocusedDay ? 0 : -1}
+                  data-calendar-focus={isFocusedDay ? 'true' : undefined}
                   className={`
                     aspect-square flex items-center justify-center text-sm rounded-lg
-                    ${!day ? 'invisible' : 'hover:bg-base-200'}
+                    ${!day ? 'invisible' : ''}
+                    ${day && !isDayDisabled ? 'hover:bg-base-200 cursor-pointer' : ''}
                     ${isInRange ? 'bg-primary/10' : ''}
                     ${isStart || isEnd ? 'bg-primary text-primary-content hover:bg-primary/90' : ''}
                     ${isToday(day) && !isStart && !isEnd ? 'border border-primary' : ''}
-                    ${day ? 'cursor-pointer' : ''}
+                    ${isDayDisabled ? 'text-base-content/30 cursor-not-allowed' : ''}
                   `}
                 >
                   {day}
@@ -549,6 +760,7 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
               type="button"
               onClick={() => {
                 const today = new Date()
+                if (disabledDate?.(today)) return
                 setSelectedRange([today, today])
                 setViewMonth(today.getMonth())
                 setViewYear(today.getFullYear())
@@ -556,8 +768,9 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
                 setIsOpen(false)
               }}
               className={`${dBtn} ${dBtnGhost} ${dBtnSm}`}
+              disabled={isTodayDisabled}
             >
-              Today
+              {todayLabel}
             </button>
           </div>
         </div>

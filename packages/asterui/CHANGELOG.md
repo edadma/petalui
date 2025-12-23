@@ -7,6 +7,20 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.65 (2025-12-23)
+
+### Components
+
+- Added `disabledDate` support for DatePicker and DatePicker.Range
+
+### Accessibility
+
+- Added keyboard navigation and ARIA roles/attributes for DatePicker and DatePicker.Range
+
+### Documentation
+
+- Documented DatePicker disabled dates and updated localized docs/examples
+
 ## v0.12.64 (2025-12-23)
 
 ### Components

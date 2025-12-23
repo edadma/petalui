@@ -66,6 +66,24 @@ export function FormatDemo() {
   )
 }
 
+// @example-imports: { DatePicker, Space } from 'asterui'
+export function DisabledDatesDemo() {
+  // @example-include
+  const disablePastDates = (date: Date) => date < new Date(new Date().setHours(0, 0, 0, 0))
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Space direction="vertical" size="sm">
+        <DatePicker placeholder="Disable past dates" disabledDate={disablePastDates} />
+        <DatePicker.Range placeholder={['Start date', 'End date']} disabledDate={disablePastDates} />
+      </Space>
+      {/* @example-return-end */}
+    </Demo>
+  )
+}
+
 // @example-imports: { DatePicker } from 'asterui'
 export function RangeDemo() {
   return (
