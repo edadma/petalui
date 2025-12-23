@@ -19,6 +19,7 @@ npm create asterui my-app
 npm create asterui my-app --js
 npm create asterui my-app --themes business
 npm create asterui my-app --js --themes all --pm pnpm
+npm create asterui my-app --optional editor
 ```
 
 ### Options
@@ -29,6 +30,7 @@ npm create asterui my-app --js --themes all --pm pnpm
 --prefixed        Use @aster-ui/prefixed with d- prefix for daisyUI
 --themes <preset> Theme preset: light-dark, business, all
 --pm <manager>    Package manager: npm, pnpm, yarn
+--optional <deps> Optional deps: chart,editor,qrcode,virtuallist
 -h, --help        Show help message
 ```
 
@@ -60,6 +62,10 @@ import { Chart } from 'asterui/chart'  # or '@aster-ui/prefixed/chart'
 # For QRCode component
 npm install qrcode
 import { QRCode } from 'asterui/qrcode'  # or '@aster-ui/prefixed/qrcode'
+
+# For RichTextEditor component
+npm install @aster-ui/icons @tiptap/react
+import { RichTextEditor } from 'asterui/editor'  # or '@aster-ui/prefixed/editor'
 
 # For VirtualList component
 npm install @tanstack/react-virtual
