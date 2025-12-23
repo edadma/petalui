@@ -19,6 +19,7 @@ const dBtnGhost = 'btn-ghost'
 const dBtnLink = 'btn-link'
 const dBtnXs = 'btn-xs'
 const dBtnSm = 'btn-sm'
+const dBtnMd = 'btn-md'
 const dBtnLg = 'btn-lg'
 const dBtnXl = 'btn-xl'
 const dBtnActive = 'btn-active'
@@ -126,7 +127,7 @@ export const Button = forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPr
     const sizeClasses = {
       xs: dBtnXs,
       sm: dBtnSm,
-      md: '',
+      md: dBtnMd,
       lg: dBtnLg,
       xl: dBtnXl,
     }
