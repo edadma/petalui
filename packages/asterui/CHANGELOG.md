@@ -8,6 +8,20 @@ description: All notable changes to AsterUI
 All notable changes to AsterUI are documented here.
 
 
+## v0.12.62 (2025-12-22)
+
+### Testability Improvements
+
+Added comprehensive testability support across 30+ components:
+
+- **data-testid prop**: Added explicit `data-testid` prop to component interfaces for Affix, Alert, Avatar, AvatarGroup, Browser, Code, Container, CopyButton, Countdown, Diff, Divider, Fieldset, Footer, Grid (Row/Col), Hero, HoverGallery, Join, Kbd, Mask, Navbar, Phone, Popover, Progress, Radio, RadioGroup, Skeleton, Space, Status, Toggle, Tooltip, Window
+- **data-state attributes**: Added state exposure via `data-state` for CopyButton (`copied|idle`), Countdown (`finished|running`)
+- **Props spreading**: Extended components to properly spread `...rest` props for data-testid passthrough (Diff, HoverGallery, Phone, Status, Window)
+
+### Bug Fixes
+
+- **Dropdown**: Removed unused `effectiveGetPopupContainer` variable that was causing TypeScript warning
+
 ## v0.12.61 (2025-12-22)
 
 ### Dependencies

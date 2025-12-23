@@ -32,6 +32,8 @@ export interface CodeProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   /** Show copy button. Pass true to auto-extract text, or a string to specify custom copy text */
   copyable?: boolean | string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const extractTextFromChildren = (children: React.ReactNode): string => {

@@ -21,6 +21,8 @@ export interface ToggleProps extends Omit<React.InputHTMLAttributes<HTMLInputEle
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'info' | 'error'
   className?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(

@@ -8,6 +8,8 @@ export interface RowProps extends React.HTMLAttributes<HTMLDivElement> {
   gutter?: number | [number, number]
   justify?: 'start' | 'end' | 'center' | 'between' | 'around' | 'evenly'
   align?: 'start' | 'end' | 'center' | 'stretch' | 'baseline'
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,6 +23,8 @@ export interface ColProps extends React.HTMLAttributes<HTMLDivElement> {
   lg?: number
   xl?: number
   xxl?: number
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 // Explicit class mappings - Tailwind v4 supports any grid value natively

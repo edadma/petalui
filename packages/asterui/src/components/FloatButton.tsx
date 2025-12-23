@@ -72,12 +72,18 @@ export interface FloatButtonGroupProps {
   shape?: 'circle' | 'square'
   /** Main trigger button icon */
   icon?: React.ReactNode
+  /** Accessible label for trigger button (required for icon-only buttons) */
+  triggerLabel?: string
   /** Main action button that replaces trigger when open (fab-main-action) */
   mainAction?: React.ReactNode
+  /** Accessible label for main action button */
+  mainActionLabel?: string
   /** Click handler for main action button */
   onMainAction?: () => void
   /** Show close button when open (fab-close) */
   showClose?: boolean
+  /** Accessible label for close button */
+  closeLabel?: string
   /** Button type/color */
   type?: 'default' | 'primary'
   /** Position on screen */
@@ -301,9 +307,12 @@ const FloatButtonGroup: React.FC<FloatButtonGroupProps> = ({
   flower = false,
   shape = 'circle',
   icon,
+  triggerLabel = 'Open menu',
   mainAction,
+  mainActionLabel,
   onMainAction,
   showClose = false,
+  closeLabel = 'Close menu',
   type = 'default',
   position = 'bottom-right',
   offset = 24,
@@ -337,19 +346,22 @@ const FloatButtonGroup: React.FC<FloatButtonGroupProps> = ({
   return (
     <div className={fabClasses} style={containerStyle}>
       {/* Trigger button - shown when closed */}
-      <div
-        tabIndex={0}
-        role="button"
+      <button
+        type="button"
         className={triggerButtonClasses}
+        aria-label={triggerLabel}
+        aria-haspopup="true"
       >
         {icon || <PlusIcon />}
-      </div>
+      </button>
 
       {/* Main action button - shown when open (replaces trigger in flower mode) */}
       {mainAction && (
         <button
+          type="button"
           className={`${triggerButtonClasses} ${dFabMainAction}`}
           onClick={onMainAction}
+          aria-label={mainActionLabel}
         >
           {mainAction}
         </button>
@@ -357,7 +369,11 @@ const FloatButtonGroup: React.FC<FloatButtonGroupProps> = ({
 
       {/* Close button - shown when open */}
       {showClose && (
-        <button className={`${triggerButtonClasses} ${dFabClose}`}>
+        <button
+          type="button"
+          className={`${triggerButtonClasses} ${dFabClose}`}
+          aria-label={closeLabel}
+        >
           <CloseIcon />
         </button>
       )}
@@ -435,7 +451,13 @@ const BackTop: React.FC<BackTopProps> = ({
   }
 
   return (
-    <button className={buttonClasses} onClick={handleClick} style={style} {...rest}>
+    <button
+      className={buttonClasses}
+      onClick={handleClick}
+      style={style}
+      aria-label={rest['aria-label'] || 'Back to top'}
+      {...rest}
+    >
       {icon || children || <ArrowUpIcon />}
     </button>
   )

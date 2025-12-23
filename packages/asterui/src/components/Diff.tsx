@@ -6,15 +6,15 @@ const dDiffItem1 = 'diff-item-1'
 const dDiffItem2 = 'diff-item-2'
 const dDiffResizer = 'diff-resizer'
 
-export interface DiffProps {
+export interface DiffProps extends React.HTMLAttributes<HTMLElement> {
   /** Left side content (revealed when dragging) */
   left: React.ReactNode
   /** Right side content (hidden when dragging) */
   right: React.ReactNode
   /** Aspect ratio class (e.g., "aspect-16/9", "aspect-4/3", "aspect-square") */
   aspect?: string
-  /** Additional CSS classes */
-  className?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Diff: React.FC<DiffProps> = ({
@@ -22,11 +22,15 @@ export const Diff: React.FC<DiffProps> = ({
   right,
   aspect = 'aspect-16/9',
   className = '',
+  'data-testid': testId,
+  ...rest
 }) => {
   return (
     <figure
       className={`${dDiff} ${aspect} ${className}`.trim()}
       tabIndex={0}
+      data-testid={testId}
+      {...rest}
     >
       <div className={dDiffItem1} role="img" tabIndex={0}>
         {left}

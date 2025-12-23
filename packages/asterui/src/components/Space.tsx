@@ -8,6 +8,8 @@ export interface SpaceProps extends React.HTMLAttributes<HTMLDivElement> {
   wrap?: boolean
   split?: React.ReactNode
   children: React.ReactNode
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const gapClasses = {

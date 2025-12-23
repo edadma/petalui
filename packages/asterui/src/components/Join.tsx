@@ -8,6 +8,8 @@ const dJoinItem = 'join-item'
 export interface JoinProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   direction?: 'horizontal' | 'vertical'
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export function Join({ children, direction = 'horizontal', className = '', ...rest }: JoinProps) {

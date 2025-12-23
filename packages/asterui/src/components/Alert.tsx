@@ -18,6 +18,8 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
   dash?: boolean
   soft?: boolean
   vertical?: boolean
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Alert: React.FC<AlertProps> = ({

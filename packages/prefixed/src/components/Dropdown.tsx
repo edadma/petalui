@@ -149,7 +149,7 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
     arrow = false,
     mouseEnterDelay = 0.15,
     mouseLeaveDelay = 0.1,
-    getPopupContainer,
+    getPopupContainer: _getPopupContainer,
     destroyOnHidden = false,
     popupRender,
     'data-testid': testId,
@@ -158,9 +158,8 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
   },
   ref
 ) {
-  const { componentDisabled, getPopupContainer: globalGetPopupContainer } = useConfig()
+  const { componentDisabled } = useConfig()
   const effectiveDisabled = disabled ?? componentDisabled ?? false
-  const effectiveGetPopupContainer = getPopupContainer ?? globalGetPopupContainer
 
   const menuId = useId()
   const triggerId = useId()

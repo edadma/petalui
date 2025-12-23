@@ -15,6 +15,8 @@ export interface KbdProps extends React.HTMLAttributes<HTMLElement> {
   size?: KbdSize
   /** Key content */
   children?: React.ReactNode
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const sizeClasses: Record<KbdSize, string> = {

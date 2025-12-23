@@ -11,6 +11,8 @@ export interface AffixProps extends Omit<React.HTMLAttributes<HTMLDivElement>, '
   target?: () => HTMLElement | Window
   /** Callback when affix state changes */
   onChange?: (affixed: boolean) => void
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Affix: React.FC<AffixProps> = ({

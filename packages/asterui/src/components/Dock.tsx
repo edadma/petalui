@@ -16,6 +16,8 @@ export interface DockItemConfig {
   icon: React.ReactNode
   /** Label text */
   label?: string
+  /** Accessible label for screen readers (required if no label provided) */
+  ariaLabel?: string
   /** Whether this item is active */
   active?: boolean
   /** Whether this item is disabled */
@@ -37,6 +39,8 @@ export interface DockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'o
   children?: React.ReactNode
   /** Additional CSS classes */
   className?: string
+  /** Accessible label for the dock */
+  'aria-label'?: string
 }
 
 export interface DockItemProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -53,7 +57,13 @@ const DockItem = forwardRef<HTMLButtonElement, DockItemProps>(
     const classes = [active && dDockActive, className].filter(Boolean).join(' ')
 
     return (
-      <button ref={ref} className={classes || undefined} {...props}>
+      <button
+        ref={ref}
+        className={classes || undefined}
+        type="button"
+        aria-pressed={active}
+        {...props}
+      >
         {children}
       </button>
     )
@@ -80,21 +90,24 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
     // If items array is provided, render from config
     if (items) {
       return (
-        <div ref={ref} className={classes} {...props}>
+        <div ref={ref} className={classes} role="toolbar" aria-label={props['aria-label'] || 'Dock'} {...props}>
           {items.map((item, index) => {
             const isActive = activeIndex !== undefined ? activeIndex === index : item.active
 
             return (
               <button
                 key={index}
+                type="button"
                 className={isActive ? dDockActive : undefined}
                 disabled={item.disabled}
+                aria-pressed={isActive}
+                aria-label={item.ariaLabel || item.label}
                 onClick={() => {
                   item.onClick?.()
                   onChange?.(index)
                 }}
               >
-                {item.icon}
+                <span aria-hidden="true">{item.icon}</span>
                 {item.label && <span className={dDockLabel}>{item.label}</span>}
               </button>
             )
@@ -105,7 +118,7 @@ const DockRoot = forwardRef<HTMLDivElement, DockProps>(
 
     // Otherwise render children
     return (
-      <div ref={ref} className={classes} {...props}>
+      <div ref={ref} className={classes} role="toolbar" aria-label={props['aria-label'] || 'Dock'} {...props}>
         {children}
       </div>
     )

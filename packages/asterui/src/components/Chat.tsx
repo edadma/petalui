@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useId } from 'react'
 
 // DaisyUI classes
 const dChat = 'chat'
@@ -39,6 +39,7 @@ export const Chat: React.FC<ChatProps> = ({
   className = '',
   ...rest
 }) => {
+  const headerId = useId()
   const positionClass = position === 'start' ? dChatStart : dChatEnd
 
   const colorClasses: Record<string, string> = {
@@ -58,7 +59,11 @@ export const Chat: React.FC<ChatProps> = ({
   }
 
   return (
-    <div className={`${dChat} ${positionClass} ${className}`} {...rest}>
+    <article
+      className={`${dChat} ${positionClass} ${className}`}
+      aria-labelledby={header ? headerId : undefined}
+      {...rest}
+    >
       {avatar && (
         <div className={`${dChatImage} ${dAvatar}`}>
           <div className="w-10 rounded-full">
@@ -66,9 +71,9 @@ export const Chat: React.FC<ChatProps> = ({
           </div>
         </div>
       )}
-      {header && <div className={dChatHeader}>{header}</div>}
+      {header && <div id={headerId} className={dChatHeader}>{header}</div>}
       <div className={bubbleClasses.join(' ')}>{message}</div>
       {footer && <div className={dChatFooter}>{footer}</div>}
-    </div>
+    </article>
   )
 }

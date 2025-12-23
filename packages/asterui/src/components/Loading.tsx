@@ -21,6 +21,8 @@ export interface LoadingProps extends React.HTMLAttributes<HTMLDivElement> {
   spinning?: boolean
   children?: React.ReactNode
   tip?: string
+  /** Accessible label for the loading indicator (defaults to tip or "Loading") */
+  label?: string
 }
 
 export const Loading: React.FC<LoadingProps> = ({
@@ -30,10 +32,12 @@ export const Loading: React.FC<LoadingProps> = ({
   spinning = true,
   children,
   tip,
+  label,
   ...rest
 }) => {
   const { componentSize } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
+  const accessibleLabel = label || tip || 'Loading'
 
   const sizeClasses = {
     xs: dLoadingXs,
@@ -58,14 +62,21 @@ export const Loading: React.FC<LoadingProps> = ({
 
   if (children) {
     return (
-      <div className="relative" {...rest}>
+      <div className="relative" aria-busy={spinning} {...rest}>
         {spinning && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center bg-base-100/50 backdrop-blur-sm z-10">
-            <span className={spinnerClasses}></span>
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center bg-base-100/50 backdrop-blur-sm z-10"
+            role="status"
+            aria-live="polite"
+          >
+            <span className={spinnerClasses} aria-hidden="true"></span>
             {tip && <p className="mt-2 text-sm">{tip}</p>}
+            {!tip && <span className="sr-only">{accessibleLabel}</span>}
           </div>
         )}
-        <div className={spinning ? 'pointer-events-none' : ''}>{children}</div>
+        <div className={spinning ? 'pointer-events-none' : ''} aria-hidden={spinning}>
+          {children}
+        </div>
       </div>
     )
   }
@@ -75,9 +86,15 @@ export const Loading: React.FC<LoadingProps> = ({
   }
 
   return (
-    <div className="flex flex-col items-center gap-2" {...rest}>
-      <span className={spinnerClasses}></span>
+    <div
+      className="flex flex-col items-center gap-2"
+      role="status"
+      aria-live="polite"
+      {...rest}
+    >
+      <span className={spinnerClasses} aria-hidden="true"></span>
       {tip && <p className="text-sm">{tip}</p>}
+      {!tip && <span className="sr-only">{accessibleLabel}</span>}
     </div>
   )
 }

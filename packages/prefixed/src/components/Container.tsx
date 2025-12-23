@@ -9,6 +9,8 @@ export interface ContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   centered?: boolean
   /** Add horizontal padding */
   padding?: boolean
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const sizeClasses: Record<string, string> = {

@@ -6,7 +6,7 @@ const dCountdown = 'countdown'
 const dCssValue = '--value'
 const dCssDigits = '--digits'
 
-export interface CountdownProps {
+export interface CountdownProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   /** Target timestamp in milliseconds or Date object */
   value: number | Date
   /** Format string: 'D' days, 'H' hours, 'M' minutes, 'S' seconds */
@@ -15,8 +15,6 @@ export interface CountdownProps {
   onFinish?: () => void
   /** Callback on each tick with remaining time */
   onChange?: (value: number) => void
-  /** Additional CSS classes */
-  className?: string
   /** Size variant */
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   /** Show labels under each unit */
@@ -30,6 +28,8 @@ export interface CountdownProps {
   }
   /** Show box style around each unit */
   boxed?: boolean
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 interface TimeLeft {
@@ -112,6 +112,8 @@ export const Countdown: React.FC<CountdownProps> = ({
   showLabels = false,
   labels = {},
   boxed = false,
+  'data-testid': testId,
+  ...rest
 }) => {
   const { componentSize } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
@@ -155,7 +157,7 @@ export const Countdown: React.FC<CountdownProps> = ({
   const showSeparators = !showLabels && !boxed
 
   return (
-    <div className={`flex gap-4 items-center ${className}`}>
+    <div className={`flex gap-4 items-center ${className}`} data-testid={testId} data-state={finished ? 'finished' : 'running'} {...rest}>
       {showDays && (
         <>
           <CountdownUnit

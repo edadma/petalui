@@ -46,8 +46,8 @@ export interface MaskProps extends React.HTMLAttributes<HTMLDivElement> {
   half?: MaskHalf
   /** Content to mask (typically an image) */
   children: React.ReactNode
-  /** Additional CSS classes */
-  className?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const shapeClasses: Record<MaskShape, string> = {

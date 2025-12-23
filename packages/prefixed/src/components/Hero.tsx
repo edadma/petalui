@@ -9,6 +9,8 @@ export interface HeroProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   overlay?: boolean
   contentClassName?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export function Hero({

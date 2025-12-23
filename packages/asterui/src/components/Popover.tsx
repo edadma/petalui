@@ -25,6 +25,8 @@ export interface PopoverProps extends Omit<React.HTMLAttributes<HTMLDivElement>,
   open?: boolean
   onOpenChange?: (open: boolean) => void
   overlayClassName?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Popover: React.FC<PopoverProps> = ({

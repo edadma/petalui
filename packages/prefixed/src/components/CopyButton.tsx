@@ -69,6 +69,8 @@ export interface CopyButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLBut
   tooltipText?: string
   /** Tooltip text for copied state */
   copiedTooltipText?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const CopyIcon: React.FC = () => {
@@ -205,6 +207,7 @@ export const CopyButton: React.FC<CopyButtonProps> = ({
       onClick={handleClick}
       disabled={disabled}
       aria-label={copied ? copiedTooltipText : tooltipText}
+      data-state={copied ? 'copied' : 'idle'}
       {...rest}
     >
       <SizeProvider size={effectiveSize}>

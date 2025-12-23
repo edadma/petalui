@@ -189,7 +189,13 @@ function NotificationContainer({ manager }: NotificationContainerProps) {
         if (items.length === 0) return null
 
         return (
-          <div key={placement} className={placementClasses[placement as NotificationPlacement]}>
+          <div
+            key={placement}
+            className={placementClasses[placement as NotificationPlacement]}
+            role="region"
+            aria-live="polite"
+            aria-label="Notifications"
+          >
             {items.map((notification) => (
               <NotificationItem
                 key={notification.id}
@@ -241,9 +247,10 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
         style={notification.style}
         data-testid={notification['data-testid']}
         onClick={handleClick}
+        role="alert"
       >
         <div className="flex items-center gap-2">
-          {icon}
+          <span aria-hidden="true">{icon}</span>
           <span>{notification.message}</span>
         </div>
       </div>
@@ -256,6 +263,7 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
       style={notification.style}
       data-testid={notification['data-testid']}
       onClick={handleClick}
+      role="alert"
     >
       <div className={notification.closable ? 'pr-8' : ''}>
         {notification.message && <div className="font-bold">{notification.message}</div>}
@@ -263,11 +271,13 @@ function NotificationItem({ notification, onClose }: NotificationItemProps) {
       </div>
       {notification.closable && (
         <button
+          type="button"
           className={`${dBtn} ${dBtnXs} ${dBtnGhost} ${dBtnCircle} absolute top-2 right-2`}
           onClick={(e) => {
             e.stopPropagation()
             onClose()
           }}
+          aria-label="Close notification"
         >
           ✕
         </button>

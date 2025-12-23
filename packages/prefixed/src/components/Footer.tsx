@@ -12,6 +12,8 @@ export interface FooterProps extends React.HTMLAttributes<HTMLElement> {
   center?: boolean
   horizontal?: boolean
   vertical?: boolean
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export interface FooterTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {

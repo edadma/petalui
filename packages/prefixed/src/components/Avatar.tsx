@@ -23,12 +23,16 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
   online?: boolean
   offline?: boolean
   placeholder?: boolean
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export interface AvatarGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   max?: number
   size?: AvatarSize
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 function AvatarRoot({

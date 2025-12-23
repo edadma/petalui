@@ -8,6 +8,8 @@ const dFieldsetLabel = 'd-fieldset-label'
 export interface FieldsetProps extends React.FieldsetHTMLAttributes<HTMLFieldSetElement> {
   children: React.ReactNode
   className?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export interface FieldsetLegendProps {

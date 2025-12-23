@@ -43,7 +43,7 @@ function BreadcrumbRoot({ children, items, separator, className = '', ...rest }:
       const isLast = index === items.length - 1
       return (
         <React.Fragment key={index}>
-          <li className={item.className}>
+          <li className={item.className} aria-current={isLast ? 'page' : undefined}>
             {item.href || item.onClick ? (
               <a href={item.href} onClick={item.onClick}>
                 {item.title}
@@ -53,7 +53,7 @@ function BreadcrumbRoot({ children, items, separator, className = '', ...rest }:
             )}
           </li>
           {hasCustomSeparator && !isLast && (
-            <li className={`flex items-center ${separatorPadding} text-base-content/50`}>
+            <li className={`flex items-center ${separatorPadding} text-base-content/50`} aria-hidden="true">
               {separator}
             </li>
           )}
@@ -75,7 +75,7 @@ function BreadcrumbRoot({ children, items, separator, className = '', ...rest }:
         result.push(child)
         if (index < childArray.length - 1) {
           result.push(
-            <li key={`sep-${index}`} className={`flex items-center ${separatorPadding} text-base-content/50`}>
+            <li key={`sep-${index}`} className={`flex items-center ${separatorPadding} text-base-content/50`} aria-hidden="true">
               {separator}
             </li>
           )
@@ -93,9 +93,9 @@ function BreadcrumbRoot({ children, items, separator, className = '', ...rest }:
     : `${dBreadcrumbs} text-sm ${className}`
 
   return (
-    <div className={cssClass} {...rest}>
+    <nav className={cssClass} aria-label="Breadcrumb" {...rest}>
       <ul>{renderChildren()}</ul>
-    </div>
+    </nav>
   )
 }
 

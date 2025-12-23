@@ -10,6 +10,8 @@ export interface SkeletonProps extends React.HTMLAttributes<HTMLDivElement> {
   circle?: boolean
   variant?: 'default' | 'text'
   children?: React.ReactNode
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Skeleton: React.FC<SkeletonProps> = ({

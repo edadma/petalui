@@ -19,7 +19,7 @@ const dStatusXl = 'd-status-xl'
 export type StatusType = 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
 export type StatusSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 
-export interface StatusProps {
+export interface StatusProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Status color type */
   type?: StatusType
   /** Status size */
@@ -30,8 +30,8 @@ export interface StatusProps {
   bounce?: boolean
   /** Accessibility label */
   label?: string
-  /** Additional CSS classes */
-  className?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const typeClasses: Record<StatusType, string> = {
@@ -60,17 +60,19 @@ export const Status: React.FC<StatusProps> = ({
   bounce = false,
   label,
   className = '',
+  'data-testid': testId,
+  ...rest
 }) => {
   const baseClasses = `${dStatus} ${typeClasses[type]} ${sizeClasses[size]} ${bounce ? 'animate-bounce' : ''} ${className}`.trim()
 
   if (ping) {
     return (
-      <div className="inline-grid *:[grid-area:1/1]" aria-label={label}>
+      <div className="inline-grid *:[grid-area:1/1]" aria-label={label} data-testid={testId} {...rest}>
         <div className={`${baseClasses} animate-ping`} />
         <div className={baseClasses} />
       </div>
     )
   }
 
-  return <div className={baseClasses} aria-label={label} />
+  return <div className={baseClasses} aria-label={label} data-testid={testId} {...rest} />
 }

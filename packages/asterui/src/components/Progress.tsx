@@ -13,6 +13,8 @@ const dProgressError = 'progress-error'
 
 export interface ProgressProps extends React.ProgressHTMLAttributes<HTMLProgressElement> {
   type?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const typeClasses = {

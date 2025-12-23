@@ -26,6 +26,8 @@ export interface NavbarProps extends Omit<React.HTMLAttributes<HTMLElement>, 'co
   shadow?: NavbarShadow
   /** Border radius */
   rounded?: NavbarRounded
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 const colorClasses: Record<NavbarColor, string> = {

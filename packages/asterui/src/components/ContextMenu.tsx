@@ -102,17 +102,19 @@ const ContextMenuItemComponent: React.FC<ContextMenuItemProps> = ({
   }
 
   return (
-    <li className={className}>
+    <li className={className} role="none">
       <button
         onClick={handleClick}
         disabled={disabled}
+        role="menuitem"
+        aria-disabled={disabled}
         className={`
           flex items-center gap-2 w-full px-4 py-2 text-left text-sm
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
           ${danger ? 'text-error hover:bg-error/10' : ''}
         `}
       >
-        {icon && <span className="w-4 h-4">{icon}</span>}
+        {icon && <span className="w-4 h-4" aria-hidden="true">{icon}</span>}
         <span className="flex-1">{children}</span>
       </button>
     </li>
@@ -120,7 +122,7 @@ const ContextMenuItemComponent: React.FC<ContextMenuItemProps> = ({
 }
 
 const ContextMenuDividerComponent: React.FC<ContextMenuDividerProps> = ({ className = '' }) => {
-  return <li className={`${dDivider} my-1 ${className}`}></li>
+  return <li className={`${dDivider} my-1 ${className}`} role="separator"></li>
 }
 
 const ContextMenuSubMenuComponent: React.FC<ContextMenuSubMenuProps> = ({
@@ -149,17 +151,22 @@ const ContextMenuSubMenuComponent: React.FC<ContextMenuSubMenuProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={`relative ${className}`}
+      role="none"
     >
       <button
         disabled={disabled}
+        role="menuitem"
+        aria-haspopup="menu"
+        aria-expanded={showSubmenu}
+        aria-disabled={disabled}
         className={`
           flex items-center gap-2 w-full px-4 py-2 text-left text-sm
           ${disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
         `}
       >
-        {icon && <span className="w-4 h-4">{icon}</span>}
+        {icon && <span className="w-4 h-4" aria-hidden="true">{icon}</span>}
         <span className="flex-1">{label}</span>
-        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
         </svg>
       </button>
@@ -168,6 +175,7 @@ const ContextMenuSubMenuComponent: React.FC<ContextMenuSubMenuProps> = ({
           className={`${dMenu} bg-base-100 rounded-box shadow-lg border border-base-300 absolute left-full top-0 min-w-[160px] z-50 p-1`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          role="menu"
         >
           {children}
         </ul>
@@ -186,7 +194,7 @@ const MenuItem: React.FC<{
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   if (item.divider) {
-    return <li className={`${dDivider} my-1`}></li>
+    return <li className={`${dDivider} my-1`} role="separator"></li>
   }
 
   const handleClick = () => {
@@ -214,20 +222,25 @@ const MenuItem: React.FC<{
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="relative"
+      role="none"
     >
       <button
         onClick={handleClick}
         disabled={item.disabled}
+        role="menuitem"
+        aria-haspopup={hasSubmenu ? 'menu' : undefined}
+        aria-expanded={hasSubmenu ? showSubmenu : undefined}
+        aria-disabled={item.disabled}
         className={`
           flex items-center gap-2 w-full px-4 py-2 text-left text-sm
           ${item.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-base-200'}
           ${item.danger ? 'text-error hover:bg-error/10' : ''}
         `}
       >
-        {item.icon && <span className="w-4 h-4">{item.icon}</span>}
+        {item.icon && <span className="w-4 h-4" aria-hidden="true">{item.icon}</span>}
         <span className="flex-1">{item.label}</span>
         {hasSubmenu && (
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         )}
@@ -237,6 +250,7 @@ const MenuItem: React.FC<{
           className={`${dMenu} bg-base-100 rounded-box shadow-lg border border-base-300 absolute left-full top-0 min-w-[160px] z-50 p-1`}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          role="menu"
         >
           {item.children!.map((child) => (
             <MenuItem key={child.key} item={child} onSelect={onSelect} onClose={onClose} />
@@ -379,6 +393,8 @@ const ContextMenuRoot: React.FC<ContextMenuProps> = ({
               ref={menuRef}
               className={`${dMenu} bg-base-100 rounded-box shadow-lg border border-base-300 min-w-[160px] p-1 fixed z-[9999] ${className}`}
               style={{ left: position.x, top: position.y }}
+              role="menu"
+              aria-label="Context menu"
             >
               {useDataDriven
                 ? items!.map((item) => (

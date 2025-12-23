@@ -19,6 +19,8 @@ export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: 'horizontal' | 'vertical'
   position?: 'start' | 'center' | 'end'
   type?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'success' | 'warning' | 'info' | 'error'
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export function Divider({

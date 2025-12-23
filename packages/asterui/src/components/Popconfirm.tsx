@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react'
+import React, { useState, useRef, useEffect, forwardRef, useId, useCallback } from 'react'
 import { useConfig } from '../providers/ConfigProvider'
 
 // DaisyUI classes
@@ -59,6 +59,8 @@ export const Popconfirm = forwardRef<HTMLDivElement, PopconfirmProps>(function P
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const titleId = useId()
+  const descriptionId = useId()
 
   // Resolve locale strings
   const resolvedOkText = okText ?? locale.Popconfirm?.okText ?? 'OK'
@@ -67,6 +69,15 @@ export const Popconfirm = forwardRef<HTMLDivElement, PopconfirmProps>(function P
   // Helper for test IDs
   const getTestId = (suffix: string) => (testId ? `${testId}-${suffix}` : undefined)
   const popupRef = useRef<HTMLDivElement>(null)
+  const confirmButtonRef = useRef<HTMLButtonElement>(null)
+
+  // Handle ESC key to close
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setIsOpen(false)
+      onCancel?.()
+    }
+  }, [onCancel])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -82,9 +93,15 @@ export const Popconfirm = forwardRef<HTMLDivElement, PopconfirmProps>(function P
 
     if (isOpen) {
       document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
+      document.addEventListener('keydown', handleKeyDown)
+      // Focus the confirm button when dialog opens
+      setTimeout(() => confirmButtonRef.current?.focus(), 0)
+      return () => {
+        document.removeEventListener('mousedown', handleClickOutside)
+        document.removeEventListener('keydown', handleKeyDown)
+      }
     }
-  }, [isOpen])
+  }, [isOpen, handleKeyDown])
 
   const handleTriggerClick = (e: React.MouseEvent) => {
     if (disabled) return
@@ -184,19 +201,27 @@ export const Popconfirm = forwardRef<HTMLDivElement, PopconfirmProps>(function P
 
       {isOpen && (
         <div className={getPopupContainerClasses()} data-testid={getTestId('popup')}>
-          <div ref={popupRef} className={getPopupClasses()}>
+          <div
+            ref={popupRef}
+            className={getPopupClasses()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby={titleId}
+            aria-describedby={description ? descriptionId : undefined}
+          >
             <div className="flex gap-3 relative z-10">
-              <div className="flex-shrink-0 mt-0.5">
+              <div className="flex-shrink-0 mt-0.5" aria-hidden="true">
                 {icon !== undefined ? icon : defaultIcon}
               </div>
               <div className="flex-1">
-                <div className="font-semibold text-base-content mb-1" data-testid={getTestId('title')}>{title}</div>
+                <div id={titleId} className="font-semibold text-base-content mb-1" data-testid={getTestId('title')}>{title}</div>
                 {description && (
-                  <div className="text-sm text-base-content/70 mb-3" data-testid={getTestId('description')}>{description}</div>
+                  <div id={descriptionId} className="text-sm text-base-content/70 mb-3" data-testid={getTestId('description')}>{description}</div>
                 )}
                 <div className="flex justify-end gap-2 mt-3">
                   {showCancel && (
                     <button
+                      type="button"
                       className={`${dBtn} ${dBtnSm} ${getButtonClass(cancelType)}`}
                       onClick={handleCancel}
                       disabled={loading}
@@ -206,12 +231,14 @@ export const Popconfirm = forwardRef<HTMLDivElement, PopconfirmProps>(function P
                     </button>
                   )}
                   <button
+                    ref={confirmButtonRef}
+                    type="button"
                     className={`${dBtn} ${dBtnSm} ${getButtonClass(okType)}`}
                     onClick={handleConfirm}
                     disabled={loading}
                     data-testid={getTestId('ok-button')}
                   >
-                    {loading && <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`}></span>}
+                    {loading && <span className={`${dLoading} ${dLoadingSpinner} ${dLoadingXs}`} aria-hidden="true"></span>}
                     {resolvedOkText}
                   </button>
                 </div>

@@ -22,6 +22,8 @@ export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
   className?: string
   children?: React.ReactNode
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export interface RadioGroupChangeEvent {
@@ -31,13 +33,14 @@ export interface RadioGroupChangeEvent {
   }
 }
 
-export interface RadioGroupProps {
+export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   children: React.ReactNode
   value?: string | number
   defaultValue?: string | number
   onChange?: (e: RadioGroupChangeEvent) => void
   name?: string
-  className?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 interface RadioGroupContextValue {
@@ -48,7 +51,7 @@ interface RadioGroupContextValue {
 
 const RadioGroupContext = createContext<RadioGroupContextValue | null>(null)
 
-function RadioGroup({ children, value, defaultValue, onChange, name, className = '' }: RadioGroupProps) {
+function RadioGroup({ children, value, defaultValue, onChange, name, className = '', 'data-testid': testId, ...rest }: RadioGroupProps) {
   const [internalValue, setInternalValue] = React.useState(defaultValue)
   const currentValue = value !== undefined ? value : internalValue
 
@@ -61,7 +64,7 @@ function RadioGroup({ children, value, defaultValue, onChange, name, className =
 
   return (
     <RadioGroupContext.Provider value={{ value: currentValue, onChange: handleChange, name }}>
-      <div role="radiogroup" className={className}>{children}</div>
+      <div role="radiogroup" className={className} data-testid={testId} {...rest}>{children}</div>
     </RadioGroupContext.Provider>
   )
 }

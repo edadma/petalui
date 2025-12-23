@@ -8,6 +8,8 @@ export interface BrowserProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
   url?: string
   contentClassName?: string
+  /** Test ID for testing */
+  'data-testid'?: string
 }
 
 export const Browser: React.FC<BrowserProps> = ({
