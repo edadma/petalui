@@ -9,6 +9,10 @@ importers:
   .: {}
 
   packages/asterui:
+    dependencies:
+      react-hook-form:
+        specifier: ^7.0.0
+        version: 7.66.1(react@19.2.0)
     devDependencies:
       '@tailwindcss/vite':
         specifier: ^4.1.17
@@ -58,9 +62,6 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
-      react-hook-form:
-        specifier: ^7.66.1
-        version: 7.66.1(react@19.2.0)
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.17
@@ -376,7 +377,7 @@ importers:
     dependencies:
       '@aster-ui/icons-prefixed':
         specifier: ^0.1.0
-        version: 0.1.2(@aster-ui/prefixed@0.12.57(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react-hook-form@7.66.1(react@19.2.0))(react@19.2.0))(react@19.2.0)
+        version: 0.1.2(@aster-ui/prefixed@0.12.62(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
       asterui:
         specifier: workspace:*
         version: link:../../asterui
@@ -592,6 +593,10 @@ importers:
         version: 4.5.4(@types/node@24.10.1)(rollup@4.53.2)(typescript@5.9.3)(vite@7.2.2(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(tsx@4.21.0)(yaml@2.8.2))
 
   packages/prefixed:
+    dependencies:
+      react-hook-form:
+        specifier: ^7.0.0
+        version: 7.66.1(react@19.2.0)
     devDependencies:
       '@aster-ui/icons':
         specifier: workspace:*
@@ -644,9 +649,6 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
-      react-hook-form:
-        specifier: ^7.66.1
-        version: 7.66.1(react@19.2.0)
       tailwindcss:
         specifier: ^4.1.17
         version: 4.1.18
@@ -710,8 +712,8 @@ packages:
       '@aster-ui/prefixed': ^0.12.0
       react: ^18.0.0 || ^19.0.0
 
-  '@aster-ui/prefixed@0.12.57':
-    resolution: {integrity: sha512-ezHy5vWeftHLrxd6OG0P8fo5CZlKpT5cQGmccTpQwalcI1W/cJvvET6uQR17Sd4o6ID1McMJ/GkzclYVJql2Pw==}
+  '@aster-ui/prefixed@0.12.62':
+    resolution: {integrity: sha512-gF5Utx6Lo6D33kyVVTF+2/64n/rpWyG26rKD8DOp/rf+HvCEkU91IMi3vbtnxqsTlafHTx5Do/DzYuzzGYtexw==}
     peerDependencies:
       '@aster-ui/icons': ^0.1.0
       '@tanstack/react-virtual': ^3.0.0
@@ -724,7 +726,6 @@ packages:
       qrcode: ^1.5.4
       react: ^18.0.0 || ^19.0.0
       react-dom: ^18.0.0 || ^19.0.0
-      react-hook-form: ^7.0.0
     peerDependenciesMeta:
       '@aster-ui/icons':
         optional: true
@@ -3920,12 +3921,12 @@ packages:
 
 snapshots:
 
-  '@aster-ui/icons-prefixed@0.1.2(@aster-ui/prefixed@0.12.57(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react-hook-form@7.66.1(react@19.2.0))(react@19.2.0))(react@19.2.0)':
+  '@aster-ui/icons-prefixed@0.1.2(@aster-ui/prefixed@0.12.62(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)':
     dependencies:
-      '@aster-ui/prefixed': 0.12.57(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react-hook-form@7.66.1(react@19.2.0))(react@19.2.0)
+      '@aster-ui/prefixed': 0.12.62(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react: 19.2.0
 
-  '@aster-ui/prefixed@0.12.57(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react-hook-form@7.66.1(react@19.2.0))(react@19.2.0)':
+  '@aster-ui/prefixed@0.12.62(@tanstack/react-virtual@3.13.13(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/extension-link@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-placeholder@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1))(@tiptap/extension-underline@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1)))(@tiptap/react@2.27.1(@tiptap/core@2.27.1(@tiptap/pm@2.27.1))(@tiptap/pm@2.27.1)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(@tiptap/starter-kit@2.27.1)(apexcharts@5.3.6)(qrcode@1.5.4)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)':
     dependencies:
       react: 19.2.0
       react-dom: 19.2.0(react@19.2.0)
