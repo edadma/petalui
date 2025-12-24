@@ -1,6 +1,9 @@
 export { Affix } from './components/Affix'
 export type { AffixProps } from './components/Affix'
 
+export { AspectRatio } from './components/AspectRatio'
+export type { AspectRatioProps } from './components/AspectRatio'
+
 export { Anchor } from './components/Anchor'
 export type { AnchorProps, AnchorLinkProps, AnchorLinkItem } from './components/Anchor'
 

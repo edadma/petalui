@@ -4,7 +4,7 @@
 
 ## Overview
 
-AsterUI provides 101 production-ready React components with:
+AsterUI provides 102 production-ready React components with:
 - Familiar, intuitive API patterns (Form.Item, Table columns, etc.)
 - DaisyUI v5 styling and theming
 - Full TypeScript support
@@ -40,6 +40,7 @@ npm install asterui
 ### Layout
 
 - [Affix](https://asterui.com/docs/affix.md)
+- [AspectRatio](https://asterui.com/docs/aspectratio.md)
 - [Container](https://asterui.com/docs/container.md)
 - [Divider](https://asterui.com/docs/divider.md)
 - [Fieldset](https://asterui.com/docs/fieldset.md)

@@ -14,7 +14,7 @@ import { Image } from 'asterui'
 
 const App: React.FC = () => (
   <Image
-    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+    src="/valley.png"
     alt="Landscape"
     width={400}
     height={300}
@@ -35,19 +35,19 @@ import { Image, Space } from 'asterui'
 const App: React.FC = () => (
   <Space direction="horizontal" size="md" align="center">
     <Image
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+      src="/valley.png"
       alt="Small"
       width={100}
       height={100}
     />
     <Image
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+      src="/valley.png"
       alt="Medium"
       width={200}
       height={150}
     />
     <Image
-      src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+      src="/valley.png"
       alt="Large"
       width={300}
       height={200}
@@ -68,7 +68,7 @@ import { Image } from 'asterui'
 
 const App: React.FC = () => (
   <Image
-    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+    src="/valley.png"
     alt="Landscape with preview"
     width={400}
     height={300}
@@ -90,11 +90,11 @@ import { Image, Space } from 'asterui'
 const App: React.FC = () => (
   <Space direction="horizontal" size="md">
     <Image
-      src="https://invalid-url.example.com/broken.jpg"
+      src="/does-not-exist.png"
       alt="Broken image"
       width={200}
       height={150}
-      fallback="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+      fallback="/valley.png"
     />
   </Space>
 )

@@ -370,11 +370,12 @@ export default defineConfig({
                     'zh-CN': '布局',
                     fr: 'Disposition',
                   },
-                  items: [
-                    { label: 'Container', slug: 'components/container' },
-                    { label: 'Divider', slug: 'components/divider' },
-                    { label: 'Flex', slug: 'components/flex' },
-                    { label: 'Footer', slug: 'components/footer' },
+              items: [
+                { label: 'AspectRatio', slug: 'components/aspectratio' },
+                { label: 'Container', slug: 'components/container' },
+                { label: 'Divider', slug: 'components/divider' },
+                { label: 'Flex', slug: 'components/flex' },
+                { label: 'Footer', slug: 'components/footer' },
                     { label: 'Grid', slug: 'components/grid' },
                     { label: 'Hero', slug: 'components/hero' },
                     { label: 'Join', slug: 'components/join' },

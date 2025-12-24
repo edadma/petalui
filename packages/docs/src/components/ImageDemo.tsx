@@ -7,7 +7,7 @@ export function BasicDemo() {
     <Demo>
       {/* @example-return */}
       <Image
-        src="https://picsum.photos/seed/asterui/800/600"
+        src="/valley.png"
         alt="Landscape"
         width={400}
         height={300}
@@ -24,19 +24,19 @@ export function SizesDemo() {
       {/* @example-return */}
       <Space direction="horizontal" size="md" align="center">
         <Image
-          src="https://picsum.photos/seed/asterui/800/600"
+          src="/valley.png"
           alt="Small"
           width={100}
           height={100}
         />
         <Image
-          src="https://picsum.photos/seed/asterui/800/600"
+          src="/valley.png"
           alt="Medium"
           width={200}
           height={150}
         />
         <Image
-          src="https://picsum.photos/seed/asterui/800/600"
+          src="/valley.png"
           alt="Large"
           width={300}
           height={200}
@@ -53,7 +53,7 @@ export function PreviewDemo() {
     <Demo>
       {/* @example-return */}
       <Image
-        src="https://picsum.photos/seed/asterui/800/600"
+        src="/valley.png"
         alt="Landscape with preview"
         width={400}
         height={300}
@@ -71,11 +71,11 @@ export function FallbackDemo() {
       {/* @example-return */}
       <Space direction="horizontal" size="md">
         <Image
-          src="https://invalid-url.example.com/broken.jpg"
+          src="/does-not-exist.png"
           alt="Broken image"
           width={200}
           height={150}
-          fallback="https://picsum.photos/seed/asterui/800/600"
+          fallback="/valley.png"
         />
       </Space>
       {/* @example-return-end */}

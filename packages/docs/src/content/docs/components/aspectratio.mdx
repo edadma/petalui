@@ -1,0 +1,46 @@
+---
+title: AspectRatio
+description: Maintain consistent media and card proportions with a simple aspect ratio wrapper.
+tableOfContents: false
+---
+
+import {
+  WidescreenDemo,
+  SquareCardDemo,
+} from '../../../components/AspectRatioDemo'
+import AspectRatioDemoSource from '../../../components/AspectRatioDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Keep media and layout blocks consistent with a fixed width-to-height ratio.
+
+## Import
+
+```tsx
+import { AspectRatio } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Widescreen Media" description="Use a 16:9 ratio for images or video frames." source={AspectRatioDemoSource} fn="WidescreenDemo">
+  <WidescreenDemo client:load slot="demo" />
+</Example>
+
+<Example title="Square Card" description="Keep cards aligned in uniform grid layouts." source={AspectRatioDemoSource} fn="SquareCardDemo">
+  <SquareCardDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `AspectRatio`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `ratio` | Aspect ratio as width / height | `number` | `1` |
+| `children` | Content to render inside the ratio container | `React.ReactNode` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `style` | Inline styles merged with the ratio styles | `React.CSSProperties` | - |
+| `data-testid` | Test ID for the root element | `string` | - |

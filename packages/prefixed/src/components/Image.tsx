@@ -52,10 +52,12 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
     const [error, setError] = useState(false)
     const [showPreview, setShowPreview] = useState(false)
     const [currentSrc, setCurrentSrc] = useState(src)
+    const [hasTriedFallback, setHasTriedFallback] = useState(false)
 
     useEffect(() => {
       setLoading(true)
       setError(false)
+      setHasTriedFallback(false)
       setCurrentSrc(src)
     }, [src])
 
@@ -66,13 +68,17 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
     }, [onLoad])
 
     const handleError = useCallback(() => {
+      onError?.()
+      if (fallback && !hasTriedFallback) {
+        setHasTriedFallback(true)
+        setCurrentSrc(fallback)
+        setLoading(true)
+        setError(false)
+        return
+      }
       setLoading(false)
       setError(true)
-      if (fallback) {
-        setCurrentSrc(fallback)
-      }
-      onError?.()
-    }, [fallback, onError])
+    }, [fallback, hasTriedFallback, onError])
 
     const handleImageClick = useCallback(() => {
       if (preview && !error && !loading) {
@@ -141,7 +147,11 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
             src={currentSrc}
             alt={alt}
             className={imageClasses}
-            style={{ ...getStyle(), display: loading ? 'none' : 'block' }}
+            style={{
+              ...getStyle(),
+              opacity: loading ? 0 : 1,
+              transition: 'opacity 150ms ease',
+            }}
             onLoad={handleLoad}
             onError={handleError}
             onClick={handleImageClick}
@@ -151,7 +161,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
             aria-label={isPreviewable ? `${alt || 'Image'} (click to preview)` : undefined}
             data-testid={`${testId}-img`}
           />
-          {error && !fallback && (
+          {error && (
             <div
               className="flex items-center justify-center bg-base-200 text-base-content/50"
               style={getStyle()}
