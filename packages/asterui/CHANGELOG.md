@@ -7,6 +7,16 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.68 (2025-12-24)
+
+### Components
+
+- Updated Grid to support 24 or 30 columns instead of 24 or 120
+
+### Documentation
+
+- Updated Grid docs and examples to use the 30-column layout
+
 ## v0.12.67 (2025-12-24)
 
 ### Bug Fixes

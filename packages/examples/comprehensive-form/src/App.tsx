@@ -277,17 +277,17 @@ function App() {
 
                   <Form.Item name="skills" label="Skills (select all that apply)">
                     <Checkbox.Group>
-                      <Row cols={120} gutter={16}>
-                        <Col xs={60} md={30}>
+                      <Row cols={30} gutter={16}>
+                        <Col xs={15} md={7}>
                           <Checkbox value="react">React</Checkbox>
                         </Col>
-                        <Col xs={60} md={30}>
+                        <Col xs={15} md={7}>
                           <Checkbox value="vue">Vue</Checkbox>
                         </Col>
-                        <Col xs={60} md={30}>
+                        <Col xs={15} md={7}>
                           <Checkbox value="angular">Angular</Checkbox>
                         </Col>
-                        <Col xs={60} md={30}>
+                        <Col xs={15} md={7}>
                           <Checkbox value="node">Node.js</Checkbox>
                         </Col>
                       </Row>

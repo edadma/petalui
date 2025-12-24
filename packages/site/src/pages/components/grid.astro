@@ -168,27 +168,27 @@ const App: React.FC = () => (
 export default App`,
   },
   {
-    id: 'cols-120',
-    title: '120-Column Grid',
-    description: 'Fine-grained control with 120 columns for precise layouts.',
+    id: 'cols-30',
+    title: '30-Column Grid',
+    description: 'Fine-grained control with 30 columns for precise layouts.',
     code: `import React from 'react'
 import { Row, Col } from 'asterui'
 
 const App: React.FC = () => (
-  <Row cols={120} gutter={8}>
-    <Col span={30}>
+  <Row cols={30} gutter={8}>
+    <Col span={8}>
       <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-        30/120
+        8/30
       </div>
     </Col>
-    <Col span={45}>
+    <Col span={11}>
       <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-        45/120
+        11/30
       </div>
     </Col>
-    <Col span={45}>
+    <Col span={11}>
       <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-        45/120
+        11/30
       </div>
     </Col>
   </Row>

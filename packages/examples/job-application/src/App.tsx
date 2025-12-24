@@ -279,7 +279,7 @@ function App() {
                 <h2 className="text-2xl font-bold border-b pb-2">Skills</h2>
                 <p className="text-sm text-base-content/70">Select all that apply</p>
 
-                <Row cols={120} gutter={16}>
+                <Row cols={30} gutter={16}>
                   {[
                     'JavaScript',
                     'TypeScript',
@@ -297,7 +297,7 @@ function App() {
                     'Redis',
                     'Go',
                   ].map((skill) => (
-                    <Col key={skill} xs={60} md={24}>
+                    <Col key={skill} xs={15} md={6}>
                       <Form.Item name="skills" valuePropName="checked">
                         <label className="flex items-center gap-2 cursor-pointer">
                           <Checkbox value={skill} />

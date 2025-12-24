@@ -1,6 +1,6 @@
 # Grid
 
-Flexible grid system with Row and Col components. Supports 24-column (default) and 120-column modes for precise layouts.
+Flexible grid system with Row and Col components. Supports 24-column (default) and 30-column modes for precise layouts.
 
 **Import:** `import { Row, Col } from 'asterui'`
 
@@ -154,29 +154,29 @@ const App: React.FC = () => (
 export default App
 ```
 
-### 120-Column Grid
+### 30-Column Grid
 
-Fine-grained control with 120 columns for precise layouts.
+Fine-grained control with 30 columns for precise layouts.
 
 ```tsx
 import React from 'react'
 import { Row, Col } from 'asterui'
 
 const App: React.FC = () => (
-  <Row cols={120} gutter={8}>
-    <Col span={30}>
+  <Row cols={30} gutter={8}>
+    <Col span={8}>
       <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-        30/120
+        8/30
       </div>
     </Col>
-    <Col span={45}>
+    <Col span={11}>
       <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-        45/120
+        11/30
       </div>
     </Col>
-    <Col span={45}>
+    <Col span={11}>
       <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-        45/120
+        11/30
       </div>
     </Col>
   </Row>
@@ -191,7 +191,7 @@ export default App
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `cols` | Number of grid columns | `24 \| 120` | `24` |
+| `cols` | Number of grid columns | `24 \| 30` | `24` |
 | `gutter` | Spacing between columns (px) | `number \| [number, number]` | `16` |
 | `justify` | Horizontal alignment of grid items | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | `-` |
 | `align` | Vertical alignment of grid items | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'` | `-` |
@@ -202,7 +202,7 @@ export default App
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
-| `span` | Number of columns to span (out of 24 or 120) | `number` | `24` |
+| `span` | Number of columns to span (out of 24 or 30) | `number` | `24` |
 | `offset` | Number of columns to offset | `number` | `0` |
 | `order` | Visual order of the column (1-12) | `number` | `-` |
 | `xs` | Responsive span for extra small screens (<640px) | `number` | `-` |

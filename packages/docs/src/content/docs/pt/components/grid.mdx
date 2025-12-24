@@ -1,6 +1,6 @@
 ---
 title: Grid
-description: Sistema de grade flexível com componentes Row e Col. Suporta modos de 24 colunas (padrão) e 120 colunas para layouts precisos.
+description: Sistema de grade flexível com componentes Row e Col. Suporta modos de 24 colunas (padrão) e 30 colunas para layouts precisos.
 tableOfContents: false
 ---
 
@@ -9,12 +9,12 @@ import {
   GutterDemo,
   OffsetDemo,
   ResponsiveDemo,
-  Cols120Demo,
+  Cols30Demo,
 } from '../../../../components/GridDemo'
 import GridDemoSource from '../../../../components/GridDemo.tsx?raw'
 import Example from '../../../../components/Example.astro'
 
-Sistema de grade flexível com componentes Row e Col. Suporta modos de 24 colunas (padrão) e 120 colunas para layouts precisos.
+Sistema de grade flexível com componentes Row e Col. Suporta modos de 24 colunas (padrão) e 30 colunas para layouts precisos.
 
 ## Importação
 
@@ -42,8 +42,8 @@ import { Row, Col } from 'asterui'
   <ResponsiveDemo client:load slot="demo" />
 </Example>
 
-<Example title="Grade de 120 Colunas" description="Controle refinado com 120 colunas para layouts precisos." source={GridDemoSource} fn="Cols120Demo">
-  <Cols120Demo client:load slot="demo" />
+<Example title="Grade de 30 Colunas" description="Controle refinado com 30 colunas para layouts precisos." source={GridDemoSource} fn="Cols30Demo">
+  <Cols30Demo client:load slot="demo" />
 </Example>
 
 </div>
@@ -54,7 +54,7 @@ import { Row, Col } from 'asterui'
 
 | Propriedade | Descrição | Tipo | Padrão |
 |----------|-------------|------|---------|
-| `cols` | Número de colunas da grade | `24 \| 120` | `24` |
+| `cols` | Número de colunas da grade | `24 \| 30` | `24` |
 | `gutter` | Espaçamento entre colunas (px) | `number \| [number, number]` | `16` |
 | `justify` | Alinhamento horizontal dos itens da grade | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | - |
 | `align` | Alinhamento vertical dos itens da grade | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'` | - |
@@ -65,7 +65,7 @@ import { Row, Col } from 'asterui'
 
 | Propriedade | Descrição | Tipo | Padrão |
 |----------|-------------|------|---------|
-| `span` | Número de colunas a ocupar (de 24 ou 120) | `number` | `24` |
+| `span` | Número de colunas a ocupar (de 24 ou 30) | `number` | `24` |
 | `offset` | Número de colunas a deslocar | `number` | `0` |
 | `order` | Ordem visual da coluna (1-12) | `number` | - |
 | `xs` | Extensão responsiva para telas extra pequenas (&lt;640px) | `number` | - |
@@ -79,10 +79,10 @@ import { Row, Col } from 'asterui'
 
 ## Notas de Uso
 
-- O padrão é um layout de 24 colunas; use `cols={120}` para controle mais refinado
+- O padrão é um layout de 24 colunas; use `cols={30}` para controle mais refinado
 - Use `Row` como container e `Col` para colunas
 - Defina `gutter` em Row para adicionar espaçamento entre colunas
 - Use props responsivas (xs, sm, md, lg, xl, xxl) para diferentes extensões de coluna em diferentes tamanhos de tela
-- As extensões de coluna devem somar até o total de colunas (24 ou 120) ou menos por linha
+- As extensões de coluna devem somar até o total de colunas (24 ou 30) ou menos por linha
 - Use `offset` para criar espaço vazio antes de uma coluna
-- Modo de 120 colunas é útil para layouts que precisam de proporções como 1:3, 2:3, ou porcentagens como 25%, 37.5%
+- Modo de 30 colunas é útil para layouts que precisam de proporções como 1:3, 2:3, ou porcentagens como 20%, 33.33%

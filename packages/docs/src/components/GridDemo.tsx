@@ -134,24 +134,24 @@ export function ResponsiveDemo() {
 }
 
 // @example-imports: { Row, Col } from 'asterui'
-export function Cols120Demo() {
+export function Cols30Demo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Row cols={120} gutter={8}>
-        <Col span={30}>
+      <Row cols={30} gutter={8}>
+        <Col span={6}>
           <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-            30/120
+            6/30
           </div>
         </Col>
-        <Col span={45}>
+        <Col span={12}>
           <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-            45/120
+            12/30
           </div>
         </Col>
-        <Col span={45}>
+        <Col span={12}>
           <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-            45/120
+            12/30
           </div>
         </Col>
       </Row>

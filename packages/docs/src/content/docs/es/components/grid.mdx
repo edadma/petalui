@@ -1,6 +1,6 @@
 ---
 title: Grid
-description: Sistema de cuadrícula flexible con componentes Row y Col. Soporta modos de 24 columnas (predeterminado) y 120 columnas para diseños precisos.
+description: Sistema de cuadrícula flexible con componentes Row y Col. Soporta modos de 24 columnas (predeterminado) y 30 columnas para diseños precisos.
 tableOfContents: false
 ---
 
@@ -9,12 +9,12 @@ import {
   GutterDemo,
   OffsetDemo,
   ResponsiveDemo,
-  Cols120Demo,
+  Cols30Demo,
 } from '../../../../components/GridDemo'
 import GridDemoSource from '../../../../components/GridDemo.tsx?raw'
 import Example from '../../../../components/Example.astro'
 
-Sistema de cuadrícula flexible con componentes Row y Col. Soporta modos de 24 columnas (predeterminado) y 120 columnas para diseños precisos.
+Sistema de cuadrícula flexible con componentes Row y Col. Soporta modos de 24 columnas (predeterminado) y 30 columnas para diseños precisos.
 
 ## Importar
 
@@ -42,8 +42,8 @@ import { Row, Col } from 'asterui'
   <ResponsiveDemo client:load slot="demo" />
 </Example>
 
-<Example title="Cuadrícula de 120 Columnas" description="Control de grano fino con 120 columnas para diseños precisos." source={GridDemoSource} fn="Cols120Demo">
-  <Cols120Demo client:load slot="demo" />
+<Example title="Cuadrícula de 30 Columnas" description="Control de grano fino con 30 columnas para diseños precisos." source={GridDemoSource} fn="Cols30Demo">
+  <Cols30Demo client:load slot="demo" />
 </Example>
 
 </div>
@@ -54,7 +54,7 @@ import { Row, Col } from 'asterui'
 
 | Propiedad | Descripción | Tipo | Predeterminado |
 |----------|-------------|------|---------|
-| `cols` | Número de columnas de cuadrícula | `24 \| 120` | `24` |
+| `cols` | Número de columnas de cuadrícula | `24 \| 30` | `24` |
 | `gutter` | Espaciado entre columnas (px) | `number \| [number, number]` | `16` |
 | `justify` | Alineación horizontal de elementos de cuadrícula | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | - |
 | `align` | Alineación vertical de elementos de cuadrícula | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'` | - |
@@ -65,7 +65,7 @@ import { Row, Col } from 'asterui'
 
 | Propiedad | Descripción | Tipo | Predeterminado |
 |----------|-------------|------|---------|
-| `span` | Número de columnas que abarca (de 24 o 120) | `number` | `24` |
+| `span` | Número de columnas que abarca (de 24 o 30) | `number` | `24` |
 | `offset` | Número de columnas de desplazamiento | `number` | `0` |
 | `order` | Orden visual de la columna (1-12) | `number` | - |
 | `xs` | Expansión responsiva para pantallas extra pequeñas (&lt;640px) | `number` | - |
@@ -79,10 +79,10 @@ import { Row, Col } from 'asterui'
 
 ## Notas de Uso
 
-- El predeterminado es un diseño de 24 columnas; usa `cols={120}` para mayor control
+- El predeterminado es un diseño de 24 columnas; usa `cols={30}` para mayor control
 - Usa `Row` como contenedor y `Col` para columnas
 - Establece `gutter` en Row para añadir espaciado entre columnas
 - Usa props responsivas (xs, sm, md, lg, xl, xxl) para diferentes expansiones de columna en diferentes tamaños de pantalla
-- Las expansiones de columna deben sumar el total de columnas (24 o 120) o menos por fila
+- Las expansiones de columna deben sumar el total de columnas (24 o 30) o menos por fila
 - Usa `offset` para crear espacio vacío antes de una columna
-- El modo de 120 columnas es útil para diseños que necesitan proporciones como 1:3, 2:3 o porcentajes como 25%, 37.5%
+- El modo de 30 columnas es útil para diseños que necesitan proporciones como 1:3, 2:3 o porcentajes como 20%, 33.33%

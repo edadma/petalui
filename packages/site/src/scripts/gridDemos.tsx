@@ -105,21 +105,21 @@ const demos: Record<string, React.ReactNode> = {
       </Col>
     </Row>
   ),
-  'cols-120': (
-    <Row cols={120} gutter={8}>
-      <Col span={30}>
+  'cols-30': (
+    <Row cols={30} gutter={8}>
+      <Col span={8}>
         <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-          30/120
+          8/30
         </div>
       </Col>
-      <Col span={45}>
+      <Col span={11}>
         <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-          45/120
+          11/30
         </div>
       </Col>
-      <Col span={45}>
+      <Col span={11}>
         <div style={{ background: '#0092ff', padding: '16px', color: 'white' }}>
-          45/120
+          11/30
         </div>
       </Col>
     </Row>

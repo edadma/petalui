@@ -1,6 +1,6 @@
 ---
 title: Grid
-description: Système de grille flexible avec composants Row et Col. Supporte les modes 24 colonnes (par défaut) et 120 colonnes pour des mises en page précises.
+description: Système de grille flexible avec composants Row et Col. Supporte les modes 24 colonnes (par défaut) et 30 colonnes pour des mises en page précises.
 tableOfContents: false
 ---
 
@@ -9,12 +9,12 @@ import {
   GutterDemo,
   OffsetDemo,
   ResponsiveDemo,
-  Cols120Demo,
+  Cols30Demo,
 } from '../../../../components/GridDemo'
 import GridDemoSource from '../../../../components/GridDemo.tsx?raw'
 import Example from '../../../../components/Example.astro'
 
-Système de grille flexible avec composants Row et Col. Supporte les modes 24 colonnes (par défaut) et 120 colonnes pour des mises en page précises.
+Système de grille flexible avec composants Row et Col. Supporte les modes 24 colonnes (par défaut) et 30 colonnes pour des mises en page précises.
 
 ## Importation
 
@@ -42,8 +42,8 @@ import { Row, Col } from 'asterui'
   <ResponsiveDemo client:load slot="demo" />
 </Example>
 
-<Example title="Grille 120 colonnes" description="Contrôle précis avec 120 colonnes pour des mises en page exactes." source={GridDemoSource} fn="Cols120Demo">
-  <Cols120Demo client:load slot="demo" />
+<Example title="Grille 30 colonnes" description="Contrôle précis avec 30 colonnes pour des mises en page exactes." source={GridDemoSource} fn="Cols30Demo">
+  <Cols30Demo client:load slot="demo" />
 </Example>
 
 </div>
@@ -54,7 +54,7 @@ import { Row, Col } from 'asterui'
 
 | Propriété | Description | Type | Défaut |
 |----------|-------------|------|---------|
-| `cols` | Nombre de colonnes de grille | `24 \| 120` | `24` |
+| `cols` | Nombre de colonnes de grille | `24 \| 30` | `24` |
 | `gutter` | Espacement entre les colonnes (px) | `number \| [number, number]` | `16` |
 | `justify` | Alignement horizontal des éléments de grille | `'start' \| 'end' \| 'center' \| 'between' \| 'around' \| 'evenly'` | - |
 | `align` | Alignement vertical des éléments de grille | `'start' \| 'end' \| 'center' \| 'stretch' \| 'baseline'` | - |
@@ -65,7 +65,7 @@ import { Row, Col } from 'asterui'
 
 | Propriété | Description | Type | Défaut |
 |----------|-------------|------|---------|
-| `span` | Nombre de colonnes à occuper (sur 24 ou 120) | `number` | `24` |
+| `span` | Nombre de colonnes à occuper (sur 24 ou 30) | `number` | `24` |
 | `offset` | Nombre de colonnes à décaler | `number` | `0` |
 | `order` | Ordre visuel de la colonne (1-12) | `number` | - |
 | `xs` | Portée réactive pour écrans extra petits (&lt;640px) | `number` | - |
@@ -79,10 +79,10 @@ import { Row, Col } from 'asterui'
 
 ## Notes d'utilisation
 
-- Par défaut, mise en page à 24 colonnes ; utiliser `cols={120}` pour un contrôle plus fin
+- Par défaut, mise en page à 24 colonnes ; utiliser `cols={30}` pour un contrôle plus fin
 - Utiliser `Row` comme conteneur et `Col` pour les colonnes
 - Définir `gutter` sur Row pour ajouter de l'espacement entre les colonnes
 - Utiliser les props réactives (xs, sm, md, lg, xl, xxl) pour différentes portées de colonnes à différentes tailles d'écran
-- Les portées de colonnes doivent totaliser au maximum le nombre total de colonnes (24 ou 120) par ligne
+- Les portées de colonnes doivent totaliser au maximum le nombre total de colonnes (24 ou 30) par ligne
 - Utiliser `offset` pour créer un espace vide avant une colonne
-- Le mode 120 colonnes est utile pour les mises en page nécessitant des ratios comme 1:3, 2:3 ou des pourcentages comme 25%, 37.5%
+- Le mode 30 colonnes est utile pour les mises en page nécessitant des ratios comme 1:3, 2:3 ou des pourcentages comme 20%, 33.33%
