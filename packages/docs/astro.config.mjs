@@ -34,6 +34,7 @@ export default defineConfig({
     }),
     starlight({
       title: 'AsterUI',
+      favicon: '/favicon.ico',
       locales: {
         root: { label: 'English', lang: 'en' },
         fr: { label: 'Français', lang: 'fr' },
@@ -52,13 +53,6 @@ export default defineConfig({
       ],
       customCss: ['./src/styles/custom.css'],
       head: [
-        {
-          tag: 'link',
-          attrs: {
-            rel: 'icon',
-            href: '/favicon.ico',
-          },
-        },
         {
           tag: 'script',
           content: `(()=>{const p=location.pathname.replace(/\\/$/,'');if(p.startsWith('/components')||p.match(/^\\/[a-z]{2}\\/components/))document.documentElement.classList.add('component-page');if(p==='/changelog'||p.match(/^\\/[a-z]{2}\\/changelog$/))document.documentElement.classList.add('changelog-page')})()`,
