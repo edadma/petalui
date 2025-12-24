@@ -1,4 +1,4 @@
-import React, { useState, useEffect, forwardRef, useCallback } from 'react'
+import React, { useState, useEffect, forwardRef, useCallback, useRef } from 'react'
 
 // DaisyUI classes
 const dBtn = 'btn'
@@ -53,6 +53,7 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
     const [showPreview, setShowPreview] = useState(false)
     const [currentSrc, setCurrentSrc] = useState(src)
     const [hasTriedFallback, setHasTriedFallback] = useState(false)
+    const imgRef = useRef<HTMLImageElement | null>(null)
 
     useEffect(() => {
       setLoading(true)
@@ -60,6 +61,28 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
       setHasTriedFallback(false)
       setCurrentSrc(src)
     }, [src])
+
+    useEffect(() => {
+      const img = imgRef.current
+      if (!img || !img.complete) return
+
+      if (img.naturalWidth > 0) {
+        setLoading(false)
+        setError(false)
+        return
+      }
+
+      if (fallback && !hasTriedFallback) {
+        setHasTriedFallback(true)
+        setCurrentSrc(fallback)
+        setLoading(true)
+        setError(false)
+        return
+      }
+
+      setLoading(false)
+      setError(true)
+    }, [currentSrc, fallback, hasTriedFallback])
 
     const handleLoad = useCallback(() => {
       setLoading(false)
@@ -142,7 +165,14 @@ export const Image = forwardRef<HTMLImageElement, ImageProps>(
             </div>
           )}
           <img
-            ref={ref}
+            ref={(node) => {
+              imgRef.current = node
+              if (typeof ref === 'function') {
+                ref(node)
+              } else if (ref) {
+                ref.current = node
+              }
+            }}
             {...props}
             src={currentSrc}
             alt={alt}
