@@ -6,7 +6,7 @@ import {
   Flex,
   Form,
   Input,
-  notification,
+  Modal,
   Row,
   Col,
   Space,
@@ -83,9 +83,9 @@ export function JobApplicationDemo() {
 
   const handleSubmit = (values: JobApplicationForm) => {
     const formatted = JSON.stringify(values, null, 2)
-    notification.info({
-      message: 'Application submitted',
-      description: (
+    Modal.info({
+      title: 'Application submitted',
+      content: (
         <Code className="max-h-60 overflow-auto" copyable={formatted}>
           {formatted.split('\n').map((line, index) => (
             <Code.Line key={index} prefix=" ">

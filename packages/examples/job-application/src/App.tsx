@@ -10,7 +10,7 @@ import {
   Code,
   Container,
   Flex,
-  notification,
+  Modal,
   Space,
   Row,
   Col,
@@ -69,9 +69,9 @@ function App() {
     setIsSubmitting(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
     const formatted = JSON.stringify(values, null, 2)
-    notification.info({
-      message: 'Application submitted',
-      description: (
+    Modal.info({
+      title: 'Application submitted',
+      content: (
         <Code className="max-h-60 overflow-auto" copyable={formatted}>
           {formatted.split('\n').map((line, index) => (
             <Code.Line key={index} prefix=" ">
