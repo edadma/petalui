@@ -7,7 +7,6 @@ import {
   Button,
   Card,
   Checkbox,
-  Code,
   Container,
   Flex,
   Modal,
@@ -68,17 +67,12 @@ function App() {
   const handleSubmit = async (values: JobApplicationForm) => {
     setIsSubmitting(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    const formatted = JSON.stringify(values, null, 2)
     Modal.info({
       title: 'Application submitted',
       content: (
-        <Code className="max-h-60 overflow-auto" copyable={formatted}>
-          {formatted.split('\n').map((line, index) => (
-            <Code.Line key={index} prefix=" ">
-              {line}
-            </Code.Line>
-          ))}
-        </Code>
+        <pre className="max-h-72 overflow-auto text-left">
+          <code>{JSON.stringify(values, null, 2)}</code>
+        </pre>
       ),
     })
     setIsSubmitting(false)

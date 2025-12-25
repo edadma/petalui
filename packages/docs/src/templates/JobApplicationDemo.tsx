@@ -2,7 +2,6 @@ import {
   Button,
   Card,
   Checkbox,
-  Code,
   Flex,
   Form,
   Input,
@@ -82,17 +81,12 @@ export function JobApplicationDemo() {
   })
 
   const handleSubmit = (values: JobApplicationForm) => {
-    const formatted = JSON.stringify(values, null, 2)
     Modal.info({
       title: 'Application submitted',
       content: (
-        <Code className="max-h-60 overflow-auto" copyable={formatted}>
-          {formatted.split('\n').map((line, index) => (
-            <Code.Line key={index} prefix=" ">
-              {line}
-            </Code.Line>
-          ))}
-        </Code>
+        <pre className="max-h-72 overflow-auto text-left">
+          <code>{JSON.stringify(values, null, 2)}</code>
+        </pre>
       ),
     })
   }
