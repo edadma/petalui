@@ -1,0 +1,77 @@
+---
+title: DateOfBirth
+description: Friendly month/day/year selector optimized for birthdays and age validation.
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  OrderDemo,
+  MonthGridDemo,
+  YearInputDemo,
+  ControlledDemo,
+  FormDemo,
+} from '../../../components/DateOfBirthDemo'
+import DateOfBirthDemoSource from '../../../components/DateOfBirthDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+Date of birth selector with flexible ordering, month presentation, and age validation.
+
+## Import
+
+```tsx
+import { DateOfBirth } from 'asterui'
+```
+
+## Examples
+
+<div class="examples">
+
+<Example title="Basic" description="Default month/day/year selector." source={DateOfBirthDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="Order" description="Switch to day/month/year order." source={DateOfBirthDemoSource} fn="OrderDemo">
+  <OrderDemo client:load slot="demo" />
+</Example>
+
+<Example title="Month Grid" description="Compact grid for month selection." source={DateOfBirthDemoSource} fn="MonthGridDemo">
+  <MonthGridDemo client:load slot="demo" />
+</Example>
+
+<Example title="Year Input" description="Use a numeric year input and custom age rules." source={DateOfBirthDemoSource} fn="YearInputDemo">
+  <YearInputDemo client:load slot="demo" />
+</Example>
+
+<Example title="Controlled" description="Control the value via local state." source={DateOfBirthDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="Form" description="Integrate with Form and submit the value." source={DateOfBirthDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `DateOfBirth`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `value` | Controlled value | `{ month?: string; day?: string; year?: string }` | - |
+| `defaultValue` | Default value | `{ month?: string; day?: string; year?: string }` | - |
+| `onChange` | Change handler | `(value) => void` | - |
+| `order` | Field order | `'mdy' \| 'dmy' \| 'ymd'` | `'mdy'` |
+| `monthStyle` | Month UI style | `'select' \| 'grid'` | `'select'` |
+| `yearStyle` | Year input style | `'select' \| 'input'` | `'select'` |
+| `yearSpan` | Number of years to show | `number` | `120` |
+| `minAge` | Minimum allowed age | `number` | `13` |
+| `maxAge` | Maximum allowed age | `number` | - |
+| `monthPlaceholder` | Placeholder for month | `string` | `'Month'` |
+| `dayPlaceholder` | Placeholder for day | `string` | `'Day'` |
+| `yearPlaceholder` | Placeholder for year | `string` | `'Year'` |
+| `disabled` | Disable the field | `boolean` | `false` |
+| `size` | Component size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `className` | Additional CSS classes | `string` | - |
+| `data-testid` | Test ID prefix | `string` | - |

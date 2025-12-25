@@ -1,0 +1,77 @@
+---
+title: DateOfBirth
+description: 出生日期选择器，支持顺序、月份样式与年龄校验。
+tableOfContents: false
+---
+
+import {
+  BasicDemo,
+  OrderDemo,
+  MonthGridDemo,
+  YearInputDemo,
+  ControlledDemo,
+  FormDemo,
+} from '../../../../components/DateOfBirthDemo'
+import DateOfBirthDemoSource from '../../../../components/DateOfBirthDemo.tsx?raw'
+import Example from '../../../../components/Example.astro'
+
+出生日期选择器，支持顺序、月份样式与年龄校验。
+
+## 导入
+
+```tsx
+import { DateOfBirth } from 'asterui'
+```
+
+## 示例
+
+<div class="examples">
+
+<Example title="基础" description="默认的月/日/年选择器。" source={DateOfBirthDemoSource} fn="BasicDemo">
+  <BasicDemo client:load slot="demo" />
+</Example>
+
+<Example title="顺序" description="切换为日/月/年顺序。" source={DateOfBirthDemoSource} fn="OrderDemo">
+  <OrderDemo client:load slot="demo" />
+</Example>
+
+<Example title="月份网格" description="紧凑的月份选择网格。" source={DateOfBirthDemoSource} fn="MonthGridDemo">
+  <MonthGridDemo client:load slot="demo" />
+</Example>
+
+<Example title="年份输入" description="使用数字年份输入与年龄规则。" source={DateOfBirthDemoSource} fn="YearInputDemo">
+  <YearInputDemo client:load slot="demo" />
+</Example>
+
+<Example title="受控" description="通过本地状态控制值。" source={DateOfBirthDemoSource} fn="ControlledDemo">
+  <ControlledDemo client:load slot="demo" />
+</Example>
+
+<Example title="表单" description="与 Form 集成并提交结果。" source={DateOfBirthDemoSource} fn="FormDemo">
+  <FormDemo client:load slot="demo" />
+</Example>
+
+</div>
+
+## API
+
+### `DateOfBirth`
+
+| 属性 | 说明 | 类型 | 默认值 |
+|----------|-------------|------|---------|
+| `value` | 受控值 | `{ month?: string; day?: string; year?: string }` | - |
+| `defaultValue` | 默认值 | `{ month?: string; day?: string; year?: string }` | - |
+| `onChange` | 变更回调 | `(value) => void` | - |
+| `order` | 字段顺序 | `'mdy' \| 'dmy' \| 'ymd'` | `'mdy'` |
+| `monthStyle` | 月份样式 | `'select' \| 'grid'` | `'select'` |
+| `yearStyle` | 年份样式 | `'select' \| 'input'` | `'select'` |
+| `yearSpan` | 年份范围 | `number` | `120` |
+| `minAge` | 最小年龄 | `number` | `13` |
+| `maxAge` | 最大年龄 | `number` | - |
+| `monthPlaceholder` | 月份占位符 | `string` | `'Month'` |
+| `dayPlaceholder` | 日期占位符 | `string` | `'Day'` |
+| `yearPlaceholder` | 年份占位符 | `string` | `'Year'` |
+| `disabled` | 禁用 | `boolean` | `false` |
+| `size` | 组件尺寸 | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
+| `className` | 额外 CSS 类 | `string` | - |
+| `data-testid` | 测试 ID 前缀 | `string` | - |

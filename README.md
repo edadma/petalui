@@ -138,7 +138,7 @@ export default function App() {
 
 ## Components
 
-102 components including forms, data display, navigation, feedback, and layout. See the full list at [asterui.com/components](https://asterui.com/components).
+103 components including forms, data display, navigation, feedback, and layout. See the full list at [asterui.com/components](https://asterui.com/components).
 
 ## Optional Components
 
@@ -162,7 +162,7 @@ import { VirtualList } from 'asterui/virtuallist'
 
 This is a pnpm monorepo with the following packages:
 
-- `packages/asterui` - The component library (102 components)
+- `packages/asterui` - The component library (103 components)
 - `packages/create-asterui` - Project scaffolding CLI
 - `packages/docs` - Documentation website (asterui.com)
 - `packages/examples` - Example apps for testing components

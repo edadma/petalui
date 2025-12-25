@@ -281,6 +281,7 @@ export default defineConfig({
                     { label: 'Checkbox', slug: 'components/checkbox' },
                     { label: 'ColorPicker', slug: 'components/colorpicker' },
                     { label: 'DatePicker', slug: 'components/datepicker' },
+                    { label: 'DateOfBirth', slug: 'components/dateofbirth' },
                     { label: 'Fieldset', slug: 'components/fieldset' },
                     { label: 'FileInput', slug: 'components/fileinput' },
                     { label: 'Filter', slug: 'components/filter' },

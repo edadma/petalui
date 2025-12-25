@@ -7,6 +7,21 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.71 (2025-12-25)
+
+### Components
+
+- Added `DateOfBirth` component with configurable layouts, year input, and age validation
+- Fixed DatePicker ref handling for reliable click-outside behavior
+
+### Documentation
+
+- Added DateOfBirth docs and Form integration example
+
+### Examples
+
+- Added Date of Birth and onboarding example apps
+
 ## v0.12.70 (2025-12-25)
 
 ### Components

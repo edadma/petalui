@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, forwardRef } from 'react'
+import React, { useState, useRef, useEffect, forwardRef, useCallback } from 'react'
 import { Input } from './Input'
 import { useConfig } from '../providers/ConfigProvider'
 
@@ -144,6 +144,18 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
   const containerRef = useRef<HTMLDivElement>(null)
   const calendarRef = useRef<HTMLDivElement>(null)
   const calendarId = React.useId()
+  const setContainerRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node
+      if (!ref) return
+      if (typeof ref === 'function') {
+        ref(node)
+      } else {
+        ;(ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+      }
+    },
+    [ref]
+  )
 
   useEffect(() => {
     if (value !== undefined) {
@@ -290,7 +302,7 @@ const DatePickerComponent = forwardRef<HTMLDivElement, DatePickerProps>(function
   }
 
   return (
-    <div ref={ref || containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
+    <div ref={setContainerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
       <Input
         value={formatDate(selectedDate, format)}
         placeholder={resolvedPlaceholder}
@@ -477,6 +489,18 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
   const containerRef = useRef<HTMLDivElement>(null)
   const calendarRef = useRef<HTMLDivElement>(null)
   const calendarId = React.useId()
+  const setContainerRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      containerRef.current = node
+      if (!ref) return
+      if (typeof ref === 'function') {
+        ref(node)
+      } else {
+        ;(ref as React.MutableRefObject<HTMLDivElement | null>).current = node
+      }
+    },
+    [ref]
+  )
 
   useEffect(() => {
     if (value !== undefined) {
@@ -633,7 +657,7 @@ const DateRangePicker = forwardRef<HTMLDivElement, DateRangePickerProps>(functio
   const [rangeStart, rangeEnd] = selectedRange
 
   return (
-    <div ref={ref || containerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
+    <div ref={setContainerRef} className={`relative ${className}`} data-state={isOpen ? 'open' : 'closed'} data-testid={testId} {...rest}>
       <Input
         value={formatRange(selectedRange, format)}
         placeholder={resolvedPlaceholder}

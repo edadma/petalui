@@ -73,6 +73,8 @@ export type { CountdownProps } from './components/Countdown'
 
 export { DatePicker } from './components/DatePicker'
 export type { DatePickerProps, DateRangePickerProps, DateRangeValue } from './components/DatePicker'
+export { DateOfBirth } from './components/DateOfBirth'
+export type { DateOfBirthProps, DateOfBirthValue, DateOfBirthOrder, DateOfBirthMonthStyle, DateOfBirthYearStyle } from './components/DateOfBirth'
 
 export { MonthCalendar } from './components/MonthCalendar'
 export type { MonthCalendarProps, CalendarEvent, CalendarLocale } from './components/MonthCalendar'
