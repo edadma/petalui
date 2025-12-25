@@ -1,0 +1,30 @@
+---
+title: Image Cropper
+description: A full image cropping workflow with file upload, aspect controls, preview, and download.
+tableOfContents: false
+---
+
+import { ImageCropperDemo } from '../../../templates/ImageCropperDemo'
+import ImageCropperDemoSource from '../../../templates/ImageCropperDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A ready-to-use cropping workflow that combines AsterUI layout and form components with a lightweight crop selection flow.
+
+<Example title="Image Cropper" description="Upload an image, adjust the crop, preview the result, and download the cropped file." source={ImageCropperDemoSource} fn="ImageCropperDemo">
+  <ImageCropperDemo client:load slot="demo" />
+</Example>
+
+## Features
+
+- **Upload and replace** - Swap the source image without leaving the flow
+- **Aspect presets** - Switch between freeform, square, and wide crops
+- **Live preview** - Review the cropped output as you adjust the selection
+- **Download action** - Save the cropped image as a PNG
+- **Grid layout** - Ready for dashboard or profile settings pages
+
+## Customization Ideas
+
+- Wrap the cropper in a Modal or Drawer for focused editing
+- Add a circular crop preset for avatars
+- Persist crop state in a form or profile API
+- Add size limits and guidance for upload formats
