@@ -465,6 +465,7 @@ export default defineConfig({
             { label: 'Login Form', slug: 'templates/login-form', translations: { es: 'Formulario de Inicio', pt: 'Formulário de Login', 'pt-BR': 'Formulário de Login', zh: '登录表单', 'zh-CN': '登录表单', fr: 'Formulaire de connexion' } },
             { label: 'Signup Form', slug: 'templates/signup-form', translations: { es: 'Formulario de Registro', pt: 'Formulário de Cadastro', 'pt-BR': 'Formulário de Cadastro', zh: '注册表单', 'zh-CN': '注册表单', fr: 'Formulaire d\'inscription' } },
             { label: 'Image Cropper', slug: 'templates/image-cropper', translations: { es: 'Recorte de Imagen', pt: 'Recorte de Imagem', 'pt-BR': 'Recorte de Imagem', zh: '图片裁剪', 'zh-CN': '图片裁剪', fr: 'Recadrage d\'image' } },
+            { label: 'Job Application', slug: 'templates/job-application', translations: { es: 'Solicitud de Empleo', pt: 'Candidatura de Emprego', 'pt-BR': 'Candidatura de Emprego', zh: '求职申请', 'zh-CN': '求职申请', fr: 'Candidature' } },
           ],
         },
       ],

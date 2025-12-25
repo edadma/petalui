@@ -199,8 +199,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         ].filter(Boolean).join(' ')
 
     // Mask handling
-    const innerRef = useRef<HTMLInputElement>(null)
-    const inputRef = (ref as React.RefObject<HTMLInputElement>) || innerRef
+    const inputRef = useRef<HTMLInputElement>(null)
+    const setInputRef = useCallback(
+      (node: HTMLInputElement | null) => {
+        inputRef.current = node
+        if (!ref) return
+        if (typeof ref === 'function') {
+          ref(node)
+        } else {
+          ;(ref as React.MutableRefObject<HTMLInputElement | null>).current = node
+        }
+      },
+      [ref]
+    )
 
     const getInitialRaw = useCallback(() => {
       if (!mask) return ''
@@ -400,7 +411,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     // Build the core input element
     const buildInput = (extraClasses?: string) => (
       <input
-        ref={inputRef}
+        ref={setInputRef}
         type={mask ? 'text' : type}
         className={[
           inputClasses,
@@ -512,7 +523,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       floatingLabel ? (
         // For floating label, use raw input (label wrapper provides styling)
         <input
-          ref={inputRef}
+          ref={setInputRef}
           type={mask ? 'text' : type}
           className={`${dInput} w-full`}
           value={maskedValue ?? (value !== undefined ? value : internalValue)}

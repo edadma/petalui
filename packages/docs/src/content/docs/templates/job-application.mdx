@@ -1,0 +1,29 @@
+---
+title: Job Application
+description: A full multi-step job application form with dynamic work history, education, and references.
+tableOfContents: false
+---
+
+import { JobApplicationDemo } from '../../../templates/JobApplicationDemo'
+import JobApplicationDemoSource from '../../../templates/JobApplicationDemo.tsx?raw'
+import Example from '../../../components/Example.astro'
+
+A complete job application workflow built with Form, Grid, and rich input components.
+
+<Example title="Job Application Form" description="Multi-section application with repeatable work history, education, and references." source={JobApplicationDemoSource} fn="JobApplicationDemo">
+  <JobApplicationDemo client:load slot="demo" />
+</Example>
+
+## Features
+
+- **Repeatable sections** - Add/remove work experience and education entries
+- **Validation** - Required field checks with formatted phone input
+- **Structured layout** - Grid-based layout with consistent spacing
+- **Submission feedback** - Notification with formatted payload
+
+## Customization Ideas
+
+- Add file upload for resumes and cover letters
+- Include conditional sections based on role selection
+- Add autosave or draft persistence with local storage
+- Hook to an API for real submissions

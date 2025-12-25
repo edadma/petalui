@@ -1,5 +1,5 @@
 import React, { createContext, useContext, cloneElement, isValidElement, useId, useEffect, useRef } from 'react'
-import { useForm, UseFormReturn, FieldValues, SubmitHandler, UseFormProps, Controller, useFieldArray, FieldArrayPath, FieldArray, useWatch } from 'react-hook-form'
+import { useForm as rhfUseForm, UseFormReturn, FieldValues, SubmitHandler, UseFormProps, Controller, useFieldArray, FieldArrayPath, FieldArray, useWatch } from 'react-hook-form'
 import { useConfig } from '../providers/ConfigProvider'
 
 // DaisyUI classes
@@ -156,7 +156,7 @@ function FormRoot<TFieldValues extends FieldValues = FieldValues>({
   const { componentSize } = useConfig()
   const effectiveSize = size ?? componentSize ?? 'md'
 
-  const internalForm = useForm<TFieldValues>({
+  const internalForm = rhfUseForm<TFieldValues>({
     defaultValues: initialValues,
   })
 
@@ -681,8 +681,10 @@ function FormList<TFieldValues extends FieldValues = FieldValues>({
 }
 
 // Enhanced hook to expose full form API
-export function useFormInstance<TFieldValues extends FieldValues = FieldValues>() {
-  const formInstance = useForm<TFieldValues>()
+export function useFormInstance<TFieldValues extends FieldValues = FieldValues>(
+  options?: UseFormProps<TFieldValues>
+) {
+  const formInstance = rhfUseForm<TFieldValues>(options)
 
   // Add convenience methods to the instance
   const enhancedInstance = formInstance as typeof formInstance & {
@@ -778,6 +780,10 @@ export const Form = Object.assign(FormRoot, {
   List: FormList,
   ErrorList: FormErrorList,
   useForm: useFormInstance,
+  useWatch,
 })
+
+export const useForm = useFormInstance
+export { useWatch }
 
 export type { UseFormReturn as FormInstance }

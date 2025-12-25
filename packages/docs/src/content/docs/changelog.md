@@ -7,6 +7,19 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.70 (2025-12-25)
+
+### Components
+
+- Added `useForm` and `useWatch` exports to Form and improved useForm options handling
+- Fixed Input mask ref handling for stable cursor behavior
+
+### Documentation
+
+- Added Job Application template and Form.useForm example
+- Updated Input mask demo and docs
+- Removed legacy `site` package
+
 ## v0.12.69 (2025-12-24)
 
 ### Components

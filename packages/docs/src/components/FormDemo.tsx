@@ -193,6 +193,57 @@ export function InitialValuesDemo() {
   )
 }
 
+// @example-imports: { Form, Input, Button, Space, Modal } from 'asterui'
+export function UseFormDemo() {
+  // @example-include
+  const form = Form.useForm<{ name: string; email: string }>()
+
+  const fillSample = () => {
+    form.setFieldsValue({
+      name: 'Aster UI',
+      email: 'hello@asterui.com',
+    })
+  }
+
+  const reset = () => form.resetFields()
+
+  const handleFinish = (values: { name: string; email: string }) => {
+    Modal.info({
+      title: 'Form Submitted',
+      content: <pre className="text-left">{JSON.stringify(values, null, 2)}</pre>,
+    })
+  }
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Form form={form} onFinish={handleFinish}>
+        <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+          <Input className="w-full" placeholder="Jane Doe" />
+        </Form.Item>
+        <Form.Item name="email" label="Email" rules={[{ required: true }, { type: 'email' }]}>
+          <Input className="w-full" placeholder="jane@example.com" />
+        </Form.Item>
+        <Form.Item>
+          <Space>
+            <Button type="button" variant="outline" onClick={fillSample}>
+              Fill Sample
+            </Button>
+            <Button type="button" variant="ghost" onClick={reset}>
+              Reset
+            </Button>
+            <Button color="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Space>
+        </Form.Item>
+      </Form>
+      {/* @example-return-end */}
+    </Demo>
+  )
+}
+
 // @example-imports: { Form, Input, Button } from 'asterui'
 export function FloatingLabelDemo() {
   return (

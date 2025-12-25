@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useForm, useWatch } from 'react-hook-form'
 import {
   Navbar,
   ThemeController,
@@ -8,9 +7,14 @@ import {
   Button,
   Card,
   Checkbox,
+  Code,
+  Container,
+  Flex,
+  notification,
   Space,
   Row,
   Col,
+  Typography,
 } from 'asterui'
 
 interface WorkExperience {
@@ -49,9 +53,8 @@ interface JobApplicationForm {
 }
 
 function App() {
-  const [submittedData, setSubmittedData] = useState<JobApplicationForm | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const form = useForm<JobApplicationForm>({
+  const form = Form.useForm<JobApplicationForm>({
     defaultValues: {
       workExperience: [
         { company: '', position: '', startDate: '', currentlyWorking: false, description: '' },
@@ -65,7 +68,19 @@ function App() {
   const handleSubmit = async (values: JobApplicationForm) => {
     setIsSubmitting(true)
     await new Promise((resolve) => setTimeout(resolve, 1000))
-    setSubmittedData(values)
+    const formatted = JSON.stringify(values, null, 2)
+    notification.info({
+      message: 'Application submitted',
+      description: (
+        <Code className="max-h-60 overflow-auto" copyable={formatted}>
+          {formatted.split('\n').map((line, index) => (
+            <Code.Line key={index} prefix=" ">
+              {line}
+            </Code.Line>
+          ))}
+        </Code>
+      ),
+    })
     setIsSubmitting(false)
   }
 
@@ -73,25 +88,26 @@ function App() {
     <>
       <Navbar
         className="bg-base-100 shadow-lg"
-        start={<a className="text-xl font-bold">Job Application Form</a>}
+        start={<Typography.Text strong className="text-xl">Job Application Form</Typography.Text>}
         end={<ThemeController.Swap />}
       />
 
-      <div className="p-6">
-        <div className="max-w-4xl mx-auto w-full">
-          <Space direction="vertical" size="lg" align="stretch" className="w-full">
-          <div className="text-center">
-            <h1 className="text-5xl font-bold">Job Application</h1>
-            <p className="text-lg mt-4">
+      <Container size="lg" className="py-6">
+        <Space direction="vertical" size="lg" align="stretch" className="w-full">
+          <Space direction="vertical" align="center" className="text-center">
+            <Typography.Title level={1} className="text-5xl">Job Application</Typography.Title>
+            <Typography.Paragraph className="text-lg" align="center">
               Complete this form to apply for a position. All required fields must be filled out.
-            </p>
-          </div>
+            </Typography.Paragraph>
+          </Space>
 
           <Card className="shadow-xl max-w-3xl mx-auto w-full">
             <Form<JobApplicationForm> form={form} onFinish={handleSubmit}>
               {/* Personal Information */}
               <Space direction="vertical">
-                <h2 className="text-2xl font-bold border-b pb-2">Personal Information</h2>
+                <Typography.Title level={3} className="border-b pb-2">
+                  Personal Information
+                </Typography.Title>
 
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
@@ -100,7 +116,7 @@ function App() {
                       label="First Name"
                       rules={{ required: 'First name is required' }}
                     >
-                      <Input placeholder="John" />
+                      <Input className="w-full" placeholder="John" />
                     </Form.Item>
                   </Col>
 
@@ -110,7 +126,7 @@ function App() {
                       label="Last Name"
                       rules={{ required: 'Last name is required' }}
                     >
-                      <Input placeholder="Doe" />
+                      <Input className="w-full" placeholder="Doe" />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -125,7 +141,7 @@ function App() {
                         type: 'email',
                       }}
                     >
-                      <Input type="email" placeholder="john@example.com" />
+                      <Input className="w-full" type="email" placeholder="john@example.com" />
                     </Form.Item>
                   </Col>
 
@@ -133,15 +149,21 @@ function App() {
                     <Form.Item
                       name="phone"
                       label="Phone"
+                      validateTrigger="onBlur"
                       rules={{
                         required: 'Phone is required',
-                        pattern: {
-                          value: /^\+?[\d\s\-()]+$/,
-                          message: 'Invalid phone number',
+                        validate: (value) => {
+                          if (!value) return true
+                          const digits = value.replace(/\D/g, '')
+                          return digits.length >= 11 || 'Phone number is incomplete'
                         },
                       }}
                     >
-                      <Input mask="+# (###) ###-####" placeholder="+1 (555) 123-4567" />
+                      <Input
+                        className="w-full"
+                        mask="+# (###) ###-####"
+                        placeholder="+1 (555) 123-4567"
+                      />
                     </Form.Item>
                   </Col>
                 </Row>
@@ -149,7 +171,9 @@ function App() {
 
               {/* Work Experience */}
               <Space direction="vertical" className="mt-8">
-                <h2 className="text-2xl font-bold border-b pb-2">Work Experience</h2>
+                <Typography.Title level={3} className="border-b pb-2">
+                  Work Experience
+                </Typography.Title>
 
                 <Form.List name="workExperience">
                   {(fields, { add, remove }) => (
@@ -186,7 +210,9 @@ function App() {
 
               {/* Education */}
               <Space direction="vertical" className="mt-8">
-                <h2 className="text-2xl font-bold border-b pb-2">Education</h2>
+                <Typography.Title level={3} className="border-b pb-2">
+                  Education
+                </Typography.Title>
 
                 <Form.List name="education">
                   {(fields, { add, remove }) => (
@@ -197,14 +223,14 @@ function App() {
                           direction="vertical"
                           className="border border-base-300 rounded-lg p-4"
                         >
-                          <div className="flex justify-between items-center">
-                            <h3 className="font-semibold">Education {index + 1}</h3>
+                          <Flex justify="between" align="center">
+                            <Typography.Text strong>Education {index + 1}</Typography.Text>
                             {fields.length > 1 && (
                               <Button size="sm" onClick={() => remove(index)} color="error">
                                 Remove
                               </Button>
                             )}
-                          </div>
+                          </Flex>
 
                           <Row gutter={16}>
                             <Col xs={24} md={12}>
@@ -213,7 +239,7 @@ function App() {
                                 label="School/University"
                                 rules={{ required: 'School is required' }}
                               >
-                                <Input placeholder="University of Example" />
+                                <Input className="w-full" placeholder="University of Example" />
                               </Form.Item>
                             </Col>
 
@@ -223,7 +249,7 @@ function App() {
                                 label="Degree"
                                 rules={{ required: 'Degree is required' }}
                               >
-                                <Input placeholder="Bachelor of Science" />
+                                <Input className="w-full" placeholder="Bachelor of Science" />
                               </Form.Item>
                             </Col>
                           </Row>
@@ -235,7 +261,7 @@ function App() {
                                 label="Field of Study"
                                 rules={{ required: 'Field is required' }}
                               >
-                                <Input placeholder="Computer Science" />
+                                <Input className="w-full" placeholder="Computer Science" />
                               </Form.Item>
                             </Col>
 
@@ -259,7 +285,7 @@ function App() {
                                   },
                                 }}
                               >
-                                <Input placeholder="2020" />
+                                <Input className="w-full" placeholder="2020" />
                               </Form.Item>
                             </Col>
                           </Row>
@@ -281,8 +307,12 @@ function App() {
 
               {/* Skills */}
               <Space direction="vertical" className="mt-8">
-                <h2 className="text-2xl font-bold border-b pb-2">Skills</h2>
-                <p className="text-sm text-base-content/70">Select all that apply</p>
+                <Typography.Title level={3} className="border-b pb-2">
+                  Skills
+                </Typography.Title>
+                <Typography.Text type="secondary" className="text-sm">
+                  Select all that apply
+                </Typography.Text>
 
                 <Row cols={30} gutter={16}>
                   {[
@@ -304,10 +334,10 @@ function App() {
                   ].map((skill) => (
                     <Col key={skill} xs={15} md={6}>
                       <Form.Item name="skills" valuePropName="checked">
-                        <label className="flex items-center gap-2 cursor-pointer">
+                        <Flex align="center" gap="sm" className="cursor-pointer">
                           <Checkbox value={skill} />
-                          <span>{skill}</span>
-                        </label>
+                          <Typography.Text>{skill}</Typography.Text>
+                        </Flex>
                       </Form.Item>
                     </Col>
                   ))}
@@ -316,7 +346,9 @@ function App() {
 
               {/* References */}
               <Space direction="vertical" className="mt-8">
-                <h2 className="text-2xl font-bold border-b pb-2">References (Optional)</h2>
+                <Typography.Title level={3} className="border-b pb-2">
+                  References (Optional)
+                </Typography.Title>
 
                 <Form.List name="references">
                   {(fields, { add, remove }) => (
@@ -327,12 +359,12 @@ function App() {
                           direction="vertical"
                           className="border border-base-300 rounded-lg p-4"
                         >
-                          <div className="flex justify-between items-center">
-                            <h3 className="font-semibold">Reference {index + 1}</h3>
+                          <Flex justify="between" align="center">
+                            <Typography.Text strong>Reference {index + 1}</Typography.Text>
                             <Button size="sm" onClick={() => remove(index)} color="error">
                               Remove
                             </Button>
-                          </div>
+                          </Flex>
 
                           <Row gutter={16}>
                             <Col xs={24} md={12}>
@@ -341,7 +373,7 @@ function App() {
                                 label="Name"
                                 rules={{ required: 'Name is required' }}
                               >
-                                <Input placeholder="Jane Smith" />
+                                <Input className="w-full" placeholder="Jane Smith" />
                               </Form.Item>
                             </Col>
 
@@ -351,7 +383,7 @@ function App() {
                                 label="Company"
                                 rules={{ required: 'Company is required' }}
                               >
-                                <Input placeholder="Example Corp" />
+                                <Input className="w-full" placeholder="Example Corp" />
                               </Form.Item>
                             </Col>
                           </Row>
@@ -363,7 +395,7 @@ function App() {
                                 label="Position"
                                 rules={{ required: 'Position is required' }}
                               >
-                                <Input placeholder="Manager" />
+                                <Input className="w-full" placeholder="Manager" />
                               </Form.Item>
                             </Col>
 
@@ -376,7 +408,7 @@ function App() {
                                   type: 'email',
                                 }}
                               >
-                                <Input type="email" placeholder="jane@example.com" />
+                                <Input className="w-full" type="email" placeholder="jane@example.com" />
                               </Form.Item>
                             </Col>
 
@@ -386,7 +418,7 @@ function App() {
                                 label="Phone"
                                 rules={{ required: 'Phone is required' }}
                               >
-                                <Input placeholder="+1 (555) 987-6543" />
+                                <Input className="w-full" placeholder="+1 (555) 987-6543" />
                               </Form.Item>
                             </Col>
                           </Row>
@@ -406,7 +438,7 @@ function App() {
                 </Form.List>
               </Space>
 
-              <div className="form-control mt-8">
+              <Form.Item className="mt-8">
                 <Button
                   color="primary"
                   htmlType="submit"
@@ -416,41 +448,31 @@ function App() {
                 >
                   {isSubmitting ? 'Submitting...' : 'Submit Application'}
                 </Button>
-              </div>
+              </Form.Item>
             </Form>
           </Card>
-
-          {submittedData && (
-            <Card className="shadow-xl max-w-3xl mx-auto w-full" title="Application Submitted Successfully">
-              <p className="mb-4">Thank you for your application! Here's what you submitted:</p>
-              <pre className="text-sm overflow-auto bg-base-200 p-4 rounded">
-                {JSON.stringify(submittedData, null, 2)}
-              </pre>
-            </Card>
-          )}
-          </Space>
-        </div>
-      </div>
+        </Space>
+      </Container>
     </>
   )
 }
 
 function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
-  const currentlyWorking = useWatch({
+  const currentlyWorking = Form.useWatch({
     control: form.control,
     name: `workExperience.${index}.currentlyWorking`,
   })
 
   return (
     <Space direction="vertical" className="border border-base-300 rounded-lg p-4">
-      <div className="flex justify-between items-center">
-        <h3 className="font-semibold">Work Experience {index + 1}</h3>
+      <Flex justify="between" align="center">
+        <Typography.Text strong>Work Experience {index + 1}</Typography.Text>
         {canRemove && (
           <Button size="sm" onClick={() => remove(index)} color="error">
             Remove
           </Button>
         )}
-      </div>
+      </Flex>
 
       <Row gutter={16}>
         <Col xs={24} md={12}>
@@ -459,7 +481,7 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
             label="Company"
             rules={{ required: 'Company is required' }}
           >
-            <Input placeholder="Example Corp" />
+            <Input className="w-full" placeholder="Example Corp" />
           </Form.Item>
         </Col>
 
@@ -469,7 +491,7 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
             label="Position"
             rules={{ required: 'Position is required' }}
           >
-            <Input placeholder="Software Engineer" />
+            <Input className="w-full" placeholder="Software Engineer" />
           </Form.Item>
         </Col>
       </Row>
@@ -481,7 +503,7 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
             label="Start Date"
             rules={{ required: 'Start date is required' }}
           >
-            <Input type="date" />
+            <Input className="w-full" type="date" />
           </Form.Item>
         </Col>
 
@@ -499,16 +521,16 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
               },
             }}
           >
-            <Input type="date" disabled={currentlyWorking} />
+            <Input className="w-full" type="date" disabled={currentlyWorking} />
           </Form.Item>
         </Col>
 
         <Col xs={24} md={8}>
           <Form.Item name={[field.name, 'currentlyWorking']} valuePropName="checked">
-            <label className="flex items-center gap-2 cursor-pointer mt-8">
+            <Flex align="center" gap="sm" className="mt-8 cursor-pointer">
               <Checkbox />
-              <span>Currently working</span>
-            </label>
+              <Typography.Text>Currently working</Typography.Text>
+            </Flex>
           </Form.Item>
         </Col>
       </Row>
@@ -521,7 +543,7 @@ function WorkExperienceField({ field, index, remove, canRemove, form }: any) {
           min: { value: 20, message: 'Description must be at least 20 characters' },
         }}
       >
-        <Input placeholder="Describe your responsibilities and achievements..." />
+        <Input className="w-full" placeholder="Describe your responsibilities and achievements..." />
       </Form.Item>
     </Space>
   )

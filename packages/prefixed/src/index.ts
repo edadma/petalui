@@ -116,7 +116,7 @@ export type { FloatButtonProps, BackTopProps } from './components/FloatButton'
 export { Footer } from './components/Footer'
 export type { FooterProps, FooterTitleProps } from './components/Footer'
 
-export { Form, useFormInstance } from './components/Form'
+export { Form, useForm, useFormInstance, useWatch } from './components/Form'
 export type { FormProps, FormItemProps, FormRule, FormInstance, FormErrorListProps, ValidateTrigger } from './components/Form'
 
 export { Grid, Row, Col } from './components/Grid'

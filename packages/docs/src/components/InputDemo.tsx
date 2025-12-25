@@ -92,7 +92,7 @@ export function MaskDemo() {
         <Input mask="(###) ###-####" placeholder="Phone number" />
         <Input mask="####-####-####-####" placeholder="Credit card" />
         <Input mask="##/##/####" placeholder="Date (MM/DD/YYYY)" />
-        <Input mask="AA-####" placeholder="License plate" />
+        <Input mask="**-####" placeholder="License plate (AB-1234)" />
       </Space>
       {/* @example-return-end */}
     </Demo>
