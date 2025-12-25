@@ -7,6 +7,12 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.69 (2025-12-24)
+
+### Components
+
+- Updated RichTextEditor toolbar icons to use Heroicons
+
 ## v0.12.68 (2025-12-24)
 
 ### Components
