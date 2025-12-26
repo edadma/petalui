@@ -150,6 +150,7 @@ export default App
 | `code` | Code style | `boolean` | `false` |
 | `mark` | Highlighted text | `boolean` | `false` |
 | `keyboard` | Keyboard style | `boolean` | `false` |
+| `size` | Text size | `'xs' \| 'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl'` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
 | `data-testid` | Test ID for testing | `string` | - |
 
@@ -159,7 +160,7 @@ export default App
 |----------|-------------|------|---------|
 | `copyable` | Enable copy to clipboard | `boolean \| { text?: string }` | `-` |
 | `ellipsis` | Truncate with ellipsis | `boolean \| { rows?: number }` | `-` |
-| `size` | Text size | `'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl'` | `-` |
+| `size` | Text size | `'xs' \| 'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl'` | `-` |
 | `align` | Text alignment | `'left' \| 'center' \| 'right'` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
 | `data-testid` | Test ID for testing | `string` | - |
@@ -169,7 +170,7 @@ export default App
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `href` | Link URL | `string` | `'#'` |
-| `size` | Text size | `'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl'` | `-` |
+| `size` | Text size | `'xs' \| 'sm' \| 'base' \| 'lg' \| 'xl' \| '2xl'` | `-` |
 | `external` | Open in new tab with external icon | `boolean` | `false` |
 | `className` | Additional CSS classes | `string` | `-` |
 | `data-testid` | Test ID for testing | `string` | - |

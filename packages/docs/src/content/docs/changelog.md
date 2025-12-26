@@ -7,6 +7,13 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.74 (2025-12-26)
+
+### Components
+
+- Added closable functionality to Alert component with onClose, closeIcon, and afterClose callbacks
+- Added 'xs' size support to Typography.Text component
+
 ## v0.12.73 (2025-12-25)
 
 ### Documentation

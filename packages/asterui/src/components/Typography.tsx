@@ -7,7 +7,7 @@ const dBtnXs = 'btn-xs'
 const dLink = 'link'
 const dLinkPrimary = 'link-primary'
 
-export type TypographySize = 'sm' | 'base' | 'lg' | 'xl' | '2xl'
+export type TypographySize = 'xs' | 'sm' | 'base' | 'lg' | 'xl' | '2xl'
 export type TitleLevel = 1 | 2 | 3 | 4 | 5
 
 export interface TypographyProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -42,6 +42,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLSpanElement> {
   underline?: boolean
   delete?: boolean
   type?: 'default' | 'secondary' | 'success' | 'warning' | 'error'
+  size?: TypographySize
   copyable?: boolean
   'data-testid'?: string
 }
@@ -94,6 +95,7 @@ function CopyButton({ text, 'data-testid': testId }: { text: string; 'data-testi
 
 function TypographyRoot({ children, size = 'base', className = '', 'data-testid': testId, ...rest }: TypographyProps) {
   const sizeClasses = {
+    xs: 'prose-xs text-xs',
     sm: 'prose-sm text-sm',
     base: 'prose-base text-base',
     lg: 'prose-lg text-lg',
@@ -223,6 +225,7 @@ function Text({
   underline,
   delete: del,
   type = 'default',
+  size,
   copyable,
   className = '',
   'data-testid': testId,
@@ -267,7 +270,18 @@ function Text({
     content = <del className="line-through opacity-70">{content}</del>
   }
 
-  const classes = `group inline ${typeClasses[type]} ${className}`.trim()
+  const classes = [
+    'group',
+    'inline',
+    typeClasses[type],
+    size === 'xs' && 'text-xs',
+    size === 'sm' && 'text-sm',
+    size === 'base' && 'text-base',
+    size === 'lg' && 'text-lg',
+    size === 'xl' && 'text-xl',
+    size === '2xl' && 'text-2xl',
+    className,
+  ].filter(Boolean).join(' ')
 
   return (
     <span className={classes} data-testid={testId} {...rest}>

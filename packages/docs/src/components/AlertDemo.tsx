@@ -1,4 +1,4 @@
-import { Alert, Space, Button } from '@aster-ui/prefixed'
+import { Alert, Space, Button, message } from '@aster-ui/prefixed'
 import { InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon, XCircleIcon } from '@aster-ui/icons-prefixed'
 import { Demo } from './Demo'
 
@@ -126,6 +126,45 @@ export function SoftDemo() {
         <Alert type="success" soft>
           <CheckCircleIcon size="lg" className="shrink-0" />
           <span>Success soft alert</span>
+        </Alert>
+      </Space>
+      {/* @example-return-end */}
+    </Demo>
+  )
+}
+
+// @example-imports: { Alert, Space, message } from 'asterui'
+// @example-imports: { InformationCircleIcon, CheckCircleIcon, ExclamationTriangleIcon } from '@aster-ui/icons'
+export function ClosableDemo() {
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Space direction="vertical" size="sm">
+        <Alert type="info" closable>
+          <InformationCircleIcon size="lg" className="shrink-0" />
+          <span>Closable alert with default close button</span>
+        </Alert>
+
+        <Alert
+          type="success"
+          closable={{
+            onClose: () => message.success('Success alert closed'),
+            afterClose: () => message.info('After close callback executed')
+          }}
+        >
+          <CheckCircleIcon size="lg" className="shrink-0" />
+          <span>Closable with onClose and afterClose callbacks</span>
+        </Alert>
+
+        <Alert
+          type="warning"
+          closable={{
+            closeIcon: <span className="text-lg font-bold">×</span>,
+            onClose: () => message.warning('Custom close icon clicked')
+          }}
+        >
+          <ExclamationTriangleIcon size="lg" className="shrink-0" />
+          <span>Closable with custom close icon</span>
         </Alert>
       </Space>
       {/* @example-return-end */}

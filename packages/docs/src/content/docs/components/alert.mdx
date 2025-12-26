@@ -11,6 +11,7 @@ import {
   OutlineDemo,
   DashDemo,
   SoftDemo,
+  ClosableDemo,
 } from '../../../components/AlertDemo'
 import AlertDemoSource from '../../../components/AlertDemo.tsx?raw'
 import Example from '../../../components/Example.astro'
@@ -51,6 +52,10 @@ import { Alert } from 'asterui'
   <SoftDemo client:load slot="demo" />
 </Example>
 
+<Example title="Closable Alert" description="Alert with close button and callbacks." source={AlertDemoSource} fn="ClosableDemo">
+  <ClosableDemo client:load slot="demo" />
+</Example>
+
 </div>
 
 ## API
@@ -61,6 +66,7 @@ import { Alert } from 'asterui'
 |----------|-------------|------|---------|
 | `children` | Alert content | `ReactNode` | - |
 | `type` | Alert color variant | `'info' \| 'success' \| 'warning' \| 'error'` | - |
+| `closable` | Show close button | `boolean \| { onClose?: () => void; closeIcon?: ReactNode; afterClose?: () => void }` | `false` |
 | `outline` | Outline style | `boolean` | `false` |
 | `dash` | Dash outline style | `boolean` | `false` |
 | `soft` | Soft style | `boolean` | `false` |
