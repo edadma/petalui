@@ -20,7 +20,7 @@ const DAISYUI_THEMES = [
 const THEME_PRESETS = ['light-dark', 'business', 'all']
 
 const ICON_LIBRARIES = [
-  { value: '@aster-ui/icons', label: '@aster-ui/icons', hint: 'Heroicons with size tokens', version: '^0.1.0' },
+  { value: '@aster-ui/icons', label: '@aster-ui/icons', hint: 'Heroicons with size tokens', version: '^0.2.0' },
   { value: '@heroicons/react', label: 'Heroicons', hint: '300+ icons, outline/solid', version: '^2.2.0' },
   { value: 'lucide-react', label: 'Lucide', hint: 'popular, 1400+ icons', version: '^0.500.0' },
   { value: 'react-icons', label: 'React Icons', hint: 'multiple icon sets', version: '^5.4.0' },
@@ -364,7 +364,7 @@ function generatePackageJson(name: string, language: string, optionalDeps: strin
     deps['apexcharts'] = '^5.0.0'
   }
   if (optionalDeps.includes('editor')) {
-    deps[prefixed ? '@aster-ui/icons-prefixed' : '@aster-ui/icons'] = '^0.1.0'
+    deps[prefixed ? '@aster-ui/icons-prefixed' : '@aster-ui/icons'] = '^0.2.0'
     deps['@tiptap/react'] = '^2.0.0'
     deps['@tiptap/starter-kit'] = '^2.0.0'
     deps['@tiptap/extension-link'] = '^2.0.0'
