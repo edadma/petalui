@@ -92,7 +92,7 @@
   },
   "devDependencies": {
     "@aster-ui/icons": "workspace:*",
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-virtual": "^3.13.13",
     "@tiptap/extension-link": "^2.11.5",
     "@tiptap/extension-placeholder": "^2.11.5",
@@ -104,12 +104,12 @@
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.1",
     "apexcharts": "^5.3.6",
-    "daisyui": "^5.5.8",
+    "daisyui": "^5.5.14",
     "qrcode": "^1.5.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-hook-form": "^7.66.1",
-    "tailwindcss": "^4.1.17",
+    "tailwindcss": "^4.1.18",
     "typescript": "^5.6.3",
     "vite": "^7.2.2",
     "vite-plugin-dts": "^4.5.4"

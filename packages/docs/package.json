@@ -32,11 +32,11 @@
     "sharp": "^0.34.2"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.18",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "astro-expressive-code": "^0.41.5",
-    "daisyui": "^5.0.0",
+    "daisyui": "^5.5.14",
     "playwright": "^1.57.0",
     "shiki": "^3.20.0",
     "tailwindcss": "4"

@@ -13,7 +13,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.0.0",
-    "@aster-ui/icons-prefixed": "^0.1.0"
+    "@aster-ui/icons-prefixed": "workspace:*"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
