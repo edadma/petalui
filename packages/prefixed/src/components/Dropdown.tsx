@@ -14,8 +14,9 @@ const dDropdownOpen = 'd-dropdown-open'
 const dDropdownContent = 'd-dropdown-content'
 const dMenu = 'd-menu'
 
-// Types for data-driven items prop
+// Types for data-driven menu prop
 export type DropdownTriggerType = 'click' | 'hover' | 'contextMenu'
+export type DropdownPlacement = 'top' | 'topLeft' | 'topRight' | 'bottom' | 'bottomLeft' | 'bottomRight' | 'left' | 'right'
 
 export interface DropdownMenuItem {
   key: string
@@ -34,9 +35,21 @@ export interface DropdownMenuDivider {
 
 export type DropdownMenuItemType = DropdownMenuItem | DropdownMenuDivider
 
+export interface DropdownMenuConfig {
+  /** Menu items */
+  items: DropdownMenuItemType[]
+  /** Callback when menu item is clicked */
+  onClick?: (info: { key: string; keyPath: string[] }) => void
+}
+
+export interface DropdownMenuProps {
+  children?: React.ReactNode
+  className?: string
+}
+
 interface DropdownContextValue {
-  position?: 'top' | 'bottom' | 'left' | 'right'
-  align?: 'start' | 'center' | 'end'
+  position: 'top' | 'bottom' | 'left' | 'right'
+  align: 'start' | 'center' | 'end'
   menuId: string
   triggerId: string
   isOpen: boolean
@@ -50,6 +63,7 @@ interface DropdownContextValue {
   arrow: boolean
   closeDropdown: () => void
   getTestId: (suffix: string) => string | undefined
+  menuOnClick?: (info: { key: string; keyPath: string[] }) => void
 }
 
 const DropdownContext = createContext<DropdownContextValue | undefined>(undefined)
@@ -65,12 +79,14 @@ function useDropdownContext() {
 export interface DropdownProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
   /** Trigger element and dropdown content (compound pattern) */
   children?: React.ReactNode
-  /** Menu items (data-driven pattern) */
-  items?: DropdownMenuItemType[]
+  /** Menu configuration (data-driven pattern) */
+  menu?: DropdownMenuConfig
   /** Trigger mode(s) for dropdown */
   trigger?: DropdownTriggerType[]
-  position?: 'top' | 'bottom' | 'left' | 'right'
-  align?: 'start' | 'center' | 'end'
+  /** Placement of dropdown menu */
+  placement?: DropdownPlacement
+  /** Whether to adjust dropdown placement automatically when dropdown is off screen */
+  autoAdjustOverflow?: boolean
   /** Controlled open state */
   open?: boolean
   /** Callback when open state changes */
@@ -139,10 +155,10 @@ export interface DropdownDividerProps {
 const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function DropdownRoot(
   {
     children,
-    items,
+    menu,
     trigger = ['hover'],
-    position = 'bottom',
-    align = 'start',
+    placement = 'bottomLeft',
+    autoAdjustOverflow = true,
     open: controlledOpen,
     onOpenChange,
     disabled,
@@ -160,6 +176,23 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
 ) {
   const { componentDisabled } = useConfig()
   const effectiveDisabled = disabled ?? componentDisabled ?? false
+
+  // TODO: Implement autoAdjustOverflow logic to reposition dropdown when it goes off-screen
+  // Currently the prop is accepted but not yet implemented
+
+  // Convert placement to position + align
+  const placementMap: Record<DropdownPlacement, { position: 'top' | 'bottom' | 'left' | 'right'; align: 'start' | 'center' | 'end' }> = {
+    top: { position: 'top', align: 'center' },
+    topLeft: { position: 'top', align: 'start' },
+    topRight: { position: 'top', align: 'end' },
+    bottom: { position: 'bottom', align: 'center' },
+    bottomLeft: { position: 'bottom', align: 'start' },
+    bottomRight: { position: 'bottom', align: 'end' },
+    left: { position: 'left', align: 'start' },
+    right: { position: 'right', align: 'start' },
+  }
+
+  const { position, align } = placementMap[placement]
 
   const menuId = useId()
   const triggerId = useId()
@@ -284,10 +317,10 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
 
   const showArrow = typeof arrow === 'boolean' ? arrow : !!arrow
 
-  // Render items from data-driven prop
+  // Render items from data-driven menu prop
   const renderItems = () => {
-    if (!items) return null
-    return items.map((item, index) => {
+    if (!menu?.items) return null
+    return menu.items.map((item, index) => {
       if ('type' in item && item.type === 'divider') {
         return <DropdownDivider key={item.key || `divider-${index}`} />
       }
@@ -328,8 +361,8 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
     })
   }
 
-  // Determine content - either compound children or items-generated menu
-  const menuContent = items ? (
+  // Determine content - either compound children or menu-generated content
+  const menuContent = menu ? (
     (shouldRender || !destroyOnHidden) && (
       <DropdownMenu>{renderItems()}</DropdownMenu>
     )
@@ -347,8 +380,8 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
   let content: React.ReactNode
   let isAutoTrigger = false
 
-  if (items) {
-    // Data-driven pattern with items prop
+  if (menu) {
+    // Data-driven pattern with menu prop
     const triggerChild = childArray.find(
       (child) => React.isValidElement(child) && child.type === DropdownTrigger
     )
@@ -417,6 +450,7 @@ const DropdownRoot = forwardRef<HTMLDivElement, DropdownProps>(function Dropdown
         arrow: showArrow,
         closeDropdown,
         getTestId,
+        menuOnClick: menu?.onClick,
       }}
     >
       <div
@@ -625,12 +659,16 @@ function DropdownItem({
   className = '',
   _key,
 }: DropdownItemProps) {
-  const { closeDropdown, getTestId } = useDropdownContext()
+  const { closeDropdown, getTestId, menuOnClick } = useDropdownContext()
   const itemClasses = [active && 'active', disabled && 'disabled', className].filter(Boolean).join(' ')
 
   const handleClick = () => {
     if (!disabled) {
       onClick?.()
+      // Call menu.onClick if provided
+      if (menuOnClick && _key) {
+        menuOnClick({ key: _key, keyPath: [_key] })
+      }
       closeDropdown()
     }
   }

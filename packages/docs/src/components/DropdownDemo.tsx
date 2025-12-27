@@ -26,7 +26,7 @@ export function BasicDemo() {
 // @example-imports: { PencilIcon, DocumentDuplicateIcon, TrashIcon } from '@aster-ui/icons'
 export function ItemsPropDemo() {
   // @example-include
-  const items = [
+  const menuItems = [
     { key: 'edit', label: 'Edit', icon: <PencilIcon size="sm" /> },
     { key: 'duplicate', label: 'Duplicate', icon: <DocumentDuplicateIcon size="sm" /> },
     { type: 'divider' as const },
@@ -37,7 +37,7 @@ export function ItemsPropDemo() {
   return (
     <Demo>
       {/* @example-return */}
-      <Dropdown items={items}>
+      <Dropdown menu={{ items: menuItems }}>
         <Dropdown.Trigger>
           <Button color="primary">Data-Driven</Button>
         </Dropdown.Trigger>
@@ -53,7 +53,7 @@ export function PositionDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm" wrap>
-        <Dropdown position="top">
+        <Dropdown placement="top">
           <Dropdown.Trigger>
             <Button>Top</Button>
           </Dropdown.Trigger>
@@ -64,7 +64,7 @@ export function PositionDemo() {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Dropdown position="bottom">
+        <Dropdown placement="bottom">
           <Dropdown.Trigger>
             <Button>Bottom</Button>
           </Dropdown.Trigger>
@@ -75,7 +75,7 @@ export function PositionDemo() {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Dropdown position="left">
+        <Dropdown placement="left">
           <Dropdown.Trigger>
             <Button>Left</Button>
           </Dropdown.Trigger>
@@ -86,7 +86,7 @@ export function PositionDemo() {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Dropdown position="right">
+        <Dropdown placement="right">
           <Dropdown.Trigger>
             <Button>Right</Button>
           </Dropdown.Trigger>
@@ -204,9 +204,9 @@ export function AlignDemo() {
     <Demo>
       {/* @example-return */}
       <Space direction="horizontal" size="sm" wrap>
-        <Dropdown align="start">
+        <Dropdown placement="bottomLeft">
           <Dropdown.Trigger>
-            <Button>Start</Button>
+            <Button>Bottom Left</Button>
           </Dropdown.Trigger>
           <Dropdown.Menu>
             <Dropdown.Item>Option 1</Dropdown.Item>
@@ -214,9 +214,9 @@ export function AlignDemo() {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Dropdown align="center">
+        <Dropdown placement="bottom">
           <Dropdown.Trigger>
-            <Button>Center</Button>
+            <Button>Bottom Center</Button>
           </Dropdown.Trigger>
           <Dropdown.Menu>
             <Dropdown.Item>Option 1</Dropdown.Item>
@@ -224,9 +224,9 @@ export function AlignDemo() {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Dropdown align="end">
+        <Dropdown placement="bottomRight">
           <Dropdown.Trigger>
-            <Button>End</Button>
+            <Button>Bottom Right</Button>
           </Dropdown.Trigger>
           <Dropdown.Menu>
             <Dropdown.Item>Option 1</Dropdown.Item>
@@ -297,7 +297,7 @@ export function SubmenuDemo() {
 // @example-imports: { UserIcon } from '@aster-ui/icons'
 export function CompactButtonDemo() {
   // @example-include
-  const items = [
+  const menuItems = [
     { key: 'profile', label: 'Profile' },
     { key: 'settings', label: 'Settings' },
     { type: 'divider' as const },
@@ -310,7 +310,7 @@ export function CompactButtonDemo() {
       {/* @example-return */}
       <Join>
         <Button color="primary">Actions</Button>
-        <Dropdown items={items} position="bottom" align="end">
+        <Dropdown menu={{ items: menuItems }} placement="bottomRight">
           <Button color="primary" icon={<UserIcon />} />
         </Dropdown>
       </Join>
@@ -327,7 +327,7 @@ export function CompactIconDemo() {
       {/* @example-return */}
       <Join>
         <Button>Save</Button>
-        <Dropdown position="bottom" align="end">
+        <Dropdown placement="bottomRight">
           <Button icon={<EllipsisVerticalIcon />} />
           <Dropdown.Menu>
             <Dropdown.Item>Save and Close</Dropdown.Item>

@@ -37,11 +37,11 @@ import { Dropdown } from 'asterui'
   <BasicDemo client:load slot="demo" />
 </Example>
 
-<Example title="Piloté par les données (prop items)" description="Définir les éléments de menu via la prop items au lieu des composants composés." source={DropdownDemoSource} fn="ItemsPropDemo">
+<Example title="Piloté par les données (prop menu)" description="Définir les éléments de menu via la prop menu au lieu des composants composés." source={DropdownDemoSource} fn="ItemsPropDemo">
   <ItemsPropDemo client:load slot="demo" />
 </Example>
 
-<Example title="Position" description="Le menu déroulant peut être positionné dans différentes directions." source={DropdownDemoSource} fn="PositionDemo">
+<Example title="Placement" description="Le menu déroulant peut être positionné dans différentes directions." source={DropdownDemoSource} fn="PositionDemo">
   <PositionDemo client:load slot="demo" />
 </Example>
 
@@ -90,17 +90,19 @@ import { Dropdown } from 'asterui'
 | Propriété | Description | Type | Défaut |
 |----------|-------------|------|---------|
 | `children` | Élément déclencheur et contenu du menu déroulant (modèle composé) | `React.ReactNode` | - |
-| `items` | Éléments de menu (modèle piloté par les données) | `DropdownMenuItemType[]` | - |
-| `trigger` | Mode(s) de déclenchement du menu déroulant | `('click' \| 'hover' \| 'contextMenu')[]` | `['click']` |
-| `position` | Position du menu déroulant | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
-| `align` | Alignement du menu déroulant | `'start' \| 'center' \| 'end'` | `'start'` |
+| `menu` | Configuration du menu (modèle piloté par les données) | `{ items: DropdownMenuItemType[], onClick?: (info: { key: string; keyPath: string[] }) => void }` | - |
+| `trigger` | Mode(s) de déclenchement du menu déroulant | `('click' \| 'hover' \| 'contextMenu')[]` | `['hover']` |
+| `placement` | Placement du menu déroulant | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'right'` | `'bottomLeft'` |
 | `open` | État d'ouverture contrôlé | `boolean` | - |
 | `onOpenChange` | Rappel lors du changement d'état d'ouverture | `(open: boolean, info?: { source }) => void` | - |
 | `disabled` | Désactiver le menu déroulant | `boolean` | `false` |
 | `arrow` | Afficher la flèche pointant vers le déclencheur | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `autoAdjustOverflow` | Ajuster automatiquement le placement du menu déroulant lorsqu'il est hors de l'écran | `boolean` | `true` |
 | `mouseEnterDelay` | Délai avant l'affichage au survol (secondes) | `number` | `0.15` |
 | `mouseLeaveDelay` | Délai avant le masquage au survol (secondes) | `number` | `0.1` |
 | `destroyOnHidden` | Détruire le menu déroulant lorsque masqué | `boolean` | `false` |
+| `popupRender` | Personnaliser le contenu du popup | `(menu: ReactNode) => ReactNode` | - |
+| `data-testid` | Préfixe d'ID de test pour les éléments enfants | `string` | - |
 | `className` | Classes CSS supplémentaires | `string` | - |
 
 ### `Dropdown.Item`

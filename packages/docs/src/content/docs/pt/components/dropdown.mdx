@@ -37,11 +37,11 @@ import { Dropdown } from 'asterui'
   <BasicDemo client:load slot="demo" />
 </Example>
 
-<Example title="Orientado a Dados (prop items)" description="Defina itens de menu via prop items em vez de componentes compostos." source={DropdownDemoSource} fn="ItemsPropDemo">
+<Example title="Orientado a Dados (prop menu)" description="Defina itens de menu via prop menu em vez de componentes compostos." source={DropdownDemoSource} fn="ItemsPropDemo">
   <ItemsPropDemo client:load slot="demo" />
 </Example>
 
-<Example title="Posição" description="Menu dropdown pode ser posicionado em diferentes direções." source={DropdownDemoSource} fn="PositionDemo">
+<Example title="Posicionamento" description="Menu dropdown pode ser posicionado em diferentes direções." source={DropdownDemoSource} fn="PositionDemo">
   <PositionDemo client:load slot="demo" />
 </Example>
 
@@ -90,17 +90,19 @@ import { Dropdown } from 'asterui'
 | Propriedade | Descrição | Tipo | Padrão |
 |----------|-------------|------|---------|
 | `children` | Elemento acionador e conteúdo dropdown (padrão composto) | `React.ReactNode` | - |
-| `items` | Itens do menu (padrão orientado a dados) | `DropdownMenuItemType[]` | - |
-| `trigger` | Modo(s) de acionamento para dropdown | `('click' \| 'hover' \| 'contextMenu')[]` | `['click']` |
-| `position` | Posição do menu dropdown | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
-| `align` | Alinhamento do menu dropdown | `'start' \| 'center' \| 'end'` | `'start'` |
+| `menu` | Configuração do menu (padrão orientado a dados) | `{ items: DropdownMenuItemType[], onClick?: (info: { key: string; keyPath: string[] }) => void }` | - |
+| `trigger` | Modo(s) de acionamento para dropdown | `('click' \| 'hover' \| 'contextMenu')[]` | `['hover']` |
+| `placement` | Posicionamento do menu dropdown | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'right'` | `'bottomLeft'` |
 | `open` | Estado aberto controlado | `boolean` | - |
 | `onOpenChange` | Callback quando estado aberto muda | `(open: boolean, info?: { source }) => void` | - |
 | `disabled` | Desabilitar o dropdown | `boolean` | `false` |
 | `arrow` | Mostrar seta apontando para o acionador | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `autoAdjustOverflow` | Ajustar automaticamente o posicionamento do dropdown quando estiver fora da tela | `boolean` | `true` |
 | `mouseEnterDelay` | Atraso antes de mostrar ao passar o mouse (segundos) | `number` | `0.15` |
 | `mouseLeaveDelay` | Atraso antes de esconder ao sair o mouse (segundos) | `number` | `0.1` |
 | `destroyOnHidden` | Destruir dropdown quando oculto | `boolean` | `false` |
+| `popupRender` | Personalizar conteúdo do popup | `(menu: ReactNode) => ReactNode` | - |
+| `data-testid` | Prefixo de ID de teste para elementos filhos | `string` | - |
 | `className` | Classes CSS adicionais | `string` | - |
 
 ### `Dropdown.Item`

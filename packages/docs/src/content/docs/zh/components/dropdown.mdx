@@ -37,11 +37,11 @@ import { Dropdown } from 'asterui'
   <BasicDemo client:load slot="demo" />
 </Example>
 
-<Example title="数据驱动（items 属性）" description="通过 items 属性而非组合组件定义菜单项。" source={DropdownDemoSource} fn="ItemsPropDemo">
+<Example title="数据驱动（menu 属性）" description="通过 menu 属性而非组合组件定义菜单项。" source={DropdownDemoSource} fn="ItemsPropDemo">
   <ItemsPropDemo client:load slot="demo" />
 </Example>
 
-<Example title="位置" description="下拉菜单可以定位在不同方向。" source={DropdownDemoSource} fn="PositionDemo">
+<Example title="弹出位置" description="下拉菜单可以定位在不同方向。" source={DropdownDemoSource} fn="PositionDemo">
   <PositionDemo client:load slot="demo" />
 </Example>
 
@@ -90,17 +90,19 @@ import { Dropdown } from 'asterui'
 | 属性 | 描述 | 类型 | 默认值 |
 |----------|-------------|------|---------|
 | `children` | 触发元素和下拉内容（组合模式） | `React.ReactNode` | - |
-| `items` | 菜单项（数据驱动模式） | `DropdownMenuItemType[]` | - |
-| `trigger` | 下拉菜单的触发模式 | `('click' \| 'hover' \| 'contextMenu')[]` | `['click']` |
-| `position` | 下拉菜单位置 | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
-| `align` | 下拉菜单对齐 | `'start' \| 'center' \| 'end'` | `'start'` |
+| `menu` | 菜单配置（数据驱动模式） | `{ items: DropdownMenuItemType[], onClick?: (info: { key: string; keyPath: string[] }) => void }` | - |
+| `trigger` | 下拉菜单的触发模式 | `('click' \| 'hover' \| 'contextMenu')[]` | `['hover']` |
+| `placement` | 下拉菜单弹出位置 | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'right'` | `'bottomLeft'` |
 | `open` | 受控的打开状态 | `boolean` | - |
 | `onOpenChange` | 打开状态改变时的回调 | `(open: boolean, info?: { source }) => void` | - |
 | `disabled` | 禁用下拉菜单 | `boolean` | `false` |
 | `arrow` | 显示指向触发器的箭头 | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `autoAdjustOverflow` | 下拉菜单被遮挡时自动调整位置 | `boolean` | `true` |
 | `mouseEnterDelay` | 悬停显示前的延迟（秒） | `number` | `0.15` |
 | `mouseLeaveDelay` | 鼠标离开隐藏前的延迟（秒） | `number` | `0.1` |
 | `destroyOnHidden` | 隐藏时销毁下拉菜单 | `boolean` | `false` |
+| `popupRender` | 自定义弹出内容 | `(menu: ReactNode) => ReactNode` | - |
+| `data-testid` | 子元素的测试 ID 前缀 | `string` | - |
 | `className` | 额外的 CSS 类名 | `string` | - |
 
 ### `Dropdown.Item`

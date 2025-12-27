@@ -37,11 +37,11 @@ import { Dropdown } from 'asterui'
   <BasicDemo client:load slot="demo" />
 </Example>
 
-<Example title="Data-Driven (items prop)" description="Define menu items via the items prop instead of compound components." source={DropdownDemoSource} fn="ItemsPropDemo">
+<Example title="Data-Driven (menu prop)" description="Define menu items via the menu prop instead of compound components." source={DropdownDemoSource} fn="ItemsPropDemo">
   <ItemsPropDemo client:load slot="demo" />
 </Example>
 
-<Example title="Position" description="Dropdown menu can be positioned in different directions." source={DropdownDemoSource} fn="PositionDemo">
+<Example title="Placement" description="Dropdown menu can be positioned in different directions." source={DropdownDemoSource} fn="PositionDemo">
   <PositionDemo client:load slot="demo" />
 </Example>
 
@@ -90,14 +90,14 @@ import { Dropdown } from 'asterui'
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `children` | Trigger element and dropdown content (compound pattern) | `React.ReactNode` | - |
-| `items` | Menu items (data-driven pattern) | `DropdownMenuItemType[]` | - |
+| `menu` | Menu configuration (data-driven pattern) | `{ items: DropdownMenuItemType[], onClick?: (info: { key: string; keyPath: string[] }) => void }` | - |
 | `trigger` | Trigger mode(s) for dropdown | `('click' \| 'hover' \| 'contextMenu')[]` | `['hover']` |
-| `position` | Dropdown menu position | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
-| `align` | Dropdown menu alignment | `'start' \| 'center' \| 'end'` | `'start'` |
+| `placement` | Placement of dropdown menu | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'right'` | `'bottomLeft'` |
 | `open` | Controlled open state | `boolean` | - |
 | `onOpenChange` | Callback when open state changes | `(open: boolean, info?: { source }) => void` | - |
 | `disabled` | Disable the dropdown | `boolean` | `false` |
 | `arrow` | Show arrow pointing to trigger | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `autoAdjustOverflow` | Whether to adjust dropdown placement automatically when dropdown is off screen | `boolean` | `true` |
 | `mouseEnterDelay` | Delay before showing on hover (seconds) | `number` | `0.15` |
 | `mouseLeaveDelay` | Delay before hiding on mouse leave (seconds) | `number` | `0.1` |
 | `destroyOnHidden` | Destroy dropdown when hidden | `boolean` | `false` |

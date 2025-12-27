@@ -37,11 +37,11 @@ import { Dropdown } from 'asterui'
   <BasicDemo client:load slot="demo" />
 </Example>
 
-<Example title="Basado en Datos (prop items)" description="Define elementos del menú a través de la prop items en lugar de componentes compuestos." source={DropdownDemoSource} fn="ItemsPropDemo">
+<Example title="Basado en Datos (prop menu)" description="Define elementos del menú a través de la prop menu en lugar de componentes compuestos." source={DropdownDemoSource} fn="ItemsPropDemo">
   <ItemsPropDemo client:load slot="demo" />
 </Example>
 
-<Example title="Posición" description="El menú desplegable puede posicionarse en diferentes direcciones." source={DropdownDemoSource} fn="PositionDemo">
+<Example title="Ubicación" description="El menú desplegable puede posicionarse en diferentes direcciones." source={DropdownDemoSource} fn="PositionDemo">
   <PositionDemo client:load slot="demo" />
 </Example>
 
@@ -90,17 +90,19 @@ import { Dropdown } from 'asterui'
 | Propiedad | Descripción | Tipo | Predeterminado |
 |----------|-------------|------|---------|
 | `children` | Elemento activador y contenido del desplegable (patrón compuesto) | `React.ReactNode` | - |
-| `items` | Elementos del menú (patrón basado en datos) | `DropdownMenuItemType[]` | - |
-| `trigger` | Modo(s) de activación para el desplegable | `('click' \| 'hover' \| 'contextMenu')[]` | `['click']` |
-| `position` | Posición del menú desplegable | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
-| `align` | Alineación del menú desplegable | `'start' \| 'center' \| 'end'` | `'start'` |
+| `menu` | Configuración del menú (patrón basado en datos) | `{ items: DropdownMenuItemType[], onClick?: (info: { key: string; keyPath: string[] }) => void }` | - |
+| `trigger` | Modo(s) de activación para el desplegable | `('click' \| 'hover' \| 'contextMenu')[]` | `['hover']` |
+| `placement` | Ubicación del menú desplegable | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'right'` | `'bottomLeft'` |
 | `open` | Estado abierto controlado | `boolean` | - |
 | `onOpenChange` | Callback cuando cambia el estado abierto | `(open: boolean, info?: { source }) => void` | - |
 | `disabled` | Deshabilitar el desplegable | `boolean` | `false` |
 | `arrow` | Mostrar flecha apuntando al activador | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `autoAdjustOverflow` | Ajustar automáticamente la ubicación del desplegable cuando está fuera de la pantalla | `boolean` | `true` |
 | `mouseEnterDelay` | Retraso antes de mostrar al pasar el ratón (segundos) | `number` | `0.15` |
 | `mouseLeaveDelay` | Retraso antes de ocultar al salir el ratón (segundos) | `number` | `0.1` |
 | `destroyOnHidden` | Destruir desplegable cuando esté oculto | `boolean` | `false` |
+| `popupRender` | Personalizar contenido del popup | `(menu: ReactNode) => ReactNode` | - |
+| `data-testid` | Prefijo de ID de prueba para elementos hijos | `string` | - |
 | `className` | Clases CSS adicionales | `string` | - |
 
 ### `Dropdown.Item`

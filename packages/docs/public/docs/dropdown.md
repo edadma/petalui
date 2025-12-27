@@ -2,9 +2,9 @@
 
 **Import:** `import { Dropdown } from 'asterui'`
 
-Supports both compound pattern and data-driven `items` prop.
+Supports both compound pattern and data-driven `menu` prop.
 
-**Simplified API:** When using a Button or any interactive element as the only child (or with `items` prop), you can omit the `Dropdown.Trigger` wrapper. The element will automatically be treated as the trigger.
+**Simplified API:** When using a Button or any interactive element as the only child (or with `menu` prop), you can omit the `Dropdown.Trigger` wrapper. The element will automatically be treated as the trigger.
 
 ## Examples
 
@@ -32,9 +32,9 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Data-Driven (items prop)
+### Data-Driven (menu prop)
 
-Define menu items via the items prop instead of compound components.
+Define menu items via the menu prop instead of compound components.
 
 ```tsx
 import React from 'react'
@@ -43,7 +43,7 @@ import type { DropdownMenuItemType } from 'asterui'
 import { PencilIcon, DocumentDuplicateIcon, TrashIcon } from '@aster-ui/icons'
 
 const App: React.FC = () => {
-  const items: DropdownMenuItemType[] = [
+  const menuItems: DropdownMenuItemType[] = [
     { key: 'edit', label: 'Edit', icon: <PencilIcon size="sm" /> },
     { key: 'duplicate', label: 'Duplicate', icon: <DocumentDuplicateIcon size="sm" /> },
     { type: 'divider' },
@@ -51,7 +51,7 @@ const App: React.FC = () => {
   ]
 
   return (
-    <Dropdown items={items}>
+    <Dropdown menu={{ items: menuItems }}>
       <Dropdown.Trigger>
         <Button color="primary">Data-Driven</Button>
       </Dropdown.Trigger>
@@ -170,7 +170,7 @@ import type { DropdownMenuItemType } from 'asterui'
 import { UserIcon } from '@aster-ui/icons'
 
 const App: React.FC = () => {
-  const items: DropdownMenuItemType[] = [
+  const menuItems: DropdownMenuItemType[] = [
     { key: 'profile', label: 'Profile' },
     { key: 'settings', label: 'Settings' },
     { type: 'divider' },
@@ -180,7 +180,7 @@ const App: React.FC = () => {
   return (
     <Join>
       <Button color="primary">Actions</Button>
-      <Dropdown items={items} position="bottom" align="end">
+      <Dropdown menu={{ items: menuItems }} placement="bottomRight">
         <Button color="primary" icon={<UserIcon />} />
       </Dropdown>
     </Join>
@@ -202,7 +202,7 @@ import { EllipsisVerticalIcon } from '@aster-ui/icons'
 const App: React.FC = () => (
   <Join>
     <Button>Save</Button>
-    <Dropdown position="bottom" align="end">
+    <Dropdown placement="bottomRight">
       <Button icon={<EllipsisVerticalIcon />} />
       <Dropdown.Menu>
         <Dropdown.Item>Save and Close</Dropdown.Item>
@@ -217,7 +217,7 @@ const App: React.FC = () => (
 export default App
 ```
 
-### Position
+### Placement
 
 Dropdown menu can be positioned in different directions.
 
@@ -227,7 +227,7 @@ import { Dropdown, Button, Space } from 'asterui'
 
 const App: React.FC = () => (
   <Space direction="horizontal" size="sm" wrap>
-    <Dropdown position="top">
+    <Dropdown placement="top">
       <Dropdown.Trigger>
         <Button>Top</Button>
       </Dropdown.Trigger>
@@ -237,7 +237,7 @@ const App: React.FC = () => (
       </Dropdown.Menu>
     </Dropdown>
 
-    <Dropdown position="bottom">
+    <Dropdown placement="bottom">
       <Dropdown.Trigger>
         <Button>Bottom</Button>
       </Dropdown.Trigger>
@@ -311,20 +311,27 @@ export default App
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
 | `children` | Trigger element and dropdown content (compound pattern) | `React.ReactNode` | - |
-| `items` | Menu items (data-driven pattern) | `DropdownMenuItemType[]` | - |
+| `menu` | Menu configuration (data-driven pattern) | `DropdownMenuConfig` | - |
 | `trigger` | Trigger mode(s) for dropdown | `('click' \| 'hover' \| 'contextMenu')[]` | `['hover']` |
-| `position` | Dropdown menu position | `'top' \| 'bottom' \| 'left' \| 'right'` | `'bottom'` |
-| `align` | Dropdown menu alignment | `'start' \| 'center' \| 'end'` | `'start'` |
+| `placement` | Placement of dropdown menu | `'top' \| 'topLeft' \| 'topRight' \| 'bottom' \| 'bottomLeft' \| 'bottomRight' \| 'left' \| 'right'` | `'bottomLeft'` |
 | `open` | Controlled open state | `boolean` | - |
 | `onOpenChange` | Callback when open state changes | `(open: boolean, info?: { source }) => void` | - |
 | `disabled` | Disable the dropdown | `boolean` | `false` |
 | `arrow` | Show arrow pointing to trigger | `boolean \| { pointAtCenter?: boolean }` | `false` |
+| `autoAdjustOverflow` | Whether to adjust dropdown placement automatically when dropdown is off screen | `boolean` | `true` |
 | `mouseEnterDelay` | Delay before showing on hover (seconds) | `number` | `0.15` |
 | `mouseLeaveDelay` | Delay before hiding on mouse leave (seconds) | `number` | `0.1` |
 | `destroyOnHidden` | Destroy dropdown when hidden | `boolean` | `false` |
 | `popupRender` | Customize popup content | `(menu: ReactNode) => ReactNode` | - |
 | `data-testid` | Test ID prefix for child elements | `string` | - |
 | `className` | Additional CSS classes | `string` | - |
+
+### DropdownMenuConfig
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `items` | Menu items array | `DropdownMenuItemType[]` | - |
+| `onClick` | Click handler for menu items | `(info: { key: string; keyPath: string[] }) => void` | - |
 
 ### Dropdown.Item
 
@@ -350,7 +357,7 @@ export default App
 | `icon` | Icon to display before title | `React.ReactNode` | - |
 | `disabled` | Disable the submenu | `boolean` | `false` |
 
-### DropdownMenuItem (for items prop)
+### DropdownMenuItemType (for menu.items)
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
