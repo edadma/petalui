@@ -7,6 +7,7 @@ tableOfContents: false
 import {
   BasicDemo,
   DefaultValueDemo,
+  OptionsDemo,
   SizesDemo,
   ColorsDemo,
   GhostDemo,
@@ -34,6 +35,10 @@ import { Select } from 'asterui'
 
 <Example title="With Default Value" description="Select with pre-selected option." source={SelectDemoSource} fn="DefaultValueDemo">
   <DefaultValueDemo client:load slot="demo" />
+</Example>
+
+<Example title="Options Array" description="Use options prop for better performance." source={SelectDemoSource} fn="OptionsDemo">
+  <OptionsDemo client:load slot="demo" />
 </Example>
 
 <Example title="Sizes" description="Five sizes: xs, sm, md, lg, and xl." source={SelectDemoSource} fn="SizesDemo">
@@ -64,6 +69,7 @@ import { Select } from 'asterui'
 
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `options` | Select options array (recommended for better performance) | `SelectOption[]` | - |
 | `size` | Select size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | - |
 | `color` | Select color theme | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | - |
 | `ghost` | Ghost style variant | `boolean` | `false` |
@@ -72,6 +78,14 @@ import { Select } from 'asterui'
 | `className` | Additional CSS classes | `string` | - |
 | `children` | Option elements | `React.ReactNode` | - |
 | `data-testid` | Test ID for testing | `string` | - |
+
+### `SelectOption`
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `label` | Display label for the option | `React.ReactNode` | - |
+| `value` | Value of the option | `string \| number` | - |
+| `disabled` | Whether option is disabled | `boolean` | `false` |
 
 ## Accessibility
 

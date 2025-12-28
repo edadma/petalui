@@ -20,6 +20,12 @@ const dSelectWarning = 'd-select-warning'
 const dSelectError = 'd-select-error'
 const dFloatingLabel = 'd-floating-label'
 
+export interface SelectOption {
+  label: React.ReactNode
+  value: string | number
+  disabled?: boolean
+}
+
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'neutral' | 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
@@ -33,6 +39,8 @@ export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectE
   addonBefore?: React.ReactNode
   /** Text/element after select (outside, using DaisyUI label) */
   addonAfter?: React.ReactNode
+  /** Select options array (recommended for better performance) */
+  options?: SelectOption[]
   className?: string
   children?: React.ReactNode
   'data-testid'?: string
@@ -49,6 +57,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
       floatingLabel,
       addonBefore,
       addonAfter,
+      options,
       className = '',
       children,
       'data-testid': testId,
@@ -58,6 +67,18 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ) => {
     const { componentSize } = useConfig()
     const effectiveSize = size ?? componentSize ?? 'md'
+
+    // Render options from array or use children
+    const renderOptions = () => {
+      if (options) {
+        return options.map((option) => (
+          <option key={option.value} value={option.value} disabled={option.disabled}>
+            {option.label}
+          </option>
+        ))
+      }
+      return children
+    }
 
     const innerRef = useRef<HTMLSelectElement>(null)
     const selectRef = (ref as React.RefObject<HTMLSelectElement>) || innerRef
@@ -110,7 +131,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     // Build the core select element
     const selectElement = (
       <select ref={selectRef} className={selectClasses} data-testid={selectTestId} {...props}>
-        {children}
+        {renderOptions()}
       </select>
     )
 
@@ -129,7 +150,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             data-testid={selectTestId}
             {...props}
           >
-            {children}
+            {renderOptions()}
           </select>
           <span>{floatingLabel}</span>
         </label>

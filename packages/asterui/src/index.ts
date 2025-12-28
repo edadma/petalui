@@ -247,7 +247,7 @@ export { Result } from './components/Result'
 export type { ResultProps, ResultStatus } from './components/Result'
 
 export { Select } from './components/Select'
-export type { SelectProps } from './components/Select'
+export type { SelectProps, SelectOption } from './components/Select'
 
 export { Segmented } from './components/Segmented'
 export type { SegmentedProps, SegmentedItemProps, SegmentedValue } from './components/Segmented'

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Select, Space, Form, Button } from '@aster-ui/prefixed';
+import type { SelectOption } from '@aster-ui/prefixed';
 import { Demo } from './Demo';
 
 // @example-imports: { Select } from 'asterui'
@@ -32,6 +33,27 @@ export function DefaultValueDemo() {
         <option value="banana">Banana</option>
         <option value="grape">Grape</option>
       </Select>
+      {/* @example-return-end */}
+    </Demo>
+  );
+}
+
+// @example-imports: { Select, SelectOption } from 'asterui'
+export function OptionsDemo() {
+  // @example-include
+  const options: SelectOption[] = [
+    { label: 'Apple', value: 'apple' },
+    { label: 'Orange', value: 'orange' },
+    { label: 'Banana', value: 'banana' },
+    { label: 'Grape', value: 'grape' },
+    { label: 'Mango (disabled)', value: 'mango', disabled: true },
+  ];
+  // @example-include-end
+
+  return (
+    <Demo>
+      {/* @example-return */}
+      <Select options={options} defaultValue="orange" />
       {/* @example-return-end */}
     </Demo>
   );

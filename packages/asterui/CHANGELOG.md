@@ -7,6 +7,19 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.78 (2025-12-28)
+
+### Components
+
+- **Select**: Added `options` prop for array-based options with better performance
+- **Select**: Added `SelectOption` interface with `label`, `value`, and `disabled` properties
+
+### Documentation
+
+- Added "Options Array" example to Select documentation
+- Updated Select API documentation to include `options` prop and `SelectOption` interface
+- Updated AI-readable Select documentation
+
 ## v0.12.77 (2025-12-28)
 
 ### Components

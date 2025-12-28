@@ -43,6 +43,29 @@ const App: React.FC = () => (
 export default App
 ```
 
+### Options Array
+
+Use the `options` prop for better performance compared to JSX children.
+
+```tsx
+import React from 'react'
+import { Select, SelectOption } from 'asterui'
+
+const App: React.FC = () => {
+  const options: SelectOption[] = [
+    { label: 'Apple', value: 'apple' },
+    { label: 'Orange', value: 'orange' },
+    { label: 'Banana', value: 'banana' },
+    { label: 'Grape', value: 'grape' },
+    { label: 'Mango (disabled)', value: 'mango', disabled: true },
+  ]
+
+  return <Select options={options} defaultValue="orange" />
+}
+
+export default App
+```
+
 ### Sizes
 
 ```tsx
@@ -275,8 +298,11 @@ export default App
 
 ## API
 
+### Select
+
 | Property | Description | Type | Default |
 |----------|-------------|------|---------|
+| `options` | Select options array (recommended for better performance) | `SelectOption[]` | `-` |
 | `size` | Select size | `'xs' \| 'sm' \| 'md' \| 'lg' \| 'xl'` | `-` |
 | `color` | Select color variant | `'neutral' \| 'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
 | `status` | Validation status (takes precedence over color) | `'error' \| 'warning'` | `-` |
@@ -291,3 +317,11 @@ export default App
 | `onChange` | Change event handler | `(e: React.ChangeEvent<HTMLSelectElement>) => void` | `-` |
 | `className` | Additional CSS classes | `string` | `-` |
 | `data-testid` | Test ID for testing | `string` | - |
+
+### SelectOption
+
+| Property | Description | Type | Default |
+|----------|-------------|------|---------|
+| `label` | Display label for the option | `React.ReactNode` | `-` |
+| `value` | Value of the option | `string \| number` | `-` |
+| `disabled` | Whether option is disabled | `boolean` | `false` |
