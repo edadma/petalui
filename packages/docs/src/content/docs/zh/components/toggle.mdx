@@ -61,7 +61,7 @@ import { Toggle } from 'asterui'
 |----------|-------------|------|---------|
 | `checked` | 受控勾选状态 | `boolean` | `-` |
 | `defaultChecked` | 默认勾选状态(非受控) | `boolean` | `false` |
-| `onChange` | 开关状态更改时的回调 | `(e: ChangeEvent) => void` | `-` |
+| `onChange` | 开关状态更改时的回调 | `(checked: boolean, event: ChangeEvent<HTMLInputElement>) => void` | `-` |
 | `size` | 开关大小 | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
 | `color` | 开关颜色 | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
 | `disabled` | 禁用开关 | `boolean` | `false` |

@@ -7,6 +7,18 @@ description: All notable changes to AsterUI
 
 All notable changes to AsterUI are documented here.
 
+## v0.12.77 (2025-12-28)
+
+### Components
+
+- **Toggle**: Updated `onChange` prop signature to `(checked: boolean, event: ChangeEvent<HTMLInputElement>) => void` for better developer experience (checked state as first parameter)
+
+### Documentation
+
+- Updated Toggle documentation across all 5 languages (English, French, Chinese, Spanish, Portuguese)
+- Updated Toggle controlled example to demonstrate new onChange API
+- Updated AI-readable Toggle documentation
+
 ## v0.12.76 (2025-12-27)
 
 ### Components

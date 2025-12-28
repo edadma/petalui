@@ -61,7 +61,7 @@ import { Toggle } from 'asterui'
 |----------|-------------|------|---------|
 | `checked` | État coché contrôlé | `boolean` | `-` |
 | `defaultChecked` | État coché par défaut (non contrôlé) | `boolean` | `false` |
-| `onChange` | Callback lorsque l'état de l'interrupteur change | `(e: ChangeEvent) => void` | `-` |
+| `onChange` | Callback lorsque l'état de l'interrupteur change | `(checked: boolean, event: ChangeEvent<HTMLInputElement>) => void` | `-` |
 | `size` | Taille de l'interrupteur | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
 | `color` | Couleur de l'interrupteur | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
 | `disabled` | Désactiver l'interrupteur | `boolean` | `false` |

@@ -17,12 +17,14 @@ const dToggleWarning = 'toggle-warning'
 const dToggleInfo = 'toggle-info'
 const dToggleError = 'toggle-error'
 
-export interface ToggleProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
+export interface ToggleProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type' | 'onChange'> {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
   color?: 'primary' | 'secondary' | 'accent' | 'neutral' | 'success' | 'warning' | 'info' | 'error'
   className?: string
   /** Test ID for testing */
   'data-testid'?: string
+  /** Callback fired when the checked state changes */
+  onChange?: (checked: boolean, event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
@@ -31,6 +33,7 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
       size,
       color,
       className = '',
+      onChange,
       ...props
     },
     ref
@@ -66,8 +69,12 @@ export const Toggle = forwardRef<HTMLInputElement, ToggleProps>(
       .filter(Boolean)
       .join(' ')
 
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange?.(event.target.checked, event)
+    }
+
     const dataState = props.checked ? 'checked' : 'unchecked'
-    return <input ref={ref} type="checkbox" className={toggleClasses} data-state={dataState} {...props} />
+    return <input ref={ref} type="checkbox" className={toggleClasses} data-state={dataState} {...props} onChange={handleChange} />
   }
 )
 

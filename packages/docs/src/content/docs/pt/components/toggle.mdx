@@ -61,7 +61,7 @@ import { Toggle } from 'asterui'
 |----------|-------------|------|---------|
 | `checked` | Estado marcado controlado | `boolean` | `-` |
 | `defaultChecked` | Estado marcado padrão (não controlado) | `boolean` | `false` |
-| `onChange` | Callback quando estado do toggle muda | `(e: ChangeEvent) => void` | `-` |
+| `onChange` | Callback quando estado do toggle muda | `(checked: boolean, event: ChangeEvent<HTMLInputElement>) => void` | `-` |
 | `size` | Tamanho do toggle | `'xs' \| 'sm' \| 'md' \| 'lg'` | `'md'` |
 | `color` | Cor do toggle | `'primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error'` | `-` |
 | `disabled` | Desabilitar o toggle | `boolean` | `false` |

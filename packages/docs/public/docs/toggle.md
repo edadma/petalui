@@ -71,7 +71,7 @@ const App: React.FC = () => {
     <div className="flex items-center gap-4">
       <Toggle
         checked={checked}
-        onChange={(e) => setChecked(e.target.checked)}
+        onChange={(checked) => setChecked(checked)}
         color="primary"
       />
       <span>Toggle is {checked ? 'ON' : 'OFF'}</span>
@@ -131,7 +131,7 @@ export default App
 |----------|-------------|------|---------|
 | `checked` | Controlled checked state | `boolean` | `-` |
 | `defaultChecked` | Default checked state (uncontrolled) | `boolean` | `false` |
-| `onChange` | Callback when toggle state changes | `(e: ChangeEvent) => void` | `-` |
+| `onChange` | Callback when toggle state changes | `(checked: boolean, event: ChangeEvent<HTMLInputElement>) => void` | `-` |
 | `size` | Toggle size | `xs' \| 'sm' \| 'md' \| 'lg` | `md` |
 | `color` | Toggle color | `primary' \| 'secondary' \| 'accent' \| 'info' \| 'success' \| 'warning' \| 'error` | `-` |
 | `disabled` | Disable the toggle | `boolean` | `false` |

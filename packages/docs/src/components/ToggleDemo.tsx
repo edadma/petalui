@@ -73,7 +73,7 @@ export function ControlledDemo() {
     <Demo>
       {/* @example-return */}
       <div className="flex items-center gap-4">
-        <Toggle checked={checked} onChange={(e) => setChecked(e.target.checked)} color="primary" />
+        <Toggle checked={checked} onChange={(checked) => setChecked(checked)} color="primary" />
         <span>Toggle is {checked ? 'ON' : 'OFF'}</span>
       </div>
       {/* @example-return-end */}
