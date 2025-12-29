@@ -9,10 +9,6 @@ All notable changes to AsterUI are documented here.
 
 ## v0.12.79 (2025-12-28)
 
-### Bug Fixes
-
-- **Form.Item**: Fixed spacing issue where bottom margin (`mb-4`) was only applied to horizontal layouts. Now applies to all layouts except inline, ensuring proper spacing between form fields.
-
 ### Internal
 
 - **DateOfBirth**: Removed unused `validateAge` function (validation now handled through `DateOfBirth.required()`)
