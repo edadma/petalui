@@ -620,7 +620,7 @@ function FormItem({
         }
 
         return (
-          <div className={`${inline ? 'w-auto' : 'w-full'} ${isHorizontal ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined} data-testid={testId}>
+          <div className={`${inline ? 'w-auto' : 'w-full'} ${!isInline ? 'mb-4' : ''} ${isInline ? 'inline-flex mr-4' : ''} ${className}`} style={hidden ? { display: 'none' } : undefined} data-testid={testId}>
             <div className={isHorizontal ? 'flex items-center gap-4' : ''}>
               {label && !floatingLabel && (
                 <label

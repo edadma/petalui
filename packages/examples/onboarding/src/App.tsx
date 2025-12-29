@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Button,
   Card,
   Checkbox,
   Container,
+  DateOfBirth,
   Descriptions,
   Divider,
   Flex,
   Form,
   Input,
-  InputNumber,
   Modal,
   Progress,
   Radio,
@@ -21,6 +21,7 @@ import {
   ThemeController,
   Typography,
   Upload,
+  type DateOfBirthValue,
   type UploadFile,
 } from 'asterui'
 
@@ -30,9 +31,7 @@ interface OnboardingForm {
   password: string
   confirmPassword: string
   avatar?: UploadFile[]
-  dobMonth?: string
-  dobDay?: string
-  dobYear?: number
+  dob?: DateOfBirthValue
   phone?: string
   country?: string
   timeZone?: string
@@ -59,31 +58,36 @@ const STEP_ITEMS = [
 
 const STEP_FIELDS: Array<Array<keyof OnboardingForm>> = [
   ['fullName', 'email', 'password', 'confirmPassword'],
-  ['dobMonth', 'dobDay', 'dobYear', 'country', 'timeZone'],
+  ['dob', 'country', 'timeZone'],
   ['notifications', 'language', 'theme', 'frequency'],
   ['experienceLevel', 'industry', 'industryOther'],
   ['terms'],
 ]
 
-const COUNTRIES = ['United States', 'Canada', 'United Kingdom', 'Germany', 'Japan', 'Brazil', 'Australia']
-const TIMEZONES = ['UTC', 'America/New_York', 'America/Los_Angeles', 'Europe/London', 'Europe/Berlin', 'Asia/Tokyo']
-const LANGUAGES = ['English', 'Spanish', 'French', 'German', 'Portuguese', 'Japanese']
-const MONTHS = [
-  { value: '1', label: 'January' },
-  { value: '2', label: 'February' },
-  { value: '3', label: 'March' },
-  { value: '4', label: 'April' },
-  { value: '5', label: 'May' },
-  { value: '6', label: 'June' },
-  { value: '7', label: 'July' },
-  { value: '8', label: 'August' },
-  { value: '9', label: 'September' },
-  { value: '10', label: 'October' },
-  { value: '11', label: 'November' },
-  { value: '12', label: 'December' },
+const COUNTRIES = [
+  'United States',
+  'Canada',
+  'United Kingdom',
+  'Germany',
+  'Japan',
+  'Brazil',
+  'Australia',
 ]
+const TIMEZONES = [
+  'UTC',
+  'America/New_York',
+  'America/Los_Angeles',
+  'Europe/London',
+  'Europe/Berlin',
+  'Asia/Tokyo',
+]
+const LANGUAGES = ['English', 'Spanish', 'French', 'German', 'Portuguese', 'Japanese']
 
-function getPasswordStrength(password: string): { score: number; label: string; type: 'error' | 'warning' | 'info' | 'success' } {
+function getPasswordStrength(password: string): {
+  score: number
+  label: string
+  type: 'error' | 'warning' | 'info' | 'success'
+} {
   const hasMinLength = password.length >= 8
   const hasUppercase = /[A-Z]/.test(password)
   const hasLowercase = /[a-z]/.test(password)
@@ -121,34 +125,12 @@ function App() {
     },
   })
 
-  const [currentStep, setCurrentStep] = useState(0)
-  const [maxStep, setMaxStep] = useState(0)
+  const [currentStep, setCurrentStep] = useState(3)
+  const [maxStep, setMaxStep] = useState(3)
   const [avatarList, setAvatarList] = useState<UploadFile[]>([])
   const password = Form.useWatch({ control: form.control, name: 'password' }) || ''
   const industry = Form.useWatch({ control: form.control, name: 'industry' })
-  const dobMonth = Form.useWatch({ control: form.control, name: 'dobMonth' })
-  const dobYear = Form.useWatch({ control: form.control, name: 'dobYear' })
-  const dobDay = Form.useWatch({ control: form.control, name: 'dobDay' })
   const formValues = Form.useWatch({ control: form.control }) as OnboardingForm
-
-  const dayOptions = useMemo(() => {
-    if (!dobMonth || !dobYear) return Array.from({ length: 31 }, (_, i) => `${i + 1}`)
-    const month = Number(dobMonth)
-    const year = Number(dobYear)
-    const daysInMonth = new Date(year, month, 0).getDate()
-    return Array.from({ length: daysInMonth }, (_, i) => `${i + 1}`)
-  }, [dobMonth, dobYear])
-
-  const yearRange = useMemo(() => {
-    const currentYear = new Date().getFullYear()
-    return Array.from({ length: 100 }, (_, i) => currentYear - i)
-  }, [])
-
-  useEffect(() => {
-    if (dobDay && !dayOptions.includes(dobDay)) {
-      form.setFieldValue('dobDay', undefined)
-    }
-  }, [dobDay, dayOptions, form])
 
   const progressValue = Math.round(((currentStep + 1) / STEP_ITEMS.length) * 100)
   const strength = useMemo(() => getPasswordStrength(password), [password])
@@ -188,7 +170,9 @@ function App() {
       <Container size="lg" className="py-10">
         <Flex justify="between" align="center" className="mb-6">
           <div>
-            <Typography.Title level={2} className="mb-1">Multi-Step Onboarding</Typography.Title>
+            <Typography.Title level={2} className="mb-1">
+              Multi-Step Onboarding
+            </Typography.Title>
             <Typography.Text type="secondary">
               Guide new users through a focused, validated setup flow.
             </Typography.Text>
@@ -198,11 +182,7 @@ function App() {
 
         <Card className="shadow-xl">
           <Space direction="vertical" size="lg" className="w-full">
-            <Steps
-              current={currentStep}
-              items={STEP_ITEMS}
-              onChange={goToStep}
-            />
+            <Steps current={currentStep} items={STEP_ITEMS} onChange={goToStep} />
             <Progress value={progressValue} max={100} type="primary" />
 
             <Form form={form} onFinish={handleSubmit}>
@@ -285,8 +265,8 @@ function App() {
               {currentStep === 1 && (
                 <Space direction="vertical" size="lg">
                   <Typography.Title level={4}>Personal Information</Typography.Title>
-                  <Row gutter={16}>
-                    <Col xs={24} md={8}>
+                  <Row>
+                    <Col xs={24} md={4}>
                       <Form.Item name="avatar" label="Profile Photo">
                         <Upload
                           listType="picture-card"
@@ -306,68 +286,14 @@ function App() {
                         </Typography.Text>
                       )}
                     </Col>
-                    <Col xs={24} md={16}>
+                    <Col xs={24} md={20}>
                       <Row gutter={16}>
-                        <Col xs={24} md={12}>
-                          <Form.Item label="Date of Birth" required>
-                            <Row gutter={12}>
-                              <Col xs={24} md={8}>
-                                <Form.Item
-                                  name="dobMonth"
-                                  rules={{ required: 'Month is required' }}
-                                >
-                                  <Select>
-                                    <option value="">Month</option>
-                                    {MONTHS.map((month) => (
-                                      <option key={month.value} value={month.value}>
-                                        {month.label}
-                                      </option>
-                                    ))}
-                                  </Select>
-                                </Form.Item>
-                              </Col>
-                              <Col xs={12} md={6}>
-                                <Form.Item
-                                  name="dobDay"
-                                  rules={{ required: 'Day is required' }}
-                                >
-                                  <Select>
-                                    <option value="">Day</option>
-                                    {dayOptions.map((day) => (
-                                      <option key={day} value={day}>{day}</option>
-                                    ))}
-                                  </Select>
-                                </Form.Item>
-                              </Col>
-                              <Col xs={12} md={10}>
-                                <Form.Item
-                                  name="dobYear"
-                                  rules={{
-                                    required: 'Year is required',
-                                    validate: (value) => {
-                                      if (!value || !dobMonth || !dobDay) return true
-                                      const year = Number(value)
-                                      const month = Number(dobMonth) - 1
-                                      const day = Number(dobDay)
-                                      const birthDate = new Date(year, month, day)
-                                      if (Number.isNaN(birthDate.getTime())) return 'Enter a valid date'
-                                      const today = new Date()
-                                      let age = today.getFullYear() - birthDate.getFullYear()
-                                      const hasHadBirthday =
-                                        today.getMonth() > birthDate.getMonth() ||
-                                        (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate())
-                                      if (!hasHadBirthday) age -= 1
-                                      return age >= 13 || 'You must be at least 13 years old'
-                                    },
-                                  }}
-                                >
-                                  <InputNumber className="w-full" min={yearRange[yearRange.length - 1]} max={yearRange[0]} placeholder="Year" />
-                                </Form.Item>
-                              </Col>
-                            </Row>
+                        <Col xs={24} md={15}>
+                          <Form.Item name="dob" label="Date of Birth" {...DateOfBirth.required()}>
+                            <DateOfBirth minAge={13} />
                           </Form.Item>
                         </Col>
-                        <Col xs={24} md={12}>
+                        <Col xs={24} md={9}>
                           <Form.Item name="phone" label="Phone (optional)">
                             <Input
                               className="w-full"
@@ -377,8 +303,8 @@ function App() {
                           </Form.Item>
                         </Col>
                       </Row>
-                      <Row gutter={16}>
-                        <Col xs={24} md={12}>
+                      <Row gutter={16} className="mt-4">
+                        <Col xs={24} md={15}>
                           <Form.Item
                             name="country"
                             label="Country/Region"
@@ -387,12 +313,14 @@ function App() {
                             <Select>
                               <option value="">Select country</option>
                               {COUNTRIES.map((country) => (
-                                <option key={country} value={country}>{country}</option>
+                                <option key={country} value={country}>
+                                  {country}
+                                </option>
                               ))}
                             </Select>
                           </Form.Item>
                         </Col>
-                        <Col xs={24} md={12}>
+                        <Col xs={24} md={9}>
                           <Form.Item
                             name="timeZone"
                             label="Time Zone"
@@ -401,7 +329,9 @@ function App() {
                             <Select>
                               <option value="">Select time zone</option>
                               {TIMEZONES.map((tz) => (
-                                <option key={tz} value={tz}>{tz}</option>
+                                <option key={tz} value={tz}>
+                                  {tz}
+                                </option>
                               ))}
                             </Select>
                           </Form.Item>
@@ -443,7 +373,9 @@ function App() {
                         <Select>
                           <option value="">Select language</option>
                           {LANGUAGES.map((language) => (
-                            <option key={language} value={language}>{language}</option>
+                            <option key={language} value={language}>
+                              {language}
+                            </option>
                           ))}
                         </Select>
                       </Form.Item>
@@ -485,8 +417,17 @@ function App() {
                     <Col xs={24} md={12}>
                       <Form.Item name="interests" label="Areas of Interest">
                         <Checkbox.Group>
-                          <Row cols={30} gutter={16}>
-                            {['Design', 'Engineering', 'Product', 'Marketing', 'Data', 'Finance', 'Sales', 'HR'].map((interest) => (
+                          <Row cols={30} gutter={[20, 5]}>
+                            {[
+                              'Design',
+                              'Engineering',
+                              'Product',
+                              'Marketing',
+                              'Data',
+                              'Finance',
+                              'Sales',
+                              'HR',
+                            ].map((interest) => (
                               <Col key={interest} xs={15} md={10}>
                                 <Checkbox value={interest.toLowerCase()}>{interest}</Checkbox>
                               </Col>
@@ -557,23 +498,42 @@ function App() {
                       { label: 'Full name', children: formValues?.fullName || '-' },
                       { label: 'Email', children: formValues?.email || '-' },
                       { label: 'Phone', children: formValues?.phone || '-' },
-                      { label: 'Date of birth', children: formValues?.dobMonth && formValues?.dobDay && formValues?.dobYear ? `${formValues.dobMonth}/${formValues.dobDay}/${formValues.dobYear}` : '-' },
+                      {
+                        label: 'Date of birth',
+                        children:
+                          formValues?.dob?.month && formValues?.dob?.day && formValues?.dob?.year
+                            ? `${formValues.dob.month}/${formValues.dob.day}/${formValues.dob.year}`
+                            : '-',
+                      },
                       { label: 'Country', children: formValues?.country || '-' },
                       { label: 'Time zone', children: formValues?.timeZone || '-' },
                       { label: 'Language', children: formValues?.language || '-' },
                       { label: 'Theme', children: formValues?.theme || '-' },
                       { label: 'Frequency', children: formValues?.frequency || '-' },
                       { label: 'Experience', children: formValues?.experienceLevel || '-' },
-                      { label: 'Industry', children: formValues?.industryOther || formValues?.industry || '-' },
-                      { label: 'Interests', children: formValues?.interests?.length ? formValues.interests.join(', ') : '-' },
-                      { label: 'Notifications', children: formValues?.notifications?.length ? formValues.notifications.join(', ') : '-' },
+                      {
+                        label: 'Industry',
+                        children: formValues?.industryOther || formValues?.industry || '-',
+                      },
+                      {
+                        label: 'Interests',
+                        children: formValues?.interests?.length
+                          ? formValues.interests.join(', ')
+                          : '-',
+                      },
+                      {
+                        label: 'Notifications',
+                        children: formValues?.notifications?.length
+                          ? formValues.notifications.join(', ')
+                          : '-',
+                      },
                     ]}
                   />
                   <Divider />
                   <Form.Item
                     name="terms"
                     valuePropName="checked"
-                    rules={{ validate: (value) => value ? true : 'You must accept the terms' }}
+                    rules={{ validate: (value) => (value ? true : 'You must accept the terms') }}
                   >
                     <Checkbox>I agree to the Terms of Service and Privacy Policy</Checkbox>
                   </Form.Item>

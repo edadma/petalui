@@ -81,30 +81,12 @@ function getDaysInMonth(year: number, month: number) {
   return new Date(year, month, 0).getDate()
 }
 
-function validateAge(value: DateOfBirthValue, minAge?: number, maxAge?: number) {
-  if (!value.year || !value.month || !value.day) return true
-  const year = Number(value.year)
-  const month = Number(value.month) - 1
-  const day = Number(value.day)
-  const birthDate = new Date(year, month, day)
-  if (Number.isNaN(birthDate.getTime())) return false
-  const today = new Date()
-  let age = today.getFullYear() - birthDate.getFullYear()
-  const hasHadBirthday =
-    today.getMonth() > birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate())
-  if (!hasHadBirthday) age -= 1
-  if (minAge !== undefined && age < minAge) return false
-  if (maxAge !== undefined && age > maxAge) return false
-  return true
-}
-
 export const DateOfBirth: DateOfBirthComponent = ({
   value,
   defaultValue,
   onChange,
   yearSpan = 120,
-  minAge = 13,
+  minAge,
   maxAge,
   order = 'mdy',
   monthStyle = 'select',
@@ -273,8 +255,6 @@ export const DateOfBirth: DateOfBirthComponent = ({
     y: 'w-full sm:w-[5rem]',
   }
 
-  const showAgeWarning = currentValue.year && currentValue.month && currentValue.day && !validateAge(currentValue, minAge, maxAge)
-
   const handleBlur = (event: React.FocusEvent<HTMLDivElement>) => {
     const currentTarget = event.currentTarget
     const next = event.relatedTarget as Node | null
@@ -313,12 +293,6 @@ export const DateOfBirth: DateOfBirthComponent = ({
             </div>
           ))}
         </Flex>
-      )}
-
-      {showAgeWarning && (
-        <div className="text-xs text-error mt-2">
-          {minAge ? `You must be at least ${minAge} years old.` : 'Date of birth is not valid.'}
-        </div>
       )}
     </div>
   )
