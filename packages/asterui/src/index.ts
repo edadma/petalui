@@ -290,6 +290,9 @@ export type { TabsProps, TabPanelProps, TabItem, TabsVariant, TabsSize, TabsPosi
 export { Textarea } from './components/Textarea'
 export type { TextareaProps } from './components/Textarea'
 
+export { Terminal } from './components/Terminal'
+export type { TerminalProps, TerminalRef } from './components/Terminal'
+
 export { TextRotate } from './components/TextRotate'
 export type { TextRotateProps, TextRotateDuration } from './components/TextRotate'
 
